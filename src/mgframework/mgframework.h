@@ -11,7 +11,7 @@
 using namespace std;
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.0.0"
+#define MGFRAMEWORKVERSION "1.0.0.1"
 
 
 class MGFramework
