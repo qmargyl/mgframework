@@ -53,3 +53,12 @@ int MGPeriodicEvent::timeLeft()
 	return m_Period - (SDL_GetTicks() - m_StartTime);
 }
 
+
+bool MGPeriodicEvent::runConsoleCommand(const char *c)
+{
+	std::cout << "MGPeriodicEvent::runConsoleCommand(" << c << ")" << std::endl;
+
+	std::string cmd(c);
+	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
+	return true;
+}

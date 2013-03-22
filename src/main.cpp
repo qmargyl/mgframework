@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 				p2->disableMiniMap();
 			}
 			else if(strcmp(argv[i], "-version")==0){
-				std::cout << p2->getProgramName() << " " << p2->getProgramVersion() << std::endl;
+				std::cout << "Project2 (example application) " << p2->getProgramVersion() << std::endl;
 				std::cout << "Based on MG Framework " << MGFRAMEWORKVERSION << " by Martin Gyllensten" << std::endl;
 			}
 			else{
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 
 
 	// Initialize the framework.
-	programTitle = string(p2->getProgramName()) + " " + string(p2->getProgramVersion());
+	programTitle = string("Project2 (example application) ") + string(p2->getProgramVersion());
 	p2->setWindowProperties(1024, 768, 32, false, programTitle);
 
 	if(p2->windowPropertiesSet())

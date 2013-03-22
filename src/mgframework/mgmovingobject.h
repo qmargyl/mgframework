@@ -21,6 +21,9 @@ public:
 	int getDestTileX();
 	int getDestTileY();
 	void setSpeed(double s);
+
+	bool runConsoleCommand(const char *c);
+
 };
 
 

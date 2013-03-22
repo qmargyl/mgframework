@@ -2,6 +2,10 @@
 #include "mgmap.h"
 #include <stdlib.h>
 #include "mgframework.h"
+#include <vector>
+#include <string>
+#include <cmath>
+#include <sstream>
 
 
 MGMap::MGMap()
@@ -186,4 +190,13 @@ void MGMap::mouseScrollingUpdate(int x, int y)
 
 		setScrollOffset(setX, setY);
 	}
+}
+
+bool MGMap::runConsoleCommand(const char *c)
+{
+	std::cout << "MGMap::runConsoleCommand(" << c << ")" << std::endl;
+
+	std::string cmd(c);
+	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
+	return true;
 }

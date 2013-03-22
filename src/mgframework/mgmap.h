@@ -51,6 +51,8 @@ public:
 	int getWindowWidth();
 
 	void save(); // Not implemented yet
+
+	bool runConsoleCommand(const char *c);
 };
 
 

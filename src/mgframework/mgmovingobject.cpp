@@ -50,3 +50,12 @@ void MGMovingObject::setSpeed(double s)
 {
 	m_Speed=s;
 }
+
+bool MGMovingObject::runConsoleCommand(const char *c)
+{
+	std::cout << "MGMovingObject::runConsoleCommand(" << c << ")" << std::endl;
+
+	std::string cmd(c);
+	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
+	return true;
+}

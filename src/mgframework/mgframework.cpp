@@ -1,13 +1,15 @@
 #include "mgframework.h"
 #include <iostream>
 #include <cmath>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
 
 MGFramework::MGFramework()
 {
-	m_CommandLine[0]='\0';
+	//m_CommandLine[0]='\0';
 	setDesiredFPS(60);
 	m_FrameTime = (Uint32)(1000/getDesiredFPS()); // Initial FPS value of 60...
 }
@@ -35,7 +37,6 @@ bool MGFramework::processEvents()
 				{
 					std::cout << "SDL_QUIT" << std::endl;
 				}
-
 				// Return false because we are quitting.
 				return false;
 			}
@@ -45,86 +46,16 @@ bool MGFramework::processEvents()
 				if(!typingEnabled())
 				{
 					SDLKey sym = event.key.keysym.sym;
-
 					if(sym == SDLK_ESCAPE) //Enable typing in the console if ESC is pressed..
 					{
 						enableTyping();
+						string cLine;
 						do{
 							cout << "mg> ";
-							cin >> m_CommandLine;
-							// Execute command here..
-							if(strcmp(m_CommandLine, "quit")==0)
-							{
-								std::cout << "Terminating program..." << std::endl;
-								return false;
-							}
-							else if(strcmp(m_CommandLine, "exit")==0)
-							{
-								std::cout << "Exiting console..." << std::endl;
-							}
-							else if(strcmp(m_CommandLine, "help")==0)
-							{
-								std::cout << "Command help" << std::endl;
-								std::cout << "help - Displays this command help information." << std::endl;
-								std::cout << "quit - Quits program." << std::endl;
-								std::cout << "exit - Exists shell and resumes framework execution." << std::endl;
-								std::cout << "minimap - Toggles mini map on/off." << std::endl;
-								std::cout << "debug - Toggles debug logging on/off (same as logging)." << std::endl;
-								std::cout << "logging - Toggles debug logging on/off (same as debug)." << std::endl;
-								std::cout << "fps30 / fps60 / fps90 / fps200 - Sets desired FPS (frames per second)" << std::endl;
-							}
-							else if(strcmp(m_CommandLine, "minimap")==0)
-							{
-								if(miniMapEnabled())
-								{
-									disableMiniMap();
-									std::cout << "Mini map disabled." << std::endl;
-								}
-								else
-								{
-									enableMiniMap();
-									std::cout << "Mini map enabled." << std::endl;
-								}
-							}
-							else if(strcmp(m_CommandLine, "debug")==0 || strcmp(m_CommandLine, "logging")==0)
-							{
-								if(loggingEnabled())
-								{
-									disableLogging();
-									std::cout << "Debug logging disabled." << std::endl;
-								}
-								else
-								{
-									enableLogging();
-									std::cout << "Debug logging enabled." << std::endl;
-								}
-							}
-							else if(strcmp(m_CommandLine, "fps30")==0)
-							{
-								setDesiredFPS(30);
-							}
-							else if(strcmp(m_CommandLine, "fps60")==0)
-							{
-								setDesiredFPS(60);
-							}
-							else if(strcmp(m_CommandLine, "fps90")==0)
-							{
-								setDesiredFPS(90);
-							}
-							else if(strcmp(m_CommandLine, "fps200")==0)
-							{
-								setDesiredFPS(200);
-							}
-							else
-							{
-								std::cout << "Unknown command (" << m_CommandLine << ")." << std::endl;
-							}
-
-						}while(strcmp(m_CommandLine, "exit")!=0);
-
+							std::getline(std::cin, cLine);
+						}while(runConsoleCommand(cLine.c_str()));
 						disableTyping();
 					}
-
 					m_Keys[sym] = 1;
 				}
 				break;
@@ -223,12 +154,6 @@ bool MGFramework::processEvents()
 
 			case SDL_MOUSEMOTION:
 			{
-				/*
-				if(loggingEnabled())
-				{
-					std::cout << "SDL_MOUSEMOTION" << std::endl;
-				}
-				*/
 				map.mouseScrollingUpdate(event.motion.x, event.motion.y);
 				break;
 			}
@@ -302,14 +227,95 @@ bool MGFramework::typingEnabled()
 	return m_TypingEnabled;
 }
 
-void MGFramework::setProgramName(const char *name)
+bool MGFramework::runConsoleCommand(const char *c)
 {
-	// Not implemented yet
-}
+	std::cout << "MGFramework::runConsoleCommand(" << c << ")" << std::endl;
 
-const char *MGFramework::getProgramName()
-{
-	return "Project2 default demo application name";
+	std::string cmd(c);
+	std::vector<std::string> cmdvec = split(cmd, ' ');
+	if(cmdvec.size() == 0)
+	{
+		std::cout << "No arguments" << std::endl;
+		return true;
+	}
+	else if(cmdvec.size() == 1)
+	{
+		std::cout << "One argument" << std::endl;
+		if(cmdvec[0]=="exit")
+		{
+			std::cout << "Exiting console..." << std::endl;
+			return false;
+		}
+
+
+		else if(cmdvec[0]=="help")
+		{
+			std::cout << "Command help" << std::endl;
+			std::cout << "help - Displays this command help information." << std::endl;
+			std::cout << "exit - Exists shell and resumes framework execution." << std::endl;
+			std::cout << "minimap - Toggles mini map on/off." << std::endl;
+			std::cout << "debug - Toggles debug logging on/off (same as logging)." << std::endl;
+			std::cout << "logging - Toggles debug logging on/off (same as debug)." << std::endl;
+			std::cout << "fps30 / fps60 / fps90 / fps200 - Sets desired FPS (frames per second)" << std::endl;
+		}
+		else if(cmdvec[0]=="minimap")
+		{
+			if(miniMapEnabled())
+			{
+				disableMiniMap();
+				std::cout << "Mini map disabled." << std::endl;
+			}
+			else
+			{
+				enableMiniMap();
+				std::cout << "Mini map enabled." << std::endl;
+			}
+		}
+		else if(cmdvec[0]=="debug" || cmdvec[0]=="logging")
+		{
+			if(loggingEnabled())
+			{
+				disableLogging();
+				std::cout << "Debug logging disabled." << std::endl;
+			}
+			else
+			{
+				enableLogging();
+				std::cout << "Debug logging enabled." << std::endl;
+			}
+		}
+		else if(cmdvec[0]=="fps30")
+		{
+			setDesiredFPS(30);
+		}
+		else if(cmdvec[0]=="fps60")
+		{
+			setDesiredFPS(60);
+		}
+		else if(cmdvec[0]=="fps90")
+		{
+			setDesiredFPS(90);
+		}
+		else if(cmdvec[0]=="fps200")
+		{
+			setDesiredFPS(200);
+		}
+		else
+		{
+			std::cout << "Unknown command (" << cmdvec[0] << ")." << std::endl;
+		}
+
+	}
+	else
+	{
+		std::cout << "Multiple arguments" << std::endl;
+		if(cmdvec[0]=="map")
+		{
+			return map.runConsoleCommand(c);
+		}
+	}
+
+	return true;
 }
 
 void MGFramework::setProgramVersion(const char *version)
@@ -482,3 +488,29 @@ void MGFramework::putPixel32( SDL_Surface *surface, int x, int y, Uint32 pixel )
 }
 
 
+std::vector<std::string> MGFramework::split(std::string str, char c)
+{
+	std::string strTempString;
+	std::vector<int> splitIndices;
+	std::vector<std::string> splitLine;
+    int nCharIndex = 0;
+    int nLineSize = str.size();
+
+    // find indices
+    for(int i = 0; i < nLineSize; i++)
+    {
+        if(str[i] == c)
+            splitIndices.push_back(i);
+    }
+    splitIndices.push_back(nLineSize); // end index
+
+    // fill split lines
+    for(int i = 0; i < (int)splitIndices.size(); i++)
+    {
+        strTempString = str.substr(nCharIndex, (splitIndices[i] - nCharIndex));
+        splitLine.push_back(strTempString);
+		cout << strTempString << endl;
+        nCharIndex = splitIndices[i] + 1;
+    }
+	return splitLine;
+}

@@ -17,6 +17,9 @@ public:
 	void deactivate();
 	bool isActive();
 	int timeLeft();
+
+	bool runConsoleCommand(const char *c);
+
 };
 
 

@@ -8,7 +8,7 @@ Project2::Project2()
 	unsetWindowProperties(); // Force setWindowProperties to be called before init.
 	disableLogging();
 	disableTyping();
-	setProgramName("Demo App Project2");
+	//setProgramName("Demo App Project2");
 	setProgramVersion("0.2");
 }
 

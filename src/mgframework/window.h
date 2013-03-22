@@ -33,6 +33,8 @@ class MGWindow
 		void setSize(int width, int height);
 		int getHeight();
 		int getWidth();
+
+		bool runConsoleCommand(const char *c);
 };
 
 

@@ -5,13 +5,12 @@
 #include <SDL/SDL.h>
 #include "mgmap.h"
 #include "SDL_ttf.h"
+#include <vector>
+#include <string>
 
-#include <iostream>
-#include <sstream>
-using namespace std;
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.0.1"
+#define MGFRAMEWORKVERSION "1.0.1.2"
 
 
 class MGFramework
@@ -30,7 +29,7 @@ class MGFramework
 
 		string m_ProgramVersion;	// Holds the application version, not the MG Framework version.
 
-		char m_CommandLine[128];
+		//char m_CommandLine[128];
 
 	protected:
 		MGWindow m_Window;				// The framework window
@@ -71,9 +70,10 @@ class MGFramework
 		void disableTyping();
 		bool typingEnabled();
 
+		// Console command handling
+		bool runConsoleCommand(const char *c);
+
 		// Program version
-		void setProgramName(const char *name);
-		const char *getProgramName();
 		void setProgramVersion(const char *version);
 		const char *getProgramVersion();
 
@@ -96,6 +96,7 @@ class MGFramework
 		// Utility functions
 		static string toString(int number);
 		static double distance(int x1, int y1, int x2, int y2);
+		static std::vector<std::string> split(std::string str, char c);
 };
 
 #endif
