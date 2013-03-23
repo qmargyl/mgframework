@@ -9,7 +9,6 @@ using namespace std;
 
 MGFramework::MGFramework()
 {
-	//m_CommandLine[0]='\0';
 	setDesiredFPS(60);
 	m_FrameTime = (Uint32)(1000/getDesiredFPS()); // Initial FPS value of 60...
 }
@@ -92,18 +91,18 @@ bool MGFramework::processEvents()
 			case SDL_MOUSEBUTTONDOWN:
 			{
 				// Calculate index, x and y for the tile that was clicked in the map.
-				int iClick = map.getTileIndex(event.button.x, event.button.y);
+				int iClick = m_Map.getTileIndex(event.button.x, event.button.y);
 				if (iClick >= 0)
 				{
-					int xClick = map.getTileX(iClick);
-					int yClick = map.getTileY(iClick);
+					int xClick = m_Map.getTileX(iClick);
+					int yClick = m_Map.getTileY(iClick);
 					if (((int) event.button.button) == 1)
 					{
-						map.setTileProperty(xClick, yClick, 1);
+						m_Map.setTileProperty(xClick, yClick, 1);
 					}
 					else if (((int) event.button.button) == 3)
 					{
-						map.mouseScrollingClick(event.button.x, event.button.y);
+						m_Map.mouseScrollingClick(event.button.x, event.button.y);
 					}
 
 					// Log debug information to console.
@@ -147,14 +146,14 @@ bool MGFramework::processEvents()
 				}
 				if (((int) event.button.button) == 3)
 				{
-					map.mouseScrollingRelease(event.button.x, event.button.y);
+					m_Map.mouseScrollingRelease(event.button.x, event.button.y);
 				}
 				break;
 			}
 
 			case SDL_MOUSEMOTION:
 			{
-				map.mouseScrollingUpdate(event.motion.x, event.motion.y);
+				m_Map.mouseScrollingUpdate(event.motion.x, event.motion.y);
 				break;
 			}
 
@@ -311,8 +310,13 @@ bool MGFramework::runConsoleCommand(const char *c)
 		std::cout << "Multiple arguments" << std::endl;
 		if(cmdvec[0]=="map")
 		{
-			return map.runConsoleCommand(c);
+			return m_Map.runConsoleCommand(c);
 		}
+		if(cmdvec[0]=="window")
+		{
+			return m_Window.runConsoleCommand(c);
+		}
+
 	}
 
 	return true;

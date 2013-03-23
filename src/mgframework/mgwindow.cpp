@@ -1,4 +1,4 @@
-#include "window.h"
+#include "mgwindow.h"
 #include "mgframework.h"
 
 

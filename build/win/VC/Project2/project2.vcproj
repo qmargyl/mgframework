@@ -200,11 +200,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\src\project2.cpp"
+				RelativePath="..\..\..\..\src\mgframework\mgwindow.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\src\mgframework\window.cpp"
+				RelativePath="..\..\..\..\src\project2.cpp"
 				>
 			</File>
 		</Filter>
@@ -230,11 +230,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\src\project2.h"
+				RelativePath="..\..\..\..\src\mgframework\mgwindow.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\src\mgframework\window.h"
+				RelativePath="..\..\..\..\src\project2.h"
 				>
 			</File>
 		</Filter>

@@ -1,7 +1,7 @@
 #ifndef _MG_FRAMEWORK_H
 #define _MG_FRAMEWORK_H
 
-#include "window.h"
+#include "mgwindow.h"
 #include <SDL/SDL.h>
 #include "mgmap.h"
 #include "SDL_ttf.h"
@@ -28,8 +28,6 @@ class MGFramework
 		Sint32 m_DelayTime;			// Holds delay in ms for last frame
 
 		string m_ProgramVersion;	// Holds the application version, not the MG Framework version.
-
-		//char m_CommandLine[128];
 
 	protected:
 		MGWindow m_Window;				// The framework window
@@ -91,7 +89,7 @@ class MGFramework
 		bool miniMapEnabled();
 
 		// Map that holds game logics needs to be accessed when graphics are drawn - public.
-		MGMap map;
+		MGMap m_Map;
 
 		// Utility functions
 		static string toString(int number);
