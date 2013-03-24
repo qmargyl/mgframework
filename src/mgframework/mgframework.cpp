@@ -184,14 +184,25 @@ void MGFramework::run()
 		//and the counter is zero, activate the console.
 		if(frameCountdownEnabled())
 		{
+			static int sleepKPI = 0;
+			static int nFrames = 0;
 			if(getFrameNumber() == 0)
 			{
+				std::cout << "Frame countdown results: " << std::endl;
+				std::cout << "\tSum of frame sleep time: " << sleepKPI << std::endl;
+				std::cout << "\tNumber of frames executed: " << nFrames << std::endl;
+				std::cout << "\tAverage sleep time per frame: " << (double)sleepKPI / (double)nFrames << std::endl;
+				sleepKPI = 0;
+				nFrames = 0;
+				disableFrameCountdown();
 				activateConsole();
 			}
 			else if (getFrameNumber() > 0)
 			{
-				std::cout << "Frame count down: " << getFrameNumber() << std::endl;
+				//std::cout << "Frame count down: " << getFrameNumber() << std::endl;
 				countdownFrame(1);
+				sleepKPI += m_DelayTime; // Add all delay times for the frames counted down as a KPI for performance.
+				nFrames ++;
 			}
 			else
 			{
@@ -314,7 +325,8 @@ bool MGFramework::runConsoleCommand(const char *c)
 			std::cout << "minimap - Toggles mini map on/off." << std::endl;
 			std::cout << "debug - Toggles debug logging on/off (same as logging)." << std::endl;
 			std::cout << "logging - Toggles debug logging on/off (same as debug)." << std::endl;
-			std::cout << "fps30 / fps60 / fps90 / fps200 - Sets desired FPS (frames per second)" << std::endl;
+			std::cout << "fps <int f> - Sets desired FPS (frames per second) to <f>." << std::endl;
+			std::cout << "runframes <int f> - Runs <f> game loops (frames) and presents some recorded data." << std::endl;
 		}
 		else if(cmdvec[0]=="minimap")
 		{
@@ -342,6 +354,7 @@ bool MGFramework::runConsoleCommand(const char *c)
 				std::cout << "Debug logging enabled." << std::endl;
 			}
 		}
+/*
 		else if(cmdvec[0]=="fps30")
 		{
 			setDesiredFPS(30);
@@ -358,6 +371,8 @@ bool MGFramework::runConsoleCommand(const char *c)
 		{
 			setDesiredFPS(200);
 		}
+*/
+/*
 		else if(cmdvec[0]=="runoneframe")
 		{
 			enableFrameCountdown();
@@ -367,14 +382,45 @@ bool MGFramework::runConsoleCommand(const char *c)
 		else if(cmdvec[0]=="runtenframes")
 		{
 			enableFrameCountdown();
-			setFrameNumber(10);
+			setFrameNumber(1000);
 			return false;
 		}
+*/
 		else
 		{
 			std::cout << "Unknown command (" << cmdvec[0] << ")." << std::endl;
 		}
 
+	}
+	else if(cmdvec.size() == 2)
+	{
+		std::cout << "Two arguments" << std::endl;
+		if(cmdvec[0]=="runframes")
+		{
+			std::istringstream buffer(cmdvec[1]);
+			int value;
+			buffer >> value;
+			enableFrameCountdown();
+			setFrameNumber(value);
+			return false;
+		}
+		else if(cmdvec[0]=="fps")
+		{
+			std::istringstream buffer(cmdvec[1]);
+			int value;
+			buffer >> value;
+			setDesiredFPS(value);
+		}
+
+
+		else if(cmdvec[0]=="map")
+		{
+			return m_Map.runConsoleCommand(c);
+		}
+		else if(cmdvec[0]=="window")
+		{
+			return m_Window.runConsoleCommand(c);
+		}
 	}
 	else
 	{
@@ -387,7 +433,6 @@ bool MGFramework::runConsoleCommand(const char *c)
 		{
 			return m_Window.runConsoleCommand(c);
 		}
-
 	}
 
 	return true;
