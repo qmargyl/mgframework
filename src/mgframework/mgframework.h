@@ -11,7 +11,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.1.4"
+#define MGFRAMEWORKVERSION "1.0.2.0"
 
 
 class MGFramework :public MGComponent
@@ -28,7 +28,21 @@ class MGFramework :public MGComponent
 		Uint32 m_FPS;				// Holds desired FPS
 		Sint32 m_DelayTime;			// Holds delay in ms for last frame
 
+		// Version related
 		string m_ProgramVersion;	// Holds the application version, not the MG Framework version.
+
+		// Countdown feature needs a flag and a counter.
+		bool m_FrameCountdownEnabled;
+		int m_FrameNumber;
+		bool frameCountdownEnabled();
+		int getFrameNumber();
+		void setFrameNumber(int f);
+		void enableFrameCountdown();
+		void disableFrameCountdown();
+		void countdownFrame(int howmany);
+
+		//Console related
+		void activateConsole();
 
 	protected:
 		MGWindow m_Window;				// The framework window

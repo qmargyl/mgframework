@@ -11,6 +11,8 @@ MGFramework::MGFramework()
 {
 	setDesiredFPS(60);
 	m_FrameTime = (Uint32)(1000/getDesiredFPS()); // Initial FPS value of 60...
+	m_FrameCountdownEnabled = false;
+	m_FrameNumber = 0;
 }
 
 MGFramework::~MGFramework()
@@ -24,6 +26,7 @@ void MGFramework::resize(int x, int y)
 
 bool MGFramework::processEvents()
 {
+	// Even processing loop is started after all special cases.
 	SDL_Event event;
 	while (SDL_PollEvent(&event))//get all events
 	{
@@ -47,13 +50,7 @@ bool MGFramework::processEvents()
 					SDLKey sym = event.key.keysym.sym;
 					if(sym == SDLK_ESCAPE) //Enable typing in the console if ESC is pressed..
 					{
-						enableTyping();
-						string cLine;
-						do{
-							cout << "mg> ";
-							std::getline(std::cin, cLine);
-						}while(runConsoleCommand(cLine.c_str()));
-						disableTyping();
+						activateConsole();
 					}
 					m_Keys[sym] = 1;
 				}
@@ -182,6 +179,26 @@ void MGFramework::run()
 
 		// Handle all calculations and drawing of current frame..
 
+
+		//If frame countdown is enabled (a.k.a. we are counting down frames to go into console again)
+		//and the counter is zero, activate the console.
+		if(frameCountdownEnabled())
+		{
+			if(getFrameNumber() == 0)
+			{
+				activateConsole();
+			}
+			else if (getFrameNumber() > 0)
+			{
+				std::cout << "Frame count down: " << getFrameNumber() << std::endl;
+				countdownFrame(1);
+			}
+			else
+			{
+				std::cout << "Error in frame countdown feature" << std::endl;
+			}
+		}
+
 		handleGameLogics();
 		draw();
 		SDL_Flip(getSurface());
@@ -194,6 +211,48 @@ void MGFramework::run()
 			Sleep((DWORD)m_DelayTime);
 		}
 	}
+}
+
+void MGFramework::activateConsole()
+{
+	disableFrameCountdown();
+	enableTyping();
+	string cLine;
+	do{
+		cout << "mg> ";
+		std::getline(std::cin, cLine);
+	}while(runConsoleCommand(cLine.c_str()));
+	disableTyping();
+}
+
+bool MGFramework::frameCountdownEnabled()
+{
+	return m_FrameCountdownEnabled;
+}
+
+int MGFramework::getFrameNumber()
+{
+	return m_FrameNumber;
+}
+
+void MGFramework::setFrameNumber(int f)
+{
+	m_FrameNumber = f;
+}
+
+void MGFramework::enableFrameCountdown()
+{
+	m_FrameCountdownEnabled = true;
+}
+
+void MGFramework::disableFrameCountdown()
+{
+	m_FrameCountdownEnabled = false;
+}
+
+void MGFramework::countdownFrame(int howmany)
+{
+	m_FrameNumber -= howmany;
 }
 
 void MGFramework::enableLogging()
@@ -298,6 +357,18 @@ bool MGFramework::runConsoleCommand(const char *c)
 		else if(cmdvec[0]=="fps200")
 		{
 			setDesiredFPS(200);
+		}
+		else if(cmdvec[0]=="runoneframe")
+		{
+			enableFrameCountdown();
+			setFrameNumber(1);
+			return false;
+		}
+		else if(cmdvec[0]=="runtenframes")
+		{
+			enableFrameCountdown();
+			setFrameNumber(10);
+			return false;
 		}
 		else
 		{
