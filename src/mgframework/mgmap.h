@@ -2,8 +2,9 @@
 #define _MG_MAP_H
 
 #include <SDL/SDL.h>
+#include "mgcomponent.h"
 
-class MGMap
+class MGMap :public MGComponent
 {
 private:
 	int m_Width; // Number of tiles the map is wide.

@@ -1,9 +1,9 @@
 #ifndef _MG_PERIODICEVENT_H
 #define _MG_PERIODICEVENT_H
-#include "mgframework.h"
+#include "mgcomponent.h"
 
 
-class MGPeriodicEvent
+class MGPeriodicEvent :public MGComponent
 {
 private:
 	int m_Period;

@@ -8,10 +8,11 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "SDL_ttf.h"
+#include "mgcomponent.h"
 
 using std::string;
 
-class MGWindow
+class MGWindow :public MGComponent
 {
 	private:
 		int m_Width;

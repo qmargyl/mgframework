@@ -7,13 +7,14 @@
 #include "SDL_ttf.h"
 #include <vector>
 #include <string>
+#include "mgcomponent.h"
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.1.2"
+#define MGFRAMEWORKVERSION "1.0.1.4"
 
 
-class MGFramework
+class MGFramework :public MGComponent
 {
 	private:
 

@@ -1,8 +1,8 @@
 #ifndef _MG_MOVINGOBJECT_H
 #define _MG_MOVINGOBJECT_H
-#include "mgframework.h"
+#include "mgcomponent.h"
 
-class MGMovingObject
+class MGMovingObject :public MGComponent
 {
 private:
 	double m_Speed;
