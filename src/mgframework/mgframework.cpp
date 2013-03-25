@@ -315,8 +315,6 @@ bool MGFramework::runConsoleCommand(const char *c)
 			std::cout << "Exiting console..." << std::endl;
 			return false;
 		}
-
-
 		else if(cmdvec[0]=="help")
 		{
 			std::cout << "Command help" << std::endl;
@@ -354,38 +352,6 @@ bool MGFramework::runConsoleCommand(const char *c)
 				std::cout << "Debug logging enabled." << std::endl;
 			}
 		}
-/*
-		else if(cmdvec[0]=="fps30")
-		{
-			setDesiredFPS(30);
-		}
-		else if(cmdvec[0]=="fps60")
-		{
-			setDesiredFPS(60);
-		}
-		else if(cmdvec[0]=="fps90")
-		{
-			setDesiredFPS(90);
-		}
-		else if(cmdvec[0]=="fps200")
-		{
-			setDesiredFPS(200);
-		}
-*/
-/*
-		else if(cmdvec[0]=="runoneframe")
-		{
-			enableFrameCountdown();
-			setFrameNumber(1);
-			return false;
-		}
-		else if(cmdvec[0]=="runtenframes")
-		{
-			enableFrameCountdown();
-			setFrameNumber(1000);
-			return false;
-		}
-*/
 		else
 		{
 			std::cout << "Unknown command (" << cmdvec[0] << ")." << std::endl;
@@ -397,22 +363,14 @@ bool MGFramework::runConsoleCommand(const char *c)
 		std::cout << "Two arguments" << std::endl;
 		if(cmdvec[0]=="runframes")
 		{
-			std::istringstream buffer(cmdvec[1]);
-			int value;
-			buffer >> value;
 			enableFrameCountdown();
-			setFrameNumber(value);
+			setFrameNumber(toInt(cmdvec[1]));
 			return false;
 		}
 		else if(cmdvec[0]=="fps")
 		{
-			std::istringstream buffer(cmdvec[1]);
-			int value;
-			buffer >> value;
-			setDesiredFPS(value);
+			setDesiredFPS(toInt(cmdvec[1]));
 		}
-
-
 		else if(cmdvec[0]=="map")
 		{
 			return m_Map.runConsoleCommand(c);
@@ -420,6 +378,10 @@ bool MGFramework::runConsoleCommand(const char *c)
 		else if(cmdvec[0]=="window")
 		{
 			return m_Window.runConsoleCommand(c);
+		}
+		else
+		{
+			std::cout << "Unknown command (" << cmdvec[0] << ")." << std::endl;
 		}
 	}
 	else
@@ -429,9 +391,13 @@ bool MGFramework::runConsoleCommand(const char *c)
 		{
 			return m_Map.runConsoleCommand(c);
 		}
-		if(cmdvec[0]=="window")
+		else if(cmdvec[0]=="window")
 		{
 			return m_Window.runConsoleCommand(c);
+		}
+		else
+		{
+			std::cout << "Unknown command (" << cmdvec[0] << ")." << std::endl;
 		}
 	}
 
@@ -633,4 +599,12 @@ std::vector<std::string> MGFramework::split(std::string str, char c)
         nCharIndex = splitIndices[i] + 1;
     }
 	return splitLine;
+}
+
+int MGFramework::toInt(const string &s)
+{
+	std::istringstream buffer(s);
+	int value;
+	buffer >> value;
+	return value;
 }

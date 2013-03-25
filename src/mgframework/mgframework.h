@@ -11,7 +11,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.2.1"
+#define MGFRAMEWORKVERSION "1.0.2.2"
 
 
 class MGFramework :public MGComponent
@@ -110,6 +110,7 @@ class MGFramework :public MGComponent
 		static string toString(int number);
 		static double distance(int x1, int y1, int x2, int y2);
 		static std::vector<std::string> split(std::string str, char c);
+		static int toInt(const string &s);
 };
 
 #endif
