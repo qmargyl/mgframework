@@ -1,6 +1,7 @@
 #include "project2.h"
 #include <iostream>
 #include "mgframework/mgframework.h"
+#include "mgframework/mgmovingobject.h"
 
 Project2::Project2()
 {
@@ -8,7 +9,6 @@ Project2::Project2()
 	unsetWindowProperties(); // Force setWindowProperties to be called before init.
 	disableLogging();
 	disableTyping();
-	//setProgramName("Demo App Project2");
 	setProgramVersion("0.2");
 }
 
@@ -25,15 +25,25 @@ bool Project2::init(int w, int h, int tw, int th)
 		// All graphics should be loaded here.
 		m_Brick = loadBMPImage("brick1_blue_32x32.bmp");
 		m_Floor = loadBMPImage("floor1_blue_32x32.bmp");
+		m_MovingObject = loadBMPImage("movingobject.bmp");
 
 
 		// Objcts such as the map are initialized here.
 		m_Map.init(w, h, tw, th, m_Window.getWidth(), m_Window.getHeight()); // width (in number of tiles), height, tile width (in pixels), tile height, resolution x and y.
 
 
-		// Setup game logic..
+		// Setup game logics..
+
+		// Local MG components..
 		m_PE.setupTimer(2000);
 		m_PE.activate();
+		// How will MG Framework forward console commands to m_PE when it is declared in Project2?
+
+		// Framework MG components init, m_MO should be declared in Project2 (TBD)..
+		m_MO.setTileXY(20, 20);
+		m_MO.setDestTileXY(10, 10);
+		m_MO.setSpeed(1.5);
+
 		enableMiniMap();
 
 		return true;
@@ -72,6 +82,12 @@ void Project2::draw()
 				{
 					drawSprite(m_Floor, getSurface(), 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
 				}
+
+				if(m_MO.getTileX()==x && m_MO.getTileY()==y)
+				{
+					drawSprite(m_MovingObject, getSurface(), 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
+				}
+
 			}
 		}
 	}

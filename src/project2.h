@@ -3,6 +3,7 @@
 
 #include "mgframework/mgperiodicevent.h"
 #include "mgframework/mgframework.h"
+#include "mgframework/mgmovingobject.h"
 
 class Project2 : public MGFramework
 {
@@ -13,8 +14,9 @@ class Project2 : public MGFramework
 		virtual void draw();
 
 		// Graphics (which is not part of the framework) should be added here.
-		SDL_Surface* m_Brick;
-		SDL_Surface* m_Floor;
+		SDL_Surface *m_Brick;
+		SDL_Surface *m_Floor;
+		SDL_Surface *m_MovingObject;
 
 		// Data members needed for game logics etc..
 		MGPeriodicEvent m_PE;

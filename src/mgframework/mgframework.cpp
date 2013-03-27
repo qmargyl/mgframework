@@ -236,65 +236,7 @@ void MGFramework::activateConsole()
 	disableTyping();
 }
 
-bool MGFramework::frameCountdownEnabled()
-{
-	return m_FrameCountdownEnabled;
-}
 
-int MGFramework::getFrameNumber()
-{
-	return m_FrameNumber;
-}
-
-void MGFramework::setFrameNumber(int f)
-{
-	m_FrameNumber = f;
-}
-
-void MGFramework::enableFrameCountdown()
-{
-	m_FrameCountdownEnabled = true;
-}
-
-void MGFramework::disableFrameCountdown()
-{
-	m_FrameCountdownEnabled = false;
-}
-
-void MGFramework::countdownFrame(int howmany)
-{
-	m_FrameNumber -= howmany;
-}
-
-void MGFramework::enableLogging()
-{
-	m_LoggingEnabled = true;
-}
-
-void MGFramework::disableLogging()
-{
-	m_LoggingEnabled = false;
-}
-
-bool MGFramework::loggingEnabled()
-{
-	return m_LoggingEnabled;
-}
-
-void MGFramework::disableTyping()
-{
-	m_TypingEnabled = false;
-}
-
-void MGFramework::enableTyping()
-{
-	m_TypingEnabled = true;
-}
-
-bool MGFramework::typingEnabled()
-{
-	return m_TypingEnabled;
-}
 
 bool MGFramework::runConsoleCommand(const char *c)
 {
@@ -404,30 +346,7 @@ bool MGFramework::runConsoleCommand(const char *c)
 	return true;
 }
 
-void MGFramework::setProgramVersion(const char *version)
-{
-	m_ProgramVersion = string(version);
-}
 
-const char *MGFramework::getProgramVersion()
-{
-	return m_ProgramVersion.c_str();
-}
-
-void MGFramework::enableMiniMap()
-{
-	m_MiniMapEnabled = true;
-}
-
-bool MGFramework::miniMapEnabled()
-{
-	return m_MiniMapEnabled;
-}
-
-void MGFramework::disableMiniMap()
-{
-	m_MiniMapEnabled = false;
-}
 
 Uint32 MGFramework::getFPS()
 {
@@ -440,13 +359,13 @@ Uint32 MGFramework::getFPS()
 		}
 		else
 		{
-			std::cout << "FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << "m_FrameTime:" << m_FrameTime << ", result:" << result << std::endl;
+			std::cout << "WARNING: FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << "m_FrameTime:" << m_FrameTime << ", result:" << result << std::endl;
 			return getDesiredFPS();
 		}
 	}
 	else
 	{
-		std::cout << "FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << m_FrameTime << std::endl;
+		std::cout << "WARNING: FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << m_FrameTime << std::endl;
 		return getDesiredFPS();
 	}
 }
@@ -476,31 +395,13 @@ Uint32 MGFramework::getDesiredFPS()
 	}
 }
 
-Sint32  MGFramework::getLastFrameDelayTime()
-{
-	return m_DelayTime;
-}
+
 
 bool MGFramework::setWindowProperties(int width, int height, int bpp, bool fullscreen, const string& title)
 {
 	m_Window.setProperties(width, height, bpp, fullscreen, title);
 	m_WindowPropertiesSet = true;
 	return true;
-}
-
-void MGFramework::unsetWindowProperties()
-{
-	m_WindowPropertiesSet = false;
-}
-
-bool MGFramework::windowPropertiesSet()
-{
-	return m_WindowPropertiesSet;
-}
-
-SDL_Surface * MGFramework::getSurface()
-{
-	return m_Window.screen;
 }
 
 
