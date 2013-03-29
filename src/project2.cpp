@@ -35,14 +35,14 @@ bool Project2::init(int w, int h, int tw, int th)
 		// Setup game logics..
 
 		// Local MG components..
-		m_PE.setupTimer(2000);
+		m_PE.setupTimer(10000);
 		m_PE.activate();
 		// How will MG Framework forward console commands to m_PE when it is declared in Project2?
 
-		// Framework MG components init, m_MO should be declared in Project2 (TBD)..
+		// Framework MG components init, m_MO should be declared in Project2 (but is put here for now)..
 		m_MO.setTileXY(20, 20);
-		m_MO.setDestTileXY(10, 10);
-		m_MO.setSpeed(1.5);
+		m_MO.setDestTileXY(15, 20);
+		m_MO.setSpeed(0.25, m_Map.getTileHeight()); // Move four tiles per second
 
 		enableMiniMap();
 
@@ -59,7 +59,10 @@ void Project2::handleGameLogics()
 	if(m_PE.update())
 	{
 		std::cout << "PeriodicEvent m_PE triggered" << std::endl;
+		m_MO.setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
 	}
+
+	m_MO.update();
 }
 
 void Project2::draw()
@@ -82,15 +85,12 @@ void Project2::draw()
 				{
 					drawSprite(m_Floor, getSurface(), 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
 				}
-
-				if(m_MO.getTileX()==x && m_MO.getTileY()==y)
-				{
-					drawSprite(m_MovingObject, getSurface(), 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
-				}
-
 			}
 		}
 	}
+
+	// Draw all moving objects:
+	drawSprite(m_MovingObject, getSurface(), 0, 0, m_MO.getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO.getXOffset(), m_MO.getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO.getYOffset(), m_Map.getTileWidth(), m_Map.getTileHeight());
 
 
 	if(miniMapEnabled())
@@ -123,6 +123,10 @@ void Project2::draw()
 				}
 			}
 		}
+
+		// Draw all moving objects..
+		putPixel32(getSurface(), m_MO.getTileX() + m_Window.getWidth() - m_Map.getWidth() - 16, m_MO.getTileY() + 16, 0x00FF0000);
+
 	}
 
 	// Example of how text can be printed on the surface.. Here FPS and time left between frames.

@@ -24,35 +24,7 @@ MGMap::~MGMap()
 	}
 }
 
-int MGMap::getWidth()
-{
-	return m_Width;
-}
 
-int MGMap::getHeight()
-{
-	return m_Height;
-}
-	
-int MGMap::getTileWidth()
-{
-	return m_TileWidth;
-}
-
-int MGMap::getTileHeight()
-{
-	return m_TileHeight;
-}
-
-int MGMap::getScrollX()
-{
-	return m_ScrollX;
-}
-
-int MGMap::getScrollY()
-{
-	return m_ScrollY;
-}
 
 void MGMap::setScrollOffset(int px, int py)
 {
@@ -95,16 +67,6 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 
 }
 
-void MGMap::setTileProperty(int x, int y, int value)
-{
-	m_TileProperty[y*getWidth()+x]=value;
-}
-
-int MGMap::getTileProperty(int x, int y)
-{
-	return m_TileProperty[y*getWidth()+x];
-}
-
 
 /***************************************************
  * int MGMap::getTileIndex(int clickX, int clickY)
@@ -125,28 +87,11 @@ int MGMap::getTileIndex(int clickX, int clickY)
 	}
 }
 
-int MGMap::getTileX(int index)
-{
-	return index % getWidth();
-}
 
-int MGMap::getTileY(int index)
-{
-	return (index - getTileX(index))/getWidth();
-}
-
-int MGMap::getWindowHeight()
-{
-	return m_WindowHeight;
-}
-
-int MGMap::getWindowWidth()
-{
-	return m_WindowWidth;
-}
 
 void MGMap::save()
 {
+	// Not implemented yet
 	return ;
 }
 

@@ -27,13 +27,14 @@ public:
 	MGMap();
 	~MGMap();
 
-	int getWidth();
-	int getHeight();
-	int getTileWidth();
-	int getTileHeight();
 
-	int getScrollX();
-	int getScrollY();
+	int getWidth(){ return m_Width;}
+	int getHeight(){ return m_Height;}
+	int getTileWidth(){ return m_TileWidth;}
+	int getTileHeight(){ return m_TileHeight;}
+
+	int getScrollX(){ return m_ScrollX;}
+	int getScrollY(){ return m_ScrollY;}
 	void setScrollOffset(int px, int py);
 	void mouseScrollingRelease(int x, int y);
 	void mouseScrollingClick(int x, int y);
@@ -41,15 +42,16 @@ public:
 
 
 	void init(int w, int h, int tw, int th, int windowWidth, int windowHeight);
-	void setTileProperty(int x, int y, int value); // Public to allow dynamic map properties.
-	int getTileProperty(int x, int y);
+	void setTileProperty(int x, int y, int value){ m_TileProperty[y*getWidth()+x]=value;}
+	int getTileProperty(int x, int y){ return m_TileProperty[y*getWidth()+x];}
+
 
 	int getTileIndex(int clickX, int clickY);
-	int getTileX(int index);
-	int getTileY(int index);
+	int getTileX(int index){ return index % getWidth();}
+	int getTileY(int index){ return (index - getTileX(index))/getWidth();}
 
-	int getWindowHeight();
-	int getWindowWidth();
+	int getWindowHeight(){ return m_WindowHeight;}
+	int getWindowWidth(){ return m_WindowWidth;}
 
 	void save(); // Not implemented yet
 

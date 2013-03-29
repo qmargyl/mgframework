@@ -5,12 +5,16 @@
 class MGMovingObject :public MGComponent
 {
 private:
-	double m_Speed;
+	double m_Speed; // pixels per second
+	int m_TimeOfLastUpdate;
 	int m_TileX;
 	int m_TileY;
 	int m_DestTileX;
 	int m_DestTileY;
 	double getDistance(int wx, int wy);
+	double m_X;
+	double m_Y;
+	int m_tileSize;
 
 public:
 	MGMovingObject();
@@ -20,7 +24,11 @@ public:
 	int getTileY();
 	int getDestTileX();
 	int getDestTileY();
-	void setSpeed(double s);
+	void setSpeed(double s, int tileSize); // Seconds, Distance to next tile (pixels)
+	void update();
+
+	int getXOffset(){ return m_X;}
+	int getYOffset(){ return m_Y;}
 
 	bool runConsoleCommand(const char *c);
 

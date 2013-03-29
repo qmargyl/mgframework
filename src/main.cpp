@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 	if(p2->windowPropertiesSet())
 	{
 		// If initialization is ok, run the framework...
-		if(p2->init(128, 256, 32, 32))
+		if(p2->init(64, 64, 32, 32))
 		{
 			p2->run();
 		}
