@@ -23,28 +23,8 @@ void MGMovingObject::setDestTileXY(int x, int y)
 	std::cout << "MO: Setting destination XY (" << x << "," << y << ")" << std::endl;
 }
 
-int MGMovingObject::getTileX()
-{
-	return m_TileX;
-}
-
-int MGMovingObject::getTileY()
-{
-	return m_TileY;
-}
-
-int MGMovingObject::getDestTileX()
-{
-	return m_DestTileX;
-}
-
-int MGMovingObject::getDestTileY()
-{
-	return m_DestTileY;
-}
-
 double MGMovingObject::getDistance(int wx, int wy)
-{
+{ 
 	return MGFramework::distance(getTileX(), getTileY(), wx, wy);
 }
 

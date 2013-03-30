@@ -12,7 +12,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.3.0"
+#define MGFRAMEWORKVERSION "1.0.3.2"
 
 
 class MGFramework :public MGComponent
@@ -51,7 +51,9 @@ class MGFramework :public MGComponent
 	protected:
 		MGWindow m_Window;		// The framework window
 		MGMap m_Map;			// Map that holds game logics needs to be accessed when graphics are drawn - protected.
-		MGMovingObject m_MO;
+		MGMovingObject m_MO1;
+		MGMovingObject m_MO2;
+		MGMovingObject m_MO3;
 
 		unsigned int m_Keys[SDLK_LAST];	// Stores keys that are pressed
 

@@ -15,7 +15,7 @@ MGFramework::MGFramework()
 	m_FrameTime = (Uint32)(1000/getDesiredFPS()); // Initial FPS value of 60...
 	m_FrameCountdownEnabled = false;
 	m_FrameNumber = 0;
-	std::srand(std::time(0));
+	std::srand((unsigned)std::time(0));
 }
 
 MGFramework::~MGFramework()
@@ -99,7 +99,7 @@ bool MGFramework::processEvents()
 					if (((int) event.button.button) == 1)
 					{
 						//m_Map.setTileProperty(xClick, yClick, 1);
-						m_MO.setDestTileXY(xClick, yClick);
+						m_MO1.setDestTileXY(xClick, yClick);
 
 					}
 					else if (((int) event.button.button) == 3)
@@ -486,7 +486,7 @@ std::vector<std::string> MGFramework::split(std::string str, char c)
 	std::vector<int> splitIndices;
 	std::vector<std::string> splitLine;
     int nCharIndex = 0;
-    int nLineSize = str.size();
+    int nLineSize = (int)str.size();
 
     // find indices
     for(int i = 0; i < nLineSize; i++)

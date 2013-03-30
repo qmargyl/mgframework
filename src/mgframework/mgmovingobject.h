@@ -2,6 +2,7 @@
 #define _MG_MOVINGOBJECT_H
 #include "mgcomponent.h"
 
+
 class MGMovingObject :public MGComponent
 {
 private:
@@ -17,18 +18,19 @@ private:
 	int m_tileSize;
 
 public:
+
 	MGMovingObject();
 	void setTileXY(int x, int y);
 	void setDestTileXY(int x, int y);
-	int getTileX();
-	int getTileY();
-	int getDestTileX();
-	int getDestTileY();
+	int getTileX(){ return m_TileX;}
+	int getTileY(){ return m_TileY;}
+	int getDestTileX(){ return m_DestTileX;}
+	int getDestTileY(){ return m_DestTileY;}
 	void setSpeed(double s, int tileSize); // Seconds, Distance to next tile (pixels)
 	void update();
 
-	int getXOffset(){ return m_X;}
-	int getYOffset(){ return m_Y;}
+	int getXOffset(){ return (int)(m_X+0.5);}
+	int getYOffset(){ return (int)(m_Y+0.5);}
 
 	bool runConsoleCommand(const char *c);
 
