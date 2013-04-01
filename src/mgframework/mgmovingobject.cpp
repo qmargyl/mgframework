@@ -14,6 +14,7 @@ void MGMovingObject::setTileXY(int x, int y)
 	m_TileY=y;
 	m_X=0.0;
 	m_Y=0.0;
+	m_FinishingLastMove=false;
 	std::cout << "MO: Setting XY (" << x << "," << y << ")" << std::endl;
 }
 
@@ -24,11 +25,14 @@ void MGMovingObject::setDestTileXY(int x, int y)
 		m_TempDestTileX=m_DestTileX;
 		m_TempDestTileY=m_DestTileY;
 		m_FinishingLastMove=true;
+		std::cout << "MO: Setting next destination XY (" << x << "," << y << ")" << std::endl;
+	}
+	else
+	{
+		std::cout << "MO: Setting destination XY (" << x << "," << y << ")" << std::endl;
 	}
 	m_DestTileX=x;
 	m_DestTileY=y;
-
-	std::cout << "MO: Setting destination XY (" << x << "," << y << ")" << std::endl;
 }
 
 double MGMovingObject::getDistance(int wx, int wy)
@@ -46,96 +50,84 @@ void MGMovingObject::update()
 {
 	int timeSinceLastUpdate = SDL_GetTicks() - m_TimeOfLastUpdate;
 	double d = m_Speed * (timeSinceLastUpdate / 1000.0);
-	//std::cout << "" << d << std::endl;
 
-	if(getDestTileX()>getTileX() && getDestTileY()>getTileY())
+	if(getDestTileX()!=getTileX() || getDestTileY()!=getTileY())
 	{
-		m_X += d;
-		m_Y += d;
-	}
-	else if(getDestTileX()<getTileX() && getDestTileY()<getTileY())
-	{
-		m_X -= d;
-		m_Y -= d;
-	}
-	else if(getDestTileX()>getTileX() && getDestTileY()<getTileY())
-	{
-		m_X += d;
-		m_Y -= d;
-	}
-	else if(getDestTileX()<getTileX() && getDestTileY()>getTileY())
-	{
-		m_X -= d;
-		m_Y += d;
-	}
-	else if(getDestTileX()>getTileX())
-	{
-		m_X += d*1.414;
-	}
-	else if(getDestTileX()<getTileX())
-	{
-		m_X -= d*1.414;
-	}
-	else if(getDestTileY()>getTileY())
-	{
-		m_Y += d*1.414;
-	}
-	else if(getDestTileY()<getTileY())
-	{
-		m_Y -= d*1.414;
-	}
-	else
-	{
-		//destination reached
-	}
+		if(getDestTileX()>getTileX() && getDestTileY()>getTileY())
+		{
+			m_X += d;
+			m_Y += d;
+		}
+		else if(getDestTileX()<getTileX() && getDestTileY()<getTileY())
+		{
+			m_X -= d;
+			m_Y -= d;
+		}
+		else if(getDestTileX()>getTileX() && getDestTileY()<getTileY())
+		{
+			m_X += d;
+			m_Y -= d;
+		}
+		else if(getDestTileX()<getTileX() && getDestTileY()>getTileY())
+		{
+			m_X -= d;
+			m_Y += d;
+		}
+		else if(getDestTileX()>getTileX())
+		{
+			m_X += d*1.414;
+		}
+		else if(getDestTileX()<getTileX())
+		{
+			m_X -= d*1.414;
+		}
+		else if(getDestTileY()>getTileY())
+		{
+			m_Y += d*1.414;
+		}
+		else if(getDestTileY()<getTileY())
+		{
+			m_Y -= d*1.414;
+		}
+		else
+		{
+			std::cout << "WARNING: MGMovingObject::update() executed a case which should never happen" << std::endl;
+			setTileXY(getTileX(), getTileY());
+		}
 
-	if(m_X>=m_tileSize && m_Y>=m_tileSize)
-	{
-		setTileXY(getTileX()+1, getTileY()+1);
-		std::cout << "MO: new location = " << getTileX() << ", " << getTileY() << std::endl;
-		m_FinishingLastMove=false;
-	}
-	else if(m_X>=m_tileSize && m_Y==0)
-	{
-		setTileXY(getTileX()+1, getTileY());
-		std::cout << "MO: new location = " << getTileX() << ", " << getTileY() << std::endl;
-		m_FinishingLastMove=false;
-	}
-	else if(-m_X>=m_tileSize && -m_Y>=m_tileSize)
-	{
-		setTileXY(getTileX()-1, getTileY()-1);
-		std::cout << "MO: new location = " << getTileX() << ", " << getTileY() << std::endl;
-		m_FinishingLastMove=false;
-	}
-	else if(-m_X>=m_tileSize && m_Y==0)
-	{
-		setTileXY(getTileX()-1, getTileY());
-		std::cout << "MO: new location = " << getTileX() << ", " << getTileY() << std::endl;
-		m_FinishingLastMove=false;
-	}
-	if(m_X>=m_tileSize && -m_Y>=m_tileSize)
-	{
-		setTileXY(getTileX()+1, getTileY()-1);
-		std::cout << "MO: new location = " << getTileX() << ", " << getTileY() << std::endl;
-		m_FinishingLastMove=false;
-	}
-	else if(m_Y>=m_tileSize && m_X==0)
-	{
-		setTileXY(getTileX(), getTileY()+1);
-		std::cout << "MO: new location = " << getTileX() << ", " << getTileY() << std::endl;
-		m_FinishingLastMove=false;
-	}
-	else if(-m_X>=m_tileSize && m_Y>=m_tileSize)
-	{
-		setTileXY(getTileX()-1, getTileY()+1);
-		std::cout << "MO: new location = " << getTileX() << ", " << getTileY() << std::endl;
-		m_FinishingLastMove=false;
-	}
-	else if(-m_Y>=m_tileSize && m_X==0)
-	{
-		setTileXY(getTileX(), getTileY()-1);
-		std::cout << "MO: new location = " << getTileX() << ", " << getTileY() << std::endl;
-		m_FinishingLastMove=false;
+
+		if(m_X>=m_tileSize && m_Y>=m_tileSize)
+		{
+			setTileXY(getTileX()+1, getTileY()+1);
+		}
+		else if(m_X>=m_tileSize && m_Y==0)
+		{
+			setTileXY(getTileX()+1, getTileY());
+		}
+		else if(-m_X>=m_tileSize && -m_Y>=m_tileSize)
+		{
+			setTileXY(getTileX()-1, getTileY()-1);
+		}
+		else if(-m_X>=m_tileSize && m_Y==0)
+		{
+			setTileXY(getTileX()-1, getTileY());
+		}
+		if(m_X>=m_tileSize && -m_Y>=m_tileSize)
+		{
+			setTileXY(getTileX()+1, getTileY()-1);
+		}
+		else if(m_Y>=m_tileSize && m_X==0)
+		{
+			setTileXY(getTileX(), getTileY()+1);
+		}
+		else if(-m_X>=m_tileSize && m_Y>=m_tileSize)
+		{
+			setTileXY(getTileX()-1, getTileY()+1);
+		}
+		else if(-m_Y>=m_tileSize && m_X==0)
+		{
+			setTileXY(getTileX(), getTileY()-1);
+		}
 	}
 
 	m_TimeOfLastUpdate = SDL_GetTicks();
