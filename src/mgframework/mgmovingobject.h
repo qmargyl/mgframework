@@ -16,6 +16,9 @@ private:
 	double m_X;
 	double m_Y;
 	int m_tileSize;
+	bool m_FinishingLastMove;
+	int m_TempDestTileX;
+	int m_TempDestTileY;
 
 public:
 
@@ -24,8 +27,8 @@ public:
 	void setDestTileXY(int x, int y);
 	int getTileX(){ return m_TileX;}
 	int getTileY(){ return m_TileY;}
-	int getDestTileX(){ return m_DestTileX;}
-	int getDestTileY(){ return m_DestTileY;}
+	int getDestTileX(){ if(m_FinishingLastMove) return m_TempDestTileX; return m_DestTileX;}
+	int getDestTileY(){ if(m_FinishingLastMove) return m_TempDestTileY; return m_DestTileY;}
 	void setSpeed(double s, int tileSize); // Seconds, Distance to next tile (pixels)
 	void update();
 

@@ -12,7 +12,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.3.2"
+#define MGFRAMEWORKVERSION "1.0.3.3"
 
 
 class MGFramework :public MGComponent
