@@ -1,6 +1,7 @@
 #ifndef _MG_MOVINGOBJECT_H
 #define _MG_MOVINGOBJECT_H
 #include "mgcomponent.h"
+#include <iostream>
 
 
 class MGMovingObject :public MGComponent
@@ -27,8 +28,25 @@ public:
 	void setDestTileXY(int x, int y);
 	int getTileX(){ return m_TileX;}
 	int getTileY(){ return m_TileY;}
-	int getDestTileX(){ if(m_FinishingLastMove) return m_TempDestTileX; return m_DestTileX;}
-	int getDestTileY(){ if(m_FinishingLastMove) return m_TempDestTileY; return m_DestTileY;}
+	int getDestTileX()
+	{ 
+		if(m_FinishingLastMove)
+		{
+			//std::cout << "TempDestTileX" << std::endl;
+			return m_TempDestTileX;
+		}
+		return m_DestTileX;
+	}
+	int getDestTileY()
+	{ 
+		if(m_FinishingLastMove)
+		{
+			//std::cout << "TempDestTileY" << std::endl;
+			return m_TempDestTileY;
+		}
+		return m_DestTileY;
+	}
+	//{ if(m_FinishingLastMove) return m_TempDestTileY; return m_DestTileY;}
 	void setSpeed(double s, int tileSize); // Seconds, Distance to next tile (pixels)
 	void update();
 

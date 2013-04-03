@@ -10,26 +10,29 @@ MGMovingObject::MGMovingObject()
 
 void MGMovingObject::setTileXY(int x, int y)
 {
+	//std::cout << "MGMovingObject::setTileXY: m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
+	//std::cout << "MO: Setting XY (" << x << "," << y << ") m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
 	m_TileX=x;
 	m_TileY=y;
 	m_X=0.0;
 	m_Y=0.0;
 	m_FinishingLastMove=false;
-	std::cout << "MO: Setting XY (" << x << "," << y << ")" << std::endl;
 }
 
 void MGMovingObject::setDestTileXY(int x, int y)
 {
+	std::cout << "MGMovingObject::setDestTileXY (" << x << "," << y << ")" << std::endl;
 	if(m_X!=0.0 || m_Y!=0.0 || m_FinishingLastMove)
 	{
 		m_TempDestTileX=m_DestTileX;
 		m_TempDestTileY=m_DestTileY;
 		m_FinishingLastMove=true;
-		std::cout << "MO: Setting next destination XY (" << x << "," << y << ")" << std::endl;
+		std::cout << "MGMovingObject::setDestTileXY, When finished: m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
 	}
 	else
 	{
-		std::cout << "MO: Setting destination XY (" << x << "," << y << ")" << std::endl;
+		std::cout << "MGMovingObject::setDestTileXY, Now: m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
+		//std::cout << "MO: Setting destination XY (" << x << "," << y << ")" << std::endl;
 	}
 	m_DestTileX=x;
 	m_DestTileY=y;
@@ -98,34 +101,42 @@ void MGMovingObject::update()
 
 		if(m_X>=m_tileSize && m_Y>=m_tileSize)
 		{
+			//std::cout << "A" << std::endl;
 			setTileXY(getTileX()+1, getTileY()+1);
 		}
 		else if(m_X>=m_tileSize && m_Y==0)
 		{
+			//std::cout << "B" << std::endl;
 			setTileXY(getTileX()+1, getTileY());
 		}
 		else if(-m_X>=m_tileSize && -m_Y>=m_tileSize)
 		{
+			//std::cout << "C" << std::endl;
 			setTileXY(getTileX()-1, getTileY()-1);
 		}
 		else if(-m_X>=m_tileSize && m_Y==0)
 		{
+			//std::cout << "D" << std::endl;
 			setTileXY(getTileX()-1, getTileY());
 		}
 		if(m_X>=m_tileSize && -m_Y>=m_tileSize)
 		{
+			//std::cout << "E" << std::endl;
 			setTileXY(getTileX()+1, getTileY()-1);
 		}
 		else if(m_Y>=m_tileSize && m_X==0)
 		{
+			//std::cout << "F" << std::endl;
 			setTileXY(getTileX(), getTileY()+1);
 		}
 		else if(-m_X>=m_tileSize && m_Y>=m_tileSize)
 		{
+			//std::cout << "G" << std::endl;
 			setTileXY(getTileX()-1, getTileY()+1);
 		}
 		else if(-m_Y>=m_tileSize && m_X==0)
 		{
+			//std::cout << "H" << std::endl;
 			setTileXY(getTileX(), getTileY()-1);
 		}
 	}

@@ -35,7 +35,7 @@ bool Project2::init(int w, int h, int tw, int th)
 		// Setup game logics..
 
 		// Local MG components..
-		m_PE.setupTimer(5000);
+		m_PE.setupTimer(4000);
 		m_PE.activate();
 		// How will MG Framework forward console commands to m_PE when it is declared in Project2?
 
@@ -69,11 +69,6 @@ void Project2::handleGameLogics()
 		m_MO1.setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
 		m_MO2.setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
 		m_MO3.setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
-
-		m_MO1.setTileXY(m_MO1.getTileX(), m_MO1.getTileY());
-		m_MO2.setTileXY(m_MO2.getTileX(), m_MO2.getTileY());
-		m_MO3.setTileXY(m_MO3.getTileX(), m_MO3.getTileY());
-
 	}
 
 	m_MO1.update();
