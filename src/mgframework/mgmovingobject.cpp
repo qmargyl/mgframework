@@ -98,7 +98,6 @@ void MGMovingObject::update()
 			setTileXY(getTileX(), getTileY());
 		}
 
-
 		if(m_X>=m_tileSize && m_Y>=m_tileSize)
 		{
 			//std::cout << "A" << std::endl;

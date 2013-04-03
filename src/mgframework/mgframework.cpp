@@ -245,18 +245,29 @@ void MGFramework::activateConsole()
 
 bool MGFramework::runConsoleCommand(const char *c)
 {
-	std::cout << "MGFramework::runConsoleCommand(" << c << ")" << std::endl;
-
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = split(cmd, ' ');
 	if(cmdvec.size() == 0)
 	{
-		std::cout << "No arguments" << std::endl;
+		std::cout << "Type help for help" << std::endl;
 		return true;
 	}
-	else if(cmdvec.size() == 1)
+	else if(cmdvec.size() >= 1)
 	{
-		std::cout << "One argument" << std::endl;
+		// Decode all commands implemented in other classes
+		if(cmdvec[0]=="map")
+		{
+			return m_Map.runConsoleCommand(c);
+		}
+		else if(cmdvec[0]=="window")
+		{
+			return m_Window.runConsoleCommand(c);
+		}
+	}
+
+	// Decode commands implemented in MGFramework
+	if(cmdvec.size() == 1)
+	{
 		if(cmdvec[0]=="exit")
 		{
 			std::cout << "Exiting console..." << std::endl;
@@ -270,8 +281,10 @@ bool MGFramework::runConsoleCommand(const char *c)
 			std::cout << "minimap - Toggles mini map on/off." << std::endl;
 			std::cout << "debug - Toggles debug logging on/off (same as logging)." << std::endl;
 			std::cout << "logging - Toggles debug logging on/off (same as debug)." << std::endl;
-			std::cout << "fps <int f> - Sets desired FPS (frames per second) to <f>." << std::endl;
-			std::cout << "runframes <int f> - Runs <f> game loops (frames) and presents some recorded data." << std::endl;
+			std::cout << "fps <f> - Sets desired FPS (frames per second) to integer value <f>." << std::endl;
+			std::cout << "runframes <f> - Runs <f> game loops (frames) and presents some recorded data. <f> is an integer." << std::endl;
+			(void)m_Map.runConsoleCommand("map help");
+			return true;
 		}
 		else if(cmdvec[0]=="minimap")
 		{
@@ -279,11 +292,13 @@ bool MGFramework::runConsoleCommand(const char *c)
 			{
 				disableMiniMap();
 				std::cout << "Mini map disabled." << std::endl;
+				return true;
 			}
 			else
 			{
 				enableMiniMap();
 				std::cout << "Mini map enabled." << std::endl;
+				return true;
 			}
 		}
 		else if(cmdvec[0]=="debug" || cmdvec[0]=="logging")
@@ -292,22 +307,18 @@ bool MGFramework::runConsoleCommand(const char *c)
 			{
 				disableLogging();
 				std::cout << "Debug logging disabled." << std::endl;
+				return true;
 			}
 			else
 			{
 				enableLogging();
 				std::cout << "Debug logging enabled." << std::endl;
+				return true;
 			}
 		}
-		else
-		{
-			std::cout << "Unknown command (" << cmdvec[0] << ")." << std::endl;
-		}
-
 	}
 	else if(cmdvec.size() == 2)
 	{
-		std::cout << "Two arguments" << std::endl;
 		if(cmdvec[0]=="runframes")
 		{
 			enableFrameCountdown();
@@ -317,37 +328,15 @@ bool MGFramework::runConsoleCommand(const char *c)
 		else if(cmdvec[0]=="fps")
 		{
 			setDesiredFPS(toInt(cmdvec[1]));
-		}
-		else if(cmdvec[0]=="map")
-		{
-			return m_Map.runConsoleCommand(c);
-		}
-		else if(cmdvec[0]=="window")
-		{
-			return m_Window.runConsoleCommand(c);
-		}
-		else
-		{
-			std::cout << "Unknown command (" << cmdvec[0] << ")." << std::endl;
+			return true;
 		}
 	}
 	else
 	{
-		std::cout << "Multiple arguments" << std::endl;
-		if(cmdvec[0]=="map")
-		{
-			return m_Map.runConsoleCommand(c);
-		}
-		else if(cmdvec[0]=="window")
-		{
-			return m_Window.runConsoleCommand(c);
-		}
-		else
-		{
-			std::cout << "Unknown command (" << cmdvec[0] << ")." << std::endl;
-		}
+
 	}
 
+	std::cout << "Unknown command" << std::endl;
 	return true;
 }
 
@@ -501,7 +490,6 @@ std::vector<std::string> MGFramework::split(std::string str, char c)
     {
         strTempString = str.substr(nCharIndex, (splitIndices[i] - nCharIndex));
         splitLine.push_back(strTempString);
-		cout << strTempString << endl;
         nCharIndex = splitIndices[i] + 1;
     }
 	return splitLine;

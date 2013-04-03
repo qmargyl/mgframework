@@ -139,9 +139,19 @@ void MGMap::mouseScrollingUpdate(int x, int y)
 
 bool MGMap::runConsoleCommand(const char *c)
 {
-	std::cout << "MGMap::runConsoleCommand(" << c << ")" << std::endl;
-
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
+
+	if(cmdvec.size() == 2)
+	{
+		if(cmdvec[1]=="help")
+		{
+			std::cout << "map help - Displays help information for console commands implemented in the map object." << std::endl;
+			return true;
+		}
+		return true;
+	}
+
+	std::cout << "Unknown command" << std::endl;
 	return true;
 }
