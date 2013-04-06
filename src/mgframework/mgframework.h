@@ -12,7 +12,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.3.6"
+#define MGFRAMEWORKVERSION "1.0.4.0"
 
 
 class MGFramework :public MGComponent
@@ -47,30 +47,34 @@ class MGFramework :public MGComponent
 		//Console related
 		void activateConsole();
 
+		//MO related
+		int m_NMO; // Number of Moving Objects
 
 	protected:
 		MGWindow m_Window;		// The framework window
 		MGMap m_Map;			// Map that holds game logics needs to be accessed when graphics are drawn - protected.
-		MGMovingObject m_MO1;
-		MGMovingObject m_MO2;
-		MGMovingObject m_MO3;
+		MGMovingObject *m_MO;	// Moving Objects
 
+		// MO related
+		void createMO(int n);
+		int getNumberOfMO(){ return m_NMO;}
+
+		// Event related
 		unsigned int m_Keys[SDLK_LAST];	// Stores keys that are pressed
+		virtual bool processEvents();
 
 		// Force a derived sub-class to implement this as it is not framework related.
 		virtual void draw() = 0;
 		virtual void handleGameLogics() = 0;
 
 		virtual void resize(int x, int y);	// Not implemented yet
-		virtual bool processEvents();
 
 		// Graphics related, depending on SDL
-		SDL_Surface *getSurface(){return m_Window.screen;}
+		SDL_Surface *getSurface(){return m_Window.m_Screen;}
 		void drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		SDL_Surface *loadBMPImage( std::string filename );
 		void drawText(SDL_Surface* screen, const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
 		void putPixel32(SDL_Surface *surface, int x, int y, Uint32 pixel);
-
 
 		// Controlling game speed and execution
 		Uint32 getFPS();

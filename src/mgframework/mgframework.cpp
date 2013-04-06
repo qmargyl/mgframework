@@ -11,8 +11,10 @@ using namespace std;
 
 MGFramework::MGFramework()
 {
-	setDesiredFPS(60);
-	m_FrameTime = (Uint32)(1000/getDesiredFPS()); // Initial FPS value of 60...
+	m_NMO=0;
+	setDesiredFPS(1);
+	m_FrameTime=0;
+	//m_FrameTime = (Uint32)(1000/getDesiredFPS()); // Initial FPS value of 60...
 	m_FrameCountdownEnabled = false;
 	m_FrameNumber = 0;
 	std::srand((unsigned)std::time(0));
@@ -98,8 +100,9 @@ bool MGFramework::processEvents()
 					int yClick = m_Map.getTileY(iClick);
 					if (((int) event.button.button) == 1)
 					{
+						//Left click actions here...
 						//m_Map.setTileProperty(xClick, yClick, 1);
-						m_MO1.setDestTileXY(xClick, yClick);
+						//m_MO1.setDestTileXY(xClick, yClick);
 
 					}
 					else if (((int) event.button.button) == 3)
@@ -276,6 +279,8 @@ bool MGFramework::runConsoleCommand(const char *c)
 		else if(cmdvec[0]=="help")
 		{
 			std::cout << "Command help" << std::endl;
+			std::cout << "<command> <subcommand> <mandatory_parameter> [<optional_parameter>] <alternative1>|<alt2>|<alt3>" << std::endl;
+			std::cout << "----------------------------------" << std::endl;
 			std::cout << "help - Displays this command help information." << std::endl;
 			std::cout << "exit - Exists shell and resumes framework execution." << std::endl;
 			std::cout << "minimap - Toggles mini map on/off." << std::endl;
@@ -283,7 +288,9 @@ bool MGFramework::runConsoleCommand(const char *c)
 			std::cout << "logging - Toggles debug logging on/off (same as debug)." << std::endl;
 			std::cout << "fps <f> - Sets desired FPS (frames per second) to integer value <f>." << std::endl;
 			std::cout << "runframes <f> - Runs <f> game loops (frames) and presents some recorded data. <f> is an integer." << std::endl;
+			std::cout << "mo create <n> - Creates <n> Moving Objects (and deletes any previously existing ones). <n> is an integer." << std::endl;
 			(void)m_Map.runConsoleCommand("map help");
+			(void)m_Window.runConsoleCommand("window help");
 			return true;
 		}
 		else if(cmdvec[0]=="minimap")
@@ -331,6 +338,30 @@ bool MGFramework::runConsoleCommand(const char *c)
 			return true;
 		}
 	}
+	else if(cmdvec.size() == 3)
+	{
+		if(cmdvec[0]=="mo" && cmdvec[1]=="create")
+		{
+			int n = toInt(cmdvec[2]);
+			if(n>0)
+			{
+				createMO(n);
+			}
+			else
+			{
+				std::cout << "Error in command (mo create <n>)" << std::endl;
+				return true;
+			}
+			for(int i=0;i<getNumberOfMO();i++)
+			{
+				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
+				m_MO[i].setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
+				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move four tiles per second
+			}
+			return true;
+		}
+	}
+
 	else
 	{
 
@@ -366,7 +397,7 @@ Uint32 MGFramework::getFPS()
 
 void MGFramework::setDesiredFPS(Uint32 f)
 {
-	if(f > 0)
+	if(f >= 0)
 	{
 		m_FPS = f;
 	}
@@ -378,14 +409,14 @@ void MGFramework::setDesiredFPS(Uint32 f)
 
 Uint32 MGFramework::getDesiredFPS()
 {
-	if(m_FPS > 0)
+	if(m_FPS >= 0)
 	{
 		return m_FPS;
 	}
 	else
 	{
 		std::cout << "FPS incorrectly calculated (Uint32 MGFramework::getDesiredFPS()): " << m_FPS << ", returning 60" << std::endl;
-		return 60;
+		return 1;
 	}
 }
 
@@ -396,6 +427,14 @@ bool MGFramework::setWindowProperties(int width, int height, int bpp, bool fulls
 	m_Window.setProperties(width, height, bpp, fullscreen, title);
 	m_WindowPropertiesSet = true;
 	return true;
+}
+
+
+void MGFramework::createMO(int n)
+{
+	delete[] m_MO;
+	m_NMO=n;
+	m_MO = new MGMovingObject[getNumberOfMO()];
 }
 
 
@@ -450,9 +489,9 @@ void MGFramework::drawText(SDL_Surface* screen, const char* string, int size, in
 
 string MGFramework::toString(int number)
 {
-	stringstream ss;//create a stringstream
-	ss << number;//add number to the stream
-	return ss.str();//return a string with the contents of the stream
+	stringstream ss;	//create a stringstream
+	ss << number;		//add number to the stream
+	return ss.str();	//return a string with the contents of the stream
 }
 
 double MGFramework::distance(int x1, int y1, int x2, int y2)

@@ -146,10 +146,9 @@ bool MGMap::runConsoleCommand(const char *c)
 	{
 		if(cmdvec[1]=="help")
 		{
-			std::cout << "map help - Displays help information for console commands implemented in the map object." << std::endl;
+			std::cout << std::endl << "map help - Displays help information for console commands implemented in the map object." << std::endl;
 			return true;
 		}
-		return true;
 	}
 
 	std::cout << "Unknown command" << std::endl;

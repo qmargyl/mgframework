@@ -21,18 +21,17 @@ void MGMovingObject::setTileXY(int x, int y)
 
 void MGMovingObject::setDestTileXY(int x, int y)
 {
-	std::cout << "MGMovingObject::setDestTileXY (" << x << "," << y << ")" << std::endl;
+	//std::cout << "MGMovingObject::setDestTileXY (" << x << "," << y << ")" << std::endl;
 	if(m_X!=0.0 || m_Y!=0.0 || m_FinishingLastMove)
 	{
 		m_TempDestTileX=m_DestTileX;
 		m_TempDestTileY=m_DestTileY;
 		m_FinishingLastMove=true;
-		std::cout << "MGMovingObject::setDestTileXY, When finished: m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
+		//std::cout << "MGMovingObject::setDestTileXY, When finished: m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
 	}
 	else
 	{
-		std::cout << "MGMovingObject::setDestTileXY, Now: m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
-		//std::cout << "MO: Setting destination XY (" << x << "," << y << ")" << std::endl;
+		//std::cout << "MGMovingObject::setDestTileXY, Now: m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
 	}
 	m_DestTileX=x;
 	m_DestTileY=y;
@@ -145,9 +144,11 @@ void MGMovingObject::update()
 
 bool MGMovingObject::runConsoleCommand(const char *c)
 {
-	std::cout << "MGMovingObject::runConsoleCommand(" << c << ")" << std::endl;
-
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
+
+
+
+	std::cout << "Error in command (mo ...)" << std::endl;
 	return true;
 }

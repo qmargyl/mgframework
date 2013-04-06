@@ -37,20 +37,10 @@ bool Project2::init(int w, int h, int tw, int th)
 		// Local MG components..
 		m_PE.setupTimer(4000);
 		m_PE.activate();
-		// How will MG Framework forward console commands to m_PE when it is declared in Project2?
 
-		// Framework MG components init, m_MO should be declared in Project2 (but is put here for now)..
-		m_MO1.setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
-		m_MO1.setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
-		m_MO1.setSpeed(0.25, m_Map.getTileHeight()); // Move four tiles per second
+		runConsoleCommand("fps 60"); // Framework default is 1 FPS
+		runConsoleCommand("mo create 5");
 
-		m_MO2.setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
-		m_MO2.setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
-		m_MO2.setSpeed(0.5, m_Map.getTileHeight()); // Move slower
-
-		m_MO3.setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
-		m_MO3.setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
-		m_MO3.setSpeed(0.5, m_Map.getTileHeight()); // Move slower
 		enableMiniMap();
 
 		return true;
@@ -65,15 +55,17 @@ void Project2::handleGameLogics()
 {
 	if(m_PE.update())
 	{
-		std::cout << "PeriodicEvent m_PE triggered" << std::endl;
-		m_MO1.setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
-		m_MO2.setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
-		m_MO3.setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
+		//std::cout << "PeriodicEvent m_PE triggered" << std::endl;
+		for(int i=0;i<getNumberOfMO();i++)
+		{
+			m_MO[i].setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
+		}
 	}
 
-	m_MO1.update();
-	m_MO2.update();
-	m_MO3.update();
+	for(int i=0;i<getNumberOfMO();i++)
+	{
+		m_MO[i].update();
+	}
 }
 
 void Project2::draw()
@@ -101,9 +93,10 @@ void Project2::draw()
 	}
 
 	// Draw all moving objects:
-	drawSprite(m_MovingObject, getSurface(), 0, 0, m_MO1.getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO1.getXOffset(), m_MO1.getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO1.getYOffset(), m_Map.getTileWidth(), m_Map.getTileHeight());
-	drawSprite(m_MovingObject, getSurface(), 0, 0, m_MO2.getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO2.getXOffset(), m_MO2.getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO2.getYOffset(), m_Map.getTileWidth(), m_Map.getTileHeight());
-	drawSprite(m_MovingObject, getSurface(), 0, 0, m_MO3.getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO3.getXOffset(), m_MO3.getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO3.getYOffset(), m_Map.getTileWidth(), m_Map.getTileHeight());
+	for(int i=0;i<getNumberOfMO();i++)
+	{
+		drawSprite(m_MovingObject, getSurface(), 0, 0, m_MO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO[i].getXOffset(), m_MO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO[i].getYOffset(), m_Map.getTileWidth(), m_Map.getTileHeight());
+	}
 
 
 	if(miniMapEnabled())
@@ -138,9 +131,10 @@ void Project2::draw()
 		}
 
 		// Draw all moving objects..
-		putPixel32(getSurface(), m_MO1.getTileX() + m_Window.getWidth() - m_Map.getWidth() - 16, m_MO1.getTileY() + 16, 0x00FF0000);
-		putPixel32(getSurface(), m_MO2.getTileX() + m_Window.getWidth() - m_Map.getWidth() - 16, m_MO2.getTileY() + 16, 0x00FF0000);
-		putPixel32(getSurface(), m_MO3.getTileX() + m_Window.getWidth() - m_Map.getWidth() - 16, m_MO3.getTileY() + 16, 0x00FF0000);
+		for(int i=0;i<getNumberOfMO();i++)
+		{
+			putPixel32(getSurface(), m_MO[i].getTileX() + m_Window.getWidth() - m_Map.getWidth() - 16, m_MO[i].getTileY() + 16, 0x00FF0000);
+		}
 
 	}
 

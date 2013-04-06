@@ -32,7 +32,6 @@ public:
 	{ 
 		if(m_FinishingLastMove)
 		{
-			//std::cout << "TempDestTileX" << std::endl;
 			return m_TempDestTileX;
 		}
 		return m_DestTileX;
@@ -41,7 +40,6 @@ public:
 	{ 
 		if(m_FinishingLastMove)
 		{
-			//std::cout << "TempDestTileY" << std::endl;
 			return m_TempDestTileY;
 		}
 		return m_DestTileY;

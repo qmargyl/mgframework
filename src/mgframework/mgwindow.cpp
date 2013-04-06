@@ -7,7 +7,7 @@ MGWindow::MGWindow():
 	m_Height(0),
 	m_Bpp(0),
 	m_Fullscreen(false),
-	screen(NULL)
+	m_Screen(NULL)
 {
 }
 
@@ -37,9 +37,9 @@ bool MGWindow::createWindow()
 	}
 
 	// Create the window
-	screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, flags );
+	m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, flags );
 		
-	if(screen == 0)
+	if(m_Screen == 0)
 	{
 		return false;
 	}
@@ -77,9 +77,56 @@ int MGWindow::getWidth()
 
 bool MGWindow::runConsoleCommand(const char *c)
 {
-	std::cout << "MGWindow::runConsoleCommand(" << c << ")" << std::endl;
-
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
+
+	if(cmdvec.size() == 2)
+	{
+		if(cmdvec[1]=="help")
+		{
+			std::cout << std::endl << "window help - Displays help information for console commands implemented in the window object." << std::endl;
+			std::cout << "window blendmode [none|blend|add|mod]- Sets the SDL_BlendMode of the main window surface to either SDL_BLENDMODE_NONE, SDL_BLENDMODE_BLEND, SDL_BLENDMODE_ADD or SDL_BLENDMODE_MOD. If the parameter is omitted the SDL_BlendMode is read out instead." << std::endl;
+			return true;
+		}
+		else if(cmdvec[1]=="blendmode")
+		{
+			// Read out SDL_BlendMode from main screen surface
+			//SDL_BlendMode bm;
+			//int res = SDL_GetSurfaceBlendMode(&m_Screen, &bm);
+			return true;
+		}
+		std::cout << "Error in command (window <parameter>)" << std::endl;
+		return true;
+	}
+	else if(cmdvec.size() == 3)
+	{
+		if(cmdvec[1]=="blendmode")
+		{
+			if(cmdvec[2]=="none")
+			{
+				// Set SDL_BlendMode of main screen surface to SDL_BLENDMODE_NONE
+				return true;
+			}
+			else if(cmdvec[2]=="blend")
+			{
+				// Set SDL_BlendMode of main screen surface to SDL_BLENDMODE_BLEND
+				return true;
+			}
+			else if(cmdvec[2]=="add")
+			{
+				// Set SDL_BlendMode of main screen surface to SDL_BLENDMODE_ADD
+				return true;
+			}
+			else if(cmdvec[2]=="mod")
+			{
+				// Set SDL_BlendMode of main screen surface to SDL_BLENDMODE_MOD
+				return true;
+			}
+			std::cout << "Error in command (window blendmode [none|blend|add|mod])" << std::endl;
+			return true;
+		}
+	}
+
+	std::cout << "Error in command (window ...)" << std::endl;
 	return true;
 }

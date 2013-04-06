@@ -23,7 +23,7 @@ class MGWindow :public MGComponent
 			
 	public:
 
-		SDL_Surface * screen;
+		SDL_Surface * m_Screen;
 
 		MGWindow();
 		~MGWindow();
