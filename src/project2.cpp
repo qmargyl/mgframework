@@ -23,8 +23,7 @@ bool Project2::init(int w, int h, int tw, int th)
 		}
 
 		// All graphics should be loaded here.
-		m_Brick = loadBMPImage("brick1_blue_32x32.bmp");
-		m_Floor = loadBMPImage("floor1_blue_32x32.bmp");
+		m_Floor = loadBMPImage("tileset.bmp");
 		m_MovingObject = loadBMPImage("movingobject.bmp");
 
 
@@ -39,7 +38,7 @@ bool Project2::init(int w, int h, int tw, int th)
 		m_PE.activate();
 
 		runConsoleCommand("fps 60"); // Framework default is 1 FPS
-		runConsoleCommand("mo create 5");
+		runConsoleCommand("create mo 5");
 
 		enableMiniMap();
 
@@ -82,11 +81,11 @@ void Project2::draw()
 			{
 				if(m_Map.getTileProperty(x, y) == 0)
 				{
-					drawSprite(m_Brick, getSurface(), 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
+					drawSprite(m_Floor, getSurface(), 128, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
 				}
 				else if(m_Map.getTileProperty(x, y) == 1)
 				{
-					drawSprite(m_Floor, getSurface(), 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
+					drawSprite(m_Floor, getSurface(), 32, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
 				}
 			}
 		}
@@ -95,7 +94,7 @@ void Project2::draw()
 	// Draw all moving objects:
 	for(int i=0;i<getNumberOfMO();i++)
 	{
-		drawSprite(m_MovingObject, getSurface(), 0, 0, m_MO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO[i].getXOffset(), m_MO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO[i].getYOffset(), m_Map.getTileWidth(), m_Map.getTileHeight());
+		drawSpriteSeeThrough(m_MovingObject, getSurface(), 0, 0, m_MO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO[i].getXOffset(), m_MO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO[i].getYOffset(), m_Map.getTileWidth(), m_Map.getTileHeight(), 0);
 	}
 
 
@@ -141,4 +140,6 @@ void Project2::draw()
 	// Example of how text can be printed on the surface.. Here FPS and time left between frames.
 	drawText(getSurface(), MGFramework::toString(getLastFrameDelayTime()).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 50, 0, 0, 0, 0, 255, 0);
 	drawText(getSurface(), MGFramework::toString(getFPS()).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 30, 0, 0, 0, 0, 255, 0);
+
+	drawFillCircle32(getSurface(), 100, 100, 20, 0);
 }

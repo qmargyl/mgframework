@@ -14,7 +14,6 @@ class Project2 : public MGFramework
 		virtual void draw();
 
 		// Graphics (which is not part of the framework) should be added here.
-		SDL_Surface *m_Brick;
 		SDL_Surface *m_Floor;
 		SDL_Surface *m_MovingObject;
 

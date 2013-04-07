@@ -45,7 +45,7 @@ double MGMovingObject::getDistance(int wx, int wy)
 void MGMovingObject::setSpeed(double s, int tileSize)
 {
 	m_Speed=(double)tileSize / s;
-	m_tileSize = tileSize;
+	m_TileSize = tileSize;
 }
 
 void MGMovingObject::update()
@@ -97,42 +97,42 @@ void MGMovingObject::update()
 			setTileXY(getTileX(), getTileY());
 		}
 
-		if(m_X>=m_tileSize && m_Y>=m_tileSize)
+		if(m_X>=getTileSize() && m_Y>=getTileSize())
 		{
 			//std::cout << "A" << std::endl;
 			setTileXY(getTileX()+1, getTileY()+1);
 		}
-		else if(m_X>=m_tileSize && m_Y==0)
+		else if(m_X>=getTileSize() && m_Y==0)
 		{
 			//std::cout << "B" << std::endl;
 			setTileXY(getTileX()+1, getTileY());
 		}
-		else if(-m_X>=m_tileSize && -m_Y>=m_tileSize)
+		else if(-m_X>=getTileSize() && -m_Y>=getTileSize())
 		{
 			//std::cout << "C" << std::endl;
 			setTileXY(getTileX()-1, getTileY()-1);
 		}
-		else if(-m_X>=m_tileSize && m_Y==0)
+		else if(-m_X>=getTileSize() && m_Y==0)
 		{
 			//std::cout << "D" << std::endl;
 			setTileXY(getTileX()-1, getTileY());
 		}
-		if(m_X>=m_tileSize && -m_Y>=m_tileSize)
+		if(m_X>=getTileSize() && -m_Y>=getTileSize())
 		{
 			//std::cout << "E" << std::endl;
 			setTileXY(getTileX()+1, getTileY()-1);
 		}
-		else if(m_Y>=m_tileSize && m_X==0)
+		else if(m_Y>=getTileSize() && m_X==0)
 		{
 			//std::cout << "F" << std::endl;
 			setTileXY(getTileX(), getTileY()+1);
 		}
-		else if(-m_X>=m_tileSize && m_Y>=m_tileSize)
+		else if(-m_X>=getTileSize() && m_Y>=getTileSize())
 		{
 			//std::cout << "G" << std::endl;
 			setTileXY(getTileX()-1, getTileY()+1);
 		}
-		else if(-m_Y>=m_tileSize && m_X==0)
+		else if(-m_Y>=getTileSize() && m_X==0)
 		{
 			//std::cout << "H" << std::endl;
 			setTileXY(getTileX(), getTileY()-1);
@@ -147,7 +147,42 @@ bool MGMovingObject::runConsoleCommand(const char *c)
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
 
+	if(cmdvec.size() == 3)
+	{
+		if(cmdvec[2]=="help")
+		{
+			std::cout << std::endl << "mo <i> help - Displays help information for console commands implemented" << std::endl;
+			std::cout << "          in MGMovingObject. <i> is the ID of the MO." << std::endl;
+			std::cout << "mo <i> getspeed - Returns the speed of the MO with ID <i>, in pixels per" << std::endl;
+			std::cout << "          second." << std::endl;
+			std::cout << "mo <i> getdestination - Returns the destination of the MO with ID <i>." << std::endl;
+			std::cout << "mo <i> getlocation - Returns the location of the MO with ID <i>." << std::endl;
+			std::cout << "mo <i> getdistance - Returns the distance to the destination of the MO with ID <i>." << std::endl;
 
+			return true;
+		}
+		else if(cmdvec[2]=="getspeed")
+		{
+			std::cout << "" << getSpeed() << std::endl;
+			return true;
+		}
+		else if(cmdvec[2]=="getdestination")
+		{
+			std::cout << "{" << getDestTileX() << "," << getDestTileY() << "}" << std::endl;
+			return true;
+		}
+		else if(cmdvec[2]=="getlocation")
+		{
+			std::cout << "{" << getTileX() << "," << getTileY() << "}" << std::endl;
+			return true;
+		}
+		else if(cmdvec[2]=="getdistance")
+		{
+			std::cout << getDistance(getDestTileX(), getDestTileY()) << std::endl;
+			return true;
+		}
+
+	}
 
 	std::cout << "Error in command (mo ...)" << std::endl;
 	return true;

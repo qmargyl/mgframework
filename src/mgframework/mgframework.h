@@ -12,7 +12,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.4.0"
+#define MGFRAMEWORKVERSION "1.0.5.0"
 
 
 class MGFramework :public MGComponent
@@ -72,9 +72,13 @@ class MGFramework :public MGComponent
 		// Graphics related, depending on SDL
 		SDL_Surface *getSurface(){return m_Window.m_Screen;}
 		void drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
+		void drawSpriteSeeThrough(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height, Uint32 seethrough);
 		SDL_Surface *loadBMPImage( std::string filename );
 		void drawText(SDL_Surface* screen, const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
 		void putPixel32(SDL_Surface *surface, int x, int y, Uint32 pixel);
+		Uint32 getPixel32(SDL_Surface *surface, int x, int y);
+		void drawCircle32(SDL_Surface *surface, int n_cx, int n_cy, int radius, Uint32 pixel);
+		void drawFillCircle32(SDL_Surface *surface, int cx, int cy, int radius, Uint32 pixel);
 
 		// Controlling game speed and execution
 		Uint32 getFPS();

@@ -266,6 +266,18 @@ bool MGFramework::runConsoleCommand(const char *c)
 		{
 			return m_Window.runConsoleCommand(c);
 		}
+		else if(cmdvec[0]=="mo")
+		{
+			if(cmdvec.size()>2)
+			{
+				int moIndex=toInt(cmdvec[1]);
+				if(moIndex >= 0 && moIndex < getNumberOfMO())
+				{
+					return m_MO[toInt(cmdvec[1])].runConsoleCommand(c);
+				}
+			}
+			std::cout << "Error in command (mo)" << std::endl;
+		}
 	}
 
 	// Decode commands implemented in MGFramework
@@ -279,18 +291,24 @@ bool MGFramework::runConsoleCommand(const char *c)
 		else if(cmdvec[0]=="help")
 		{
 			std::cout << "Command help" << std::endl;
-			std::cout << "<command> <subcommand> <mandatory_parameter> [<optional_parameter>] <alternative1>|<alt2>|<alt3>" << std::endl;
-			std::cout << "----------------------------------" << std::endl;
-			std::cout << "help - Displays this command help information." << std::endl;
-			std::cout << "exit - Exists shell and resumes framework execution." << std::endl;
+			std::cout << "[<object> [<object identifier>]] <command> [<parameter 1> ... <parameter n>]" << std::endl;
+			std::cout << "-----------------------------------------------------------------------------" << std::endl << std::endl;
+			std::cout << "help -    Displays this command help information." << std::endl;
+			std::cout << "exit -    Exists shell and resumes framework execution." << std::endl;
 			std::cout << "minimap - Toggles mini map on/off." << std::endl;
-			std::cout << "debug - Toggles debug logging on/off (same as logging)." << std::endl;
+			std::cout << "debug -   Toggles debug logging on/off (same as logging)." << std::endl;
 			std::cout << "logging - Toggles debug logging on/off (same as debug)." << std::endl;
 			std::cout << "fps <f> - Sets desired FPS (frames per second) to integer value <f>." << std::endl;
-			std::cout << "runframes <f> - Runs <f> game loops (frames) and presents some recorded data. <f> is an integer." << std::endl;
-			std::cout << "mo create <n> - Creates <n> Moving Objects (and deletes any previously existing ones). <n> is an integer." << std::endl;
+			std::cout << "runframes <f> - Runs <f> game loops (frames) and presents some recorded data." << std::endl;
+			std::cout << "          <f> is an integer." << std::endl;
+			std::cout << "create <mo> <n> - Creates <n> objects (and deletes any previously" << std::endl;
+			std::cout << "          existing ones). <n> is an integer. Only MGMovingObject supported at"  << std::endl;
+			std::cout << "          this point (mo)." << std::endl;
+
 			(void)m_Map.runConsoleCommand("map help");
 			(void)m_Window.runConsoleCommand("window help");
+			if(getNumberOfMO()>0)(void)m_MO[0].runConsoleCommand("mo 0 help");
+
 			return true;
 		}
 		else if(cmdvec[0]=="minimap")
@@ -340,7 +358,7 @@ bool MGFramework::runConsoleCommand(const char *c)
 	}
 	else if(cmdvec.size() == 3)
 	{
-		if(cmdvec[0]=="mo" && cmdvec[1]=="create")
+		if(cmdvec[0]=="create" && cmdvec[1]=="mo")
 		{
 			int n = toInt(cmdvec[2]);
 			if(n>0)
@@ -349,14 +367,14 @@ bool MGFramework::runConsoleCommand(const char *c)
 			}
 			else
 			{
-				std::cout << "Error in command (mo create <n>)" << std::endl;
+				std::cout << "Error in command (create mo <n>)" << std::endl;
 				return true;
 			}
 			for(int i=0;i<getNumberOfMO();i++)
 			{
 				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
 				m_MO[i].setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
-				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move four tiles per second
+				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
 			}
 			return true;
 		}
@@ -453,7 +471,24 @@ void MGFramework::drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurfa
 	SDL_BlitSurface(imageSurface, &srcRect, screenSurface, &dstRect);
 }
 
-
+void MGFramework::drawSpriteSeeThrough(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height, Uint32 seethrough)
+{
+	Uint32 p;
+	for(int x=0; x<width; x++)
+	{
+		for(int y=0; y<height; y++)
+		{
+			if(dstX+x >=0 && dstX+x < m_Window.getWidth() && dstY+y >= 0 && dstY+y < m_Window.getHeight())
+			{
+				p=getPixel32(imageSurface, srcX+x, srcY+y);
+				if(p!=seethrough)
+				{
+					putPixel32(screenSurface, dstX+x, dstY+y, p);
+				}
+			}
+		}
+	}
+}
 
 SDL_Surface *MGFramework::loadBMPImage( std::string filename ) 
 {
@@ -499,12 +534,90 @@ double MGFramework::distance(int x1, int y1, int x2, int y2)
 	return sqrt((double)(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1))));
 }
 
-void MGFramework::putPixel32( SDL_Surface *surface, int x, int y, Uint32 pixel )
+void MGFramework::putPixel32(SDL_Surface *surface, int x, int y, Uint32 pixel )
 {
 	//Convert the pixels to 32 bit
 	Uint32 *pixels = (Uint32 *)surface->pixels;
 	//Set the pixel
 	pixels[ ( y * surface->w ) + x ] = pixel;
+}
+
+Uint32 MGFramework::getPixel32(SDL_Surface *surface, int x, int y)
+{
+	Uint32 *pixels = (Uint32 *)surface->pixels;
+	return pixels[ ( y * surface->w ) + x ];
+}
+
+void MGFramework::drawCircle32(SDL_Surface *surface, int n_cx, int n_cy, int radius, Uint32 pixel)
+{
+    // if the first pixel in the screen is represented by (0,0) (which is in sdl)
+    // remember that the beginning of the circle is not in the middle of the pixel
+    // but to the left-top from it:
+ 
+    double error = (double)-radius;
+    double x = (double)radius -0.5;
+    double y = (double)0.5;
+    double cx = n_cx - 0.5;
+    double cy = n_cy - 0.5;
+ 
+    while (x >= y)
+    {
+        putPixel32(surface, (int)(cx + x), (int)(cy + y), pixel);
+        putPixel32(surface, (int)(cx + y), (int)(cy + x), pixel);
+ 
+        if (x != 0)
+        {
+            putPixel32(surface, (int)(cx - x), (int)(cy + y), pixel);
+            putPixel32(surface, (int)(cx + y), (int)(cy - x), pixel);
+        }
+ 
+        if (y != 0)
+        {
+            putPixel32(surface, (int)(cx + x), (int)(cy - y), pixel);
+            putPixel32(surface, (int)(cx - y), (int)(cy + x), pixel);
+        }
+ 
+        if (x != 0 && y != 0)
+        {
+            putPixel32(surface, (int)(cx - x), (int)(cy - y), pixel);
+            putPixel32(surface, (int)(cx - y), (int)(cy - x), pixel);
+        }
+ 
+        error += y;
+        ++y;
+        error += y;
+ 
+        if (error >= 0)
+        {
+            --x;
+            error -= x;
+            error -= x;
+        }
+    }
+}
+
+
+void MGFramework::drawFillCircle32(SDL_Surface *surface, int cx, int cy, int radius, Uint32 pixel)
+{
+    static const int BPP = 4;
+    double r = (double)radius;
+    for (double dy = 1; dy <= r; dy += 1.0)
+    {
+        double dx = floor(sqrt((2.0 * r * dy) - (dy * dy)));
+        int x = cx - (int)dx;
+ 
+        // Grab a pointer to the left-most pixel for each half of the circle
+        Uint8 *target_pixel_a = (Uint8 *)surface->pixels + ((int)(cy + r - dy)) * surface->pitch + x * BPP;
+        Uint8 *target_pixel_b = (Uint8 *)surface->pixels + ((int)(cy - r + dy)) * surface->pitch + x * BPP;
+ 
+        for (; x <= cx + dx; x++)
+        {
+            *(Uint32 *)target_pixel_a = pixel;
+            *(Uint32 *)target_pixel_b = pixel;
+            target_pixel_a += BPP;
+            target_pixel_b += BPP;
+        }
+    }
 }
 
 
