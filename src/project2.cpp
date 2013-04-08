@@ -25,6 +25,7 @@ bool Project2::init(int w, int h, int tw, int th)
 		// All graphics should be loaded here.
 		m_Floor = loadBMPImage("tileset.bmp");
 		m_MovingObject = loadBMPImage("movingobject.bmp");
+		SDL_SetColorKey(m_MovingObject, SDL_SRCCOLORKEY, 0);
 
 
 		// Objcts such as the map are initialized here.
@@ -52,19 +53,25 @@ bool Project2::init(int w, int h, int tw, int th)
 
 void Project2::handleGameLogics()
 {
+	// Update periodic event to trigger rare events
 	if(m_PE.update())
 	{
-		//std::cout << "PeriodicEvent m_PE triggered" << std::endl;
+		// Set all moving objects destination coordinate.
 		for(int i=0;i<getNumberOfMO();i++)
 		{
 			m_MO[i].setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
 		}
 	}
 
+	// Update all moving objects
 	for(int i=0;i<getNumberOfMO();i++)
 	{
 		m_MO[i].update();
 	}
+
+	// Example of how FPS can be controlled dynamically
+	if(getLastFrameDelayTime()>10) setDesiredFPS(getFPS()+1);
+	if(getLastFrameDelayTime()<5) setDesiredFPS(getFPS()-1);
 }
 
 void Project2::draw()
@@ -92,9 +99,17 @@ void Project2::draw()
 	}
 
 	// Draw all moving objects:
+	int oX,oY;
 	for(int i=0;i<getNumberOfMO();i++)
 	{
-		drawSpriteSeeThrough(m_MovingObject, getSurface(), 0, 0, m_MO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO[i].getXOffset(), m_MO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO[i].getYOffset(), m_Map.getTileWidth(), m_Map.getTileHeight(), 0);
+		oX=m_MO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO[i].getXOffset();
+		oY=m_MO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO[i].getYOffset();
+		// Only draw visible moving objects...
+		if(detectCollisionRectangle(oX, oY, oX+m_Map.getTileWidth(), oY+m_Map.getTileHeight(), 0, 0, m_Window.getWidth(), m_Window.getHeight()))
+		{
+			drawSprite(m_MovingObject, getSurface(), 0, 0, oX, oY, m_Map.getTileWidth(), m_Map.getTileHeight());
+		}
+		//drawSprite(m_MovingObject, getSurface(), 0, 0, m_MO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO[i].getXOffset(), m_MO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO[i].getYOffset(), m_Map.getTileWidth(), m_Map.getTileHeight());
 	}
 
 
@@ -141,5 +156,5 @@ void Project2::draw()
 	drawText(getSurface(), MGFramework::toString(getLastFrameDelayTime()).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 50, 0, 0, 0, 0, 255, 0);
 	drawText(getSurface(), MGFramework::toString(getFPS()).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 30, 0, 0, 0, 0, 255, 0);
 
-	drawFillCircle32(getSurface(), 100, 100, 20, 0);
+	//drawFillCircle32(getSurface(), 100, 100, 20, 0);
 }

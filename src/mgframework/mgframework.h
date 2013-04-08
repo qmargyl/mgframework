@@ -12,7 +12,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.5.0"
+#define MGFRAMEWORKVERSION "1.0.5.1"
 
 
 class MGFramework :public MGComponent
@@ -72,7 +72,6 @@ class MGFramework :public MGComponent
 		// Graphics related, depending on SDL
 		SDL_Surface *getSurface(){return m_Window.m_Screen;}
 		void drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
-		void drawSpriteSeeThrough(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height, Uint32 seethrough);
 		SDL_Surface *loadBMPImage( std::string filename );
 		void drawText(SDL_Surface* screen, const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
 		void putPixel32(SDL_Surface *surface, int x, int y, Uint32 pixel);
@@ -128,6 +127,8 @@ class MGFramework :public MGComponent
 		static std::vector<std::string> split(std::string str, char c);
 		static int toInt(const string &s);
 		static int randomN(int upperLimit){return std::rand()%upperLimit;}
+		static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
+		static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);
 };
 
 #endif

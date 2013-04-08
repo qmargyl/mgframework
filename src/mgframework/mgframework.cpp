@@ -471,24 +471,6 @@ void MGFramework::drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurfa
 	SDL_BlitSurface(imageSurface, &srcRect, screenSurface, &dstRect);
 }
 
-void MGFramework::drawSpriteSeeThrough(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height, Uint32 seethrough)
-{
-	Uint32 p;
-	for(int x=0; x<width; x++)
-	{
-		for(int y=0; y<height; y++)
-		{
-			if(dstX+x >=0 && dstX+x < m_Window.getWidth() && dstY+y >= 0 && dstY+y < m_Window.getHeight())
-			{
-				p=getPixel32(imageSurface, srcX+x, srcY+y);
-				if(p!=seethrough)
-				{
-					putPixel32(screenSurface, dstX+x, dstY+y, p);
-				}
-			}
-		}
-	}
-}
 
 SDL_Surface *MGFramework::loadBMPImage( std::string filename ) 
 {
@@ -653,4 +635,26 @@ int MGFramework::toInt(const string &s)
 	int value;
 	buffer >> value;
 	return value;
+}
+
+bool MGFramework::detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2)
+{
+	if(detectCollisionPointRectangle(x1, y1, a1, b1, a2, b2))
+		return true;
+	if(detectCollisionPointRectangle(x2, y2, a1, b1, a2, b2))
+		return true;
+	if(detectCollisionPointRectangle(a1, b1, x1, y1, x2, y2))
+		return true;
+	if(detectCollisionPointRectangle(a2, b2, x1, y1, x2, y2))
+		return true;
+	return false;
+}
+
+bool MGFramework::detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2)
+{ 
+	if(x1 >= px && px >=x2 && y1 >= py && py >= y2)
+		return true;
+	if(x2 >= px && px >=x1 && y2 >= py && py >= y1)
+		return true;
+	return false;
 }
