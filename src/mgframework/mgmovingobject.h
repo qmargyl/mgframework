@@ -28,19 +28,19 @@ public:
 	MGMovingObject();
 	void setTileXY(int x, int y);
 	void setDestTileXY(int x, int y);
+	void setSpeed(double s, int tileSize); // Seconds, Distance to next tile (pixels)
+	void update();
+	void copy(const MGMovingObject *src);
+
 	int getTileX(){ return m_TileX;}
 	int getTileY(){ return m_TileY;}
 	int getDestTileX(){	if(m_FinishingLastMove) return m_TempDestTileX;	return m_DestTileX;	}
 	int getDestTileY(){	if(m_FinishingLastMove)	return m_TempDestTileY;	return m_DestTileY;	}
-	void setSpeed(double s, int tileSize); // Seconds, Distance to next tile (pixels)
-	void update();
 
 	int getXOffset(){ return (int)(m_X+0.5);} // Difference between actual coordinate and tile coordinate
 	int getYOffset(){ return (int)(m_Y+0.5);}
-
 	int getCenterX(){ return getTileX()*getTileSize() + (int)(0.5 *getTileSize());}
 	int getCenterY(){ return getTileY()*getTileSize() + (int)(0.5 *getTileSize());}
-
 	bool runConsoleCommand(const char *c);
 
 };

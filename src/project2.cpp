@@ -38,7 +38,7 @@ bool Project2::init(int w, int h, int tw, int th)
 		m_PE.setupTimer(4000);
 		m_PE.activate();
 
-		runConsoleCommand("fps 60"); // Framework default is 1 FPS
+		runConsoleCommand("setfps 60"); // Framework default is 1 FPS
 		runConsoleCommand("create mo 5");
 
 		enableMiniMap();

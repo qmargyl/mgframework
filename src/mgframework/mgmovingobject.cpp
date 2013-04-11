@@ -142,6 +142,24 @@ void MGMovingObject::update()
 	m_TimeOfLastUpdate = SDL_GetTicks();
 }
 
+
+void MGMovingObject::copy(const MGMovingObject *src)
+{
+	//Copy ALL class variables!
+	m_Speed = src->m_Speed;
+	m_TimeOfLastUpdate = src->m_TimeOfLastUpdate;
+	m_TileX = src->m_TileX;
+	m_TileY = src->m_TileY;
+	m_DestTileX = src->m_DestTileX;
+	m_DestTileY = src->m_DestTileY;
+	m_X = src->m_X;
+	m_Y = src->m_Y;
+	m_TileSize = src->m_TileSize;
+	m_FinishingLastMove = src->m_FinishingLastMove;
+	m_TempDestTileX = src->m_TempDestTileX;
+	m_TempDestTileY = src->m_TempDestTileY;
+}
+
 bool MGMovingObject::runConsoleCommand(const char *c)
 {
 	std::string cmd(c);

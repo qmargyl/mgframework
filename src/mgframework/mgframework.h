@@ -12,7 +12,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.5.1"
+#define MGFRAMEWORKVERSION "1.0.6.0"
 
 
 class MGFramework :public MGComponent
@@ -57,6 +57,7 @@ class MGFramework :public MGComponent
 
 		// MO related
 		void createMO(int n);
+		void addMO(int n);
 		int getNumberOfMO(){ return m_NMO;}
 
 		// Event related

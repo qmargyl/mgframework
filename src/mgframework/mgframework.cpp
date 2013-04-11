@@ -298,12 +298,14 @@ bool MGFramework::runConsoleCommand(const char *c)
 			std::cout << "minimap - Toggles mini map on/off." << std::endl;
 			std::cout << "debug -   Toggles debug logging on/off (same as logging)." << std::endl;
 			std::cout << "logging - Toggles debug logging on/off (same as debug)." << std::endl;
-			std::cout << "fps <f> - Sets desired FPS (frames per second) to integer value <f>." << std::endl;
+			std::cout << "setfps <f> - Sets desired FPS (frames per second) to integer value <f>." << std::endl;
 			std::cout << "runframes <f> - Runs <f> game loops (frames) and presents some recorded data." << std::endl;
 			std::cout << "          <f> is an integer." << std::endl;
 			std::cout << "create <mo> <n> - Creates <n> objects (and deletes any previously" << std::endl;
-			std::cout << "          existing ones). <n> is an integer. Only MGMovingObject supported at"  << std::endl;
-			std::cout << "          this point (mo)." << std::endl;
+			std::cout << "          existing ones). <n> is an integer. Only MGMovingObject (mo)"  << std::endl;
+			std::cout << "          supported at this point." << std::endl;
+			std::cout << "add <mo> <n> - Adds <n> objects. <n> is an integer. Only MGMovingObject (mo)" << std::endl;
+			std::cout << "          supported at this point."  << std::endl;
 
 			(void)m_Map.runConsoleCommand("map help");
 			(void)m_Window.runConsoleCommand("window help");
@@ -350,7 +352,7 @@ bool MGFramework::runConsoleCommand(const char *c)
 			setFrameNumber(toInt(cmdvec[1]));
 			return false;
 		}
-		else if(cmdvec[0]=="fps")
+		else if(cmdvec[0]=="setfps")
 		{
 			setDesiredFPS(toInt(cmdvec[1]));
 			return true;
@@ -377,6 +379,28 @@ bool MGFramework::runConsoleCommand(const char *c)
 				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
 			}
 			return true;
+		}
+		else if(cmdvec[0]=="add" && cmdvec[1]=="mo")
+		{
+			int nBefore=getNumberOfMO();
+			int n = toInt(cmdvec[2]);
+			if(n>0)
+			{
+				addMO(n);
+			}
+			else
+			{
+				std::cout << "Error in command (add mo <n>)" << std::endl;
+				return true;
+			}
+			for(int i=nBefore; i<getNumberOfMO(); i++)
+			{
+				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
+				m_MO[i].setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
+				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
+			}
+			return true;
+
 		}
 	}
 
@@ -453,6 +477,23 @@ void MGFramework::createMO(int n)
 	delete[] m_MO;
 	m_NMO=n;
 	m_MO = new MGMovingObject[getNumberOfMO()];
+}
+
+void MGFramework::addMO(int n)
+{
+	MGMovingObject *oldMO = new MGMovingObject[getNumberOfMO()];
+	int nOld=getNumberOfMO();
+	for(int i=0; i<nOld; i++)
+	{
+		oldMO[i].copy(&m_MO[i]);
+	}
+	delete[] m_MO;
+	m_NMO=nOld+n;
+	m_MO = new MGMovingObject[getNumberOfMO()];
+	for(int i=0; i<nOld; i++)
+	{
+		m_MO[i].copy(&oldMO[i]);
+	}
 }
 
 
