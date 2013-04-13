@@ -137,7 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib sdl.lib sdlmain.lib sdl_ttf.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib sdl.lib sdlmain.lib sdl_ttf.lib wsock32.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;..\..\..\..\..\..\download_sdl\SDL_ttf-2.0.11\lib\x86&quot;"
 				GenerateDebugInformation="true"

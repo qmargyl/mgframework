@@ -3,6 +3,7 @@
 
 #include "mgwindow.h"
 #include <SDL/SDL.h>
+#include <SDL/SDL_thread.h>
 #include "mgmap.h"
 #include "SDL_ttf.h"
 #include <vector>
@@ -12,7 +13,9 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.6.0"
+#define MGFRAMEWORKVERSION "1.0.7.0"
+
+int runMGFrameworkSocketTerminal(void *fm);
 
 
 class MGFramework :public MGComponent
@@ -23,8 +26,6 @@ class MGFramework :public MGComponent
 		bool m_TypingEnabled;		// Setting allows typing commands to console.
 		bool m_WindowPropertiesSet; // Used to determine if all Windows properties have been set.
 		bool m_MiniMapEnabled;		// Enables the mini map implementation.
-
-
 
 		// FPS related
 		Uint32 m_FrameTime;			// Holds current frame time
@@ -49,6 +50,13 @@ class MGFramework :public MGComponent
 
 		//MO related
 		int m_NMO; // Number of Moving Objects
+
+		//Socket terminal related.
+		SDL_Thread *m_SocketTerminal;
+		bool m_KeepSocketTerminalOpen;
+		void openSocketTerminal(){m_KeepSocketTerminalOpen = true;}
+		void closeSocketTerminal(){m_KeepSocketTerminalOpen = false;}
+		
 
 	protected:
 		MGWindow m_Window;		// The framework window
@@ -111,6 +119,9 @@ class MGFramework :public MGComponent
 		// Console command handling
 		bool runConsoleCommand(const char *c);
 
+		//Socket terminal related
+		bool socketTerminalOpen(){return m_KeepSocketTerminalOpen;}
+
 		// Program version
 		void setProgramVersion(const char *version){m_ProgramVersion = string(version);}
 		const char *getProgramVersion(){return m_ProgramVersion.c_str();}
@@ -130,6 +141,7 @@ class MGFramework :public MGComponent
 		static int randomN(int upperLimit){return std::rand()%upperLimit;}
 		static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
 		static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);
+		static int initializeWinsock(WORD wVersionRequested);
 };
 
 #endif

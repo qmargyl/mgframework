@@ -5,6 +5,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <winsock.h>
 
 using namespace std;
 
@@ -13,10 +14,10 @@ MGFramework::MGFramework()
 {
 	m_NMO=0;
 	setDesiredFPS(1);
-	m_FrameTime=0;
-	//m_FrameTime = (Uint32)(1000/getDesiredFPS()); // Initial FPS value of 60...
+	m_FrameTime=16;
 	m_FrameCountdownEnabled = false;
 	m_FrameNumber = 0;
+	m_KeepSocketTerminalOpen = false;
 	std::srand((unsigned)std::time(0));
 }
 
@@ -356,6 +357,22 @@ bool MGFramework::runConsoleCommand(const char *c)
 		{
 			setDesiredFPS(toInt(cmdvec[1]));
 			return true;
+		}
+		else if(cmdvec[0]=="open" && cmdvec[1]=="socketterminal")
+		{
+				std::cout << "Opening socket terminal." << std::endl;
+				openSocketTerminal();
+				m_SocketTerminal = SDL_CreateThread(runMGFrameworkSocketTerminal, this);
+				return true;
+		}
+		else if(cmdvec[0]=="close" && cmdvec[1]=="socketterminal")
+		{
+				std::cout << "Closing socket terminal." << std::endl;
+				if(socketTerminalOpen())
+				{
+					closeSocketTerminal();
+				}
+				return true;
 		}
 	}
 	else if(cmdvec.size() == 3)
@@ -698,4 +715,109 @@ bool MGFramework::detectCollisionPointRectangle(int px, int py, int x1, int y1, 
 	if(x2 >= px && px >=x1 && y2 >= py && py >= y1)
 		return true;
 	return false;
+}
+
+int MGFramework::initializeWinsock(WORD wVersionRequested)
+{
+	WSADATA wsaData;
+	int err = WSAStartup(wVersionRequested, &wsaData);
+
+	if (err!=0) return 0; // Tell the user that we couldn't find a usable winsock.dll 
+	if (LOBYTE(wsaData.wVersion )!=1 || HIBYTE(wsaData.wVersion)!=1) return 0;
+	//Everything is fine: proceed
+	return 1;
+}
+
+int runMGFrameworkSocketTerminal(void *fm)
+{
+	std::cout << "Opening socket terminal..." << std::endl;
+	MGFramework *mgf = (MGFramework *)fm;
+	//char buf[1024];
+	#define PORTNR 666
+
+	bool connectionOpen=true;
+	int nZerosInARow=0;
+
+	while(mgf->socketTerminalOpen())
+	{
+		if (!mgf->initializeWinsock (MAKEWORD(1,1) ) ) 
+		{
+			std::cout << "Error initializing Winsock." << std::endl;
+			return 1;
+		}
+
+		SOCKET fd, fd_new; 	// "file" descriptors for the network sockets
+		SOCKADDR_IN saddr_me;
+
+		if ((fd=socket(AF_INET,SOCK_STREAM,0)) == INVALID_SOCKET)
+		{
+			std::cout << "Server: socket not connected " << std::endl;
+			return 1;
+		}
+
+		saddr_me.sin_family = AF_INET;
+		saddr_me.sin_addr.s_addr= htonl(INADDR_ANY);
+		saddr_me.sin_port = htons(PORTNR);
+
+		if (bind(fd, (LPSOCKADDR) &saddr_me, sizeof(saddr_me)) == SOCKET_ERROR)
+		{
+			std::cout << "Server: bind failure " << std::endl;
+			return 1;
+		}
+
+		if (listen(fd,1) == SOCKET_ERROR)
+		{
+			std::cout << "Server: listen failure " << std::endl;
+			return 1;
+		}
+
+		// the server is now started and ready to accept a command..
+		std::cout << "Waiting for terminal command..." << std::endl;
+
+		if ( (fd_new=accept(fd, NULL, NULL)) == INVALID_SOCKET)
+		{
+			std::cout << "Server: accept failure " << std::endl;
+			return 1;
+		}
+
+		while(connectionOpen)
+		{
+			char buf[256];
+			for (int i=0; i < 256; i++)
+			{
+				buf[i]=0;
+				//if(buf[i]=='\n')buf[i]='\0';
+			}
+			if( recv(fd_new, buf, sizeof(buf), 0) == SOCKET_ERROR )
+			{
+				std::cout << "Server: receiving failure " << std::endl;
+				return 1;
+			}
+
+			// Now buf contains the request string.
+
+			int lBuf=strlen(buf);
+			if(lBuf==0)
+			{
+				nZerosInARow++;
+			}
+			else
+			{
+				nZerosInARow=0;
+				mgf->runConsoleCommand(buf);
+			}
+			if(nZerosInARow>4)
+			{
+				connectionOpen=false;
+			}
+
+			std::cout << "Terminal command: " << buf << " (" << strlen(buf) << ")"<< std::endl;
+
+			Sleep((DWORD)100);
+		}
+
+		WSACleanup();
+	}
+	std::cout << "Socket terminal closed..." << std::endl;
+	return 0;
 }
