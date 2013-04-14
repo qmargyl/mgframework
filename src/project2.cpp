@@ -40,7 +40,7 @@ bool Project2::init(int w, int h, int tw, int th)
 
 		runConsoleCommand("setfps 60"); // Framework default is 1 FPS
 		runConsoleCommand("create mo 5");
-		runConsoleCommand("open socketterminal");
+		runConsoleCommand("open terminalserver");
 
 		enableMiniMap();
 

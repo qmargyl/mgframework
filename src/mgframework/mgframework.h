@@ -13,7 +13,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.7.0"
+#define MGFRAMEWORKVERSION "1.0.7.1"
 
 int runMGFrameworkSocketTerminal(void *fm);
 
@@ -142,6 +142,7 @@ class MGFramework :public MGComponent
 		static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
 		static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);
 		static int initializeWinsock(WORD wVersionRequested);
+		static bool okMGFrameworkSyntax(const char *c);
 };
 
 #endif

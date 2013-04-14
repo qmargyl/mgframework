@@ -358,16 +358,16 @@ bool MGFramework::runConsoleCommand(const char *c)
 			setDesiredFPS(toInt(cmdvec[1]));
 			return true;
 		}
-		else if(cmdvec[0]=="open" && cmdvec[1]=="socketterminal")
+		else if(cmdvec[0]=="open" && cmdvec[1]=="terminalserver")
 		{
-				std::cout << "Opening socket terminal." << std::endl;
+				std::cout << "Opening terminal server..." << std::endl;
 				openSocketTerminal();
 				m_SocketTerminal = SDL_CreateThread(runMGFrameworkSocketTerminal, this);
 				return true;
 		}
-		else if(cmdvec[0]=="close" && cmdvec[1]=="socketterminal")
+		else if(cmdvec[0]=="close" && cmdvec[1]=="terminalserver")
 		{
-				std::cout << "Closing socket terminal." << std::endl;
+				std::cout << "Closing terminal server..." << std::endl;
 				if(socketTerminalOpen())
 				{
 					closeSocketTerminal();
@@ -728,13 +728,20 @@ int MGFramework::initializeWinsock(WORD wVersionRequested)
 	return 1;
 }
 
+bool MGFramework::okMGFrameworkSyntax(const char *c)
+{
+	if(strlen(c)>2)
+	{
+		return true;
+	}
+	return false;
+}
+
 int runMGFrameworkSocketTerminal(void *fm)
 {
 	std::cout << "Opening socket terminal..." << std::endl;
 	MGFramework *mgf = (MGFramework *)fm;
-	//char buf[1024];
 	#define PORTNR 666
-
 	bool connectionOpen=true;
 	int nZerosInARow=0;
 
@@ -786,7 +793,6 @@ int runMGFrameworkSocketTerminal(void *fm)
 			for (int i=0; i < 256; i++)
 			{
 				buf[i]=0;
-				//if(buf[i]=='\n')buf[i]='\0';
 			}
 			if( recv(fd_new, buf, sizeof(buf), 0) == SOCKET_ERROR )
 			{
@@ -796,7 +802,7 @@ int runMGFrameworkSocketTerminal(void *fm)
 
 			// Now buf contains the request string.
 
-			int lBuf=strlen(buf);
+			int lBuf=(int)strlen(buf);
 			if(lBuf==0)
 			{
 				nZerosInARow++;
@@ -804,18 +810,21 @@ int runMGFrameworkSocketTerminal(void *fm)
 			else
 			{
 				nZerosInARow=0;
-				mgf->runConsoleCommand(buf);
+				if(mgf->okMGFrameworkSyntax(buf))
+				{
+					mgf->runConsoleCommand(buf);
+					if(send(fd_new, "ok\n\r", 4, 0) == SOCKET_ERROR)
+					{
+						std::cout << "Server: Failed sending an answer to client request" << std::endl;
+					}
+				}
 			}
 			if(nZerosInARow>4)
 			{
 				connectionOpen=false;
 			}
-
-			std::cout << "Terminal command: " << buf << " (" << strlen(buf) << ")"<< std::endl;
-
-			Sleep((DWORD)100);
+			//Sleep((DWORD)100);
 		}
-
 		WSACleanup();
 	}
 	std::cout << "Socket terminal closed..." << std::endl;
