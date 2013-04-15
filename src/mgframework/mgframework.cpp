@@ -271,10 +271,24 @@ bool MGFramework::runConsoleCommand(const char *c)
 		{
 			if(cmdvec.size()>2)
 			{
-				int moIndex=toInt(cmdvec[1]);
-				if(moIndex >= 0 && moIndex < getNumberOfMO())
+				if(cmdvec[1]=="marked")
 				{
-					return m_MO[toInt(cmdvec[1])].runConsoleCommand(c);
+					for(int i=0; i<getNumberOfMO(); i++)
+					{
+						if(m_MO[i].isMarked())
+						{
+							m_MO[i].runConsoleCommand(c);
+						}
+					}
+					return true;
+				}
+				else
+				{
+					int moIndex=toInt(cmdvec[1]);
+					if(moIndex >= 0 && moIndex < getNumberOfMO())
+					{
+						return m_MO[toInt(cmdvec[1])].runConsoleCommand(c);
+					}
 				}
 			}
 			std::cout << "Error in command (mo)" << std::endl;

@@ -23,6 +23,9 @@ private:
 	int getTileSize(){ return m_TileSize;}
 	double getSpeed(){ return m_Speed;}
 
+	//Marking related
+	bool m_Marked;
+
 public:
 
 	MGMovingObject();
@@ -42,6 +45,11 @@ public:
 	int getCenterX(){ return getTileX()*getTileSize() + (int)(0.5 *getTileSize());}
 	int getCenterY(){ return getTileY()*getTileSize() + (int)(0.5 *getTileSize());}
 	bool runConsoleCommand(const char *c);
+
+	//Marking related
+	void mark(){m_Marked=true;}
+	void unMark(){m_Marked=false;}
+	bool isMarked(){return m_Marked;}
 
 };
 

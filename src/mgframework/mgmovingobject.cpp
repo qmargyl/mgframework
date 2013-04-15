@@ -6,6 +6,7 @@ MGMovingObject::MGMovingObject()
 {
 	m_TimeOfLastUpdate = SDL_GetTicks();
 	m_FinishingLastMove=false;
+	m_Marked=false;
 }
 
 void MGMovingObject::setTileXY(int x, int y)
@@ -158,6 +159,7 @@ void MGMovingObject::copy(const MGMovingObject *src)
 	m_FinishingLastMove = src->m_FinishingLastMove;
 	m_TempDestTileX = src->m_TempDestTileX;
 	m_TempDestTileY = src->m_TempDestTileY;
+	m_Marked = src->m_Marked;
 }
 
 bool MGMovingObject::runConsoleCommand(const char *c)
@@ -197,6 +199,16 @@ bool MGMovingObject::runConsoleCommand(const char *c)
 		else if(cmdvec[2]=="getdistance")
 		{
 			std::cout << getDistance(getDestTileX(), getDestTileY()) << std::endl;
+			return true;
+		}
+		else if(cmdvec[2]=="mark")
+		{
+			mark();
+			return true;
+		}
+		else if(cmdvec[2]=="unmark")
+		{
+			unMark();
 			return true;
 		}
 

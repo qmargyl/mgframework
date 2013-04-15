@@ -16,6 +16,7 @@ class Project2 : public MGFramework
 		// Graphics (which is not part of the framework) should be added here.
 		SDL_Surface *m_Floor;
 		SDL_Surface *m_MovingObject;
+		SDL_Surface *m_Mark;
 
 		// Data members needed for game logics etc..
 		MGPeriodicEvent m_PE;
