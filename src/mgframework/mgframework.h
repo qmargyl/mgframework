@@ -13,7 +13,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.8.0"
+#define MGFRAMEWORKVERSION "1.0.9.0"
 
 int runMGFrameworkSocketTerminal(void *fm);
 
