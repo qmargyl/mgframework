@@ -60,7 +60,7 @@ class MGFramework :public MGComponent
 
 	protected:
 		MGWindow m_Window;		// The framework window
-		MGMap m_Map;			// Map that holds game logics needs to be accessed when graphics are drawn - protected.
+		
 		MGMovingObject *m_MO;	// Moving Objects
 
 		// MO related
@@ -103,6 +103,8 @@ class MGFramework :public MGComponent
 		MGFramework();
 		virtual ~MGFramework();
 
+		MGMap m_Map;			// Map that holds game logics needs to be accessed when graphics are drawn, and by moving objects.
+
 		// Initialization
 		virtual bool init(int w, int h, int tw, int th) = 0;	// Force a derived sub-class to implement this as it is not framework related.
 		bool setWindowProperties(int width, int height, int bpp, bool fullscreen, const string& title);
@@ -143,6 +145,7 @@ class MGFramework :public MGComponent
 		static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);
 		static int initializeWinsock(WORD wVersionRequested);
 		static bool okMGFrameworkSyntax(const char *c);
+		static bool oneOf(int x, int a1, int a2){ if(x==a1) return true;  if(x==a2) return true; return false;}
 };
 
 #endif

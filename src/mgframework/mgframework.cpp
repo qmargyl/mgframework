@@ -396,6 +396,15 @@ bool MGFramework::runConsoleCommand(const char *c)
 			int n = toInt(cmdvec[2]);
 			if(n>0)
 			{
+				// Clear the map of occupied marks...
+				for(int y=0; y<m_Map.getHeight(); y++)
+				{
+					for(int x=0; x<m_Map.getWidth(); x++)
+					{
+						m_Map.unOccupy(x, y);
+					}
+				}
+				// ...and then create the new MOs.
 				createMO(n);
 			}
 			else
@@ -405,7 +414,7 @@ bool MGFramework::runConsoleCommand(const char *c)
 			}
 			for(int i=0;i<getNumberOfMO();i++)
 			{
-				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
+				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()), this);
 				m_MO[i].setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
 				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
 			}
@@ -426,7 +435,7 @@ bool MGFramework::runConsoleCommand(const char *c)
 			}
 			for(int i=nBefore; i<getNumberOfMO(); i++)
 			{
-				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
+				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()), this);
 				m_MO[i].setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
 				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
 			}

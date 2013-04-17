@@ -15,6 +15,7 @@ private:
 	int m_ScrollY; // Number of pixels from top left.
 
 	int *m_TileProperty; // Allows for many unique properties (ex: water, sand, grass, walkable, non-walkable etc.)
+	int *m_Occupied;
 	int m_WindowHeight;
 	int m_WindowWidth;
 
@@ -44,6 +45,10 @@ public:
 	void init(int w, int h, int tw, int th, int windowWidth, int windowHeight);
 	void setTileProperty(int x, int y, int value){ m_TileProperty[y*getWidth()+x]=value;}
 	int getTileProperty(int x, int y){ return m_TileProperty[y*getWidth()+x];}
+
+	void occupy(int x, int y, int id){ m_Occupied[y*getWidth()+x]=id;}
+	void unOccupy(int x, int y){ m_Occupied[y*getWidth()+x]=0;}
+	int occupant(int x, int y){ return m_Occupied[y*getWidth()+x];}
 
 
 	int getTileIndex(int clickX, int clickY);

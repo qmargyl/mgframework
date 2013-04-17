@@ -71,7 +71,7 @@ void Project2::handleGameLogics()
 	// Update all moving objects
 	for(int i=0;i<getNumberOfMO();i++)
 	{
-		m_MO[i].update();
+		m_MO[i].update(this);
 	}
 
 	// Example of how FPS can be controlled dynamically
@@ -99,6 +99,11 @@ void Project2::draw()
 				else if(m_Map.getTileProperty(x, y) == 1)
 				{
 					drawSprite(m_Floor, getSurface(), 32, 64, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
+				}
+
+				if(m_Map.occupant(x, y)!=0)
+				{
+					drawSprite(m_Mark, getSurface(), 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
 				}
 			}
 		}

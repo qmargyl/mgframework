@@ -2,6 +2,8 @@
 #define _MG_MOVINGOBJECT_H
 #include "mgcomponent.h"
 
+class MGFramework;
+
 
 class MGMovingObject :public MGComponent
 {
@@ -19,6 +21,12 @@ private:
 	int m_TempDestTileX;
 	int m_TempDestTileY;
 
+	int m_ID;
+
+	int m_NextTileX;
+	int m_NextTileY;
+	void setNextXY(int x, int y, MGFramework *world);
+
 	double getDistance(int wx, int wy);
 	int getTileSize(){ return m_TileSize;}
 	double getSpeed(){ return m_Speed;}
@@ -29,10 +37,11 @@ private:
 public:
 
 	MGMovingObject();
-	void setTileXY(int x, int y);
+
+	void setTileXY(int x, int y, MGFramework *world);
 	void setDestTileXY(int x, int y);
 	void setSpeed(double s, int tileSize); // Seconds, Distance to next tile (pixels)
-	void update();
+	void update(MGFramework *w);
 	void copy(const MGMovingObject *src);
 
 	int getTileX(){ return m_TileX;}
@@ -50,6 +59,9 @@ public:
 	void mark(){m_Marked=true;}
 	void unMark(){m_Marked=false;}
 	bool isMarked(){return m_Marked;}
+
+	void setID(int id){ m_ID=id;}
+	int getID(){ return m_ID;}
 
 };
 

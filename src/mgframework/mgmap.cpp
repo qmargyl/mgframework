@@ -35,6 +35,7 @@ void MGMap::setScrollOffset(int px, int py)
 void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight)
 {
 	m_TileProperty = new int[w*h];
+	m_Occupied = new int[w*h];
 	m_Width = w;
 	m_Height = h;
 	m_TileWidth = tw;
@@ -54,6 +55,7 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 		for (int y=0; y < getHeight(); y++)
 		{
 			setTileProperty(x, y, 0);
+			unOccupy(x, y);
 		}
 	}
 
