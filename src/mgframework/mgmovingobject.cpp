@@ -11,7 +11,7 @@ MGMovingObject::MGMovingObject()
 	m_TileY=0;
 	m_NextTileX=0;
 	m_NextTileY=0;
-	m_ID=MGFramework::randomN(1000000);
+	m_ID=MGFramework::randomN(1000000)+1;
 }
 
 void MGMovingObject::setTileXY(int x, int y, MGFramework *world)

@@ -1,9 +1,7 @@
 #ifndef _PROJECT_2_H
 #define _PROJECT_2_H
 
-#include "mgframework/mgperiodicevent.h"
 #include "mgframework/mgframework.h"
-#include "mgframework/mgmovingobject.h"
 
 class Project2 : public MGFramework
 {
@@ -17,9 +15,6 @@ class Project2 : public MGFramework
 		SDL_Surface *m_Floor;
 		SDL_Surface *m_MovingObject;
 		SDL_Surface *m_Mark;
-
-		// Data members needed for game logics etc..
-		MGPeriodicEvent m_PE;
 
 	public:
 		Project2();

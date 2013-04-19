@@ -6,6 +6,7 @@
 #include <string>
 #include <cmath>
 #include <sstream>
+#include <list>
 
 
 MGMap::MGMap()
@@ -34,7 +35,7 @@ void MGMap::setScrollOffset(int px, int py)
 
 void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight)
 {
-	m_TileProperty = new int[w*h];
+	m_TileProperty = new Uint32[w*h];
 	m_Occupied = new int[w*h];
 	m_Width = w;
 	m_Height = h;
@@ -54,18 +55,18 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 	{
 		for (int y=0; y < getHeight(); y++)
 		{
-			setTileProperty(x, y, 0);
+			setTileProperty(x, y, MGMAP_TP_PROPERTY_1 | MGMAP_TP_NOOBSTACLE);
 			unOccupy(x, y);
 		}
 	}
 
 	// Just an example...
-	setTileProperty(3, 3, 1);
-	setTileProperty(4, 4, 1);
-	setTileProperty(5, 5, 1);
-	setTileProperty(6, 4, 1);
-	setTileProperty(7, 3, 1);
-	setTileProperty(8, 2, 1);
+	setTileProperty(3, 3, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
+	setTileProperty(4, 4, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
+	setTileProperty(5, 5, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
+	setTileProperty(6, 4, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
+	setTileProperty(7, 3, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
+	setTileProperty(8, 2, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
 
 }
 
@@ -154,7 +155,27 @@ bool MGMap::runConsoleCommand(const char *c)
 			return true;
 		}
 	}
+	if(cmdvec.size() == 6)
+	{
+		if(cmdvec[1]=="path")
+		{
+			int x1 = MGFramework::toInt(cmdvec[2]);
+			int y1 = MGFramework::toInt(cmdvec[3]);
+			int x2 = MGFramework::toInt(cmdvec[4]);
+			int y2 = MGFramework::toInt(cmdvec[5]);
+
+			std::cout << "Calculating closest path from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ")." << std::endl;
+			calculatePath(x1, y1, x2, y2);
+			return true;
+		}
+	}
 
 	std::cout << "Unknown command" << std::endl;
 	return true;
+}
+
+void MGMap::calculatePath(int ax, int ay, int bx, int by)
+{
+	std::list<PathItem> path;
+	std::list<PathItem> pathneighbors;
 }

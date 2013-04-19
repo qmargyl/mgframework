@@ -18,6 +18,8 @@ public:
 	bool isActive();
 	int timeLeft();
 
+    void copy(const MGPeriodicEvent *src);
+
 	bool runConsoleCommand(const char *c);
 
 };

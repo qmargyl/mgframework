@@ -10,10 +10,19 @@
 #include <string>
 #include "mgcomponent.h"
 #include "mgmovingobject.h"
+#include "mgperiodicevent.h"
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.9.0"
+#define MGFRAMEWORKVERSION "1.0.10.0"
+
+#define MGFLOG(x) if(loggingEnabled()){ x; }
+
+enum MGFInstanceType{
+	MGFSERVERINSTANCE = 0,
+	MGFCLIENTINSTANCE = 1,
+	MGFSINGLEPLAYERINSTANCE = 2
+};
 
 int runMGFrameworkSocketTerminal(void *fm);
 
@@ -26,6 +35,9 @@ class MGFramework :public MGComponent
 		bool m_TypingEnabled;		// Setting allows typing commands to console.
 		bool m_WindowPropertiesSet; // Used to determine if all Windows properties have been set.
 		bool m_MiniMapEnabled;		// Enables the mini map implementation.
+
+		MGFInstanceType m_MGFInstanceType;
+
 
 		// FPS related
 		Uint32 m_FrameTime;			// Holds current frame time
@@ -51,6 +63,9 @@ class MGFramework :public MGComponent
 		//MO related
 		int m_NMO; // Number of Moving Objects
 
+		//PE related
+		int m_NPE;
+
 		//Socket terminal related.
 		SDL_Thread *m_SocketTerminal;
 		bool m_KeepSocketTerminalOpen;
@@ -62,11 +77,17 @@ class MGFramework :public MGComponent
 		MGWindow m_Window;		// The framework window
 		
 		MGMovingObject *m_MO;	// Moving Objects
+		MGPeriodicEvent *m_PE;  // Periodic Events
 
 		// MO related
 		void createMO(int n);
 		void addMO(int n);
 		int getNumberOfMO(){ return m_NMO;}
+
+		// PE related
+		void createPE(int n);
+		void addPE(int n);
+		int getNumberOfPE(){ return m_NPE;}
 
 		// Event related
 		unsigned int m_Keys[SDLK_LAST];	// Stores keys that are pressed
@@ -117,12 +138,16 @@ class MGFramework :public MGComponent
 		void disableLogging(){m_LoggingEnabled = false;}
 		bool loggingEnabled(){return m_LoggingEnabled;}
 
+		// Client/Server
+		void setInstanceType(MGFInstanceType it){ m_MGFInstanceType = it;}
+		MGFInstanceType getInstanceType(){return m_MGFInstanceType;}
 
 		// Console command handling
 		bool runConsoleCommand(const char *c);
 
 		//Socket terminal related
 		bool socketTerminalOpen(){return m_KeepSocketTerminalOpen;}
+		void logIfEnabled(const char *log){MGFLOG(std::cout << "" << log << std::endl;)}
 
 		// Program version
 		void setProgramVersion(const char *version){m_ProgramVersion = string(version);}

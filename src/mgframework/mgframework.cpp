@@ -13,7 +13,8 @@ using namespace std;
 MGFramework::MGFramework()
 {
 	m_NMO=0;
-	setDesiredFPS(1);
+	m_NPE=0;
+	setDesiredFPS(20);
 	m_FrameTime=16;
 	m_FrameCountdownEnabled = false;
 	m_FrameNumber = 0;
@@ -41,10 +42,7 @@ bool MGFramework::processEvents()
 			// Quit event
 			case SDL_QUIT:
 			{
-				if(loggingEnabled())
-				{
-					std::cout << "SDL_QUIT" << std::endl;
-				}
+				MGFLOG(std::cout << "SDL_QUIT" << std::endl;)
 				// Return false because we are quitting.
 				return false;
 			}
@@ -68,12 +66,7 @@ bool MGFramework::processEvents()
 				if(!typingEnabled())
 				{
 					SDLKey sym = event.key.keysym.sym;
-
-					if(loggingEnabled())
-					{
-						std::cout << "SDL_KEYUP" << std::endl << "  " << SDL_GetKeyName(sym) << std::endl;
-					}
-
+					MGFLOG(std::cout << "SDL_KEYUP" << std::endl << "  " << SDL_GetKeyName(sym) << std::endl;)
 					m_Keys[sym] = 0;
 				}
 				break;
@@ -81,10 +74,7 @@ bool MGFramework::processEvents()
 
 			case SDL_VIDEORESIZE:
 			{
-				if(loggingEnabled())
-				{
-					std::cout << "SDL_VIDEORESIZE" << std::endl << "  " << "Resizing Window to " << event.resize.w << "x" << event.resize.h << std::endl;
-				}
+				MGFLOG(std::cout << "SDL_VIDEORESIZE" << std::endl << "  " << "Resizing Window to " << event.resize.w << "x" << event.resize.h << std::endl;)
 				//Not implemented yet
 				//The window has been resized so we need to set up our viewport and projection according to the new size
 				resize(event.resize.w, event.resize.h);
@@ -112,33 +102,26 @@ bool MGFramework::processEvents()
 					}
 
 					// Log debug information to console.
-					if(loggingEnabled())
+					MGFLOG(std::cout << "SDL_MOUSEBUTTONDOWN" << std::endl << "  " << "Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;)
+					if (((int) event.button.button) == 1)
 					{
-						std::cout << "SDL_MOUSEBUTTONDOWN" << std::endl << "  " << "Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;
-						if (((int) event.button.button) == 1)
-						{
-							std::cout << "Map (left click): index = " << iClick << ", x = " << xClick << ", y = " << yClick << std::endl;
-						}
-						else if (((int) event.button.button) == 3)
-						{
-							std::cout << "Map (right click): index = " << iClick << ", x = " << xClick << ", y = " << yClick << std::endl;
-						}
+						MGFLOG(std::cout << "Map (left click): index = " << iClick << ", x = " << xClick << ", y = " << yClick << std::endl;)
+					}
+					else if (((int) event.button.button) == 3)
+					{
+						MGFLOG(std::cout << "Map (right click): index = " << iClick << ", x = " << xClick << ", y = " << yClick << std::endl;)
 					}
 				}
 				else
 				{
-					if(loggingEnabled())
+					MGFLOG(std::cout << "SDL_MOUSEBUTTONDOWN" << std::endl << "  " << "Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;)
+					if (((int) event.button.button) == 1)
 					{
-						std::cout << "SDL_MOUSEBUTTONDOWN" << std::endl << "  " << "Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;
-
-						if (((int) event.button.button) == 1)
-						{
-							std::cout << "Map (left click): index = -1, x = <not calculated>, y = <not calculated>" << std::endl;
-						}
-						else if (((int) event.button.button) == 3)
-						{
-							std::cout << "Map (right click): index = -1, x = <not calculated>, y = <not calculated>" << std::endl;
-						}
+						MGFLOG(std::cout << "Map (left click): index = -1, x = <not calculated>, y = <not calculated>" << std::endl;)
+					}
+					else if (((int) event.button.button) == 3)
+					{
+						MGFLOG(std::cout << "Map (right click): index = -1, x = <not calculated>, y = <not calculated>" << std::endl;)
 					}
 				}
 				break;
@@ -146,10 +129,7 @@ bool MGFramework::processEvents()
 
 			case SDL_MOUSEBUTTONUP:
 			{
-				if(loggingEnabled())
-				{
-					std::cout << "SDL_MOUSEBUTTONUP" << std::endl << "  " << "Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;
-				}
+				MGFLOG(std::cout << "SDL_MOUSEBUTTONUP" << std::endl << "  " << "Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;)
 				if (((int) event.button.button) == 3)
 				{
 					m_Map.mouseScrollingRelease(event.button.x, event.button.y);
@@ -311,8 +291,7 @@ bool MGFramework::runConsoleCommand(const char *c)
 			std::cout << "help -    Displays this command help information." << std::endl;
 			std::cout << "exit -    Exists shell and resumes framework execution." << std::endl;
 			std::cout << "minimap - Toggles mini map on/off." << std::endl;
-			std::cout << "debug -   Toggles debug logging on/off (same as logging)." << std::endl;
-			std::cout << "logging - Toggles debug logging on/off (same as debug)." << std::endl;
+			std::cout << "logging - Toggles logging on/off." << std::endl;
 			std::cout << "setfps <f> - Sets desired FPS (frames per second) to integer value <f>." << std::endl;
 			std::cout << "runframes <f> - Runs <f> game loops (frames) and presents some recorded data." << std::endl;
 			std::cout << "          <f> is an integer." << std::endl;
@@ -343,18 +322,18 @@ bool MGFramework::runConsoleCommand(const char *c)
 				return true;
 			}
 		}
-		else if(cmdvec[0]=="debug" || cmdvec[0]=="logging")
+		else if(cmdvec[0]=="logging")
 		{
 			if(loggingEnabled())
 			{
 				disableLogging();
-				std::cout << "Debug logging disabled." << std::endl;
+				std::cout << "Logging disabled." << std::endl;
 				return true;
 			}
 			else
 			{
 				enableLogging();
-				std::cout << "Debug logging enabled." << std::endl;
+				std::cout << "Logging enabled." << std::endl;
 				return true;
 			}
 		}
@@ -415,7 +394,7 @@ bool MGFramework::runConsoleCommand(const char *c)
 			for(int i=0;i<getNumberOfMO();i++)
 			{
 				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()), this);
-				m_MO[i].setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
+				//m_MO[i].setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
 				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
 			}
 			return true;
@@ -436,12 +415,39 @@ bool MGFramework::runConsoleCommand(const char *c)
 			for(int i=nBefore; i<getNumberOfMO(); i++)
 			{
 				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()), this);
-				m_MO[i].setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
+				//m_MO[i].setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
 				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
 			}
 			return true;
-
 		}
+		if(cmdvec[0]=="create" && cmdvec[1]=="pe")
+		{
+			int n = toInt(cmdvec[2]);
+			if(n>0)
+			{
+				createPE(n);
+			}
+			else
+			{
+				std::cout << "Error in command (create pe <n>)" << std::endl;
+			}
+			return true;
+		}
+		else if(cmdvec[0]=="add" && cmdvec[1]=="pe")
+		{
+			int nBefore=getNumberOfPE();
+			int n = toInt(cmdvec[2]);
+			if(n>0)
+			{
+				addPE(n);
+			}
+			else
+			{
+				std::cout << "Error in command (add pe <n>)" << std::endl;
+			}
+			return true;
+		}
+
 	}
 
 	else
@@ -466,13 +472,13 @@ Uint32 MGFramework::getFPS()
 		}
 		else
 		{
-			std::cout << "WARNING: FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << "m_FrameTime:" << m_FrameTime << ", result:" << result << std::endl;
+			MGFLOG(std::cout << "WARNING: FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << "m_FrameTime:" << m_FrameTime << ", result:" << result << std::endl;)
 			return getDesiredFPS();
 		}
 	}
 	else
 	{
-		std::cout << "WARNING: FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << m_FrameTime << std::endl;
+		MGFLOG(std::cout << "WARNING: FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << m_FrameTime << std::endl;)
 		return getDesiredFPS();
 	}
 }
@@ -485,7 +491,7 @@ void MGFramework::setDesiredFPS(Uint32 f)
 	}
 	else
 	{
-		std::cout << "FPS incorrectly calculated (void MGFramework::setDesiredFPS(Uint32 f)): " << f << std::endl;
+		MGFLOG(std::cout << "FPS incorrectly calculated (void MGFramework::setDesiredFPS(Uint32 f)): " << f << std::endl;)
 	}
 }
 
@@ -497,7 +503,7 @@ Uint32 MGFramework::getDesiredFPS()
 	}
 	else
 	{
-		std::cout << "FPS incorrectly calculated (Uint32 MGFramework::getDesiredFPS()): " << m_FPS << ", returning 60" << std::endl;
+		MGFLOG(std::cout << "FPS incorrectly calculated (Uint32 MGFramework::getDesiredFPS()): " << m_FPS << ", returning 60" << std::endl;)
 		return 1;
 	}
 }
@@ -536,6 +542,30 @@ void MGFramework::addMO(int n)
 	}
 }
 
+
+void MGFramework::createPE(int n)
+{
+	delete[] m_PE;
+	m_NPE=n;
+	m_PE = new MGPeriodicEvent[getNumberOfPE()];
+}
+
+void MGFramework::addPE(int n)
+{
+	MGPeriodicEvent *oldPE = new MGPeriodicEvent[getNumberOfPE()];
+	int nOld=getNumberOfPE();
+	for(int i=0; i<nOld; i++)
+	{
+		oldPE[i].copy(&m_PE[i]);
+	}
+	delete[] m_PE;
+	m_NPE=nOld+n;
+	m_PE = new MGPeriodicEvent[getNumberOfPE()];
+	for(int i=0; i<nOld; i++)
+	{
+		m_PE[i].copy(&oldPE[i]);
+	}
+}
 
 void MGFramework::drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {
@@ -762,8 +792,8 @@ bool MGFramework::okMGFrameworkSyntax(const char *c)
 
 int runMGFrameworkSocketTerminal(void *fm)
 {
-	std::cout << "Opening socket terminal..." << std::endl;
 	MGFramework *mgf = (MGFramework *)fm;
+	mgf->logIfEnabled("Opening socket terminal...");
 	#define PORTNR 666
 	bool connectionOpen=true;
 	int nZerosInARow=0;
@@ -772,7 +802,7 @@ int runMGFrameworkSocketTerminal(void *fm)
 	{
 		if (!mgf->initializeWinsock (MAKEWORD(1,1) ) ) 
 		{
-			std::cout << "Error initializing Winsock." << std::endl;
+			mgf->logIfEnabled("Error initializing Winsock.");
 			return 1;
 		}
 
@@ -781,7 +811,7 @@ int runMGFrameworkSocketTerminal(void *fm)
 
 		if ((fd=socket(AF_INET,SOCK_STREAM,0)) == INVALID_SOCKET)
 		{
-			std::cout << "Server: socket not connected " << std::endl;
+			mgf->logIfEnabled("Server: socket not connected ");
 			return 1;
 		}
 
@@ -791,22 +821,22 @@ int runMGFrameworkSocketTerminal(void *fm)
 
 		if (bind(fd, (LPSOCKADDR) &saddr_me, sizeof(saddr_me)) == SOCKET_ERROR)
 		{
-			std::cout << "Server: bind failure " << std::endl;
+			mgf->logIfEnabled("Server: bind failure ");
 			return 1;
 		}
 
 		if (listen(fd,1) == SOCKET_ERROR)
 		{
-			std::cout << "Server: listen failure " << std::endl;
+			mgf->logIfEnabled("Server: listen failure ");
 			return 1;
 		}
 
 		// the server is now started and ready to accept a command..
-		std::cout << "Waiting for terminal command..." << std::endl;
+		mgf->logIfEnabled("Waiting for terminal command...");
 
 		if ( (fd_new=accept(fd, NULL, NULL)) == INVALID_SOCKET)
 		{
-			std::cout << "Server: accept failure " << std::endl;
+			mgf->logIfEnabled("Server: accept failure ");
 			return 1;
 		}
 
@@ -819,7 +849,7 @@ int runMGFrameworkSocketTerminal(void *fm)
 			}
 			if( recv(fd_new, buf, sizeof(buf), 0) == SOCKET_ERROR )
 			{
-				std::cout << "Server: receiving failure " << std::endl;
+				mgf->logIfEnabled("Server: receiving failure ");
 				return 1;
 			}
 
@@ -838,7 +868,8 @@ int runMGFrameworkSocketTerminal(void *fm)
 					mgf->runConsoleCommand(buf);
 					if(send(fd_new, "ok\n\r", 4, 0) == SOCKET_ERROR)
 					{
-						std::cout << "Server: Failed sending an answer to client request" << std::endl;
+						mgf->logIfEnabled("Server: Failed sending an answer to client request");
+						return 1;
 					}
 				}
 			}
@@ -850,6 +881,6 @@ int runMGFrameworkSocketTerminal(void *fm)
 		}
 		WSACleanup();
 	}
-	std::cout << "Socket terminal closed..." << std::endl;
+	mgf->logIfEnabled("Socket terminal closed...");
 	return 0;
 }

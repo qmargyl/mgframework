@@ -54,6 +54,13 @@ int MGPeriodicEvent::timeLeft()
 }
 
 
+void MGPeriodicEvent::copy(const MGPeriodicEvent *src)
+{
+	m_Period = src->m_Period;
+	m_StartTime = src->m_StartTime;
+	m_isActive = src->m_isActive;
+}
+
 bool MGPeriodicEvent::runConsoleCommand(const char *c)
 {
 	std::cout << "MGPeriodicEvent::runConsoleCommand(" << c << ")" << std::endl;
