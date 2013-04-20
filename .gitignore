@@ -11,3 +11,23 @@
 *.lai
 *.la
 *.a
+
+# Object code
+*.obj
+
+# Pre-built or 3rd party components
+*.dll
+*.exe
+
+# VS files
+*.manifest
+*.dep
+*.sln
+*.suo
+Buildlog.htm
+*.idb
+*.pdb
+*.user
+*.ncb
+*.manifest.res
+

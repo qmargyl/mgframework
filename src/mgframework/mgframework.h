@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.10.1"
+#define MGFRAMEWORKVERSION "1.0.10.2"
 
 #define MGFLOG(x) if(loggingEnabled()){ x; }
 

@@ -50,7 +50,7 @@ bool Project2::init(int w, int h, int tw, int th)
 			m_PE[0].activate();
 		}
 
-		enableMiniMap();
+//		enableMiniMap();
 
 		return true;
 	}

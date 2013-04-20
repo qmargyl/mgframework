@@ -33,7 +33,10 @@ void MGFramework::resize(int x, int y)
 
 bool MGFramework::processEvents()
 {
-	// Even processing loop is started after all special cases.
+	// No events for a server instance..
+	if(getInstanceType() == MGFSERVERINSTANCE) return true;
+
+	// Event processing loop is started after all special cases.
 	SDL_Event event;
 	while (SDL_PollEvent(&event))//get all events
 	{
@@ -201,7 +204,7 @@ void MGFramework::run()
 
 		handleGameLogics();
 		draw();
-		SDL_Flip(getSurface());
+		if(getInstanceType() != MGFSERVERINSTANCE) SDL_Flip(getSurface());
 
 		// Sleep if there is time to spare..
 		m_DelayTime = (1000/getDesiredFPS()) - (SDL_GetTicks() - frameStartTime);
