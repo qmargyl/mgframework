@@ -207,6 +207,10 @@
 				RelativePath="..\..\..\..\src\project2.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\..\src\project2_server.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Headers"
@@ -239,6 +243,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\src\project2.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\src\project2_server.h"
 				>
 			</File>
 		</Filter>

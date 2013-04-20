@@ -1,20 +1,20 @@
-#include "project2.h"
+#include "project2_server.h"
 #include <iostream>
 #include "mgframework/mgframework.h"
 #include "mgframework/mgmovingobject.h"
 
-Project2::Project2()
+Project2Server::Project2Server()
 {
 	// Default parameters for demo application Project2...
 	unsetWindowProperties(); // Force setWindowProperties to be called before init.
 	disableTyping();
 	setProgramVersion("0.2");
-	setInstanceType(MGFSINGLEPLAYERINSTANCE);
+	setInstanceType(MGFSERVERINSTANCE);
 	enableMiniMap();
-	disableLogging();
+	enableLogging();
 }
 
-bool Project2::init(int w, int h, int tw, int th)
+bool Project2Server::init(int w, int h, int tw, int th)
 {
 	// The window is created.
 	if (windowPropertiesSet())
@@ -60,7 +60,7 @@ bool Project2::init(int w, int h, int tw, int th)
 	}
 }
 
-void Project2::handleGameLogics()
+void Project2Server::handleGameLogics()
 {
 	// Update periodic event to trigger rare events
 	if(getNumberOfPE()>0)
@@ -86,7 +86,7 @@ void Project2::handleGameLogics()
 	if(getLastFrameDelayTime()<7) setDesiredFPS(getFPS()-1);
 }
 
-void Project2::draw()
+void Project2Server::draw()
 {
 	// Draw all tiles visible in the window...
 	for (int x=0; x < m_Map.getWidth(); x++)

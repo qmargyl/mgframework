@@ -1,17 +1,15 @@
 #include "project2.h"
+#include "project2_server.h"
 #include "mgframework/mgframework.h"
 
 using std::string;
 
 int main(int argc, char **argv)
 {
-	//string programTitle; // Used for window title..
-	
-	//Create a framework instance and set default configuration
-	MGFramework* p2 = new Project2();
-	p2->setInstanceType(MGFSINGLEPLAYERINSTANCE);
-	p2->enableMiniMap();
-	p2->disableLogging();
+	MGFramework* p2;
+
+	MGFInstanceType instanceType = MGFSINGLEPLAYERINSTANCE;
+	bool loggingOn = false;
 
 	if(argc==1){
 		// No parameters were given
@@ -19,7 +17,7 @@ int main(int argc, char **argv)
 	else{
 		for(int i=1; i<argc; i++){
 			if(strcmp(argv[i], "-logging")==0){
-				p2->enableLogging();
+				loggingOn = true;
 			}
 			else if(strcmp(argv[i], "-help")==0){
 				std::cout << std::endl << argv[0] << " supports the following parameters:" << std::endl;
@@ -29,36 +27,41 @@ int main(int argc, char **argv)
 				goto EXIT_MAIN_RIGHT_AWAY;
 			}
 			else if(strcmp(argv[i], "-server")==0){
-				p2->setInstanceType(MGFSERVERINSTANCE);
+				instanceType = MGFSERVERINSTANCE;
 			}
 			else if(strcmp(argv[i], "-client")==0){
-				p2->setInstanceType(MGFCLIENTINSTANCE);
+				instanceType = MGFCLIENTINSTANCE;
 			}
 			else{
 				// Unknown parameter.
-
 			}
 		}
 	}
 
 
-	// Initialize the framework.
-	//programTitle = string("Project2 (example application) ") + string(p2->getProgramVersion());
-	if(p2->getInstanceType()==MGFSINGLEPLAYERINSTANCE)
+	// Create and initialize the framework...
+
+	if(instanceType==MGFSINGLEPLAYERINSTANCE)
 	{
+		p2 = new Project2();
 		p2->setWindowProperties(1024, 768, 32, false, 
 			string("Project2 (single player example application) ") + string(p2->getProgramVersion()));
 	}
-	else if(p2->getInstanceType()==MGFCLIENTINSTANCE)
+	else if(instanceType==MGFCLIENTINSTANCE)
 	{
+		// Add separate class later...
+		p2 = new Project2();
 		p2->setWindowProperties(640, 480, 32, false, 
 			string("Project2 (client example application) ") + string(p2->getProgramVersion()));
 	}
-	else if(p2->getInstanceType()==MGFSERVERINSTANCE)
+	else if(instanceType==MGFSERVERINSTANCE)
 	{
+		p2 = new Project2Server();
 		p2->setWindowProperties(800, 600, 32, false, 
 			string("Project2 (server example application) ") + string(p2->getProgramVersion()));
 	}
+
+	if(loggingOn) p2->enableLogging();
 
 	if(p2->windowPropertiesSet())
 	{
