@@ -39,7 +39,7 @@ bool Project2::init(int w, int h, int tw, int th)
 		// Setup game logics..
 
 		runConsoleCommand("setfps 60"); // Framework default is 20 FPS
-		runConsoleCommand("create mo 5");
+		runConsoleCommand("create mo 50");
 		runConsoleCommand("open terminalserver");
 		runConsoleCommand("mo 0 mark");
 		runConsoleCommand("create pe 1");
@@ -108,10 +108,10 @@ void Project2::draw()
 					drawSprite(m_Floor, getSurface(), 32, 64, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
 				}
 
-				if(m_Map.occupant(x, y)!=0)
-				{
-					drawSprite(m_Mark, getSurface(), 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
-				}
+			//	if(m_Map.occupant(x, y)!=0)
+			//	{
+			//		drawSprite(m_Mark, getSurface(), 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
+			//	}
 			}
 		}
 	}
@@ -175,6 +175,20 @@ void Project2::draw()
 	drawText(getSurface(), MGFramework::toString(getLastFrameDelayTime()).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 50, 0, 0, 0, 0, 255, 0);
 	drawText(getSurface(), MGFramework::toString(getFPS()).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 30, 0, 0, 0, 0, 255, 0);
 
+
+
+	// Draw frame if available
+	if(isFramingOngoing())
+	{
+		int uLX=smallest(getFrameStartX(), getFrameEndX());
+		int uLY=smallest(getFrameStartY(), getFrameEndY());
+		int xL=abs(getFrameStartX() - getFrameEndX());
+		int yL=abs(getFrameStartY() - getFrameEndY());
+		hLine32(getSurface(), uLX, uLY, xL, 0x00FF0000);
+		hLine32(getSurface(), uLX, uLY+yL, xL, 0x00FF0000);
+		vLine32(getSurface(), uLX, uLY, yL, 0x00FF0000);
+		vLine32(getSurface(), uLX+xL, uLY, yL, 0x00FF0000);
+	}
 
 	//drawFillCircle32(getSurface(), 100, 100, 20, 0);
 }

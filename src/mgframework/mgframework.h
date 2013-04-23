@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.10.2"
+#define MGFRAMEWORKVERSION "1.0.11.0"
 
 #define MGFLOG(x) if(loggingEnabled()){ x; }
 
@@ -71,6 +71,22 @@ class MGFramework :public MGComponent
 		bool m_KeepSocketTerminalOpen;
 		void openSocketTerminal(){m_KeepSocketTerminalOpen = true;}
 		void closeSocketTerminal(){m_KeepSocketTerminalOpen = false;}
+
+		// Framing related
+		bool m_FramingOngoing;
+		int m_XFrameStart;
+		int m_YFrameStart;
+		int m_XFrameEnd;
+		int m_YFrameEnd;
+		void setFrameStartX(int x){ m_XFrameStart=x;}
+		void setFrameStartY(int y){ m_YFrameStart=y;}
+		void setFrameEndX(int x){ m_XFrameEnd=x;}
+		void setFrameEndY(int y){ m_YFrameEnd=y;}
+		void activateFraming(int x, int y){setFrameStartX(x); setFrameStartY(y); m_FramingOngoing=true;}
+		void deactivateFraming(){ m_FramingOngoing = false;}
+		void updateFraming(int x, int y){setFrameEndX(x); setFrameEndY(y);}
+		
+
 		
 
 	protected:
@@ -99,6 +115,13 @@ class MGFramework :public MGComponent
 
 		virtual void resize(int x, int y);	// Not implemented yet
 
+		//Framing related
+		bool isFramingOngoing(){ return m_FramingOngoing;}
+		int getFrameStartX(){ return m_XFrameStart;}
+		int getFrameStartY(){ return m_YFrameStart;}
+		int getFrameEndX(){ return m_XFrameEnd;}
+		int getFrameEndY(){ return m_YFrameEnd;}
+
 		// Graphics related, depending on SDL
 		SDL_Surface *getSurface(){return m_Window.m_Screen;}
 		void drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
@@ -108,6 +131,8 @@ class MGFramework :public MGComponent
 		Uint32 getPixel32(SDL_Surface *surface, int x, int y);
 		void drawCircle32(SDL_Surface *surface, int n_cx, int n_cy, int radius, Uint32 pixel);
 		void drawFillCircle32(SDL_Surface *surface, int cx, int cy, int radius, Uint32 pixel);
+		void vLine32(SDL_Surface *surface, int x, int y, int length, Uint32 pixel);
+		void hLine32(SDL_Surface *surface, int x, int y, int length, Uint32 pixel);
 
 		// Controlling game speed and execution
 		Uint32 getFPS();
@@ -171,6 +196,8 @@ class MGFramework :public MGComponent
 		static int initializeWinsock(WORD wVersionRequested);
 		static bool okMGFrameworkSyntax(const char *c);
 		static bool oneOf(int x, int a1, int a2){ if(x==a1) return true;  if(x==a2) return true; return false;}
+		static int smallest(int a, int b){ if(a<b) return a; return b;}
+		static int biggest(int a, int b){ if(a>b) return a; return b;}
 };
 
 #endif

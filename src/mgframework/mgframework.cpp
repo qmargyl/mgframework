@@ -20,6 +20,11 @@ MGFramework::MGFramework()
 	m_FrameNumber = 0;
 	m_KeepSocketTerminalOpen = false;
 	std::srand((unsigned)std::time(0));
+	m_FramingOngoing = false;
+	m_XFrameStart = 0;
+	m_YFrameStart = 0;
+	m_XFrameEnd = 0;
+	m_YFrameEnd = 0;
 }
 
 MGFramework::~MGFramework()
@@ -108,6 +113,7 @@ bool MGFramework::processEvents()
 					MGFLOG(std::cout << "SDL_MOUSEBUTTONDOWN" << std::endl << "  " << "Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;)
 					if (((int) event.button.button) == 1)
 					{
+						activateFraming(event.button.x, event.button.y);
 						MGFLOG(std::cout << "Map (left click): index = " << iClick << ", x = " << xClick << ", y = " << yClick << std::endl;)
 					}
 					else if (((int) event.button.button) == 3)
@@ -133,9 +139,34 @@ bool MGFramework::processEvents()
 			case SDL_MOUSEBUTTONUP:
 			{
 				MGFLOG(std::cout << "SDL_MOUSEBUTTONUP" << std::endl << "  " << "Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;)
-				if (((int) event.button.button) == 3)
+				if (((int) event.button.button) == 1)
+				{
+					int endClickX = m_Map.getTileX(m_Map.getTileIndex(getFrameEndX(), getFrameEndY()));
+					int endClickY = m_Map.getTileY(m_Map.getTileIndex(getFrameEndX(), getFrameEndY()));
+					int startClickX = m_Map.getTileX(m_Map.getTileIndex(getFrameStartX(), getFrameStartY()));
+					int startClickY = m_Map.getTileY(m_Map.getTileIndex(getFrameStartX(), getFrameStartY()));
+					for(int x=smallest(startClickX, endClickX); x<=biggest(startClickX, endClickX); x++)
+					{
+						for(int y=smallest(startClickY, endClickY); y<=biggest(startClickY, endClickY); y++)
+						{
+							for(int i=0; i<getNumberOfMO(); i++)
+							{
+								if(m_MO[i].getTileX()==x && m_MO[i].getTileY()==y)
+								{
+									m_MO[i].mark();
+								}
+							}
+						}
+					}
+					deactivateFraming();
+				}
+				else if (((int) event.button.button) == 3)
 				{
 					m_Map.mouseScrollingRelease(event.button.x, event.button.y);
+					for(int i=0; i<getNumberOfMO(); i++)
+					{
+						m_MO[i].unMark();
+					}
 				}
 				break;
 			}
@@ -143,6 +174,7 @@ bool MGFramework::processEvents()
 			case SDL_MOUSEMOTION:
 			{
 				m_Map.mouseScrollingUpdate(event.motion.x, event.motion.y);
+				if(isFramingOngoing()) updateFraming(event.motion.x, event.motion.y);
 				break;
 			}
 
@@ -298,11 +330,15 @@ bool MGFramework::runConsoleCommand(const char *c)
 			std::cout << "setfps <f> - Sets desired FPS (frames per second) to integer value <f>." << std::endl;
 			std::cout << "runframes <f> - Runs <f> game loops (frames) and presents some recorded data." << std::endl;
 			std::cout << "          <f> is an integer." << std::endl;
-			std::cout << "create <mo> <n> - Creates <n> objects (and deletes any previously" << std::endl;
+			std::cout << "create <mo|pe> <n> - Creates <n> objects (and deletes any previously" << std::endl;
 			std::cout << "          existing ones). <n> is an integer. Only MGMovingObject (mo)"  << std::endl;
-			std::cout << "          supported at this point." << std::endl;
-			std::cout << "add <mo> <n> - Adds <n> objects. <n> is an integer. Only MGMovingObject (mo)" << std::endl;
-			std::cout << "          supported at this point."  << std::endl;
+			std::cout << "          and MGPeriodicEvent are (pe) supported at this point." << std::endl;
+			std::cout << "add <mo|pe> <n> - Adds <n> objects. <n> is an integer. Only MGMovingObject" << std::endl;
+			std::cout << "          (mo) and MGPeriodicEvent (pe) are supported at this point."  << std::endl;
+			std::cout << "open <terminalserver> - Opens the terminal server for framework commands " << std::endl;
+			std::cout << "          over TCP/IP." << std::endl;
+			std::cout << "close <terminalserver> - Closes the terminal server for framework commands " << std::endl;
+			std::cout << "          over TCP/IP." << std::endl;
 
 			(void)m_Map.runConsoleCommand("map help");
 			(void)m_Window.runConsoleCommand("window help");
@@ -714,6 +750,23 @@ void MGFramework::drawFillCircle32(SDL_Surface *surface, int cx, int cy, int rad
             target_pixel_b += BPP;
         }
     }
+}
+
+
+void MGFramework::vLine32(SDL_Surface *surface, int x, int y, int length, Uint32 pixel)
+{
+	for(int i=y; i<y+length; i++)
+	{
+		putPixel32(surface, x, i, pixel);
+	}
+}
+
+void MGFramework::hLine32(SDL_Surface *surface, int x, int y, int length, Uint32 pixel)
+{
+	for(int i=x; i<x+length; i++)
+	{
+		putPixel32(surface, i, y, pixel);
+	}
 }
 
 

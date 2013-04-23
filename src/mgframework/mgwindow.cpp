@@ -84,49 +84,13 @@ bool MGWindow::runConsoleCommand(const char *c)
 	{
 		if(cmdvec[1]=="help")
 		{
-			std::cout << std::endl << "window help - Displays help information for console commands implemented in the window object." << std::endl;
-			std::cout << "window blendmode [none|blend|add|mod]- Sets the SDL_BlendMode of the main window surface to either SDL_BLENDMODE_NONE, SDL_BLENDMODE_BLEND, SDL_BLENDMODE_ADD or SDL_BLENDMODE_MOD. If the parameter is omitted the SDL_BlendMode is read out instead." << std::endl;
-			return true;
-		}
-		else if(cmdvec[1]=="blendmode")
-		{
-			// Read out SDL_BlendMode from main screen surface
-			//SDL_BlendMode bm;
-			//int res = SDL_GetSurfaceBlendMode(&m_Screen, &bm);
+			//std::cout << std::endl << "window help - Displays help information for console commands implemented in the window object." << std::endl;
+			//std::cout << "window blendmode [none|blend|add|mod]- Sets the SDL_BlendMode of the main window surface to either SDL_BLENDMODE_NONE, SDL_BLENDMODE_BLEND, SDL_BLENDMODE_ADD or SDL_BLENDMODE_MOD. If the parameter is omitted the SDL_BlendMode is read out instead." << std::endl;
 			return true;
 		}
 		std::cout << "Error in command (window <parameter>)" << std::endl;
 		return true;
 	}
-	else if(cmdvec.size() == 3)
-	{
-		if(cmdvec[1]=="blendmode")
-		{
-			if(cmdvec[2]=="none")
-			{
-				// Set SDL_BlendMode of main screen surface to SDL_BLENDMODE_NONE
-				return true;
-			}
-			else if(cmdvec[2]=="blend")
-			{
-				// Set SDL_BlendMode of main screen surface to SDL_BLENDMODE_BLEND
-				return true;
-			}
-			else if(cmdvec[2]=="add")
-			{
-				// Set SDL_BlendMode of main screen surface to SDL_BLENDMODE_ADD
-				return true;
-			}
-			else if(cmdvec[2]=="mod")
-			{
-				// Set SDL_BlendMode of main screen surface to SDL_BLENDMODE_MOD
-				return true;
-			}
-			std::cout << "Error in command (window blendmode [none|blend|add|mod])" << std::endl;
-			return true;
-		}
-	}
-
 	std::cout << "Error in command (window ...)" << std::endl;
 	return true;
 }
