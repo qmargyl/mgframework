@@ -87,7 +87,7 @@ public:
 
 	void save(); // Not implemented yet
 
-	bool runConsoleCommand(const char *c);
+	bool runConsoleCommand(const char *c, MGFramework *w);
 };
 
 

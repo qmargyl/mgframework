@@ -38,11 +38,11 @@ bool Project2::init(int w, int h, int tw, int th)
 
 		// Setup game logics..
 
-		runConsoleCommand("setfps 60"); // Framework default is 20 FPS
-		runConsoleCommand("create mo 50");
-		runConsoleCommand("open terminalserver");
-		runConsoleCommand("mo 0 mark");
-		runConsoleCommand("create pe 1");
+		runConsoleCommand("setfps 60", this); // Framework default is 20 FPS
+		runConsoleCommand("create mo 50", this);
+		runConsoleCommand("open terminalserver", this);
+		runConsoleCommand("mo 0 mark", this);
+		runConsoleCommand("create pe 1", this);
 
 		if(getNumberOfPE()>0)
 		{
@@ -68,10 +68,10 @@ void Project2::handleGameLogics()
 		if(m_PE[0].update())
 		{
 			// Set all moving objects destination coordinate.
-			for(int i=0;i<getNumberOfMO();i++)
-			{
-				m_MO[i].setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
-			}
+		//	for(int i=0;i<getNumberOfMO();i++)
+		//	{
+		//		m_MO[i].setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
+		//	}
 		}
 	}
 

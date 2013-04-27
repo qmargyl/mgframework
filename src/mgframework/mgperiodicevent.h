@@ -20,7 +20,7 @@ public:
 
     void copy(const MGPeriodicEvent *src);
 
-	bool runConsoleCommand(const char *c);
+	bool runConsoleCommand(const char *c, MGFramework *w);
 
 };
 

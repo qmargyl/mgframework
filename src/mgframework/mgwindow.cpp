@@ -75,7 +75,7 @@ int MGWindow::getWidth()
 }
 
 
-bool MGWindow::runConsoleCommand(const char *c)
+bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 {
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
@@ -84,8 +84,6 @@ bool MGWindow::runConsoleCommand(const char *c)
 	{
 		if(cmdvec[1]=="help")
 		{
-			//std::cout << std::endl << "window help - Displays help information for console commands implemented in the window object." << std::endl;
-			//std::cout << "window blendmode [none|blend|add|mod]- Sets the SDL_BlendMode of the main window surface to either SDL_BLENDMODE_NONE, SDL_BLENDMODE_BLEND, SDL_BLENDMODE_ADD or SDL_BLENDMODE_MOD. If the parameter is omitted the SDL_BlendMode is read out instead." << std::endl;
 			return true;
 		}
 		std::cout << "Error in command (window <parameter>)" << std::endl;

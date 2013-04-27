@@ -211,7 +211,7 @@ void MGMovingObject::copy(const MGMovingObject *src)
 	m_ID = src->m_ID;
 }
 
-bool MGMovingObject::runConsoleCommand(const char *c)
+bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 {
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
@@ -253,14 +253,25 @@ bool MGMovingObject::runConsoleCommand(const char *c)
 		else if(cmdvec[2]=="mark")
 		{
 			mark();
+			w->countMark();
 			return true;
 		}
 		else if(cmdvec[2]=="unmark")
 		{
 			unMark();
+			w->countUnMark();
 			return true;
 		}
-
+	}
+	else if(cmdvec.size() == 5)
+	{
+		if(cmdvec[2]=="setdestination")
+		{
+			int dx=MGFramework::toInt(cmdvec[3]);
+			int dy=MGFramework::toInt(cmdvec[4]);
+			setDestTileXY(dx, dy);
+			return true;
+		}
 	}
 
 	std::cout << "Error in command (mo ...)" << std::endl;

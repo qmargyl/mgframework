@@ -140,7 +140,7 @@ void MGMap::mouseScrollingUpdate(int x, int y)
 	}
 }
 
-bool MGMap::runConsoleCommand(const char *c)
+bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 {
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');

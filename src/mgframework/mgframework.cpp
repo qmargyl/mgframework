@@ -25,6 +25,7 @@ MGFramework::MGFramework()
 	m_YFrameStart = 0;
 	m_XFrameEnd = 0;
 	m_YFrameEnd = 0;
+	m_MarkedMOs = 0;
 }
 
 MGFramework::~MGFramework()
@@ -97,29 +98,38 @@ bool MGFramework::processEvents()
 				{
 					int xClick = m_Map.getTileX(iClick);
 					int yClick = m_Map.getTileY(iClick);
+					
 					if (((int) event.button.button) == 1)
 					{
-						//Left click actions here...
-						//m_Map.setTileProperty(xClick, yClick, 1);
-						//m_MO1.setDestTileXY(xClick, yClick);
 
-					}
-					else if (((int) event.button.button) == 3)
-					{
-						m_Map.mouseScrollingClick(event.button.x, event.button.y);
-					}
+						// Unmark all MO..
+						for(int i=0; i<getNumberOfMO(); i++)
+						{
+							if(m_MO[i].isMarked())
+							{
+								m_MO[i].unMark();
+								countUnMark();
+							}
+						}
 
-					// Log debug information to console.
-					MGFLOG(std::cout << "SDL_MOUSEBUTTONDOWN" << std::endl << "  " << "Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;)
-					if (((int) event.button.button) == 1)
-					{
 						activateFraming(event.button.x, event.button.y);
 						MGFLOG(std::cout << "Map (left click): index = " << iClick << ", x = " << xClick << ", y = " << yClick << std::endl;)
 					}
 					else if (((int) event.button.button) == 3)
 					{
+					//	if(getNumberOfMarkedMO()>0)
+					//	{
+					//		char c[64];
+					//		sprintf(c, "mo marked setdestination %d %d", xClick, yClick);
+					//		runConsoleCommand(c, this);
+					//	}
 						MGFLOG(std::cout << "Map (right click): index = " << iClick << ", x = " << xClick << ", y = " << yClick << std::endl;)
+						m_Map.mouseScrollingClick(event.button.x, event.button.y);
 					}
+
+					// Log debug information to console.
+					MGFLOG(std::cout << "SDL_MOUSEBUTTONDOWN: Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;)
+
 				}
 				else
 				{
@@ -138,7 +148,7 @@ bool MGFramework::processEvents()
 
 			case SDL_MOUSEBUTTONUP:
 			{
-				MGFLOG(std::cout << "SDL_MOUSEBUTTONUP" << std::endl << "  " << "Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;)
+				MGFLOG(std::cout << "SDL_MOUSEBUTTONUP: Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;)
 				if (((int) event.button.button) == 1)
 				{
 					int endClickX = m_Map.getTileX(m_Map.getTileIndex(getFrameEndX(), getFrameEndY()));
@@ -153,7 +163,11 @@ bool MGFramework::processEvents()
 							{
 								if(m_MO[i].getTileX()==x && m_MO[i].getTileY()==y)
 								{
-									m_MO[i].mark();
+									if(!m_MO[i].isMarked())
+									{
+										m_MO[i].mark();
+										countMark();
+									}
 								}
 							}
 						}
@@ -162,11 +176,27 @@ bool MGFramework::processEvents()
 				}
 				else if (((int) event.button.button) == 3)
 				{
-					m_Map.mouseScrollingRelease(event.button.x, event.button.y);
-					for(int i=0; i<getNumberOfMO(); i++)
+					// Order marked MOs to go yo mouse location
+					if(getNumberOfMarkedMO()>0)
 					{
-						m_MO[i].unMark();
+						int iClick = m_Map.getTileIndex(event.button.x, event.button.y);
+						int xClick = m_Map.getTileX(iClick);
+						int yClick = m_Map.getTileY(iClick);
+						char c[64];
+						sprintf(c, "mo marked setdestination %d %d", xClick, yClick);
+						runConsoleCommand(c, this);
 					}
+
+					m_Map.mouseScrollingRelease(event.button.x, event.button.y);
+
+			//		for(int i=0; i<getNumberOfMO(); i++)
+			//		{
+			//			if(m_MO[i].isMarked())
+			//			{
+			//				m_MO[i].unMark();
+			//				countUnMark();
+			//			}
+			//		}
 				}
 				break;
 			}
@@ -256,13 +286,13 @@ void MGFramework::activateConsole()
 	do{
 		cout << "mg> ";
 		std::getline(std::cin, cLine);
-	}while(runConsoleCommand(cLine.c_str()));
+	}while(runConsoleCommand(cLine.c_str(), this));
 	disableTyping();
 }
 
 
 
-bool MGFramework::runConsoleCommand(const char *c)
+bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 {
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = split(cmd, ' ');
@@ -276,11 +306,11 @@ bool MGFramework::runConsoleCommand(const char *c)
 		// Decode all commands implemented in other classes
 		if(cmdvec[0]=="map")
 		{
-			return m_Map.runConsoleCommand(c);
+			return m_Map.runConsoleCommand(c, this);
 		}
 		else if(cmdvec[0]=="window")
 		{
-			return m_Window.runConsoleCommand(c);
+			return m_Window.runConsoleCommand(c, this);
 		}
 		else if(cmdvec[0]=="mo")
 		{
@@ -292,7 +322,7 @@ bool MGFramework::runConsoleCommand(const char *c)
 					{
 						if(m_MO[i].isMarked())
 						{
-							m_MO[i].runConsoleCommand(c);
+							m_MO[i].runConsoleCommand(c, this);
 						}
 					}
 					return true;
@@ -302,7 +332,7 @@ bool MGFramework::runConsoleCommand(const char *c)
 					int moIndex=toInt(cmdvec[1]);
 					if(moIndex >= 0 && moIndex < getNumberOfMO())
 					{
-						return m_MO[toInt(cmdvec[1])].runConsoleCommand(c);
+						return m_MO[toInt(cmdvec[1])].runConsoleCommand(c, this);
 					}
 				}
 			}
@@ -340,9 +370,9 @@ bool MGFramework::runConsoleCommand(const char *c)
 			std::cout << "close <terminalserver> - Closes the terminal server for framework commands " << std::endl;
 			std::cout << "          over TCP/IP." << std::endl;
 
-			(void)m_Map.runConsoleCommand("map help");
-			(void)m_Window.runConsoleCommand("window help");
-			if(getNumberOfMO()>0)(void)m_MO[0].runConsoleCommand("mo 0 help");
+			(void)m_Map.runConsoleCommand("map help", this);
+			(void)m_Window.runConsoleCommand("window help", this);
+			if(getNumberOfMO()>0)(void)m_MO[0].runConsoleCommand("mo 0 help", this);
 
 			return true;
 		}
@@ -375,6 +405,21 @@ bool MGFramework::runConsoleCommand(const char *c)
 				std::cout << "Logging enabled." << std::endl;
 				return true;
 			}
+		}
+		else if(cmdvec[0]=="getfps")
+		{
+			std::cout << "" << getFPS() << std::endl;
+			return true;
+		}
+		else if(cmdvec[0]=="getnumberofmarkedmo")
+		{
+			std::cout << "" << getNumberOfMarkedMO() << std::endl;
+			return true;
+		}
+		else if(cmdvec[0]=="getnumberofmo")
+		{
+			std::cout << "" << getNumberOfMO() << std::endl;
+			return true;
 		}
 	}
 	else if(cmdvec.size() == 2)
@@ -433,7 +478,7 @@ bool MGFramework::runConsoleCommand(const char *c)
 			for(int i=0;i<getNumberOfMO();i++)
 			{
 				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()), this);
-				//m_MO[i].setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
+				m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
 				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
 			}
 			return true;
@@ -454,7 +499,7 @@ bool MGFramework::runConsoleCommand(const char *c)
 			for(int i=nBefore; i<getNumberOfMO(); i++)
 			{
 				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()), this);
-				//m_MO[i].setDestTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()));
+				m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
 				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
 			}
 			return true;
@@ -921,7 +966,7 @@ int runMGFrameworkSocketTerminal(void *fm)
 				nZerosInARow=0;
 				if(mgf->okMGFrameworkSyntax(buf))
 				{
-					mgf->runConsoleCommand(buf);
+					mgf->runConsoleCommand(buf, mgf);
 					if(send(fd_new, "ok\n\r", 4, 0) == SOCKET_ERROR)
 					{
 						mgf->logIfEnabled("Server: Failed sending an answer to client request");

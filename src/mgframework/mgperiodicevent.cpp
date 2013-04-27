@@ -61,7 +61,7 @@ void MGPeriodicEvent::copy(const MGPeriodicEvent *src)
 	m_isActive = src->m_isActive;
 }
 
-bool MGPeriodicEvent::runConsoleCommand(const char *c)
+bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 {
 	std::cout << "MGPeriodicEvent::runConsoleCommand(" << c << ")" << std::endl;
 

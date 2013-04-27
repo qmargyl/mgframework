@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.11.0"
+#define MGFRAMEWORKVERSION "1.0.11.1"
 
 #define MGFLOG(x) if(loggingEnabled()){ x; }
 
@@ -62,6 +62,7 @@ class MGFramework :public MGComponent
 
 		//MO related
 		int m_NMO; // Number of Moving Objects
+		int m_MarkedMOs;
 
 		//PE related
 		int m_NPE;
@@ -82,7 +83,7 @@ class MGFramework :public MGComponent
 		void setFrameStartY(int y){ m_YFrameStart=y;}
 		void setFrameEndX(int x){ m_XFrameEnd=x;}
 		void setFrameEndY(int y){ m_YFrameEnd=y;}
-		void activateFraming(int x, int y){setFrameStartX(x); setFrameStartY(y); m_FramingOngoing=true;}
+		void activateFraming(int x, int y){setFrameStartX(x); setFrameStartY(y); setFrameEndX(x); setFrameEndY(y); m_FramingOngoing=true;}
 		void deactivateFraming(){ m_FramingOngoing = false;}
 		void updateFraming(int x, int y){setFrameEndX(x); setFrameEndY(y);}
 		
@@ -168,7 +169,7 @@ class MGFramework :public MGComponent
 		MGFInstanceType getInstanceType(){return m_MGFInstanceType;}
 
 		// Console command handling
-		bool runConsoleCommand(const char *c);
+		bool runConsoleCommand(const char *c, MGFramework *w);
 
 		//Socket terminal related
 		bool socketTerminalOpen(){return m_KeepSocketTerminalOpen;}
@@ -184,6 +185,11 @@ class MGFramework :public MGComponent
 		void enableMiniMap(){m_MiniMapEnabled = true;}
 		void disableMiniMap(){m_MiniMapEnabled = false;}
 		bool miniMapEnabled(){return m_MiniMapEnabled;}
+
+		// MO marking related
+		void countMark(){m_MarkedMOs++;}
+		void countUnMark(){m_MarkedMOs--;}
+		int getNumberOfMarkedMO(){ return m_MarkedMOs;}
 
 		// Utility functions
 		static string toString(int number);

@@ -35,7 +35,7 @@ class MGWindow :public MGComponent
 		int getHeight();
 		int getWidth();
 
-		bool runConsoleCommand(const char *c);
+		bool runConsoleCommand(const char *c, MGFramework *w);
 };
 
 
