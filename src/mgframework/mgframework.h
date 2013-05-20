@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.11.1"
+#define MGFRAMEWORKVERSION "1.0.12.1"
 
 #define MGFLOG(x) if(loggingEnabled()){ x; }
 
@@ -174,6 +174,7 @@ class MGFramework :public MGComponent
 		//Socket terminal related
 		bool socketTerminalOpen(){return m_KeepSocketTerminalOpen;}
 		void logIfEnabled(const char *log){MGFLOG(std::cout << "" << log << std::endl;)}
+		void addConsoleCommandToQueue(const char *c);
 
 		// Program version
 		void setProgramVersion(const char *version){m_ProgramVersion = string(version);}

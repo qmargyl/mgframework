@@ -117,12 +117,6 @@ bool MGFramework::processEvents()
 					}
 					else if (((int) event.button.button) == 3)
 					{
-					//	if(getNumberOfMarkedMO()>0)
-					//	{
-					//		char c[64];
-					//		sprintf(c, "mo marked setdestination %d %d", xClick, yClick);
-					//		runConsoleCommand(c, this);
-					//	}
 						MGFLOG(std::cout << "Map (right click): index = " << iClick << ", x = " << xClick << ", y = " << yClick << std::endl;)
 						m_Map.mouseScrollingClick(event.button.x, event.button.y);
 					}
@@ -176,7 +170,7 @@ bool MGFramework::processEvents()
 				}
 				else if (((int) event.button.button) == 3)
 				{
-					// Order marked MOs to go yo mouse location
+					// Order marked MOs to go to mouse location
 					if(getNumberOfMarkedMO()>0)
 					{
 						int iClick = m_Map.getTileIndex(event.button.x, event.button.y);
@@ -188,15 +182,6 @@ bool MGFramework::processEvents()
 					}
 
 					m_Map.mouseScrollingRelease(event.button.x, event.button.y);
-
-			//		for(int i=0; i<getNumberOfMO(); i++)
-			//		{
-			//			if(m_MO[i].isMarked())
-			//			{
-			//				m_MO[i].unMark();
-			//				countUnMark();
-			//			}
-			//		}
 				}
 				break;
 			}
@@ -224,6 +209,7 @@ void MGFramework::run()
 	m_DelayTime = 0;
 	Uint32 lastFrameTime = SDL_GetTicks()-1; // SDL_GetTicks() - lastFrameTime cannot be zero.
 
+	// Frame loop (processEvents, handleGameLogics, draw)
 	while(processEvents())
 	{
 		// Calculate the current frame time (and implicitly FPS)..
@@ -231,7 +217,7 @@ void MGFramework::run()
 		lastFrameTime = SDL_GetTicks();
 		frameStartTime = SDL_GetTicks();
 
-		// Handle all calculations and drawing of current frame..
+		// Handle all calculations and draw current frame..
 
 
 		//If frame countdown is enabled (a.k.a. we are counting down frames to go into console again)
@@ -248,12 +234,10 @@ void MGFramework::run()
 				std::cout << "\tAverage sleep time per frame: " << (double)sleepKPI / (double)nFrames << std::endl;
 				sleepKPI = 0;
 				nFrames = 0;
-				disableFrameCountdown();
 				activateConsole();
 			}
 			else if (getFrameNumber() > 0)
 			{
-				//std::cout << "Frame count down: " << getFrameNumber() << std::endl;
 				countdownFrame(1);
 				sleepKPI += m_DelayTime; // Add all delay times for the frames counted down as a KPI for performance.
 				nFrames ++;
@@ -266,7 +250,7 @@ void MGFramework::run()
 
 		handleGameLogics();
 		draw();
-		if(getInstanceType() != MGFSERVERINSTANCE) SDL_Flip(getSurface());
+		if(getInstanceType() != MGFSERVERINSTANCE) SDL_Flip(getSurface()); // A server instance of the framework has no graphics.
 
 		// Sleep if there is time to spare..
 		m_DelayTime = (1000/getDesiredFPS()) - (SDL_GetTicks() - frameStartTime);
@@ -477,9 +461,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			for(int i=0;i<getNumberOfMO();i++)
 			{
+				// Here there should be a check whether the tile is already occupied..
 				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()), this);
 				m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
 				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
+				m_Map.occupy(m_MO[i].getTileX(), m_MO[i].getTileY(), m_MO[i].getID());
 			}
 			return true;
 		}
@@ -498,9 +484,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			for(int i=nBefore; i<getNumberOfMO(); i++)
 			{
+				// Here there should be a check whether the tile is already occupied..
 				m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()), this);
 				m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
 				m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
+				m_Map.occupy(m_MO[i].getTileX(), m_MO[i].getTileY(), m_MO[i].getID());
 			}
 			return true;
 		}
@@ -575,7 +563,7 @@ void MGFramework::setDesiredFPS(Uint32 f)
 	}
 	else
 	{
-		MGFLOG(std::cout << "FPS incorrectly calculated (void MGFramework::setDesiredFPS(Uint32 f)): " << f << std::endl;)
+		MGFLOG(std::cout << "WARNING: FPS incorrectly calculated (void MGFramework::setDesiredFPS(Uint32 f)): " << f << std::endl;)
 	}
 }
 
@@ -587,7 +575,7 @@ Uint32 MGFramework::getDesiredFPS()
 	}
 	else
 	{
-		MGFLOG(std::cout << "FPS incorrectly calculated (Uint32 MGFramework::getDesiredFPS()): " << m_FPS << ", returning 60" << std::endl;)
+		MGFLOG(std::cout << "WARNING: FPS incorrectly calculated (Uint32 MGFramework::getDesiredFPS()): " << m_FPS << ", returning 60" << std::endl;)
 		return 1;
 	}
 }
@@ -884,12 +872,20 @@ int MGFramework::initializeWinsock(WORD wVersionRequested)
 
 bool MGFramework::okMGFrameworkSyntax(const char *c)
 {
+	// Dummy implementation
 	if(strlen(c)>2)
 	{
 		return true;
 	}
 	return false;
 }
+
+
+void MGFramework::addConsoleCommandToQueue(const char *c)
+{
+
+}
+
 
 int runMGFrameworkSocketTerminal(void *fm)
 {
