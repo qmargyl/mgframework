@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 {
 	MGFramework* p2;
 
-	MGFInstanceType instanceType = MGFSINGLEPLAYERINSTANCE;
+	eMGFInstanceType instanceType = MGFSINGLEPLAYERINSTANCE;
 	bool loggingOn = false;
 
 	if(argc==1){

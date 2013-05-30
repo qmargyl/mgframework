@@ -3,6 +3,7 @@
 #include "mgframework/mgframework.h"
 #include "mgframework/mgmovingobject.h"
 
+
 Project2Server::Project2Server()
 {
 	// Default parameters for demo application Project2...

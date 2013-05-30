@@ -12,6 +12,7 @@ using namespace std;
 
 MGFramework::MGFramework()
 {
+	//m_Map = new MGMap();
 	m_NMO=0;
 	m_NPE=0;
 	setDesiredFPS(20);

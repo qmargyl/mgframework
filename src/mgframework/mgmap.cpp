@@ -165,7 +165,7 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 			int y2 = MGFramework::toInt(cmdvec[5]);
 
 			std::cout << "Calculating closest path from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ")." << std::endl;
-			calculatePath(x1, y1, x2, y2);
+			calculatePath(MGFSKYPATH, x1, y1, x2, y2);
 			return true;
 		}
 	}
@@ -174,8 +174,75 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 	return true;
 }
 
-void MGMap::calculatePath(int ax, int ay, int bx, int by)
+void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 {
 	std::list<PathItem> path;
-	std::list<PathItem> pathneighbors;
+
+	if(pathType==MGFSKYPATH)
+	{
+		int x=ax;
+		int y=ay;
+
+		while (x!=bx || y!=by)
+		{
+			if(x>bx && y>by)
+			{
+				x--;
+				y--;
+			}
+			else if(x<bx && y<by)
+			{
+				x++;
+				y++;
+			}
+			else if(x>bx && y<by)
+			{
+				x--;
+				y++;
+			}
+			else if(x<bx && y>by)
+			{
+				x++;
+				y--;
+			}
+			else if(x<bx)
+			{
+				x++;
+			}
+			else if(x>bx)
+			{
+				x--;
+			}
+			else if(y<by)
+			{
+				y++;
+			}
+			else if(y>by)
+			{
+				y--;
+			}
+			else
+			{
+				std::cout << "WARNING: MGMap::calculatePath() executed a case which should never happen" << std::endl;
+				std::cout << "Data: x=" << x << ", y=" << y << ", ax=" << ax << ", ay=" << ay << ", bx=" << bx << ", by=" << by << std::endl;
+			}
+
+			PathItem *pI = new PathItem(x, y);
+			path.push_back(*pI);
+			//std::cout << "Add to path: " << pI->getX() << ", " << pI->getY() << std::endl;
+
+		}
+
+		if(!path.empty())
+		{
+			std::cout << "Path: ";
+			for (std::list<PathItem>::iterator it=path.begin(); it != path.end(); ++it)
+			{
+				std::cout << "(" << (*it).getX() << ", " << (*it).getY() << ") ";
+			}
+			std::cout << std::endl;
+		}
+
+	}
+	//delete [] path;
 }

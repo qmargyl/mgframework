@@ -18,7 +18,7 @@
 
 #define MGFLOG(x) if(loggingEnabled()){ x; }
 
-enum MGFInstanceType{
+enum eMGFInstanceType{
 	MGFSERVERINSTANCE = 0,
 	MGFCLIENTINSTANCE = 1,
 	MGFSINGLEPLAYERINSTANCE = 2
@@ -36,7 +36,7 @@ class MGFramework :public MGComponent
 		bool m_WindowPropertiesSet; // Used to determine if all Windows properties have been set.
 		bool m_MiniMapEnabled;		// Enables the mini map implementation.
 
-		MGFInstanceType m_MGFInstanceType;
+		eMGFInstanceType m_MGFInstanceType;
 
 
 		// FPS related
@@ -165,8 +165,8 @@ class MGFramework :public MGComponent
 		bool loggingEnabled(){return m_LoggingEnabled;}
 
 		// Client/Server
-		void setInstanceType(MGFInstanceType it){ m_MGFInstanceType = it;}
-		MGFInstanceType getInstanceType(){return m_MGFInstanceType;}
+		void setInstanceType(eMGFInstanceType it){ m_MGFInstanceType = it;}
+		eMGFInstanceType getInstanceType(){return m_MGFInstanceType;}
 
 		// Console command handling
 		bool runConsoleCommand(const char *c, MGFramework *w);

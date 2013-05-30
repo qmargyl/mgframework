@@ -2,7 +2,9 @@
 #define _MG_MAP_H
 
 #include <SDL/SDL.h>
+#include <iostream>
 #include "mgcomponent.h"
+
 
 #define MGMAP_TP_NOOBSTACLE  0
 #define MGMAP_TP_PROPERTY_1  2
@@ -11,6 +13,11 @@
 #define MGMAP_TP_PROPERTY_4  16
 #define MGMAP_TP_PROPERTY_5  32
 
+enum eMGFPathType{
+	MGFSTRAIGHTLINE = 0,
+	MGFSKYPATH = 1,
+	MGFGROUNDPATH = 2
+};
 
 class MGMap :public MGComponent
 {
@@ -32,8 +39,6 @@ private:
 	int m_MouseScrollingXClick;
 	int m_MouseScrollingYClick;
 
-	// Path related
-	void calculatePath(int ax, int ay, int bx, int by); // Calculates the path from A to B
 
 	class PathItem
 	{
@@ -43,7 +48,8 @@ private:
 		double m_Heuristic;
 	public:
 		PathItem();
-		PathItem(int x, int y);
+		PathItem(int x, int y){m_X=x; m_Y=y; m_Heuristic=1;};
+		~PathItem(){std::cout << "PathItem::~PathItem()\n";};
 		int getX(){ return m_X;}
 		int getY(){ return m_Y;}
 		double getH(){ return m_Heuristic;}
@@ -86,6 +92,9 @@ public:
 	int getWindowWidth(){ return m_WindowWidth;}
 
 	void save(); // Not implemented yet
+
+	// Path related
+	void calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by); // Calculates the path from A to B
 
 	bool runConsoleCommand(const char *c, MGFramework *w);
 };
