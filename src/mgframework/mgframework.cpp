@@ -12,7 +12,6 @@ using namespace std;
 
 MGFramework::MGFramework()
 {
-	//m_Map = new MGMap();
 	m_NMO=0;
 	m_NPE=0;
 	setDesiredFPS(20);
@@ -323,6 +322,17 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			std::cout << "Error in command (mo)" << std::endl;
 		}
+		else if(cmdvec[0]=="pe")
+		{
+			if(cmdvec.size()>2)
+			{
+				int peIndex=toInt(cmdvec[1]);
+				if(peIndex >= 0 && peIndex < getNumberOfPE())
+				{
+					return m_PE[toInt(cmdvec[1])].runConsoleCommand(c, this);
+				}
+			}
+		}
 	}
 
 	// Decode commands implemented in MGFramework
@@ -340,7 +350,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			std::cout << "-----------------------------------------------------------------------------" << std::endl << std::endl;
 			std::cout << "help -    Displays this command help information." << std::endl;
 			std::cout << "exit -    Exists shell and resumes framework execution." << std::endl;
-			std::cout << "minimap - Toggles mini map on/off." << std::endl;
+			std::cout << "minimap <on|off> - Toggles mini map on/off." << std::endl;
 			std::cout << "logging - Toggles logging on/off." << std::endl;
 			std::cout << "setfps <f> - Sets desired FPS (frames per second) to integer value <f>." << std::endl;
 			std::cout << "runframes <f> - Runs <f> game loops (frames) and presents some recorded data." << std::endl;
@@ -360,21 +370,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			if(getNumberOfMO()>0)(void)m_MO[0].runConsoleCommand("mo 0 help", this);
 
 			return true;
-		}
-		else if(cmdvec[0]=="minimap")
-		{
-			if(miniMapEnabled())
-			{
-				disableMiniMap();
-				std::cout << "Mini map disabled." << std::endl;
-				return true;
-			}
-			else
-			{
-				enableMiniMap();
-				std::cout << "Mini map enabled." << std::endl;
-				return true;
-			}
 		}
 		else if(cmdvec[0]=="logging")
 		{
@@ -436,6 +431,19 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				return true;
 		}
+		else if(cmdvec[0]=="minimap" && cmdvec[1]=="on")
+		{
+				enableMiniMap();
+				std::cout << "Mini map enabled." << std::endl;
+				return true;
+		}
+		else if(cmdvec[0]=="minimap" && cmdvec[1]=="off")
+		{
+				disableMiniMap();
+				std::cout << "Mini map disabled." << std::endl;
+				return true;
+		}
+
 	}
 	else if(cmdvec.size() == 3)
 	{
@@ -528,7 +536,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 	}
 
-	std::cout << "Unknown command" << std::endl;
+	std::cout << "MGFramework: Unknown command" << std::endl;
 	return true;
 }
 

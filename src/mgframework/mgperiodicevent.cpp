@@ -67,5 +67,37 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
+
+	if(cmdvec.size() == 3)
+	{
+		if(cmdvec[2]=="help")
+		{
+			return true;
+		}
+		else if(cmdvec[2]=="activate")
+		{
+			activate();
+			return true;
+		}
+		else if(cmdvec[2]=="deactivate")
+		{
+			deactivate();
+			return true;
+		}
+
+	}
+	else if(cmdvec.size() == 4)
+	{
+		if(cmdvec[2]=="setuptimer")
+		{
+			int ms=MGFramework::toInt(cmdvec[3]);
+			setupTimer(ms);
+			return true;
+		}
+	}
+
+	std::cout << "Error in command (pe ...)" << std::endl;
+
+
 	return true;
 }

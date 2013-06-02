@@ -10,7 +10,6 @@ Project2::Project2()
 	disableTyping();
 	setProgramVersion("0.2");
 	setInstanceType(MGFSINGLEPLAYERINSTANCE);
-	enableMiniMap();
 	disableLogging();
 }
 
@@ -43,14 +42,9 @@ bool Project2::init(int w, int h, int tw, int th)
 		runConsoleCommand("open terminalserver", this);
 		runConsoleCommand("mo 0 mark", this);
 		runConsoleCommand("create pe 1", this);
-
-		if(getNumberOfPE()>0)
-		{
-			m_PE[0].setupTimer(4000);
-			m_PE[0].activate();
-		}
-
-//		enableMiniMap();
+		runConsoleCommand("pe 0 setuptimer 4000", this);
+		runConsoleCommand("pe 0 activate", this);
+		runConsoleCommand("minimap on", this);
 
 		return true;
 	}
@@ -67,11 +61,7 @@ void Project2::handleGameLogics()
 	{
 		if(m_PE[0].update())
 		{
-			// Set all moving objects destination coordinate.
-		//	for(int i=0;i<getNumberOfMO();i++)
-		//	{
-		//		m_MO[i].setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
-		//	}
+			std::cout << "PE0: update" << std::endl;
 		}
 	}
 
@@ -107,11 +97,6 @@ void Project2::draw()
 				{
 					drawSprite(m_Floor, getSurface(), 32, 64, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
 				}
-
-			//	if(m_Map.occupant(x, y)!=0)
-			//	{
-			//		drawSprite(m_Mark, getSurface(), 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
-			//	}
 			}
 		}
 	}
@@ -190,5 +175,4 @@ void Project2::draw()
 		vLine32(getSurface(), uLX+xL, uLY, yL, 0x00FF0000);
 	}
 
-	//drawFillCircle32(getSurface(), 100, 100, 20, 0);
 }
