@@ -2,13 +2,16 @@
 #define _MG_WINDOW_H
 
 #include <string>
-#include <iostream>
-#include <SDL/SDL.h>
-#include <SDL/SDL_opengl.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include "SDL_ttf.h"
+//#include <iostream>
+//#include <SDL/SDL.h>
+//#include <SDL/SDL_opengl.h>
+//#include <GL/gl.h>
+//#include <GL/glu.h>
+//#include "SDL_ttf.h"
 #include "mgcomponent.h"
+
+struct SDL_Surface;
+
 
 using std::string;
 

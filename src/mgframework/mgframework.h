@@ -14,9 +14,12 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.12.1"
+#define MGFRAMEWORKVERSION "1.0.12.3"
 
-#define MGFLOG(x) if(loggingEnabled()){ x; }
+//#define MGFLOG(x) if(loggingEnabled()){ x; }
+#define MGFLOG(x) if(loggingEnabled()){ std::cout << "(ID:" << getID() << ") ";  x; }
+
+typedef unsigned short      WORD;
 
 enum eMGFInstanceType{
 	MGFSERVERINSTANCE = 0,
@@ -31,7 +34,7 @@ class MGFramework :public MGComponent
 {
 	private:
 
-		bool m_LoggingEnabled;		// Setting allows extended logging to console.
+//		bool m_LoggingEnabled;		// Setting allows extended logging to console.
 		bool m_TypingEnabled;		// Setting allows typing commands to console.
 		bool m_WindowPropertiesSet; // Used to determine if all Windows properties have been set.
 		bool m_MiniMapEnabled;		// Enables the mini map implementation.
@@ -159,10 +162,10 @@ class MGFramework :public MGComponent
 		bool windowPropertiesSet(){return m_WindowPropertiesSet;}
 
 			
-		// Configuration of Logging/Debugging
-		void enableLogging(){m_LoggingEnabled = true;}
-		void disableLogging(){m_LoggingEnabled = false;}
-		bool loggingEnabled(){return m_LoggingEnabled;}
+//		// Configuration of Logging...
+//		void enableLogging(){m_LoggingEnabled = true;}
+//		void disableLogging(){m_LoggingEnabled = false;}
+//		bool loggingEnabled(){return m_LoggingEnabled;}
 
 		// Client/Server
 		void setInstanceType(eMGFInstanceType it){ m_MGFInstanceType = it;}

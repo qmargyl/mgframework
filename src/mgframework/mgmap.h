@@ -49,7 +49,7 @@ private:
 	public:
 		PathItem();
 		PathItem(int x, int y){m_X=x; m_Y=y; m_Heuristic=1;};
-		~PathItem(){std::cout << "PathItem::~PathItem()\n";};
+		~PathItem(){/*std::cout << "PathItem::~PathItem()\n";*/};
 		int getX(){ return m_X;}
 		int getY(){ return m_Y;}
 		double getH(){ return m_Heuristic;}

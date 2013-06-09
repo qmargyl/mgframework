@@ -1,3 +1,11 @@
+
+#include <string>
+#include <iostream>
+#include <SDL/SDL.h>
+#include <SDL/SDL_opengl.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include "SDL_ttf.h"
 #include "mgwindow.h"
 #include "mgframework.h"
 

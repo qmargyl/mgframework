@@ -21,8 +21,6 @@ private:
 	int m_TempDestTileX;
 	int m_TempDestTileY;
 
-	int m_ID;
-
 	int m_NextTileX;
 	int m_NextTileY;
 	void setNextXY(int x, int y, MGFramework *world);
@@ -60,8 +58,8 @@ public:
 	void unMark(){m_Marked=false;}
 	bool isMarked(){return m_Marked;}
 
-	void setID(int id){ m_ID=id;}
-	int getID(){ return m_ID;}
+	void setTimeOfLastUpdate(Uint32 ms){ m_TimeOfLastUpdate = ms; }
+	Uint32 getTimeOfLastUpdate(){ return m_TimeOfLastUpdate; }
 
 };
 

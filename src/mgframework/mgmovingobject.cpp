@@ -4,14 +4,14 @@
 
 MGMovingObject::MGMovingObject()
 {
-	m_TimeOfLastUpdate = SDL_GetTicks();
+	setTimeOfLastUpdate(SDL_GetTicks());
 	m_FinishingLastMove=false;
 	m_Marked=false;
 	m_TileX=0;
 	m_TileY=0;
 	m_NextTileX=0;
 	m_NextTileY=0;
-	m_ID=MGFramework::randomN(1000000)+1;
+	setID();
 }
 
 void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
@@ -65,7 +65,7 @@ void MGMovingObject::setSpeed(double s, int tileSize)
 
 void MGMovingObject::update(MGFramework *w)
 {
-	int timeSinceLastUpdate = SDL_GetTicks() - m_TimeOfLastUpdate;
+	int timeSinceLastUpdate = SDL_GetTicks() - getTimeOfLastUpdate();
 	double d = m_Speed * (timeSinceLastUpdate / 1000.0);
 
 	if(getDestTileX()!=getTileX() || getDestTileY()!=getTileY())
@@ -186,7 +186,7 @@ void MGMovingObject::update(MGFramework *w)
 		}
 	}
 
-	m_TimeOfLastUpdate = SDL_GetTicks();
+	setTimeOfLastUpdate(SDL_GetTicks());
 }
 
 
