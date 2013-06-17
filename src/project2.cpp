@@ -8,7 +8,6 @@ Project2::Project2()
 	// Default parameters for demo application Project2...
 	unsetWindowProperties(); // Force setWindowProperties to be called before init.
 	disableTyping();
-	setProgramVersion("0.2");
 	setInstanceType(MGFSINGLEPLAYERINSTANCE);
 	disableLogging();
 }

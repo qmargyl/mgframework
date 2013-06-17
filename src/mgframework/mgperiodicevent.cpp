@@ -8,6 +8,13 @@
 MGPeriodicEvent::MGPeriodicEvent()
 : m_Period(1000), m_StartTime(0), m_isActive(false) 
 {
+
+}
+
+
+eMGFPEConsoleCommand MGPeriodicEvent::detectPEConsoleCommand(const std::vector<std::string> &cmdvec)
+{
+	return MGFPECMD_UNDEFINED;
 }
 
 void MGPeriodicEvent::setupTimer(int ms)
@@ -63,10 +70,28 @@ void MGPeriodicEvent::copy(const MGPeriodicEvent *src)
 
 bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 {
-	std::cout << "MGPeriodicEvent::runConsoleCommand(" << c << ")" << std::endl;
+	MGFLOG(std::cout << "MGPeriodicEvent::runConsoleCommand(" << c << ")" << std::endl;);
 
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
+
+//	MGFPECMD_UNDEFINED = 0,
+//	MGFPECMD_HELP,
+//	MGFPECMD_ACTIVATE,
+//	MGFPECMD_DEACTIVATE,
+//	MGFPECMD_SETUPTIMER,
+//	MGFPECMD_LOGGING_ON,
+//	MGFPECMD_LOGGING_OFF
+
+	switch(detectPEConsoleCommand(cmdvec))
+	{
+		case MGFPECMD_UNDEFINED:
+			MGFLOG(std::cout << "Console command not identified as PE command: " << c << std::endl;); 
+			break;
+
+		default:
+			break;
+	}
 
 	if(cmdvec.size() == 3)
 	{
@@ -94,10 +119,23 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 			setupTimer(ms);
 			return true;
 		}
+		else if(cmdvec[2]=="logging" && cmdvec[3]=="on")
+		{
+			enableLogging();
+			MGFPRINT(std::cout << "Logging enabled." << std::endl;);
+			return true;
+		}
+		else if(cmdvec[2]=="Logging" && cmdvec[3]=="off")
+		{
+			disableLogging();
+			MGFPRINT(std::cout << "Logging disabled." << std::endl;);
+			return true;
+		}
 	}
 
-	std::cout << "Error in command (pe ...)" << std::endl;
-
+	MGFPRINT(std::cout << "Error in command (pe ...)" << std::endl;);
 
 	return true;
 }
+
+

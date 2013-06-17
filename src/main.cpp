@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 			else if(strcmp(argv[i], "-help")==0){
 				std::cout << std::endl << argv[0] << " supports the following parameters:" << std::endl;
 				std::cout << "-logging" << std::endl;
-				std::cout << " Enables debug logging to console. -debug gives same effect." << std::endl;
+				std::cout << " Enables debug logging to console." << std::endl;
 
 				goto EXIT_MAIN_RIGHT_AWAY;
 			}
@@ -45,20 +45,20 @@ int main(int argc, char **argv)
 	{
 		p2 = new Project2();
 		p2->setWindowProperties(1024, 768, 32, false, 
-			string("Project2 (single player example application) ") + string(p2->getProgramVersion()));
+			string("Project2 (single player example application) based on MGF ") + string(p2->getMGFrameworkVersion()));
 	}
 	else if(instanceType==MGFCLIENTINSTANCE)
 	{
 		// Add separate class later...
 		p2 = new Project2();
 		p2->setWindowProperties(640, 480, 32, false, 
-			string("Project2 (client example application) ") + string(p2->getProgramVersion()));
+			string("Project2 (client example application) based on MGF ") + string(p2->getMGFrameworkVersion()));
 	}
 	else if(instanceType==MGFSERVERINSTANCE)
 	{
 		p2 = new Project2Server();
 		p2->setWindowProperties(800, 600, 32, false, 
-			string("Project2 (server example application) ") + string(p2->getProgramVersion()));
+			string("Project2 (server example application) based on MGF ") + string(p2->getMGFrameworkVersion()));
 	}
 
 	if(loggingOn) p2->enableLogging();

@@ -9,7 +9,6 @@ Project2Server::Project2Server()
 	// Default parameters for demo application Project2...
 	unsetWindowProperties(); // Force setWindowProperties to be called before init.
 	disableTyping();
-	setProgramVersion("0.2");
 	setInstanceType(MGFSERVERINSTANCE);
 	disableMiniMap();
 	enableLogging();

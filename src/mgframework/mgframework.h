@@ -16,15 +16,28 @@
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
 #define MGFRAMEWORKVERSION "1.0.12.3"
 
-//#define MGFLOG(x) if(loggingEnabled()){ x; }
-#define MGFLOG(x) if(loggingEnabled()){ std::cout << "(ID:" << getID() << ") ";  x; }
+#define MGFLOG(x) if(loggingEnabled()){ std::cout << "LOG (ID:" << getID() << ") ";  x; }
+#define MGFPRINT(x) { std::cout << "PRINT (ID:" << getID() << ") ";  x; }
+
 
 typedef unsigned short      WORD;
 
 enum eMGFInstanceType{
 	MGFSERVERINSTANCE = 0,
-	MGFCLIENTINSTANCE = 1,
-	MGFSINGLEPLAYERINSTANCE = 2
+	MGFCLIENTINSTANCE,
+	MGFSINGLEPLAYERINSTANCE
+};
+
+// Each console command construction forwarded to another class has an enum.
+enum eMGFExternalConsoleCommand{
+	MGFEXTCMD_UNDEFINED = 0,	// Used to represent a failed detection.
+	MGFEXTCMD_MAP,				// Command forwarded to m_Map.
+	MGFEXTCMD_WINDOW,			// Command forwarded to m_Window.
+	MGFEXTCMD_MO,				// Command forwarded to m_MO[x] where x is a valid index.
+	MGFEXTCMD_MO_MARKED,		// Command forwarded to all m_MO[x] where m_MO[x] is marked.
+	MGFEXTCMD_MO_ALL,			// Command forwarded to all m_MO[x].
+	MGFEXTCMD_PE,				// Command forwarded to m_PE[x] where x is a valid index.
+	MGFEXTCMD_PE_ALL			// Command forwarded to all m_PE[x].
 };
 
 int runMGFrameworkSocketTerminal(void *fm);
@@ -41,14 +54,13 @@ class MGFramework :public MGComponent
 
 		eMGFInstanceType m_MGFInstanceType;
 
-
 		// FPS related
 		Uint32 m_FrameTime;			// Holds current frame time
 		Uint32 m_FPS;				// Holds desired FPS
 		Sint32 m_DelayTime;			// Holds delay in ms for last frame
 
 		// Version related
-		string m_ProgramVersion;	// Holds the application version, not the MG Framework version.
+		//string m_ProgramVersion;	// Holds the application version, not the MG Framework version.
 
 		// Countdown feature needs a flag and a counter.
 		bool m_FrameCountdownEnabled;
@@ -60,7 +72,7 @@ class MGFramework :public MGComponent
 		void disableFrameCountdown(){m_FrameCountdownEnabled = false;}
 		void countdownFrame(int howmany){m_FrameNumber -= howmany;}
 
-		//Console related
+		//Console activation related
 		void activateConsole();
 
 		//MO related
@@ -68,7 +80,7 @@ class MGFramework :public MGComponent
 		int m_MarkedMOs;
 
 		//PE related
-		int m_NPE;
+		int m_NPE; // Number of Periodic Events
 
 		//Socket terminal related.
 		SDL_Thread *m_SocketTerminal;
@@ -76,7 +88,7 @@ class MGFramework :public MGComponent
 		void openSocketTerminal(){m_KeepSocketTerminalOpen = true;}
 		void closeSocketTerminal(){m_KeepSocketTerminalOpen = false;}
 
-		// Framing related
+		// Frame selection related (click drag and release)
 		bool m_FramingOngoing;
 		int m_XFrameStart;
 		int m_YFrameStart;
@@ -90,8 +102,9 @@ class MGFramework :public MGComponent
 		void deactivateFraming(){ m_FramingOngoing = false;}
 		void updateFraming(int x, int y){setFrameEndX(x); setFrameEndY(y);}
 		
+		// Console command parser implementation..
+		eMGFExternalConsoleCommand detectExternalConsoleCommand(const std::vector<std::string> &cmdvec);
 
-		
 
 	protected:
 		MGWindow m_Window;		// The framework window
@@ -119,7 +132,7 @@ class MGFramework :public MGComponent
 
 		virtual void resize(int x, int y);	// Not implemented yet
 
-		//Framing related
+		// Frame selection related (click drag and release)
 		bool isFramingOngoing(){ return m_FramingOngoing;}
 		int getFrameStartX(){ return m_XFrameStart;}
 		int getFrameStartY(){ return m_YFrameStart;}
@@ -144,7 +157,7 @@ class MGFramework :public MGComponent
 		Uint32 getDesiredFPS();
 		Sint32 getLastFrameDelayTime(){return m_DelayTime;}	// A kind of measurement for how much time is left for additional calculations between frames.
 
-		// Configuration
+		// Console activation related
 		void enableTyping(){m_TypingEnabled = true;}
 		void disableTyping(){m_TypingEnabled = false;}
 		bool typingEnabled(){return m_TypingEnabled;}
@@ -180,8 +193,8 @@ class MGFramework :public MGComponent
 		void addConsoleCommandToQueue(const char *c);
 
 		// Program version
-		void setProgramVersion(const char *version){m_ProgramVersion = string(version);}
-		const char *getProgramVersion(){return m_ProgramVersion.c_str();}
+		//void setProgramVersion(const char *version){m_ProgramVersion = string(version);}
+		const char *getMGFrameworkVersion(){return MGFRAMEWORKVERSION;}
 
 		virtual void run();
 
@@ -190,7 +203,7 @@ class MGFramework :public MGComponent
 		void disableMiniMap(){m_MiniMapEnabled = false;}
 		bool miniMapEnabled(){return m_MiniMapEnabled;}
 
-		// MO marking related
+		// MO selection related
 		void countMark(){m_MarkedMOs++;}
 		void countUnMark(){m_MarkedMOs--;}
 		int getNumberOfMarkedMO(){ return m_MarkedMOs;}

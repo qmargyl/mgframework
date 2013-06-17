@@ -280,6 +280,74 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 {
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = split(cmd, ' ');
+
+	switch(detectExternalConsoleCommand(cmdvec))
+	{
+		case MGFEXTCMD_UNDEFINED:
+			MGFLOG(std::cout << "Console command not identified as external: " << c << std::endl;); 
+			// Continue to detecting commands implemented in the MGFramework class.
+			break;
+
+		case MGFEXTCMD_MAP:
+			return m_Map.runConsoleCommand(c, this);
+
+		case MGFEXTCMD_WINDOW:
+			return m_Window.runConsoleCommand(c, this);
+
+		case MGFEXTCMD_MO:
+		{
+			int moIndex=toInt(cmdvec[1]);
+			if(moIndex >= 0 && moIndex < getNumberOfMO())
+			{
+				return m_MO[toInt(cmdvec[1])].runConsoleCommand(c, this);
+			}
+			MGFLOG(std::cout << "WARNING: Console command was not forwarded to MO " << moIndex << std::endl;); 
+			return true;
+		}
+
+		case MGFEXTCMD_MO_MARKED:
+			for(int i=0; i<getNumberOfMO(); i++)
+			{
+				if(m_MO[i].isMarked())
+				{
+					m_MO[i].runConsoleCommand(c, this);
+				}
+			}
+			return true;
+
+		case MGFEXTCMD_MO_ALL:
+			for(int i=0; i<getNumberOfMO(); i++)
+			{
+				m_MO[i].runConsoleCommand(c, this);
+			}
+			return true;
+
+		case MGFEXTCMD_PE:
+		{
+			int peIndex=toInt(cmdvec[1]);
+			if(peIndex >= 0 && peIndex < getNumberOfPE())
+			{
+				return m_PE[toInt(cmdvec[1])].runConsoleCommand(c, this);
+			}
+			MGFLOG(std::cout << "WARNING: Console command was not forwarded to PE " << peIndex << std::endl;); 
+			return true;
+		}
+
+		case MGFEXTCMD_PE_ALL:
+			for(int i=0; i<getNumberOfPE(); i++)
+			{
+				m_PE[i].runConsoleCommand(c, this);
+			}
+			return true;
+
+
+		default:
+			MGFLOG(std::cout << "ERROR: detectExternalConsoleCommand returned a bad value" << std::endl;); 
+			return true;
+	}
+
+
+
 	if(cmdvec.size() == 0)
 	{
 		std::cout << "Type help for help" << std::endl;
@@ -290,48 +358,48 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		// Decode all commands implemented in other classes
 		if(cmdvec[0]=="map")
 		{
-			return m_Map.runConsoleCommand(c, this);
+			//return m_Map.runConsoleCommand(c, this);
 		}
 		else if(cmdvec[0]=="window")
 		{
-			return m_Window.runConsoleCommand(c, this);
+			//return m_Window.runConsoleCommand(c, this);
 		}
 		else if(cmdvec[0]=="mo")
 		{
-			if(cmdvec.size()>2)
-			{
-				if(cmdvec[1]=="marked")
-				{
-					for(int i=0; i<getNumberOfMO(); i++)
-					{
-						if(m_MO[i].isMarked())
-						{
-							m_MO[i].runConsoleCommand(c, this);
-						}
-					}
-					return true;
-				}
-				else
-				{
-					int moIndex=toInt(cmdvec[1]);
-					if(moIndex >= 0 && moIndex < getNumberOfMO())
-					{
-						return m_MO[toInt(cmdvec[1])].runConsoleCommand(c, this);
-					}
-				}
-			}
-			std::cout << "Error in command (mo)" << std::endl;
+//			if(cmdvec.size()>2)
+//			{
+//				if(cmdvec[1]=="marked")
+//				{
+//					for(int i=0; i<getNumberOfMO(); i++)
+//					{
+//						if(m_MO[i].isMarked())
+//						{
+//							m_MO[i].runConsoleCommand(c, this);
+//						}
+//					}
+//					return true;
+//				}
+//				else
+//				{
+//					int moIndex=toInt(cmdvec[1]);
+//					if(moIndex >= 0 && moIndex < getNumberOfMO())
+//					{
+//						return m_MO[toInt(cmdvec[1])].runConsoleCommand(c, this);
+//					}
+//				}
+//			}
+//			std::cout << "Error in command (mo)" << std::endl;
 		}
 		else if(cmdvec[0]=="pe")
 		{
-			if(cmdvec.size()>2)
-			{
-				int peIndex=toInt(cmdvec[1]);
-				if(peIndex >= 0 && peIndex < getNumberOfPE())
-				{
-					return m_PE[toInt(cmdvec[1])].runConsoleCommand(c, this);
-				}
-			}
+//			if(cmdvec.size()>2)
+//			{
+//				int peIndex=toInt(cmdvec[1]);
+//				if(peIndex >= 0 && peIndex < getNumberOfPE())
+//				{
+//					return m_PE[toInt(cmdvec[1])].runConsoleCommand(c, this);
+//				}
+//			}
 		}
 	}
 
@@ -376,29 +444,29 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			if(loggingEnabled())
 			{
 				disableLogging();
-				std::cout << "Logging disabled." << std::endl;
+				MGFPRINT(std::cout << "Logging disabled." << std::endl;);
 				return true;
 			}
 			else
 			{
 				enableLogging();
-				std::cout << "Logging enabled." << std::endl;
+				MGFPRINT(std::cout << "Logging enabled." << std::endl;);
 				return true;
 			}
 		}
 		else if(cmdvec[0]=="getfps")
 		{
-			std::cout << "" << getFPS() << std::endl;
+			MGFPRINT(std::cout << "" << getFPS() << std::endl;);
 			return true;
 		}
 		else if(cmdvec[0]=="getnumberofmarkedmo")
 		{
-			std::cout << "" << getNumberOfMarkedMO() << std::endl;
+			MGFPRINT(std::cout << "" << getNumberOfMarkedMO() << std::endl;);
 			return true;
 		}
 		else if(cmdvec[0]=="getnumberofmo")
 		{
-			std::cout << "" << getNumberOfMO() << std::endl;
+			MGFPRINT(std::cout << "" << getNumberOfMO() << std::endl;);
 			return true;
 		}
 	}
@@ -417,14 +485,14 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		}
 		else if(cmdvec[0]=="open" && cmdvec[1]=="terminalserver")
 		{
-				std::cout << "Opening terminal server..." << std::endl;
+				MGFPRINT(std::cout << "Opening terminal server..." << std::endl;);
 				openSocketTerminal();
 				m_SocketTerminal = SDL_CreateThread(runMGFrameworkSocketTerminal, this);
 				return true;
 		}
 		else if(cmdvec[0]=="close" && cmdvec[1]=="terminalserver")
 		{
-				std::cout << "Closing terminal server..." << std::endl;
+				MGFPRINT(std::cout << "Closing terminal server..." << std::endl;);
 				if(socketTerminalOpen())
 				{
 					closeSocketTerminal();
@@ -434,13 +502,25 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		else if(cmdvec[0]=="minimap" && cmdvec[1]=="on")
 		{
 				enableMiniMap();
-				std::cout << "Mini map enabled." << std::endl;
+				MGFPRINT(std::cout << "Mini map enabled." << std::endl;);
 				return true;
 		}
 		else if(cmdvec[0]=="minimap" && cmdvec[1]=="off")
 		{
 				disableMiniMap();
-				std::cout << "Mini map disabled." << std::endl;
+				MGFPRINT(std::cout << "Mini map disabled." << std::endl;);
+				return true;
+		}
+		else if(cmdvec[0]=="logging" && cmdvec[1]=="on")
+		{
+				enableLogging();
+				MGFPRINT(std::cout << "Logging enabled." << std::endl;);
+				return true;
+		}
+		else if(cmdvec[0]=="Logging" && cmdvec[1]=="off")
+		{
+				disableLogging();
+				MGFPRINT(std::cout << "Logging disabled." << std::endl;);
 				return true;
 		}
 
@@ -465,7 +545,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			else
 			{
-				std::cout << "Error in command (create mo <n>)" << std::endl;
+				MGFPRINT(std::cout << "Error in command (create mo <n>)" << std::endl;);
 				return true;
 			}
 			for(int i=0;i<getNumberOfMO();i++)
@@ -488,7 +568,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			else
 			{
-				std::cout << "Error in command (add mo <n>)" << std::endl;
+				MGFPRINT(std::cout << "Error in command (add mo <n>)" << std::endl;);
 				return true;
 			}
 			for(int i=nBefore; i<getNumberOfMO(); i++)
@@ -510,7 +590,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			else
 			{
-				std::cout << "Error in command (create pe <n>)" << std::endl;
+				MGFPRINT(std::cout << "Error in command (create pe <n>)" << std::endl;);
 			}
 			return true;
 		}
@@ -524,7 +604,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			else
 			{
-				std::cout << "Error in command (add pe <n>)" << std::endl;
+				MGFPRINT(std::cout << "Error in command (add pe <n>)" << std::endl;);
 			}
 			return true;
 		}
@@ -536,10 +616,50 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 	}
 
-	std::cout << "MGFramework: Unknown command" << std::endl;
+	MGFPRINT(std::cout << "MGFramework: Unknown command" << std::endl;);
 	return true;
 }
 
+
+eMGFExternalConsoleCommand MGFramework::detectExternalConsoleCommand(const std::vector<std::string> &cmdvec)
+{
+	if(cmdvec.size() == 0)
+	{
+		return MGFEXTCMD_UNDEFINED;
+	}
+	else if(cmdvec[0]=="map")
+	{
+		return MGFEXTCMD_MAP;
+	}
+	else if(cmdvec[0]=="window")
+	{
+		return MGFEXTCMD_WINDOW;
+	}
+	else if(cmdvec.size() > 2 && cmdvec[0]=="mo" && cmdvec[1]=="marked")
+	{
+		return MGFEXTCMD_MO_MARKED;
+	}
+	else if(cmdvec.size() > 2 && cmdvec[0]=="mo" && cmdvec[1]=="all")
+	{
+		return MGFEXTCMD_MO_ALL;
+	}
+	else if(cmdvec.size() > 1 && cmdvec[0]=="mo")
+	{
+		return MGFEXTCMD_MO;
+	}
+	else if(cmdvec.size() > 1 && cmdvec[0]=="pe")
+	{
+		return MGFEXTCMD_PE;
+	}
+	else if(cmdvec.size() > 1 && cmdvec[0]=="pe" && cmdvec[1]=="all")
+	{
+		return MGFEXTCMD_PE_ALL;
+	}
+	else
+	{
+		return MGFEXTCMD_UNDEFINED;
+	}
+}
 
 
 Uint32 MGFramework::getFPS()
