@@ -100,3 +100,8 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 	std::cout << "Error in command (window ...)" << std::endl;
 	return true;
 }
+
+eMGComponentConsoleCommand MGWindow::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
+{
+	return MGComponent_UNDEFINED;
+}

@@ -216,6 +216,20 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
 
+	switch(detectMGComponentConsoleCommand(cmdvec))
+	{
+
+
+
+		default:
+			MGFLOG(std::cout << "ERROR: MGMovingObject::detectComponentConsoleCommand returned a bad value" << std::endl;); 
+//			return true;
+	}
+
+//	MGFPRINT(std::cout << "Unknown command" << std::endl;);
+//	return true;
+
+
 	if(cmdvec.size() == 3)
 	{
 		if(cmdvec[2]=="help")
@@ -277,4 +291,9 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 
 	std::cout << "Error in command (mo ...)" << std::endl;
 	return true;
+}
+
+eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
+{
+	return MGComponent_UNDEFINED;
 }

@@ -174,6 +174,11 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 	return true;
 }
 
+eMGComponentConsoleCommand MGMap::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
+{
+	return MGComponent_UNDEFINED;
+}
+
 void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 {
 	std::list<PathItem> path;

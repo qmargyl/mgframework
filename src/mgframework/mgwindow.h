@@ -39,6 +39,8 @@ class MGWindow :public MGComponent
 		int getWidth();
 
 		bool runConsoleCommand(const char *c, MGFramework *w);
+		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
+
 };
 
 

@@ -281,48 +281,25 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = split(cmd, ' ');
 
-	switch(detectExternalConsoleCommand(cmdvec))
+	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
-		case MGFEXTCMD_UNDEFINED:
-			MGFLOG(std::cout << "Console command not identified as external: " << c << std::endl;); 
-			// Continue to detecting commands implemented in the MGFramework class.
-			break;
-
-		case MGFEXTCMD_MAP:
-			return m_Map.runConsoleCommand(c, this);
-
-		case MGFEXTCMD_WINDOW:
-			return m_Window.runConsoleCommand(c, this);
-
-		case MGFEXTCMD_MO:
+		case MGComponent_MAP_X:
 		{
-			int moIndex=toInt(cmdvec[1]);
-			if(moIndex >= 0 && moIndex < getNumberOfMO())
-			{
-				return m_MO[toInt(cmdvec[1])].runConsoleCommand(c, this);
-			}
-			MGFLOG(std::cout << "WARNING: Console command was not forwarded to MO " << moIndex << std::endl;); 
-			return true;
+			return m_Map.runConsoleCommand(c, this);
 		}
 
-		case MGFEXTCMD_MO_MARKED:
-			for(int i=0; i<getNumberOfMO(); i++)
-			{
-				if(m_MO[i].isMarked())
-				{
-					m_MO[i].runConsoleCommand(c, this);
-				}
-			}
-			return true;
+		case MGComponent_WINDOW_X:
+		{
+			return m_Window.runConsoleCommand(c, this);
+		}
 
-		case MGFEXTCMD_MO_ALL:
-			for(int i=0; i<getNumberOfMO(); i++)
-			{
-				m_MO[i].runConsoleCommand(c, this);
-			}
-			return true;
-
-		case MGFEXTCMD_PE:
+		case MGComponent_PE_INT_X:
+		case MGComponent_PE_INT_HELP:
+		case MGComponent_PE_INT_ACTIVATE:
+		case MGComponent_PE_INT_DEACTIVATE:
+		case MGComponent_PE_INT_SETUPTIMER_INT:
+		case MGComponent_PE_INT_LOGGING_ON:
+		case MGComponent_PE_INT_LOGGING_OFF:
 		{
 			int peIndex=toInt(cmdvec[1]);
 			if(peIndex >= 0 && peIndex < getNumberOfPE())
@@ -333,201 +310,22 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
-		case MGFEXTCMD_PE_ALL:
+		case MGComponent_PE_ALL_X:
+		{
 			for(int i=0; i<getNumberOfPE(); i++)
 			{
 				m_PE[i].runConsoleCommand(c, this);
 			}
 			return true;
+		}
 
-
-		default:
-			MGFLOG(std::cout << "ERROR: detectExternalConsoleCommand returned a bad value" << std::endl;); 
-			return true;
-	}
-
-
-
-	if(cmdvec.size() == 0)
-	{
-		std::cout << "Type help for help" << std::endl;
-		return true;
-	}
-	else if(cmdvec.size() >= 1)
-	{
-		// Decode all commands implemented in other classes
-		if(cmdvec[0]=="map")
-		{
-			//return m_Map.runConsoleCommand(c, this);
-		}
-		else if(cmdvec[0]=="window")
-		{
-			//return m_Window.runConsoleCommand(c, this);
-		}
-		else if(cmdvec[0]=="mo")
-		{
-//			if(cmdvec.size()>2)
-//			{
-//				if(cmdvec[1]=="marked")
-//				{
-//					for(int i=0; i<getNumberOfMO(); i++)
-//					{
-//						if(m_MO[i].isMarked())
-//						{
-//							m_MO[i].runConsoleCommand(c, this);
-//						}
-//					}
-//					return true;
-//				}
-//				else
-//				{
-//					int moIndex=toInt(cmdvec[1]);
-//					if(moIndex >= 0 && moIndex < getNumberOfMO())
-//					{
-//						return m_MO[toInt(cmdvec[1])].runConsoleCommand(c, this);
-//					}
-//				}
-//			}
-//			std::cout << "Error in command (mo)" << std::endl;
-		}
-		else if(cmdvec[0]=="pe")
-		{
-//			if(cmdvec.size()>2)
-//			{
-//				int peIndex=toInt(cmdvec[1]);
-//				if(peIndex >= 0 && peIndex < getNumberOfPE())
-//				{
-//					return m_PE[toInt(cmdvec[1])].runConsoleCommand(c, this);
-//				}
-//			}
-		}
-	}
-
-	// Decode commands implemented in MGFramework
-	if(cmdvec.size() == 1)
-	{
-		if(cmdvec[0]=="exit")
-		{
-			std::cout << "Exiting console..." << std::endl;
-			return false;
-		}
-		else if(cmdvec[0]=="help")
-		{
-			std::cout << "Command help" << std::endl;
-			std::cout << "[<object> [<object identifier>]] <command> [<parameter 1> ... <parameter n>]" << std::endl;
-			std::cout << "-----------------------------------------------------------------------------" << std::endl << std::endl;
-			std::cout << "help -    Displays this command help information." << std::endl;
-			std::cout << "exit -    Exists shell and resumes framework execution." << std::endl;
-			std::cout << "minimap <on|off> - Toggles mini map on/off." << std::endl;
-			std::cout << "logging - Toggles logging on/off." << std::endl;
-			std::cout << "setfps <f> - Sets desired FPS (frames per second) to integer value <f>." << std::endl;
-			std::cout << "runframes <f> - Runs <f> game loops (frames) and presents some recorded data." << std::endl;
-			std::cout << "          <f> is an integer." << std::endl;
-			std::cout << "create <mo|pe> <n> - Creates <n> objects (and deletes any previously" << std::endl;
-			std::cout << "          existing ones). <n> is an integer. Only MGMovingObject (mo)"  << std::endl;
-			std::cout << "          and MGPeriodicEvent are (pe) supported at this point." << std::endl;
-			std::cout << "add <mo|pe> <n> - Adds <n> objects. <n> is an integer. Only MGMovingObject" << std::endl;
-			std::cout << "          (mo) and MGPeriodicEvent (pe) are supported at this point."  << std::endl;
-			std::cout << "open <terminalserver> - Opens the terminal server for framework commands " << std::endl;
-			std::cout << "          over TCP/IP." << std::endl;
-			std::cout << "close <terminalserver> - Closes the terminal server for framework commands " << std::endl;
-			std::cout << "          over TCP/IP." << std::endl;
-
-			(void)m_Map.runConsoleCommand("map help", this);
-			(void)m_Window.runConsoleCommand("window help", this);
-			if(getNumberOfMO()>0)(void)m_MO[0].runConsoleCommand("mo 0 help", this);
-
-			return true;
-		}
-		else if(cmdvec[0]=="logging")
-		{
-			if(loggingEnabled())
-			{
-				disableLogging();
-				MGFPRINT(std::cout << "Logging disabled." << std::endl;);
-				return true;
-			}
-			else
-			{
-				enableLogging();
-				MGFPRINT(std::cout << "Logging enabled." << std::endl;);
-				return true;
-			}
-		}
-		else if(cmdvec[0]=="getfps")
-		{
-			MGFPRINT(std::cout << "" << getFPS() << std::endl;);
-			return true;
-		}
-		else if(cmdvec[0]=="getnumberofmarkedmo")
-		{
-			MGFPRINT(std::cout << "" << getNumberOfMarkedMO() << std::endl;);
-			return true;
-		}
-		else if(cmdvec[0]=="getnumberofmo")
-		{
-			MGFPRINT(std::cout << "" << getNumberOfMO() << std::endl;);
-			return true;
-		}
-	}
-	else if(cmdvec.size() == 2)
-	{
-		if(cmdvec[0]=="runframes")
-		{
-			enableFrameCountdown();
-			setFrameNumber(toInt(cmdvec[1]));
-			return false;
-		}
-		else if(cmdvec[0]=="setfps")
+		case MGComponent_SETFPS_INT:
 		{
 			setDesiredFPS(toInt(cmdvec[1]));
 			return true;
 		}
-		else if(cmdvec[0]=="open" && cmdvec[1]=="terminalserver")
-		{
-				MGFPRINT(std::cout << "Opening terminal server..." << std::endl;);
-				openSocketTerminal();
-				m_SocketTerminal = SDL_CreateThread(runMGFrameworkSocketTerminal, this);
-				return true;
-		}
-		else if(cmdvec[0]=="close" && cmdvec[1]=="terminalserver")
-		{
-				MGFPRINT(std::cout << "Closing terminal server..." << std::endl;);
-				if(socketTerminalOpen())
-				{
-					closeSocketTerminal();
-				}
-				return true;
-		}
-		else if(cmdvec[0]=="minimap" && cmdvec[1]=="on")
-		{
-				enableMiniMap();
-				MGFPRINT(std::cout << "Mini map enabled." << std::endl;);
-				return true;
-		}
-		else if(cmdvec[0]=="minimap" && cmdvec[1]=="off")
-		{
-				disableMiniMap();
-				MGFPRINT(std::cout << "Mini map disabled." << std::endl;);
-				return true;
-		}
-		else if(cmdvec[0]=="logging" && cmdvec[1]=="on")
-		{
-				enableLogging();
-				MGFPRINT(std::cout << "Logging enabled." << std::endl;);
-				return true;
-		}
-		else if(cmdvec[0]=="Logging" && cmdvec[1]=="off")
-		{
-				disableLogging();
-				MGFPRINT(std::cout << "Logging disabled." << std::endl;);
-				return true;
-		}
 
-	}
-	else if(cmdvec.size() == 3)
-	{
-		if(cmdvec[0]=="create" && cmdvec[1]=="mo")
+		case MGComponent_CREATE_MO_INT:
 		{
 			int n = toInt(cmdvec[2]);
 			if(n>0)
@@ -558,7 +356,8 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			return true;
 		}
-		else if(cmdvec[0]=="add" && cmdvec[1]=="mo")
+
+		case MGComponent_ADD_MO_INT:
 		{
 			int nBefore=getNumberOfMO();
 			int n = toInt(cmdvec[2]);
@@ -581,7 +380,8 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			return true;
 		}
-		if(cmdvec[0]=="create" && cmdvec[1]=="pe")
+
+		case MGComponent_CREATE_PE_INT:
 		{
 			int n = toInt(cmdvec[2]);
 			if(n>0)
@@ -594,7 +394,8 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			return true;
 		}
-		else if(cmdvec[0]=="add" && cmdvec[1]=="pe")
+
+		case MGComponent_ADD_PE_INT:
 		{
 			int nBefore=getNumberOfPE();
 			int n = toInt(cmdvec[2]);
@@ -609,56 +410,273 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
+		case MGComponent_OPEN_TERMINALSERVER:
+		{
+			MGFPRINT(std::cout << "Opening terminal server..." << std::endl;);
+			openSocketTerminal();
+			m_SocketTerminal = SDL_CreateThread(runMGFrameworkSocketTerminal, this);
+			return true;
+		}
+
+		case MGComponent_CLOSE_TERMINALSERVER:
+		{
+			MGFPRINT(std::cout << "Closing terminal server..." << std::endl;);
+			if(socketTerminalOpen())
+			{
+				closeSocketTerminal();
+			}
+			return true;
+		}
+
+		case MGComponent_MO_INT_X:
+		case MGComponent_MO_INT_MARK:
+		{
+			int moIndex=toInt(cmdvec[1]);
+			if(moIndex >= 0 && moIndex < getNumberOfMO())
+			{
+				return m_MO[toInt(cmdvec[1])].runConsoleCommand(c, this);
+			}
+			MGFLOG(std::cout << "WARNING: Console command was not forwarded to MO " << moIndex << std::endl;); 
+			return true;
+		}
+
+		case MGComponent_MO_MARKED_X:
+		{
+			for(int i=0; i<getNumberOfMO(); i++)
+			{
+				if(m_MO[i].isMarked())
+				{
+					m_MO[i].runConsoleCommand(c, this);
+				}
+			}
+			return true;
+		}
+
+		case MGComponent_MO_ALL_X:
+		{
+			for(int i=0; i<getNumberOfMO(); i++)
+			{
+				m_MO[i].runConsoleCommand(c, this);
+			}
+			return true;
+		}
+
+		case MGComponent_LOGGING_ON:
+		{
+			enableLogging();
+			MGFPRINT(std::cout << "Logging enabled." << std::endl;);
+			return true;
+		}
+
+		case MGComponent_LOGGING_OFF:
+		{
+			disableLogging();
+			MGFPRINT(std::cout << "Logging disabled." << std::endl;);
+			return true;
+		}
+
+		case MGComponent_MINIMAP_ON:
+		{
+			enableMiniMap();
+			MGFPRINT(std::cout << "Mini map enabled." << std::endl;);
+			return true;
+		}
+
+		case MGComponent_MINIMAP_OFF:
+		{
+			disableMiniMap();
+			MGFPRINT(std::cout << "Mini map disabled." << std::endl;);
+			return true;
+		}
+
+		case MGComponent_RUNFRAMES_INT:
+		{
+			enableFrameCountdown();
+			setFrameNumber(toInt(cmdvec[1]));
+			return false;
+		}
+
+		case MGComponent_EXIT:
+		{
+			std::cout << "Exiting console..." << std::endl;
+			return false;
+		}
+
+		case MGComponent_HELP:
+		{
+			std::cout << "Command help" << std::endl;
+			std::cout << "[<object> [<object identifier>]] <command> [<parameter 1> ... <parameter n>]" << std::endl;
+			std::cout << "-----------------------------------------------------------------------------" << std::endl << std::endl;
+			std::cout << "help -    Displays this command help information." << std::endl;
+			std::cout << "exit -    Exists shell and resumes framework execution." << std::endl;
+			std::cout << "minimap <on|off> - Turns mini map on/off." << std::endl;
+			std::cout << "logging <on|off> - Turns logging on/off." << std::endl;
+			std::cout << "setfps <f> - Sets desired FPS (frames per second) to integer value <f>." << std::endl;
+			std::cout << "runframes <f> - Runs <f> game loops (frames) and presents some recorded data." << std::endl;
+			std::cout << "          <f> is an integer." << std::endl;
+			std::cout << "create <mo|pe> <n> - Creates <n> objects (and deletes any previously" << std::endl;
+			std::cout << "          existing ones). <n> is an integer. Only MGMovingObject (mo)"  << std::endl;
+			std::cout << "          and MGPeriodicEvent are (pe) supported at this point." << std::endl;
+			std::cout << "add <mo|pe> <n> - Adds <n> objects. <n> is an integer. Only MGMovingObject" << std::endl;
+			std::cout << "          (mo) and MGPeriodicEvent (pe) are supported at this point."  << std::endl;
+			std::cout << "open <terminalserver> - Opens the terminal server for framework commands " << std::endl;
+			std::cout << "          over TCP/IP." << std::endl;
+			std::cout << "close <terminalserver> - Closes the terminal server for framework commands " << std::endl;
+			std::cout << "          over TCP/IP." << std::endl;
+
+			(void)m_Map.runConsoleCommand("map help", this);
+			(void)m_Window.runConsoleCommand("window help", this);
+			if(getNumberOfMO()>0)(void)m_MO[0].runConsoleCommand("mo 0 help", this);
+
+			return true;
+		}
+
+		case MGComponent_GETFPS:
+		{
+			MGFPRINT(std::cout << "" << getFPS() << std::endl;);
+			return true;
+		}
+
+		case MGComponent_GETNUMBEROFMARKEDMO:
+		{
+			MGFPRINT(std::cout << "" << getNumberOfMarkedMO() << std::endl;);
+			return true;
+		}
+
+		case MGComponent_GETNUMBEROFMO:
+		{
+			MGFPRINT(std::cout << "" << getNumberOfMO() << std::endl;);
+			return true;
+		}
+
+		default:
+			MGFLOG(std::cout << "ERROR: MGFramework::detectComponentConsoleCommand returned a bad value" << std::endl;); 
+			return true;
 	}
 
-	else
-	{
-
-	}
-
-	MGFPRINT(std::cout << "MGFramework: Unknown command" << std::endl;);
+	MGFPRINT(std::cout << "Unknown command" << std::endl;);
 	return true;
 }
 
 
-eMGFExternalConsoleCommand MGFramework::detectExternalConsoleCommand(const std::vector<std::string> &cmdvec)
+eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
 {
 	if(cmdvec.size() == 0)
 	{
-		return MGFEXTCMD_UNDEFINED;
+		return MGComponent_UNDEFINED;
 	}
-	else if(cmdvec[0]=="map")
+	else if(cmdvec.size() == 1)
 	{
-		return MGFEXTCMD_MAP;
+		if(cmdvec[0]=="exit")
+		{
+			return MGComponent_EXIT;
+		}
+		else if(cmdvec[0]=="help")
+		{
+			return MGComponent_HELP;
+		}
+		else if(cmdvec[0]=="getfps")
+		{
+			return MGComponent_GETFPS;
+		}
+		else if(cmdvec[0]=="getnumberofmarkedmo")
+		{
+			return MGComponent_GETNUMBEROFMARKEDMO;
+		}
+		else if(cmdvec[0]=="getnumberofmo")
+		{
+			return MGComponent_GETNUMBEROFMO;
+		}
+
 	}
-	else if(cmdvec[0]=="window")
+	else if(cmdvec.size() == 2)
 	{
-		return MGFEXTCMD_WINDOW;
+		if(cmdvec[0]=="setfps")
+		{
+			return MGComponent_SETFPS_INT;
+		}
+		else if(cmdvec[0]=="open" && cmdvec[1]=="terminalserver")
+		{
+			return MGComponent_OPEN_TERMINALSERVER;
+		}
+		else if(cmdvec[0]=="close" && cmdvec[1]=="terminalserver")
+		{
+			return MGComponent_CLOSE_TERMINALSERVER;
+		}
+		else if(cmdvec[0]=="logging" && cmdvec[1]=="on")
+		{
+			return MGComponent_LOGGING_ON;
+		}
+		else if(cmdvec[0]=="logging" && cmdvec[1]=="off")
+		{
+			return MGComponent_LOGGING_OFF;
+		}
+		else if(cmdvec[0]=="minimap" && cmdvec[1]=="on")
+		{
+			return MGComponent_MINIMAP_ON;
+		}
+		else if(cmdvec[0]=="minimap" && cmdvec[1]=="off")
+		{
+			return MGComponent_MINIMAP_OFF;
+		}
+		else if(cmdvec[0]=="runframes")
+		{
+			return MGComponent_RUNFRAMES_INT;
+		}
 	}
-	else if(cmdvec.size() > 2 && cmdvec[0]=="mo" && cmdvec[1]=="marked")
+	else if(cmdvec.size() > 2)
 	{
-		return MGFEXTCMD_MO_MARKED;
+		if(cmdvec[0]=="create" && cmdvec[1]=="mo")
+		{
+			return MGComponent_CREATE_MO_INT;
+		}
+		else if(cmdvec[0]=="add" && cmdvec[1]=="mo")
+		{
+			return MGComponent_ADD_MO_INT;
+		}
+		else if(cmdvec[0]=="create" && cmdvec[1]=="pe")
+		{
+			return MGComponent_CREATE_PE_INT;
+		}
+		else if(cmdvec[0]=="add" && cmdvec[1]=="pe")
+		{
+			return MGComponent_ADD_PE_INT;
+		}
+		else if(cmdvec[0]=="mo" && cmdvec[1]=="marked")
+		{
+			return MGComponent_MO_MARKED_X;
+		}
+		else if(cmdvec[0]=="mo" && cmdvec[1]=="all")
+		{
+			return MGComponent_MO_ALL_X;
+		}
+		else if(cmdvec[0]=="mo")
+		{
+			return MGComponent_MO_INT_X;
+		}
+		else if(cmdvec[0]=="pe" && cmdvec[1]=="all")
+		{
+			return MGComponent_PE_ALL_X;
+		}
+		else if(cmdvec[0]=="pe")
+		{
+			return MGComponent_PE_INT_X;
+		}
 	}
-	else if(cmdvec.size() > 2 && cmdvec[0]=="mo" && cmdvec[1]=="all")
+	else if(cmdvec.size() > 1)
 	{
-		return MGFEXTCMD_MO_ALL;
+		if(cmdvec[0]=="map")
+		{
+			return MGComponent_MAP_X;
+		}
+		else if(cmdvec[0]=="window")
+		{
+			return MGComponent_WINDOW_X;
+		}
 	}
-	else if(cmdvec.size() > 1 && cmdvec[0]=="mo")
-	{
-		return MGFEXTCMD_MO;
-	}
-	else if(cmdvec.size() > 1 && cmdvec[0]=="pe")
-	{
-		return MGFEXTCMD_PE;
-	}
-	else if(cmdvec.size() > 1 && cmdvec[0]=="pe" && cmdvec[1]=="all")
-	{
-		return MGFEXTCMD_PE_ALL;
-	}
-	else
-	{
-		return MGFEXTCMD_UNDEFINED;
-	}
+
+	// MGFramework failed to detect a proper command in the given string..
+	return MGComponent_UNDEFINED;
 }
 
 

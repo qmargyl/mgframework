@@ -97,6 +97,7 @@ public:
 	void calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by); // Calculates the path from A to B
 
 	bool runConsoleCommand(const char *c, MGFramework *w);
+	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 };
 
 

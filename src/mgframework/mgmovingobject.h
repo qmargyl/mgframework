@@ -52,6 +52,7 @@ public:
 	int getCenterX(){ return getTileX()*getTileSize() + (int)(0.5 *getTileSize());}
 	int getCenterY(){ return getTileY()*getTileSize() + (int)(0.5 *getTileSize());}
 	bool runConsoleCommand(const char *c, MGFramework *w);
+	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
 	//Marking related
 	void mark(){m_Marked=true;}

@@ -11,12 +11,6 @@ MGPeriodicEvent::MGPeriodicEvent()
 
 }
 
-
-eMGFPEConsoleCommand MGPeriodicEvent::detectPEConsoleCommand(const std::vector<std::string> &cmdvec)
-{
-	return MGFPECMD_UNDEFINED;
-}
-
 void MGPeriodicEvent::setupTimer(int ms)
 {
 	m_Period = ms;
@@ -75,67 +69,87 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
 
-//	MGFPECMD_UNDEFINED = 0,
-//	MGFPECMD_HELP,
-//	MGFPECMD_ACTIVATE,
-//	MGFPECMD_DEACTIVATE,
-//	MGFPECMD_SETUPTIMER,
-//	MGFPECMD_LOGGING_ON,
-//	MGFPECMD_LOGGING_OFF
-
-	switch(detectPEConsoleCommand(cmdvec))
+	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
-		case MGFPECMD_UNDEFINED:
-			MGFLOG(std::cout << "Console command not identified as PE command: " << c << std::endl;); 
+		case MGComponent_UNDEFINED:
+			MGFPRINT(std::cout << "Error in command (pe ...), MGFPECMD_UNDEFINED received from detectMGComponentConsoleCommand" << std::endl;); 
 			break;
 
-		default:
-			break;
-	}
-
-	if(cmdvec.size() == 3)
-	{
-		if(cmdvec[2]=="help")
-		{
+		case MGComponent_PE_INT_HELP:
+			std::cout << "Help for PE console commands: " << std::endl;
 			return true;
-		}
-		else if(cmdvec[2]=="activate")
-		{
+
+		case MGComponent_PE_INT_ACTIVATE:
 			activate();
 			return true;
-		}
-		else if(cmdvec[2]=="deactivate")
-		{
+
+		case MGComponent_PE_INT_DEACTIVATE:
 			deactivate();
 			return true;
-		}
 
-	}
-	else if(cmdvec.size() == 4)
-	{
-		if(cmdvec[2]=="setuptimer")
+		case MGComponent_PE_INT_SETUPTIMER_INT:
 		{
 			int ms=MGFramework::toInt(cmdvec[3]);
 			setupTimer(ms);
 			return true;
 		}
-		else if(cmdvec[2]=="logging" && cmdvec[3]=="on")
-		{
+
+		case MGComponent_PE_INT_LOGGING_ON:
 			enableLogging();
 			MGFPRINT(std::cout << "Logging enabled." << std::endl;);
 			return true;
-		}
-		else if(cmdvec[2]=="Logging" && cmdvec[3]=="off")
-		{
+
+		case MGComponent_PE_INT_LOGGING_OFF:
 			disableLogging();
 			MGFPRINT(std::cout << "Logging disabled." << std::endl;);
 			return true;
-		}
-	}
 
-	MGFPRINT(std::cout << "Error in command (pe ...)" << std::endl;);
+		default:
+			break;
+	}
 
 	return true;
 }
 
 
+eMGComponentConsoleCommand MGPeriodicEvent::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
+{
+	if(cmdvec.size() < 3)
+	{
+		return MGComponent_UNDEFINED;
+	}
+	else if(cmdvec.size() == 3)
+	{
+		if(cmdvec[0]=="pe" && cmdvec[2]=="HELP")
+		{
+			return MGComponent_PE_INT_HELP;
+		}
+		else if(cmdvec[0]=="pe" && cmdvec[2]=="ACTIVATE")
+		{
+			return MGComponent_PE_INT_ACTIVATE;
+		}
+		else if(cmdvec[0]=="pe" && cmdvec[2]=="DEACTIVATE")
+		{
+			return MGComponent_PE_INT_DEACTIVATE;
+		}
+
+	}
+	else if(cmdvec.size() == 4)
+	{
+		if(cmdvec[0]=="pe" && cmdvec[2]=="setuptimer")
+		{
+			return MGComponent_PE_INT_SETUPTIMER_INT;
+		}
+		else if(cmdvec[0]=="pe" && cmdvec[2]=="logging" && cmdvec[3]=="on")
+		{
+			return MGComponent_PE_INT_LOGGING_ON;
+		}
+		else if(cmdvec[0]=="pe" && cmdvec[2]=="logging" && cmdvec[3]=="off")
+		{
+			return MGComponent_PE_INT_LOGGING_OFF;
+		}
+	}
+
+	// MGPeriodicEvent failed to detect a proper command in the given string..
+	return MGComponent_UNDEFINED;
+}

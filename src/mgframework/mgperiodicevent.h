@@ -3,15 +3,7 @@
 #include "mgcomponent.h"
 
 
-enum eMGFPEConsoleCommand{
-	MGFPECMD_UNDEFINED = 0,
-	MGFPECMD_HELP,
-	MGFPECMD_ACTIVATE,
-	MGFPECMD_DEACTIVATE,
-	MGFPECMD_SETUPTIMER,
-	MGFPECMD_LOGGING_ON,
-	MGFPECMD_LOGGING_OFF
-};
+
 
 class MGPeriodicEvent :public MGComponent
 {
@@ -19,8 +11,6 @@ private:
 	int m_Period;
 	int m_StartTime;
 	bool m_isActive;
-
-	eMGFPEConsoleCommand detectPEConsoleCommand(const std::vector<std::string> &cmdvec);
 
 public:
 	MGPeriodicEvent();
@@ -34,6 +24,7 @@ public:
     void copy(const MGPeriodicEvent *src);
 
 	bool runConsoleCommand(const char *c, MGFramework *w);
+	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
 };
 

@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.12.3"
+#define MGFRAMEWORKVERSION "1.0.13.0"
 
 #define MGFLOG(x) if(loggingEnabled()){ std::cout << "LOG (ID:" << getID() << ") ";  x; }
 #define MGFPRINT(x) { std::cout << "PRINT (ID:" << getID() << ") ";  x; }
@@ -28,17 +28,67 @@ enum eMGFInstanceType{
 	MGFSINGLEPLAYERINSTANCE
 };
 
-// Each console command construction forwarded to another class has an enum.
-enum eMGFExternalConsoleCommand{
-	MGFEXTCMD_UNDEFINED = 0,	// Used to represent a failed detection.
-	MGFEXTCMD_MAP,				// Command forwarded to m_Map.
-	MGFEXTCMD_WINDOW,			// Command forwarded to m_Window.
-	MGFEXTCMD_MO,				// Command forwarded to m_MO[x] where x is a valid index.
-	MGFEXTCMD_MO_MARKED,		// Command forwarded to all m_MO[x] where m_MO[x] is marked.
-	MGFEXTCMD_MO_ALL,			// Command forwarded to all m_MO[x].
-	MGFEXTCMD_PE,				// Command forwarded to m_PE[x] where x is a valid index.
-	MGFEXTCMD_PE_ALL			// Command forwarded to all m_PE[x].
+
+enum eMGComponentConsoleCommand{
+	MGComponent_UNDEFINED = 0,
+
+	//MGFramework commands
+	MGComponent_HELP,
+	MGComponent_EXIT,
+	MGComponent_LOGGING,
+	MGComponent_GETFPS,
+	MGComponent_GETNUMBEROFMARKEDMO,
+	MGComponent_GETNUMBEROFMO,
+	MGComponent_CREATE_MO_INT,
+	MGComponent_ADD_MO_INT,
+	MGComponent_CREATE_PE_INT,
+	MGComponent_ADD_PE_INT,
+	MGComponent_RUNFRAMES_INT,
+	MGComponent_SETFPS_INT,
+	MGComponent_OPEN_TERMINALSERVER,
+	MGComponent_CLOSE_TERMINALSERVER,
+	MGComponent_MINIMAP_ON,
+	MGComponent_MINIMAP_OFF,
+	MGComponent_LOGGING_ON,
+	MGComponent_LOGGING_OFF,
+
+
+	//MGPeriodicEvent commands
+	MGComponent_PE_INT_X,
+	MGComponent_PE_ALL_X,
+	MGComponent_PE_INT_HELP,
+	MGComponent_PE_INT_ACTIVATE,
+	MGComponent_PE_INT_DEACTIVATE,
+	MGComponent_PE_INT_SETUPTIMER_INT,
+	MGComponent_PE_INT_LOGGING_ON,
+	MGComponent_PE_INT_LOGGING_OFF,
+
+
+	//MGMovingObject commands
+	MGComponent_MO_INT_X,
+	MGComponent_MO_INT_MARK,
+	MGComponent_MO_ALL_MARK,
+	MGComponent_MO_INT_UNMARK,
+	MGComponent_MO_ALL_UNMARK,
+	MGComponent_MO_INT_GETDISTANCE,
+	MGComponent_MO_INT_GETLOCATION,
+	MGComponent_MO_INT_GETDESTINATION,
+	MGComponent_MO_INT_GETSPEED,
+	MGComponent_MO_INT_HELP,
+	MGComponent_MO_MARKED_X,
+	MGComponent_MO_ALL_X,
+	MGComponent_MO_INT_SETDESTINATION_INT_INT,
+	MGComponent_MO_ALL_SETDESTINATION_INT_INT,
+
+	//MGMap commands
+	MGComponent_MAP_X,
+
+	//MGWindow commands
+	MGComponent_WINDOW_X
+
 };
+
+
 
 int runMGFrameworkSocketTerminal(void *fm);
 
@@ -103,7 +153,7 @@ class MGFramework :public MGComponent
 		void updateFraming(int x, int y){setFrameEndX(x); setFrameEndY(y);}
 		
 		// Console command parser implementation..
-		eMGFExternalConsoleCommand detectExternalConsoleCommand(const std::vector<std::string> &cmdvec);
+		//eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
 
 	protected:
@@ -186,6 +236,7 @@ class MGFramework :public MGComponent
 
 		// Console command handling
 		bool runConsoleCommand(const char *c, MGFramework *w);
+		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
 		//Socket terminal related
 		bool socketTerminalOpen(){return m_KeepSocketTerminalOpen;}
