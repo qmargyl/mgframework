@@ -143,12 +143,12 @@ void Project2::draw()
 				}
 				else
 				{
-					// Represent the tile on the mini map if enabled...
+					// Draw it black..
 					putPixel32(getSurface(), x + m_Window.getWidth() - m_Map.getWidth() - 16, y + 16, 0x00000000);
 				}
 			}
 		}
-		// Draw all moving objects..
+		// Draw all moving objects on the mini map..
 		for(int i=0;i<getNumberOfMO();i++)
 		{
 			putPixel32(getSurface(), m_MO[i].getTileX() + m_Window.getWidth() - m_Map.getWidth() - 16, m_MO[i].getTileY() + 16, 0x00FF0000);
@@ -161,7 +161,7 @@ void Project2::draw()
 
 
 
-	// Draw frame if available
+	// Draw marking frame if marking is ongoing
 	if(isFramingOngoing())
 	{
 		int uLX=smallest(getFrameStartX(), getFrameEndX());

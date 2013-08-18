@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.13.1"
+#define MGFRAMEWORKVERSION "1.0.13.2"
 
 #define MGFLOG(x) if(loggingEnabled()){ std::cout << "LOG (ID:" << getID() << ") ";  x; }
 #define MGFPRINT(x) { std::cout << "PRINT (ID:" << getID() << ") ";  x; }
@@ -52,7 +52,6 @@ enum eMGComponentConsoleCommand{
 	MGComponent_LOGGING_ON,
 	MGComponent_LOGGING_OFF,
 
-
 	//MGPeriodicEvent commands
 	MGComponent_PE_INT_X,
 	MGComponent_PE_ALL_X,
@@ -62,7 +61,6 @@ enum eMGComponentConsoleCommand{
 	MGComponent_PE_INT_SETUPTIMER_INT,
 	MGComponent_PE_INT_LOGGING_ON,
 	MGComponent_PE_INT_LOGGING_OFF,
-
 
 	//MGMovingObject commands
 	MGComponent_MO_INT_X,
@@ -102,7 +100,6 @@ class MGFramework :public MGComponent
 {
 	private:
 
-//		bool m_LoggingEnabled;		// Setting allows extended logging to console.
 		bool m_TypingEnabled;		// Setting allows typing commands to console.
 		bool m_WindowPropertiesSet; // Used to determine if all Windows properties have been set.
 		bool m_MiniMapEnabled;		// Enables the mini map implementation.
@@ -113,9 +110,6 @@ class MGFramework :public MGComponent
 		Uint32 m_FrameTime;			// Holds current frame time
 		Uint32 m_FPS;				// Holds desired FPS
 		Sint32 m_DelayTime;			// Holds delay in ms for last frame
-
-		// Version related
-		//string m_ProgramVersion;	// Holds the application version, not the MG Framework version.
 
 		// Countdown feature needs a flag and a counter.
 		bool m_FrameCountdownEnabled;
@@ -156,9 +150,6 @@ class MGFramework :public MGComponent
 		void activateFraming(int x, int y){setFrameStartX(x); setFrameStartY(y); setFrameEndX(x); setFrameEndY(y); m_FramingOngoing=true;}
 		void deactivateFraming(){ m_FramingOngoing = false;}
 		void updateFraming(int x, int y){setFrameEndX(x); setFrameEndY(y);}
-		
-		// Console command parser implementation..
-		//eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
 
 	protected:
@@ -229,12 +220,6 @@ class MGFramework :public MGComponent
 		void unsetWindowProperties(){m_WindowPropertiesSet = false;}
 		bool windowPropertiesSet(){return m_WindowPropertiesSet;}
 
-			
-//		// Configuration of Logging...
-//		void enableLogging(){m_LoggingEnabled = true;}
-//		void disableLogging(){m_LoggingEnabled = false;}
-//		bool loggingEnabled(){return m_LoggingEnabled;}
-
 		// Client/Server
 		void setInstanceType(eMGFInstanceType it){ m_MGFInstanceType = it;}
 		eMGFInstanceType getInstanceType(){return m_MGFInstanceType;}
@@ -249,7 +234,6 @@ class MGFramework :public MGComponent
 		void addConsoleCommandToQueue(const char *c);
 
 		// Program version
-		//void setProgramVersion(const char *version){m_ProgramVersion = string(version);}
 		const char *getMGFrameworkVersion(){return MGFRAMEWORKVERSION;}
 
 		virtual void run();

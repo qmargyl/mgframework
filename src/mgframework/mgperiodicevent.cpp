@@ -72,7 +72,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFPRINT(std::cout << "Error in command (pe ...), MGComponent_UNDEFINED received from detectMGComponentConsoleCommand" << std::endl;); 
+			MGFPRINT(std::cout << "Error in command (pe ...), MGComponent_UNDEFINED received from MGPeriodicEvent::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
 
 		case MGComponent_PE_INT_HELP:

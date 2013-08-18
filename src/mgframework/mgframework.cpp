@@ -283,6 +283,10 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
+		case MGComponent_UNDEFINED:
+			MGFPRINT(std::cout << "Error in command, MGComponent_UNDEFINED received from MGFramework::detectMGComponentConsoleCommand" << std::endl;); 
+			break;
+
 		case MGComponent_MAP_X:
 		{
 			return m_Map.runConsoleCommand(c, this);
@@ -561,11 +565,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
 {
-	if(cmdvec.size() == 0)
-	{
-		return MGComponent_UNDEFINED;
-	}
-	else if(cmdvec.size() == 1)
+	if(cmdvec.size() == 1)
 	{
 		if(cmdvec[0]=="exit")
 		{
@@ -663,7 +663,9 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 			return MGComponent_PE_INT_X;
 		}
 	}
-	else if(cmdvec.size() > 1)
+
+
+	if(cmdvec.size() > 1)
 	{
 		if(cmdvec[0]=="map")
 		{
@@ -704,7 +706,7 @@ Uint32 MGFramework::getFPS()
 
 void MGFramework::setDesiredFPS(Uint32 f)
 {
-	if(f >= 0)
+	if(f >= 1) // Don't allow an FPS lower than 1
 	{
 		m_FPS = f;
 	}
@@ -716,13 +718,13 @@ void MGFramework::setDesiredFPS(Uint32 f)
 
 Uint32 MGFramework::getDesiredFPS()
 {
-	if(m_FPS >= 0)
+	if(m_FPS >= 1) // Don't allow an FPS lower than 1
 	{
 		return m_FPS;
 	}
 	else
 	{
-		MGFLOG(std::cout << "WARNING: FPS incorrectly calculated (Uint32 MGFramework::getDesiredFPS()): " << m_FPS << ", returning 60" << std::endl;)
+		MGFLOG(std::cout << "WARNING: FPS incorrectly calculated (Uint32 MGFramework::getDesiredFPS()): " << m_FPS << ", returning 1" << std::endl;)
 		return 1;
 	}
 }
