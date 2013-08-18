@@ -361,6 +361,21 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
+		case MGComponent_DELETE_ALL_MO:
+		{
+			// Clear the map of occupied marks...
+			for(int y=0; y<m_Map.getHeight(); y++)
+			{
+				for(int x=0; x<m_Map.getWidth(); x++)
+				{
+					m_Map.unOccupy(x, y);
+				}
+			}
+			// ...and then create zero new MOs.
+			createMO(0);
+			return true;
+		}
+
 		case MGComponent_ADD_MO_INT:
 		{
 			int nBefore=getNumberOfMO();
@@ -662,6 +677,10 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		{
 			return MGComponent_PE_INT_X;
 		}
+		else if(cmdvec[0]=="delete" && cmdvec[1]=="all" && cmdvec[2]=="mo" )
+		{
+			return MGComponent_DELETE_ALL_MO;
+		}
 	}
 
 
@@ -743,7 +762,15 @@ void MGFramework::createMO(int n)
 {
 	delete[] m_MO;
 	m_NMO=n;
-	m_MO = new MGMovingObject[getNumberOfMO()];
+	if(getNumberOfMO() > 0)
+	{
+		m_MO = new MGMovingObject[getNumberOfMO()];
+	}
+	else
+	{
+		m_MO = NULL;
+		m_MarkedMOs = 0;
+	}
 }
 
 void MGFramework::addMO(int n)
@@ -768,7 +795,14 @@ void MGFramework::createPE(int n)
 {
 	delete[] m_PE;
 	m_NPE=n;
-	m_PE = new MGPeriodicEvent[getNumberOfPE()];
+	if(getNumberOfPE() > 0)
+	{
+		m_PE = new MGPeriodicEvent[getNumberOfPE()];
+	}
+	else
+	{
+		m_PE = NULL;
+	}
 }
 
 void MGFramework::addPE(int n)

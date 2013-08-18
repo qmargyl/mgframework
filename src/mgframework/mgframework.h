@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.13.2"
+#define MGFRAMEWORKVERSION "1.0.14.0"
 
 #define MGFLOG(x) if(loggingEnabled()){ std::cout << "LOG (ID:" << getID() << ") ";  x; }
 #define MGFPRINT(x) { std::cout << "PRINT (ID:" << getID() << ") ";  x; }
@@ -43,6 +43,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_ADD_MO_INT,
 	MGComponent_CREATE_PE_INT,
 	MGComponent_ADD_PE_INT,
+	MGComponent_DELETE_ALL_MO,
 	MGComponent_RUNFRAMES_INT,
 	MGComponent_SETFPS_INT,
 	MGComponent_OPEN_TERMINALSERVER,
@@ -161,7 +162,7 @@ class MGFramework :public MGComponent
 		// MO related
 		void createMO(int n);
 		void addMO(int n);
-		int getNumberOfMO(){ return m_NMO;}
+		int getNumberOfMO(){ return biggest(m_NMO, 0);}
 
 		// PE related
 		void createPE(int n);
@@ -246,7 +247,7 @@ class MGFramework :public MGComponent
 		// MO selection related
 		void countMark(){m_MarkedMOs++;}
 		void countUnMark(){m_MarkedMOs--;}
-		int getNumberOfMarkedMO(){ return m_MarkedMOs;}
+		int getNumberOfMarkedMO(){ return smallest(m_MarkedMOs, getNumberOfMO());}
 
 		// Utility functions
 		static string toString(int number);
