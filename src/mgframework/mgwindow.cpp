@@ -88,20 +88,31 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
 
-	if(cmdvec.size() == 2)
+	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
-		if(cmdvec[1]=="help")
+		case MGComponent_WINDOW_HELP:
 		{
 			return true;
 		}
-		std::cout << "Error in command (window <parameter>)" << std::endl;
-		return true;
+
+		default:
+			MGFLOG(std::cout << "ERROR: MGWindow::detectComponentConsoleCommand returned a bad value" << std::endl;); 
+			return true;
 	}
-	std::cout << "Error in command (window ...)" << std::endl;
+
+	MGFPRINT(std::cout << "Unknown command" << std::endl;);
 	return true;
 }
 
 eMGComponentConsoleCommand MGWindow::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
 {
+	if(cmdvec.size() == 2)
+	{
+		if(cmdvec[1]=="help")
+		{
+			return MGComponent_WINDOW_HELP;
+		}
+	}
+
 	return MGComponent_UNDEFINED;
 }

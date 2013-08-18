@@ -218,21 +218,48 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
+		case MGComponent_MO_INT_MARK:
+		case MGComponent_MO_ALL_MARK:
+		{
+			mark();
+			w->countMark();
+			return true;
+		}
 
+		case MGComponent_MO_MARKED_UNMARK:
+		case MGComponent_MO_INT_UNMARK:
+		case MGComponent_MO_ALL_UNMARK:
+		{
+			unMark();
+			w->countUnMark();
+			return true;
+		}
 
+		case MGComponent_MO_INT_GETDISTANCE:
+		{
+			std::cout << getDistance(getDestTileX(), getDestTileY()) << std::endl;
+			return true;
+		}
 
-		default:
-			MGFLOG(std::cout << "ERROR: MGMovingObject::detectComponentConsoleCommand returned a bad value" << std::endl;); 
-//			return true;
-	}
+		case MGComponent_MO_INT_GETLOCATION:
+		{
+			std::cout << "{" << getTileX() << "," << getTileY() << "}" << std::endl;
+			return true;
+		}
 
-//	MGFPRINT(std::cout << "Unknown command" << std::endl;);
-//	return true;
+		case MGComponent_MO_INT_GETDESTINATION:
+		{
+			std::cout << "{" << getDestTileX() << "," << getDestTileY() << "}" << std::endl;
+			return true;
+		}
 
+		case MGComponent_MO_INT_GETSPEED:
+		{
+			std::cout << "" << getSpeed() << std::endl;
+			return true;
+		}
 
-	if(cmdvec.size() == 3)
-	{
-		if(cmdvec[2]=="help")
+		case MGComponent_MO_INT_HELP:
 		{
 			std::cout << std::endl << "mo <i> help - Displays help information for console commands implemented" << std::endl;
 			std::cout << "          in MGMovingObject. <i> is the ID of the MO." << std::endl;
@@ -244,42 +271,10 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 
 			return true;
 		}
-		else if(cmdvec[2]=="getspeed")
-		{
-			std::cout << "" << getSpeed() << std::endl;
-			return true;
-		}
-		else if(cmdvec[2]=="getdestination")
-		{
-			std::cout << "{" << getDestTileX() << "," << getDestTileY() << "}" << std::endl;
-			return true;
-		}
-		else if(cmdvec[2]=="getlocation")
-		{
-			std::cout << "{" << getTileX() << "," << getTileY() << "}" << std::endl;
-			return true;
-		}
-		else if(cmdvec[2]=="getdistance")
-		{
-			std::cout << getDistance(getDestTileX(), getDestTileY()) << std::endl;
-			return true;
-		}
-		else if(cmdvec[2]=="mark")
-		{
-			mark();
-			w->countMark();
-			return true;
-		}
-		else if(cmdvec[2]=="unmark")
-		{
-			unMark();
-			w->countUnMark();
-			return true;
-		}
-	}
-	else if(cmdvec.size() == 5)
-	{
-		if(cmdvec[2]=="setdestination")
+
+		case MGComponent_MO_INT_SETDESTINATION_INT_INT:
+		case MGComponent_MO_ALL_SETDESTINATION_INT_INT:
+		case MGComponent_MO_MARKED_SETDESTINATION_INT_INT:
 		{
 			int dx=MGFramework::toInt(cmdvec[3]);
 			int dy=MGFramework::toInt(cmdvec[4]);
@@ -287,13 +282,57 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			w->m_Map.calculatePath(MGFSKYPATH, getTileX(), getTileY(), getDestTileX(), getDestTileY());
 			return true;
 		}
+
+
+		default:
+			MGFLOG(std::cout << "ERROR: MGMovingObject::detectComponentConsoleCommand returned a bad value" << std::endl;); 
+			return true;
 	}
 
-	std::cout << "Error in command (mo ...)" << std::endl;
+	MGFPRINT(std::cout << "Unknown command" << std::endl;);
 	return true;
 }
 
 eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
 {
+	if(cmdvec.size() == 3)
+	{
+		if(cmdvec[2]=="help")
+		{
+			return MGComponent_MO_INT_HELP;
+		}
+		else if(cmdvec[2]=="getspeed")
+		{
+			return MGComponent_MO_INT_GETSPEED;
+		}
+		else if(cmdvec[2]=="getdestination")
+		{
+			return MGComponent_MO_INT_GETDESTINATION;
+		}
+		else if(cmdvec[2]=="getlocation")
+		{
+			return MGComponent_MO_INT_GETLOCATION;
+		}
+		else if(cmdvec[2]=="getdistance")
+		{
+			return MGComponent_MO_INT_GETDISTANCE;
+		}
+		else if(cmdvec[2]=="mark")
+		{
+			return MGComponent_MO_INT_MARK;
+		}
+		else if(cmdvec[2]=="unmark")
+		{
+			return MGComponent_MO_INT_UNMARK;
+		}
+	}
+	else if(cmdvec.size() == 5)
+	{
+		if(cmdvec[2]=="setdestination")
+		{
+			return MGComponent_MO_INT_SETDESTINATION_INT_INT;
+		}
+	}
+
 	return MGComponent_UNDEFINED;
 }

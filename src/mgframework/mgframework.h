@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.13.0"
+#define MGFRAMEWORKVERSION "1.0.13.1"
 
 #define MGFLOG(x) if(loggingEnabled()){ std::cout << "LOG (ID:" << getID() << ") ";  x; }
 #define MGFPRINT(x) { std::cout << "PRINT (ID:" << getID() << ") ";  x; }
@@ -70,6 +70,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_MO_ALL_MARK,
 	MGComponent_MO_INT_UNMARK,
 	MGComponent_MO_ALL_UNMARK,
+	MGComponent_MO_MARKED_UNMARK,
 	MGComponent_MO_INT_GETDISTANCE,
 	MGComponent_MO_INT_GETLOCATION,
 	MGComponent_MO_INT_GETDESTINATION,
@@ -79,12 +80,16 @@ enum eMGComponentConsoleCommand{
 	MGComponent_MO_ALL_X,
 	MGComponent_MO_INT_SETDESTINATION_INT_INT,
 	MGComponent_MO_ALL_SETDESTINATION_INT_INT,
+	MGComponent_MO_MARKED_SETDESTINATION_INT_INT,
 
 	//MGMap commands
 	MGComponent_MAP_X,
+	MGComponent_MAP_HELP,
+	MGComponent_MAP_PATH_INT_INT_INT_INT,
 
 	//MGWindow commands
-	MGComponent_WINDOW_X
+	MGComponent_WINDOW_X,
+	MGComponent_WINDOW_HELP
 
 };
 

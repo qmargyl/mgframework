@@ -145,19 +145,17 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
 
-	if(cmdvec.size() == 2)
+	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
-		if(cmdvec[1]=="help")
+		case MGComponent_MAP_HELP:
 		{
 			std::cout << "-----------------------------------------------------------------------------" << std::endl << std::endl;
 			std::cout << "map help - Displays help information for console commands implemented in the" << std::endl;
 			std::cout << "           map object." << std::endl;
 			return true;
 		}
-	}
-	if(cmdvec.size() == 6)
-	{
-		if(cmdvec[1]=="path")
+
+		case MGComponent_MAP_PATH_INT_INT_INT_INT:
 		{
 			int x1 = MGFramework::toInt(cmdvec[2]);
 			int y1 = MGFramework::toInt(cmdvec[3]);
@@ -168,14 +166,33 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 			calculatePath(MGFSKYPATH, x1, y1, x2, y2);
 			return true;
 		}
+
+		default:
+			MGFLOG(std::cout << "ERROR: MGMap::detectComponentConsoleCommand returned a bad value" << std::endl;); 
+			return true;
 	}
 
-	std::cout << "Unknown command" << std::endl;
+	MGFPRINT(std::cout << "Unknown command" << std::endl;);
 	return true;
 }
 
 eMGComponentConsoleCommand MGMap::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
 {
+	if(cmdvec.size() == 2)
+	{
+		if(cmdvec[1]=="help")
+		{
+			return MGComponent_MAP_HELP;
+		}
+	}
+	else if(cmdvec.size() == 6)
+	{
+		if(cmdvec[1]=="path")
+		{
+			return MGComponent_MAP_PATH_INT_INT_INT_INT;
+		}
+	}
+
 	return MGComponent_UNDEFINED;
 }
 

@@ -72,7 +72,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFPRINT(std::cout << "Error in command (pe ...), MGFPECMD_UNDEFINED received from detectMGComponentConsoleCommand" << std::endl;); 
+			MGFPRINT(std::cout << "Error in command (pe ...), MGComponent_UNDEFINED received from detectMGComponentConsoleCommand" << std::endl;); 
 			break;
 
 		case MGComponent_PE_INT_HELP:
@@ -114,21 +114,17 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 
 eMGComponentConsoleCommand MGPeriodicEvent::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
 {
-	if(cmdvec.size() < 3)
+	if(cmdvec.size() == 3)
 	{
-		return MGComponent_UNDEFINED;
-	}
-	else if(cmdvec.size() == 3)
-	{
-		if(cmdvec[0]=="pe" && cmdvec[2]=="HELP")
+		if(cmdvec[0]=="pe" && cmdvec[2]=="help")
 		{
 			return MGComponent_PE_INT_HELP;
 		}
-		else if(cmdvec[0]=="pe" && cmdvec[2]=="ACTIVATE")
+		else if(cmdvec[0]=="pe" && cmdvec[2]=="activate")
 		{
 			return MGComponent_PE_INT_ACTIVATE;
 		}
-		else if(cmdvec[0]=="pe" && cmdvec[2]=="DEACTIVATE")
+		else if(cmdvec[0]=="pe" && cmdvec[2]=="deactivate")
 		{
 			return MGComponent_PE_INT_DEACTIVATE;
 		}
