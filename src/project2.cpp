@@ -36,6 +36,7 @@ bool Project2::init(int w, int h, int tw, int th)
 
 		// Setup game logics..
 
+		runConsoleCommand("logging on", this); // Turn on logging for the MGFramework class
 		runConsoleCommand("setfps 60", this); // Framework default is 20 FPS
 		runConsoleCommand("create mo 50", this);
 		runConsoleCommand("open terminalserver", this);
@@ -104,17 +105,19 @@ void Project2::draw()
 	int oX,oY;
 	for(int i=0;i<getNumberOfMO();i++)
 	{
-		oX=m_MO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO[i].getXOffset();
-		oY=m_MO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO[i].getYOffset();
-		// Only draw visible moving objects...
-		if(detectCollisionRectangle(oX, oY, oX+m_Map.getTileWidth(), oY+m_Map.getTileHeight(), 0, 0, m_Window.getWidth(), m_Window.getHeight()))
+		if(m_MO != NULL)
 		{
-			drawSprite(m_MovingObject, getSurface(), 0, 0, oX, oY, m_Map.getTileWidth(), m_Map.getTileHeight());
-			if(m_MO[i].isMarked())
+			oX=m_MO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO[i].getXOffset();
+			oY=m_MO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO[i].getYOffset();
+			// Only draw visible moving objects...
+			if(detectCollisionRectangle(oX, oY, oX+m_Map.getTileWidth(), oY+m_Map.getTileHeight(), 0, 0, m_Window.getWidth(), m_Window.getHeight()))
 			{
-				drawSprite(m_Mark, getSurface(), 0, 0, oX, oY, m_Map.getTileWidth(), m_Map.getTileHeight());
+				drawSprite(m_MovingObject, getSurface(), 0, 0, oX, oY, m_Map.getTileWidth(), m_Map.getTileHeight());
+				if(m_MO[i].isMarked())
+				{
+					drawSprite(m_Mark, getSurface(), 0, 0, oX, oY, m_Map.getTileWidth(), m_Map.getTileHeight());
+				}
 			}
-
 		}
 	}
 

@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.14.0"
+#define MGFRAMEWORKVERSION "1.0.14.1"
 
 #define MGFLOG(x) if(loggingEnabled()){ std::cout << "LOG (ID:" << getID() << ") ";  x; }
 #define MGFPRINT(x) { std::cout << "PRINT (ID:" << getID() << ") ";  x; }
