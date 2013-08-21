@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.14.1"
+#define MGFRAMEWORKVERSION "1.0.15.1"
 
 #define MGFLOG(x) if(loggingEnabled()){ std::cout << "LOG (ID:" << getID() << ") ";  x; }
 #define MGFPRINT(x) { std::cout << "PRINT (ID:" << getID() << ") ";  x; }
@@ -88,7 +88,10 @@ enum eMGComponentConsoleCommand{
 
 	//MGWindow commands
 	MGComponent_WINDOW_X,
-	MGComponent_WINDOW_HELP
+	MGComponent_WINDOW_HELP,
+	MGComponent_WINDOW_FULLSCREEN_ON,
+	MGComponent_WINDOW_LOGGING_OFF,
+	MGComponent_WINDOW_LOGGING_ON
 
 };
 

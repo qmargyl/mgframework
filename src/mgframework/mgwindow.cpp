@@ -99,6 +99,28 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
+		case MGComponent_WINDOW_FULLSCREEN_ON:
+		{
+			m_Fullscreen = true;
+			int flags = SDL_DOUBLEBUF | SDL_HWSURFACE | SDL_FULLSCREEN;
+			m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, flags );
+			return false; // Deactivate console
+		}
+
+		case MGComponent_WINDOW_LOGGING_ON:
+		{
+			enableLogging();
+			MGFPRINT(std::cout << "Logging enabled." << std::endl;);
+			return true;
+		}
+
+		case MGComponent_WINDOW_LOGGING_OFF:
+		{
+			disableLogging();
+			MGFPRINT(std::cout << "Logging disabled." << std::endl;);
+			return true;
+		}
+
 		default:
 			MGFLOG(std::cout << "ERROR: MGWindow::detectComponentConsoleCommand returned a bad value" << std::endl;); 
 			return true;
@@ -117,6 +139,20 @@ eMGComponentConsoleCommand MGWindow::detectMGComponentConsoleCommand(const std::
 			return MGComponent_WINDOW_HELP;
 		}
 	}
-
+	else if(cmdvec.size() == 3)
+	{
+		if(cmdvec[1]=="fullscreen" && cmdvec[2]=="on")
+		{
+			return MGComponent_WINDOW_FULLSCREEN_ON;
+		}
+		else if(cmdvec[1]=="logging" && cmdvec[2]=="on")
+		{
+			return MGComponent_WINDOW_LOGGING_ON;
+		}
+		else if(cmdvec[1]=="logging" && cmdvec[2]=="off")
+		{
+			return MGComponent_WINDOW_LOGGING_OFF;
+		}
+	}
 	return MGComponent_UNDEFINED;
 }
