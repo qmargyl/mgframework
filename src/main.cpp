@@ -10,6 +10,8 @@ int main(int argc, char **argv)
 
 	eMGFInstanceType instanceType = MGFSINGLEPLAYERINSTANCE;
 	bool loggingOn = false;
+	bool scriptFile = false;
+	char scriptFileName[128] = "";
 
 	if(argc==1){
 		// No parameters were given
@@ -32,6 +34,19 @@ int main(int argc, char **argv)
 			else if(strcmp(argv[i], "-client")==0){
 				instanceType = MGFCLIENTINSTANCE;
 			}
+			else if(strcmp(argv[i], "-script")==0){
+				if(i+1 == argc)
+				{
+					//No parameter after -script
+					goto EXIT_MAIN_RIGHT_AWAY;
+				}
+				else
+				{
+					//Store argv[++i] as script file name..
+					strcpy(scriptFileName, argv[++i]);
+					scriptFile = true;
+				}
+			}
 			else{
 				// Unknown parameter.
 			}
@@ -44,7 +59,7 @@ int main(int argc, char **argv)
 	if(instanceType==MGFSINGLEPLAYERINSTANCE)
 	{
 		p2 = new Project2();
-		p2->setWindowProperties(1024, 768, 32, false, 
+		p2->setWindowProperties(MGWindow_RES_1920_1080, 32, true, 
 			string("Project2 (single player example application) based on MGF ") + string(p2->getMGFrameworkVersion()));
 	}
 	else if(instanceType==MGFCLIENTINSTANCE)
@@ -68,7 +83,7 @@ int main(int argc, char **argv)
 		// If initialization is ok, run the framework...
 		if(p2->init(128, 128, 32, 32))
 		{
-			p2->run();
+			p2->run(scriptFileName);
 		}
 		else
 		{

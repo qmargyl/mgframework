@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.15.1"
+#define MGFRAMEWORKVERSION "1.0.16.0"
 
 #define MGFLOG(x) if(loggingEnabled()){ std::cout << "LOG (ID:" << getID() << ") ";  x; }
 #define MGFPRINT(x) { std::cout << "PRINT (ID:" << getID() << ") ";  x; }
@@ -221,6 +221,7 @@ class MGFramework :public MGComponent
 		// Initialization
 		virtual bool init(int w, int h, int tw, int th) = 0;	// Force a derived sub-class to implement this as it is not framework related.
 		bool setWindowProperties(int width, int height, int bpp, bool fullscreen, const string& title);
+		bool setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const string& title);
 		void unsetWindowProperties(){m_WindowPropertiesSet = false;}
 		bool windowPropertiesSet(){return m_WindowPropertiesSet;}
 
@@ -240,7 +241,9 @@ class MGFramework :public MGComponent
 		// Program version
 		const char *getMGFrameworkVersion(){return MGFRAMEWORKVERSION;}
 
-		virtual void run();
+		// Execute the framework
+		void run(const char *scriptFileName);
+		//void run();
 
 		// Mini map
 		void enableMiniMap(){m_MiniMapEnabled = true;}

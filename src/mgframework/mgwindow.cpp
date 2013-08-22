@@ -15,8 +15,10 @@ MGWindow::MGWindow():
 	m_Height(0),
 	m_Bpp(0),
 	m_Fullscreen(false),
-	m_Screen(NULL)
+	m_Screen(NULL),
+	m_Flags(0)
 {
+	// Nothing besides the initialization list..
 }
 
 MGWindow::~MGWindow()
@@ -37,15 +39,17 @@ bool MGWindow::createWindow()
 	SDL_WM_SetCaption(m_Title.c_str(), m_Title.c_str());
 
 	// Flags tell SDL about the type of window we are creating.
-	int flags = SDL_DOUBLEBUF | SDL_HWSURFACE;
-		
 	if(m_Fullscreen == true)
 	{
-		flags |= SDL_FULLSCREEN;
+		setFlags(SDL_FULLSCREEN | SDL_DOUBLEBUF | SDL_HWSURFACE);
+	}
+	else
+	{
+		setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
 	}
 
 	// Create the window
-	m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, flags );
+	m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, getFlags() );
 		
 	if(m_Screen == 0)
 	{
@@ -58,11 +62,44 @@ bool MGWindow::createWindow()
 bool MGWindow::setProperties(int width, int height, int bpp, bool fullscreen, const string& title)
 {
 	//Copy the values incase we need them
-	m_Height = height;
-	m_Width = width;
+	setSize(width, height);
 	m_Title = title;
 	m_Fullscreen = fullscreen;
 	m_Bpp = bpp;
+	setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
+	return true;
+}
+
+bool MGWindow::setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const string& title)
+{
+	switch(screenResolution)
+	{
+		case MGWindow_RES_1920_1080:
+			setSize(1920, 1080);
+			break;
+		case MGWindow_RES_1600_900:
+			setSize(1600, 900);
+			break;
+		case MGWindow_RES_1024_768:
+			setSize(1024, 768);
+			break;
+		case MGWindow_RES_800_600:
+			setSize(800, 600);
+			break;
+		case MGWindow_RES_640_480:
+			setSize(640, 480);
+			break;
+
+		default:
+			MGFLOG(std::cout << "ERROR: MGWindow::setProperties was given unsupported screen resolution" << std::endl;); 
+			return false;
+
+	}
+
+	m_Title = title;
+	m_Fullscreen = fullscreen;
+	m_Bpp = bpp;
+	setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
 	return true;
 }
 
@@ -82,6 +119,15 @@ int MGWindow::getWidth()
 	return m_Width;
 }
 
+void MGWindow::setFlags(int flags)
+{
+	m_Flags = flags;
+}
+
+int MGWindow::getFlags()
+{
+	return m_Flags;
+}
 
 bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 {
@@ -102,8 +148,8 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_WINDOW_FULLSCREEN_ON:
 		{
 			m_Fullscreen = true;
-			int flags = SDL_DOUBLEBUF | SDL_HWSURFACE | SDL_FULLSCREEN;
-			m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, flags );
+			setFlags(SDL_FULLSCREEN | SDL_DOUBLEBUF | SDL_HWSURFACE);
+			m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, getFlags() );
 			return false; // Deactivate console
 		}
 

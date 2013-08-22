@@ -211,8 +211,14 @@ bool MGFramework::processEvents()
 	return true;
 }
 
-void MGFramework::run()
+
+void MGFramework::run(const char *scriptFileName)
 {
+	if(strlen(scriptFileName) > 0)
+	{
+		MGFLOG(std::cout << "WARNING: Passing a script file name to run() is not yet supported" << std::endl;);
+	}
+
 	Uint32 frameStartTime = 0; 
 	m_DelayTime = 0;
 	Uint32 lastFrameTime = SDL_GetTicks()-1; // SDL_GetTicks() - lastFrameTime cannot be zero.
@@ -791,6 +797,13 @@ Uint32 MGFramework::getDesiredFPS()
 bool MGFramework::setWindowProperties(int width, int height, int bpp, bool fullscreen, const string& title)
 {
 	m_Window.setProperties(width, height, bpp, fullscreen, title);
+	m_WindowPropertiesSet = true;
+	return true;
+}
+
+bool MGFramework::setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const string& title)
+{
+	m_Window.setProperties(screenResolution, bpp, fullscreen, title);
 	m_WindowPropertiesSet = true;
 	return true;
 }
