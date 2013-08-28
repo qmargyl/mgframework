@@ -2,3 +2,4 @@
 
 int MGComponent::m_IDGenerator = 0;
 
+

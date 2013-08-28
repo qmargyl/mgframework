@@ -3,7 +3,6 @@
 
 #include <vector>
 
-
 enum eMGComponentConsoleCommand;
 
 class MGFramework;
@@ -43,6 +42,7 @@ public:
 	void enableLogging(){m_LoggingEnabled = true;}
 	void disableLogging(){m_LoggingEnabled = false;}
 	bool loggingEnabled(){return m_LoggingEnabled;}
+
 };
 
 #endif

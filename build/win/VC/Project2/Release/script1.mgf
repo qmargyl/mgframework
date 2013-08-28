@@ -1,0 +1,8 @@
+create mo 200
+create pe 1
+pe 0 setuptimer 4000
+pe 0 activate
+window help
+map help
+blablabla 7 3 6 hehe ok
+

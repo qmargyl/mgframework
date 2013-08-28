@@ -28,8 +28,8 @@ class MGWindow :public MGComponent
 		string m_Title;
 		int m_Flags;
 
-		void setFlags(int flags);
-		int getFlags();
+		void setFlags(int flags){ m_Flags = flags; }
+		int getFlags(){ return m_Flags; }
 			
 	public:
 
@@ -43,9 +43,9 @@ class MGWindow :public MGComponent
 		bool setProperties(int width, int height, int bpp, bool fullscreen, const string& title);
 		bool setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const string& title);
 
-		void setSize(int width, int height);
-		int getHeight();
-		int getWidth();
+		void setSize(int width, int height){ m_Height = height; m_Width = width; }
+		int getHeight(){ return m_Height; }
+		int getWidth(){ return m_Width; }
 
 		bool runConsoleCommand(const char *c, MGFramework *w);
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);

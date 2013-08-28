@@ -10,22 +10,22 @@
 using namespace std;
 
 
-MGFramework::MGFramework()
+MGFramework::MGFramework():
+	m_NMO(0),
+	m_NPE(0),
+	m_FrameTime(16),
+	m_FrameCountdownEnabled(false),
+	m_FrameNumber(0),
+	m_KeepSocketTerminalOpen(false),
+	m_FramingOngoing(false),
+	m_XFrameStart(0),
+	m_YFrameStart(0),
+	m_XFrameEnd(0),
+	m_YFrameEnd(0),
+	m_MarkedMOs(0)
 {
-	m_NMO=0;
-	m_NPE=0;
 	setDesiredFPS(20);
-	m_FrameTime=16;
-	m_FrameCountdownEnabled = false;
-	m_FrameNumber = 0;
-	m_KeepSocketTerminalOpen = false;
 	std::srand((unsigned)std::time(0));
-	m_FramingOngoing = false;
-	m_XFrameStart = 0;
-	m_YFrameStart = 0;
-	m_XFrameEnd = 0;
-	m_YFrameEnd = 0;
-	m_MarkedMOs = 0;
 }
 
 MGFramework::~MGFramework()
@@ -211,13 +211,63 @@ bool MGFramework::processEvents()
 	return true;
 }
 
+void MGFramework::parse(const char *scriptFileName)
+{
+	FILE *sf = NULL;
+	errno_t scriptError = fopen_s(&sf, scriptFileName, "rt");
+	if(sf == NULL)
+	{
+		MGFLOG(std::cout << "ERROR: MGFramework::parse failed to open script file " << scriptFileName << ", error(" << scriptError << ")" << std::endl;);
+	}
+	else
+	{
+		char scriptLine[MGF_SCRIPTLINE_MAXLENGTH] = "";
+		bool neof = true;
+		MGFLOG(std::cout << "INFO: MGFramework::parse starting to parse script file " << scriptFileName << std::endl;);
+
+		while(true)
+		{
+			neof = fgets(scriptLine, MGF_SCRIPTLINE_MAXLENGTH, sf);
+			if(!neof)
+			{
+				break;
+			}
+			else
+			{
+				// Remove the newline before sending command to runConsoleCommand
+
+
+				for(int i=strlen(scriptLine); i>=0 ; --i)
+				{
+					if(scriptLine[i] == '\n')
+					{
+						scriptLine[i] = '\0';
+					}
+				}
+
+				MGFLOG(std::cout << ":" << scriptLine << std::endl;);
+
+				if(okMGFrameworkSyntax(scriptLine))
+				{
+					MGFLOG(std::cout << ": runConsoleCommand(" << scriptLine << ")" << std::endl;);
+					runConsoleCommand(scriptLine, this);
+				}
+			}
+		}
+
+		if(sf != NULL)
+		{
+			fclose(sf);
+		}
+
+		MGFLOG(std::cout << "INFO: MGFramework::parse finished parsing script file " << scriptFileName << std::endl;);
+	}
+}
+
 
 void MGFramework::run(const char *scriptFileName)
 {
-	if(strlen(scriptFileName) > 0)
-	{
-		MGFLOG(std::cout << "WARNING: Passing a script file name to run() is not yet supported" << std::endl;);
-	}
+	parse(scriptFileName);
 
 	Uint32 frameStartTime = 0; 
 	m_DelayTime = 0;

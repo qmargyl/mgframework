@@ -38,12 +38,12 @@ bool Project2::init(int w, int h, int tw, int th)
 
 		runConsoleCommand("logging on", this); // Turn on logging for the MGFramework class
 		runConsoleCommand("setfps 60", this); // Framework default is 20 FPS
-		runConsoleCommand("create mo 50", this);
+	//	runConsoleCommand("create mo 50", this);
 		runConsoleCommand("open terminalserver", this);
-		runConsoleCommand("mo 0 mark", this);
-		runConsoleCommand("create pe 1", this);
-		runConsoleCommand("pe 0 setuptimer 4000", this);
-		runConsoleCommand("pe 0 activate", this);
+	//	runConsoleCommand("mo 0 mark", this);
+	//	runConsoleCommand("create pe 1", this);
+	//	runConsoleCommand("pe 0 setuptimer 4000", this);
+	//	runConsoleCommand("pe 0 activate", this);
 		runConsoleCommand("minimap on", this);
 
 		return true;

@@ -103,32 +103,6 @@ bool MGWindow::setProperties(eMGWindowScreenResolution screenResolution, int bpp
 	return true;
 }
 
-void MGWindow::setSize(int width, int height)
-{
-	m_Height = height;
-	m_Width = width;
-}
-	
-int MGWindow::getHeight()
-{
-	return m_Height;
-}
-	
-int MGWindow::getWidth()
-{
-	return m_Width;
-}
-
-void MGWindow::setFlags(int flags)
-{
-	m_Flags = flags;
-}
-
-int MGWindow::getFlags()
-{
-	return m_Flags;
-}
-
 bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 {
 	std::string cmd(c);

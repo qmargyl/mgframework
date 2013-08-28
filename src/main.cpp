@@ -59,7 +59,7 @@ int main(int argc, char **argv)
 	if(instanceType==MGFSINGLEPLAYERINSTANCE)
 	{
 		p2 = new Project2();
-		p2->setWindowProperties(MGWindow_RES_1920_1080, 32, true, 
+		p2->setWindowProperties(MGWindow_RES_800_600, 32, false, 
 			string("Project2 (single player example application) based on MGF ") + string(p2->getMGFrameworkVersion()));
 	}
 	else if(instanceType==MGFCLIENTINSTANCE)

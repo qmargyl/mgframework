@@ -14,10 +14,22 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.16.0"
+#define MGFRAMEWORKVERSION "1.0.17.0"
 
-#define MGFLOG(x) if(loggingEnabled()){ std::cout << "LOG (ID:" << getID() << ") ";  x; }
-#define MGFPRINT(x) { std::cout << "PRINT (ID:" << getID() << ") ";  x; }
+// Configurable defines...
+#define MGF_SCRIPTLINE_MAXLENGTH	256
+
+
+// Macros...
+#define MGFTIMESTAMP(x) (x/3600000) << ":" << (x%3600000)/60000 << ":" << (x%60000)/1000 << ":" << (x%1000) 
+
+#define MGFLOG(x) if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] LOG (ID:" << getID() << ") ";  x; }
+#define MGFPRINT(x) { Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] PRINT (ID:" << getID() << ") ";  x; }
+
+//Change to...
+//MGFLOG_WARNING
+//MGFLOG_INFO
+//MGFLOG_ERROR
 
 
 typedef unsigned short      WORD;
@@ -155,7 +167,6 @@ class MGFramework :public MGComponent
 		void deactivateFraming(){ m_FramingOngoing = false;}
 		void updateFraming(int x, int y){setFrameEndX(x); setFrameEndY(y);}
 
-
 	protected:
 		MGWindow m_Window;		// The framework window
 		
@@ -212,6 +223,9 @@ class MGFramework :public MGComponent
 		void disableTyping(){m_TypingEnabled = false;}
 		bool typingEnabled(){return m_TypingEnabled;}
 
+		// Parsing script files containing mgf commands
+		void parse(const char *scriptFileName);
+
 	public:
 		MGFramework();
 		virtual ~MGFramework();
@@ -243,7 +257,6 @@ class MGFramework :public MGComponent
 
 		// Execute the framework
 		void run(const char *scriptFileName);
-		//void run();
 
 		// Mini map
 		void enableMiniMap(){m_MiniMapEnabled = true;}
