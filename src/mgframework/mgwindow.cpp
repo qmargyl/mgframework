@@ -111,7 +111,7 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFPRINT(std::cout << "Error in command (window ...), MGComponent_UNDEFINED received from MGWindow::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG(std::cout << "ERROR: MGWindow::runConsoleCommand received MGComponent_UNDEFINED from MGWindow::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
 
 		case MGComponent_WINDOW_HELP:

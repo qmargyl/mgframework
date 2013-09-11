@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.17.0"
+#define MGFRAMEWORKVERSION "1.0.18.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -23,14 +23,14 @@
 // Macros...
 #define MGFTIMESTAMP(x) (x/3600000) << ":" << (x%3600000)/60000 << ":" << (x%60000)/1000 << ":" << (x%1000) 
 
-#define MGFLOG(x) if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] LOG (ID:" << getID() << ") ";  x; }
+#define MGFLOG(x) if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] LOG " << __FILE__ << ":" << __LINE__ << "(ID:" << getID() << ") ";  x; }
 #define MGFPRINT(x) { Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] PRINT (ID:" << getID() << ") ";  x; }
 
 //Change to...
 //MGFLOG_WARNING
 //MGFLOG_INFO
 //MGFLOG_ERROR
-
+//MGFCONSRETURN
 
 typedef unsigned short      WORD;
 
@@ -74,6 +74,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_PE_INT_SETUPTIMER_INT,
 	MGComponent_PE_INT_LOGGING_ON,
 	MGComponent_PE_INT_LOGGING_OFF,
+	MGComponent_PE_INT_STOREFILENAME_FILENAME,
 
 	//MGMovingObject commands
 	MGComponent_MO_INT_X,
@@ -223,9 +224,6 @@ class MGFramework :public MGComponent
 		void disableTyping(){m_TypingEnabled = false;}
 		bool typingEnabled(){return m_TypingEnabled;}
 
-		// Parsing script files containing mgf commands
-		void parse(const char *scriptFileName);
-
 	public:
 		MGFramework();
 		virtual ~MGFramework();
@@ -257,6 +255,9 @@ class MGFramework :public MGComponent
 
 		// Execute the framework
 		void run(const char *scriptFileName);
+
+		// Parsing script files containing mgf commands
+		void parse(const char *scriptFileName);
 
 		// Mini map
 		void enableMiniMap(){m_MiniMapEnabled = true;}

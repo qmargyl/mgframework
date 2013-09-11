@@ -219,7 +219,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFPRINT(std::cout << "Error in command (mo ...), MGComponent_UNDEFINED received from MGMovingObject::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG(std::cout << "ERROR: MGMovingObject::runConsoleCommand received MGComponent_UNDEFINED from MGMovingObject::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
 
 		case MGComponent_MO_INT_MARK:

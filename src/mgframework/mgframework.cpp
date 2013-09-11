@@ -227,6 +227,7 @@ void MGFramework::parse(const char *scriptFileName)
 
 		while(true)
 		{
+			// Read until new line or end of file, whichever happens first..
 			neof = fgets(scriptLine, MGF_SCRIPTLINE_MAXLENGTH, sf);
 			if(!neof)
 			{
@@ -234,14 +235,16 @@ void MGFramework::parse(const char *scriptFileName)
 			}
 			else
 			{
-				// Remove the newline before sending command to runConsoleCommand
-
-
-				for(int i=strlen(scriptLine); i>=0 ; --i)
+				// Remove the newline and any tailing "special" characters before sending command to runConsoleCommand
+				for(int i=(int)strlen(scriptLine); i>=0 ; --i)
 				{
-					if(scriptLine[i] == '\n')
+					if(scriptLine[i] <= 32) // Remove characters from 0 to space in the ASCII table
 					{
 						scriptLine[i] = '\0';
+					}
+					else
+					{
+						break;
 					}
 				}
 
@@ -348,7 +351,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFPRINT(std::cout << "Error in command, MGComponent_UNDEFINED received from MGFramework::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG(std::cout << "ERROR: MGFramework::runConsoleCommand received MGComponent_UNDEFINED from MGFramework::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
 
 		case MGComponent_MAP_X:
@@ -368,6 +371,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_PE_INT_SETUPTIMER_INT:
 		case MGComponent_PE_INT_LOGGING_ON:
 		case MGComponent_PE_INT_LOGGING_OFF:
+		case MGComponent_PE_INT_STOREFILENAME_FILENAME:
 		{
 			int peIndex=toInt(cmdvec[1]);
 			if(peIndex >= 0 && peIndex < getNumberOfPE())

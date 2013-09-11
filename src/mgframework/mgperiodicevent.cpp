@@ -6,9 +6,14 @@
 
 
 MGPeriodicEvent::MGPeriodicEvent()
-: m_Period(1000), m_StartTime(0), m_isActive(false) 
+: m_Period(1000), m_StartTime(0), m_isActive(false), m_FileName1(NULL)
 {
 
+}
+
+MGPeriodicEvent::~MGPeriodicEvent()
+{
+	delete [] m_FileName1;
 }
 
 void MGPeriodicEvent::setupTimer(int ms)
@@ -64,15 +69,13 @@ void MGPeriodicEvent::copy(const MGPeriodicEvent *src)
 
 bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 {
-	MGFLOG(std::cout << "MGPeriodicEvent::runConsoleCommand(" << c << ")" << std::endl;);
-
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
 
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFPRINT(std::cout << "Error in command (pe ...), MGComponent_UNDEFINED received from MGPeriodicEvent::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG(std::cout << "ERROR: MGPeriodicEvent::runConsoleCommand received MGComponent_UNDEFINED from MGPeriodicEvent::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
 
 		case MGComponent_PE_INT_HELP:
@@ -104,10 +107,17 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 			MGFPRINT(std::cout << "Logging disabled." << std::endl;);
 			return true;
 
+		case MGComponent_PE_INT_STOREFILENAME_FILENAME:
+		{
+			setFileName1(cmdvec[3].c_str());
+			return true;
+		}
+
 		default:
 			break;
 	}
 
+	MGFPRINT(std::cout << "Unknown command" << std::endl;);
 	return true;
 }
 
@@ -130,7 +140,7 @@ eMGComponentConsoleCommand MGPeriodicEvent::detectMGComponentConsoleCommand(cons
 		}
 
 	}
-	else if(cmdvec.size() == 4)
+	else if(cmdvec.size() >= 4)
 	{
 		if(cmdvec[0]=="pe" && cmdvec[2]=="setuptimer")
 		{
@@ -144,8 +154,38 @@ eMGComponentConsoleCommand MGPeriodicEvent::detectMGComponentConsoleCommand(cons
 		{
 			return MGComponent_PE_INT_LOGGING_OFF;
 		}
+		else if(cmdvec[0]=="pe" && (cmdvec[2]=="<<" || cmdvec[2]=="storefilename"))
+		{
+			return MGComponent_PE_INT_STOREFILENAME_FILENAME;
+		}
 	}
 
 	// MGPeriodicEvent failed to detect a proper command in the given string..
 	return MGComponent_UNDEFINED;
+}
+
+void MGPeriodicEvent::setFileName1(const char *c)
+{
+	delete [] m_FileName1;
+	m_FileName1 = new char(strlen(c)+1);
+	strcpy(m_FileName1,c);
+}
+
+void MGPeriodicEvent::runFile1(MGFramework *w)
+{
+	if(m_FileName1 != NULL)
+	{
+		if(w != NULL)
+		{
+			w->parse(m_FileName1);
+		}
+		else
+		{
+			MGFLOG(std::cout << "ERROR: MGPeriodicEvent::runFile1 was called with no callback framework pointer." << std::endl;);
+		}
+	}
+	else
+	{
+		MGFLOG(std::cout << "ERROR: MGPeriodicEvent::runFile1 was called with no file name set." << std::endl;); 
+	}
 }

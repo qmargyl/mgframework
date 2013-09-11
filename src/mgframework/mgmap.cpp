@@ -148,7 +148,7 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFPRINT(std::cout << "Error in command (map ...), MGComponent_UNDEFINED received from MGMap::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG(std::cout << "ERROR: MGMap::runConsoleCommand received MGComponent_UNDEFINED from MGMap::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
 
 		case MGComponent_MAP_HELP:
