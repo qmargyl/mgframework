@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.18.0"
+#define MGFRAMEWORKVERSION "1.0.19.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -32,15 +32,6 @@
 //MGFLOG_ERROR
 //MGFCONSRETURN
 
-typedef unsigned short      WORD;
-
-enum eMGFInstanceType{
-	MGFSERVERINSTANCE = 0,
-	MGFCLIENTINSTANCE,
-	MGFSINGLEPLAYERINSTANCE
-};
-
-
 enum eMGComponentConsoleCommand{
 	MGComponent_UNDEFINED = 0,
 
@@ -51,8 +42,8 @@ enum eMGComponentConsoleCommand{
 	MGComponent_GETFPS,
 	MGComponent_GETNUMBEROFMARKEDMO,
 	MGComponent_GETNUMBEROFMO,
-	MGComponent_CREATE_MO_INT,
-	MGComponent_ADD_MO_INT,
+	MGComponent_CREATE_MO_INT_PARAMLIST,
+	MGComponent_ADD_MO_INT_PARAMLIST,
 	MGComponent_CREATE_PE_INT,
 	MGComponent_ADD_PE_INT,
 	MGComponent_DELETE_ALL_MO,

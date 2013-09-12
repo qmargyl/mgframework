@@ -155,8 +155,9 @@ void Project2::draw()
 	}
 
 	// Example of how text can be printed on the surface.. Here FPS and time left between frames.
-	drawText(getSurface(), MGFramework::toString(getLastFrameDelayTime()).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 50, 0, 0, 0, 0, 255, 0);
-	drawText(getSurface(), MGFramework::toString(getFPS()).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 30, 0, 0, 0, 0, 255, 0);
+	drawText(getSurface(), (string("MOs: ") + MGFramework::toString(getNumberOfMO())).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 30, 0, 0, 0, 0, 255, 0);
+	drawText(getSurface(), (string("FD : ") + MGFramework::toString(getLastFrameDelayTime())).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 50, 0, 0, 0, 0, 255, 0);
+	drawText(getSurface(), (string("FPS: ") + MGFramework::toString(getFPS())).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 70, 0, 0, 0, 0, 255, 0);
 
 
 

@@ -222,14 +222,14 @@ void MGFramework::parse(const char *scriptFileName)
 	else
 	{
 		char scriptLine[MGF_SCRIPTLINE_MAXLENGTH] = "";
-		bool neof = true;
+		char *neof = NULL;
 		MGFLOG(std::cout << "INFO: MGFramework::parse starting to parse script file " << scriptFileName << std::endl;);
 
 		while(true)
 		{
 			// Read until new line or end of file, whichever happens first..
 			neof = fgets(scriptLine, MGF_SCRIPTLINE_MAXLENGTH, sf);
-			if(!neof)
+			if(neof == NULL)
 			{
 				break;
 			}
@@ -397,10 +397,24 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
-		case MGComponent_CREATE_MO_INT:
+		case MGComponent_CREATE_MO_INT_PARAMLIST:
 		{
 			int n = toInt(cmdvec[2]);
-			if(n>0)
+			int owner = 0;
+			for(int i = 3; i < cmdvec.size(); ++i)
+			{
+				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
+				{
+					owner = toInt(cmdvec[i+1]);
+					++i;
+				}
+				else
+				{
+					MGFPRINT(std::cout << "Error in command (create mo <n>), bad parameter list" << std::endl;);
+					n = 0; // Abort MO creation..
+				}
+			}
+			if(n > 0)
 			{
 				// Clear the map of occupied marks...
 				for(int y=0; y<m_Map.getHeight(); y++)
@@ -426,6 +440,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 					m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()), this);
 					m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
 					m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
+					m_MO[i].setOwner(owner);
 					m_Map.occupy(m_MO[i].getTileX(), m_MO[i].getTileY(), m_MO[i].getID());
 				}
 				if(m_MO == NULL)
@@ -452,10 +467,24 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
-		case MGComponent_ADD_MO_INT:
+		case MGComponent_ADD_MO_INT_PARAMLIST:
 		{
 			int nBefore=getNumberOfMO();
 			int n = toInt(cmdvec[2]);
+			int owner = 0;
+			for(int i = 3; i < cmdvec.size(); ++i)
+			{
+				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
+				{
+					owner = toInt(cmdvec[i+1]);
+					++i;
+				}
+				else
+				{
+					MGFPRINT(std::cout << "Error in command (add mo <n>), bad parameter list" << std::endl;);
+					n = 0; // Abort MO creation..
+				}
+			}
 			if(n>0)
 			{
 				addMO(n);
@@ -473,6 +502,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 					m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()), this);
 					m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
 					m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
+					m_MO[i].setOwner(owner);
 					m_Map.occupy(m_MO[i].getTileX(), m_MO[i].getTileY(), m_MO[i].getID());
 				}
 				if(m_MO == NULL)
@@ -741,11 +771,11 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 	{
 		if(cmdvec[0]=="create" && cmdvec[1]=="mo")
 		{
-			return MGComponent_CREATE_MO_INT;
+			return MGComponent_CREATE_MO_INT_PARAMLIST; // Zero or more parameters..
 		}
 		else if(cmdvec[0]=="add" && cmdvec[1]=="mo")
 		{
-			return MGComponent_ADD_MO_INT;
+			return MGComponent_ADD_MO_INT_PARAMLIST; // Zero or more parameters..
 		}
 		else if(cmdvec[0]=="create" && cmdvec[1]=="pe")
 		{
