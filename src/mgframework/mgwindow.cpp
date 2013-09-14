@@ -5,10 +5,11 @@
 #include <SDL/SDL_opengl.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "SDL_ttf.h"
 #include "mgwindow.h"
 #include "mgframework.h"
-
+#ifndef MGF_DEBUGGING_ENABLED
+#include "SDL_ttf.h"
+#endif
 
 MGWindow::MGWindow():
 	m_Width(0),
@@ -33,7 +34,9 @@ bool MGWindow::createWindow()
 		return false;
 	}
 
+#ifndef MGF_DEBUGGING_ENABLED
 	TTF_Init(); // To debug all TTF references must be commented out.
+#endif
 
 	// Set the title.
 	SDL_WM_SetCaption(m_Title.c_str(), m_Title.c_str());

@@ -3,9 +3,9 @@
 
 #include <vector>
 
-enum eMGComponentConsoleCommand;
-
 typedef unsigned short      WORD;
+
+enum eMGComponentConsoleCommand;
 
 enum eMGFInstanceType{
 	MGFSERVERINSTANCE = 0,
@@ -22,14 +22,16 @@ class MGFramework;
 class MGComponent
 {
 private:
+
 	static int m_IDGenerator;
-	bool m_LoggingEnabled;		// Setting allows extended logging to console.
 	unsigned int m_Owner;
+	bool m_LoggingEnabled;		// Setting allows extended logging to console.
 
 	void setID(int id){ m_ID=id;}
 	int generateID(){ return m_IDGenerator++;}
 
 protected:
+
 	int m_ID;
 
 	void setID()
@@ -41,10 +43,12 @@ protected:
 
 public:
 	MGComponent()
+		: m_LoggingEnabled (false),
+		  m_Owner (MGF_NOPLAYER)
 	{
 		setID();
-		disableLogging();
-		m_Owner = MGF_NOPLAYER;
+//		disableLogging();
+//		m_Owner = MGF_NOPLAYER;
 	}
 
 	// Force all classes inheriting MGComponent to take console commands. 

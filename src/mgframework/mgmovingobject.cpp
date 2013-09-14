@@ -12,6 +12,8 @@ MGMovingObject::MGMovingObject()
 	m_NextTileX=0;
 	m_NextTileY=0;
 	setID();
+	setOwner(MGF_NOPLAYER);
+	disableLogging();
 }
 
 void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
@@ -209,6 +211,8 @@ void MGMovingObject::copy(const MGMovingObject *src)
 	m_NextTileX = src->m_NextTileX;
 	m_NextTileY = src->m_NextTileY;
 	m_ID = src->m_ID;
+//	m_Owner = src->m_Owner;
+//	m_LoggingEnabled = src->m_LoggingEnabled;
 }
 
 bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
@@ -225,8 +229,11 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_MO_INT_MARK:
 		case MGComponent_MO_ALL_MARK:
 		{
-			mark();
-			w->countMark();
+			if(!isMarked())
+			{
+				mark();
+				w->countMark();
+			}
 			return true;
 		}
 
@@ -234,8 +241,11 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_MO_INT_UNMARK:
 		case MGComponent_MO_ALL_UNMARK:
 		{
-			unMark();
-			w->countUnMark();
+			if(isMarked())
+			{
+				unMark();
+				w->countUnMark();
+			}
 			return true;
 		}
 

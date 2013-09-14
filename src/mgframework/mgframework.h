@@ -14,10 +14,11 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.19.0"
+#define MGFRAMEWORKVERSION "1.0.20.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
+//#define MGF_DEBUGGING_ENABLED
 
 
 // Macros...
@@ -38,15 +39,21 @@ enum eMGComponentConsoleCommand{
 	//MGFramework commands
 	MGComponent_HELP,
 	MGComponent_EXIT,
+	MGComponent_EXIT_APPLICATION,
 	MGComponent_LOGGING,
+
 	MGComponent_GETFPS,
 	MGComponent_GETNUMBEROFMARKEDMO,
 	MGComponent_GETNUMBEROFMO,
+
+	MGComponent_EXPECT_GETNUMBEROFMARKEDMO_INT,
+	MGComponent_EXPECT_GETNUMBEROFMO_INT,
+
 	MGComponent_CREATE_MO_INT_PARAMLIST,
 	MGComponent_ADD_MO_INT_PARAMLIST,
 	MGComponent_CREATE_PE_INT,
 	MGComponent_ADD_PE_INT,
-	MGComponent_DELETE_ALL_MO,
+	MGComponent_DELETE_ALL_MO_PARAMLIST,
 	MGComponent_RUNFRAMES_INT,
 	MGComponent_SETFPS_INT,
 	MGComponent_OPEN_TERMINALSERVER,
@@ -55,6 +62,8 @@ enum eMGComponentConsoleCommand{
 	MGComponent_MINIMAP_OFF,
 	MGComponent_LOGGING_ON,
 	MGComponent_LOGGING_OFF,
+	MGComponent_INPUT_OFF,
+	MGComponent_INPUT_ON,
 
 	//MGPeriodicEvent commands
 	MGComponent_PE_INT_X,
@@ -100,13 +109,23 @@ enum eMGComponentConsoleCommand{
 };
 
 
-
+#ifndef MGF_DEBUGGING_ENABLED
 int runMGFrameworkSocketTerminal(void *fm);
-
+#endif
 
 class MGFramework :public MGComponent
 {
 	private:
+		// Enable/disable input functionality
+		bool m_InputEnabled;
+		void enableInput(){ m_InputEnabled = true;}
+		void disableInput(){ m_InputEnabled = false;}
+		bool isInputEnabled(){ return m_InputEnabled;}
+
+		// Exit application functionality
+		bool m_Quit;
+		void quit(){ m_Quit = true; }
+		bool getQuitFlag(){ return m_Quit; }
 
 		bool m_TypingEnabled;		// Setting allows typing commands to console.
 		bool m_WindowPropertiesSet; // Used to determine if all Windows properties have been set.
@@ -169,6 +188,7 @@ class MGFramework :public MGComponent
 		void createMO(int n);
 		void addMO(int n);
 		int getNumberOfMO(){ return biggest(m_NMO, 0);}
+		void deleteMO(int index);
 
 		// PE related
 		void createPE(int n);
@@ -196,7 +216,9 @@ class MGFramework :public MGComponent
 		SDL_Surface *getSurface(){return m_Window.m_Screen;}
 		void drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		SDL_Surface *loadBMPImage( std::string filename );
+#ifndef MGF_DEBUGGING_ENABLED
 		void drawText(SDL_Surface* screen, const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
+#endif
 		void putPixel32(SDL_Surface *surface, int x, int y, Uint32 pixel);
 		Uint32 getPixel32(SDL_Surface *surface, int x, int y);
 		void drawCircle32(SDL_Surface *surface, int n_cx, int n_cy, int radius, Uint32 pixel);
@@ -268,7 +290,9 @@ class MGFramework :public MGComponent
 		static int randomN(int upperLimit){return std::rand()%upperLimit;}
 		static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
 		static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);
+#ifndef MGF_DEBUGGING_ENABLED
 		static int initializeWinsock(WORD wVersionRequested);
+#endif
 		static bool okMGFrameworkSyntax(const char *c);
 		static bool oneOf(int x, int a1, int a2){ if(x==a1) return true;  if(x==a2) return true; return false;}
 		static int smallest(int a, int b){ if(a<b) return a; return b;}

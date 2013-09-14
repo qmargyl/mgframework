@@ -22,14 +22,19 @@ MGFramework::MGFramework():
 	m_YFrameStart(0),
 	m_XFrameEnd(0),
 	m_YFrameEnd(0),
-	m_MarkedMOs(0)
+	m_MarkedMOs(0),
+	m_Quit(false),
+	m_DelayTime(0),
+	m_InputEnabled(true)
 {
 	setDesiredFPS(20);
-	std::srand((unsigned)std::time(0));
+	std::srand((int)std::time(0));
 }
 
 MGFramework::~MGFramework()
 {
+//	delete[] m_MO;
+//	delete[] m_PE;
 }
 
 void MGFramework::resize(int x, int y)
@@ -42,6 +47,9 @@ bool MGFramework::processEvents()
 	// No events for a server instance..
 	if(getInstanceType() == MGFSERVERINSTANCE) return true;
 
+	// Don't handle input if input is disabled..
+	if(!isInputEnabled()) return true;
+
 	// Event processing loop is started after all special cases.
 	SDL_Event event;
 	while (SDL_PollEvent(&event))//get all events
@@ -53,6 +61,8 @@ bool MGFramework::processEvents()
 			{
 				MGFLOG(std::cout << "SDL_QUIT" << std::endl;)
 				// Return false because we are quitting.
+				//quit();
+				//break;
 				return false;
 			}
 
@@ -208,6 +218,10 @@ bool MGFramework::processEvents()
 			}
 		}
 	}
+
+	// Quit if it has been decided to do so..
+	if(getQuitFlag()) return false;
+
 	return true;
 }
 
@@ -245,6 +259,15 @@ void MGFramework::parse(const char *scriptFileName)
 					else
 					{
 						break;
+					}
+				}
+				// Also remove comments..
+				int l=(int)strlen(scriptLine);
+				for(int i=0; i<l; ++i)
+				{
+					if(scriptLine[i] == '/') // Remove comments
+					{
+						scriptLine[i] = '\0';
 					}
 				}
 
@@ -397,11 +420,12 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
+
 		case MGComponent_CREATE_MO_INT_PARAMLIST:
 		{
 			int n = toInt(cmdvec[2]);
 			int owner = 0;
-			for(int i = 3; i < cmdvec.size(); ++i)
+			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
@@ -451,28 +475,65 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
-		case MGComponent_DELETE_ALL_MO:
+
+
+		case MGComponent_DELETE_ALL_MO_PARAMLIST:
 		{
 			// Clear the map of occupied marks...
-			for(int y=0; y<m_Map.getHeight(); y++)
+			// TODO: Add support for -owner parameter (delete only one owner's MOs)
+			int owner = 0;
+			bool ownerParamSet=false;
+			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
-				for(int x=0; x<m_Map.getWidth(); x++)
+				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					m_Map.unOccupy(x, y);
+					owner = toInt(cmdvec[i+1]);
+					ownerParamSet=true;
+					++i;
+				}
+				else
+				{
+					MGFPRINT(std::cout << "Error in command (delete all mo), bad parameter list" << std::endl;);
+					return true;
 				}
 			}
-			// ...and then create zero new MOs.
-			MGFLOG(std::cout << "INFO: Creating zero MO..." << std::endl;);
-			createMO(0);
+
+			for(int i = getNumberOfMO()-1; i>=0; --i)
+			{
+				if(ownerParamSet)
+				{
+					if(m_MO[i].getOwner() == owner)
+					{
+						deleteMO(i);
+					}
+				}
+				else
+				{
+					deleteMO(i);
+				}
+			}
+
+//			for(int y=0; y<m_Map.getHeight(); y++)
+//			{
+//				for(int x=0; x<m_Map.getWidth(); x++)
+//				{
+//					m_Map.unOccupy(x, y);
+//				}
+//			}
+//			// ...and then create zero new MOs.
+//			MGFLOG(std::cout << "INFO: Creating zero MO..." << std::endl;);
+//			createMO(0);
 			return true;
 		}
+
+
 
 		case MGComponent_ADD_MO_INT_PARAMLIST:
 		{
 			int nBefore=getNumberOfMO();
 			int n = toInt(cmdvec[2]);
 			int owner = 0;
-			for(int i = 3; i < cmdvec.size(); ++i)
+			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
@@ -513,6 +574,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
+
 		case MGComponent_CREATE_PE_INT:
 		{
 			int n = toInt(cmdvec[2]);
@@ -546,7 +608,9 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			MGFPRINT(std::cout << "Opening terminal server..." << std::endl;);
 			openSocketTerminal();
+#ifndef MGF_DEBUGGING_ENABLED
 			m_SocketTerminal = SDL_CreateThread(runMGFrameworkSocketTerminal, this);
+#endif
 			return true;
 		}
 
@@ -649,6 +713,13 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return false;
 		}
 
+		case MGComponent_EXIT_APPLICATION:
+		{
+			std::cout << "Exiting application..." << std::endl;
+			quit();
+			return false;
+		}
+
 		case MGComponent_HELP:
 		{
 			std::cout << "Command help" << std::endl;
@@ -693,6 +764,46 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_GETNUMBEROFMO:
 		{
 			MGFPRINT(std::cout << "" << getNumberOfMO() << std::endl;);
+			return true;
+		}
+
+		case MGComponent_INPUT_ON:
+		{
+			enableInput();
+			return true;
+		}
+
+		case MGComponent_INPUT_OFF:
+		{
+			disableInput();
+			return true;
+		}
+
+		case MGComponent_EXPECT_GETNUMBEROFMARKEDMO_INT:
+		{
+			int exp = toInt(cmdvec[2]);
+			if(exp == getNumberOfMarkedMO())
+			{
+				MGFLOG(std::cout << "INFO: MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")" << std::endl;);
+			}
+			else
+			{
+				MGFLOG(std::cout << "ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfMarkedMO() << ")" << std::endl;);
+			}
+			return true;
+		}
+
+		case MGComponent_EXPECT_GETNUMBEROFMO_INT:
+		{
+			int exp = toInt(cmdvec[2]);
+			if(exp == getNumberOfMO())
+			{
+				MGFLOG(std::cout << "INFO: MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")" << std::endl;);
+			}
+			else
+			{
+				MGFLOG(std::cout << "ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfMO() << ")" << std::endl;);
+			}
 			return true;
 		}
 
@@ -766,6 +877,18 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		{
 			return MGComponent_RUNFRAMES_INT;
 		}
+		else if(cmdvec[0]=="exit" && cmdvec[1]=="application")
+		{
+			return MGComponent_EXIT_APPLICATION;
+		}
+		else if(cmdvec[0]=="input" && cmdvec[1]=="on")
+		{
+			return MGComponent_INPUT_ON;
+		}
+		else if(cmdvec[0]=="input" && cmdvec[1]=="off")
+		{
+			return MGComponent_INPUT_OFF;
+		}
 	}
 	else if(cmdvec.size() > 2)
 	{
@@ -807,7 +930,15 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		}
 		else if(cmdvec[0]=="delete" && cmdvec[1]=="all" && cmdvec[2]=="mo" )
 		{
-			return MGComponent_DELETE_ALL_MO;
+			return MGComponent_DELETE_ALL_MO_PARAMLIST;
+		}
+		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofmarkedmo")
+		{
+			return MGComponent_EXPECT_GETNUMBEROFMARKEDMO_INT;
+		}
+		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofmo")
+		{
+			return MGComponent_EXPECT_GETNUMBEROFMO_INT;
 		}
 	}
 
@@ -925,6 +1056,41 @@ void MGFramework::addMO(int n)
 	}
 }
 
+void MGFramework::deleteMO(int index)
+{
+	if(index < 0 || index >= getNumberOfMO())
+	{
+		MGFLOG(std::cout << "ERROR: MGFramework::deleteMO was given a bad index: " << index << std::endl;)
+	}
+	else
+	{
+		m_Map.unOccupy(m_MO[index].getTileX(), m_MO[index].getTileY());
+
+		for(int i=0; i<getNumberOfMO(); ++i)
+		{
+			if(i<index)
+			{
+				// Do nothing...
+			}
+			else if(i>=index && i<getNumberOfMO()-1)
+			{
+				// Overwrite mo(i) with mo(i+1)
+				m_MO[i].copy(&m_MO[i+1]);
+			}
+			else if(i==getNumberOfMO()-1)
+			{
+				//No need to actually delete the MO since we will not access it if it's outside getNumberOfMO()...
+				//delete m_MO[i];
+			}
+			else
+			{
+				MGFLOG(std::cout << "ERROR: MGFramework::deleteMO was not able to find the given index: " << index << std::endl;)
+				return;
+			}
+		}
+		m_NMO = getNumberOfMO()-1;
+	}
+}
 
 void MGFramework::createPE(int n)
 {
@@ -993,6 +1159,7 @@ SDL_Surface *MGFramework::loadBMPImage( std::string filename )
 	return optimizedImage;
 }
 
+#ifndef MGF_DEBUGGING_ENABLED
 void MGFramework::drawText(SDL_Surface* screen, const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB)
 {
 	TTF_Font* font = TTF_OpenFont("ARIAL.TTF", size);
@@ -1004,6 +1171,7 @@ void MGFramework::drawText(SDL_Surface* screen, const char* string, int size, in
 	SDL_FreeSurface(textSurface);
 	TTF_CloseFont(font);
 }
+#endif
 
 string MGFramework::toString(int number)
 {
@@ -1177,6 +1345,7 @@ bool MGFramework::detectCollisionPointRectangle(int px, int py, int x1, int y1, 
 	return false;
 }
 
+#ifndef MGF_DEBUGGING_ENABLED
 int MGFramework::initializeWinsock(WORD wVersionRequested)
 {
 	WSADATA wsaData;
@@ -1187,6 +1356,7 @@ int MGFramework::initializeWinsock(WORD wVersionRequested)
 	//Everything is fine: proceed
 	return 1;
 }
+#endif
 
 bool MGFramework::okMGFrameworkSyntax(const char *c)
 {
@@ -1204,7 +1374,7 @@ void MGFramework::addConsoleCommandToQueue(const char *c)
 
 }
 
-
+#ifndef MGF_DEBUGGING_ENABLED
 int runMGFrameworkSocketTerminal(void *fm)
 {
 	MGFramework *mgf = (MGFramework *)fm;
@@ -1299,3 +1469,4 @@ int runMGFrameworkSocketTerminal(void *fm)
 	mgf->logIfEnabled("Socket terminal closed...");
 	return 0;
 }
+#endif

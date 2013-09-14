@@ -1,0 +1,6 @@
+input off
+create mo 10 -owner 1
+runframes 100
+delete all mo
+input on
+exit application

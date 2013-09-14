@@ -1,0 +1,46 @@
+
+
+
+// Creation and deletion
+create mo 1
+expect getnumberofmo 1
+delete all mo
+expect getnumberofmo 0
+
+
+
+// Creation and deletion with -owner
+create mo 1 -owner 1
+expect getnumberofmo 1
+add mo 1 -owner 2
+expect getnumberofmo 2
+delete all mo -owner 1
+expect getnumberofmo 1
+delete all mo -owner 2
+expect getnumberofmo 0
+
+
+
+// Mark and unmark
+add mo 20 -owner 0
+expect getnumberofmo 20
+expect getnumberofmarkedmo 0
+mo 10 mark
+expect getnumberofmarkedmo 1
+mo 11 mark
+expect getnumberofmarkedmo 2
+mo 2 mark
+expect getnumberofmarkedmo 3
+mo 7 unmark
+expect getnumberofmarkedmo 3
+mo 11 unmark
+expect getnumberofmarkedmo 2
+mo all unmark
+expect getnumberofmarkedmo 0
+delete all mo
+expect getnumberofmo 0
+expect getnumberofmarkedmo 0
+
+
+// Exiting application when all tests have run
+exit application
