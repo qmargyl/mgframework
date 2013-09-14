@@ -681,8 +681,8 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_LOGGING_OFF:
 		{
-			disableLogging();
 			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
+			disableLogging();
 			return true;
 		}
 

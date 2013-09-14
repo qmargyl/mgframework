@@ -297,6 +297,16 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
+		case MGComponent_MO_INT_LOGGING_ON:
+			enableLogging();
+			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
+			return true;
+
+		case MGComponent_MO_INT_LOGGING_OFF:
+			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
+			disableLogging();
+			return true;
+
 
 		default:
 			MGFLOG_ERROR(std::cout << "MGMovingObject::detectComponentConsoleCommand returned a bad value" << std::endl;); 
@@ -338,6 +348,17 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 		else if(cmdvec[2]=="unmark")
 		{
 			return MGComponent_MO_INT_UNMARK;
+		}
+	}
+	else if(cmdvec.size() == 4)
+	{
+		if(cmdvec[0]=="mo" && cmdvec[2]=="logging" && cmdvec[3]=="on")
+		{
+			return MGComponent_MO_INT_LOGGING_ON;
+		}
+		else if(cmdvec[0]=="mo" && cmdvec[2]=="logging" && cmdvec[3]=="off")
+		{
+			return MGComponent_MO_INT_LOGGING_OFF;
 		}
 	}
 	else if(cmdvec.size() == 5)

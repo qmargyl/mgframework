@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.20.1"
+#define MGFRAMEWORKVERSION "1.0.20.2"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -36,7 +36,6 @@ enum eMGComponentConsoleCommand{
 	MGComponent_HELP,
 	MGComponent_EXIT,
 	MGComponent_EXIT_APPLICATION,
-	MGComponent_LOGGING,
 
 	MGComponent_GETFPS,
 	MGComponent_GETNUMBEROFMARKEDMO,
@@ -89,6 +88,10 @@ enum eMGComponentConsoleCommand{
 	MGComponent_MO_INT_SETDESTINATION_INT_INT,
 	MGComponent_MO_ALL_SETDESTINATION_INT_INT,
 	MGComponent_MO_MARKED_SETDESTINATION_INT_INT,
+	MGComponent_MO_INT_LOGGING_OFF,
+	MGComponent_MO_INT_LOGGING_ON,
+	MGComponent_MO_ALL_LOGGING_OFF,
+	MGComponent_MO_ALL_LOGGING_ON,
 
 	//MGMap commands
 	MGComponent_MAP_X,

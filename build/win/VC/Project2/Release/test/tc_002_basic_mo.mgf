@@ -3,6 +3,7 @@
 
 // Creation and deletion
 create mo 1
+mo 0 logging on
 expect getnumberofmo 1
 delete all mo
 expect getnumberofmo 0
@@ -23,6 +24,7 @@ expect getnumberofmo 0
 
 // Mark and unmark
 add mo 20 -owner 0
+mo all logging on
 expect getnumberofmo 20
 expect getnumberofmarkedmo 0
 mo 10 mark
@@ -37,6 +39,11 @@ mo 11 unmark
 expect getnumberofmarkedmo 2
 mo all unmark
 expect getnumberofmarkedmo 0
+mo 4 mark
+mo 5 mark
+expect getnumberofmarkedmo 2
+mo marked unmark
+expect getnumberofmarkedmo 0
 delete all mo
 expect getnumberofmo 0
 expect getnumberofmarkedmo 0
@@ -47,6 +54,23 @@ expect getnumberofmarkedmo 0
 create mo 10000 -owner 1
 add mo 10000 -owner 2
 expect getnumberofmo 20000
+delete all mo
+expect getnumberofmo 0
+
+
+
+// Ordering
+create mo 1
+mo 0 logging on
+mo 0 mark
+expect getnumberofmarkedmo 1
+mo 0 unmark
+expect getnumberofmo 1
+mo 0 getdistance
+mo 0 getdestination
+mo 0 getspeed
+mo 0 help
+mo 0 setdestination 0 0
 delete all mo
 expect getnumberofmo 0
 

@@ -106,8 +106,8 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 
 		case MGComponent_PE_INT_LOGGING_OFF:
-			disableLogging();
 			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
+			disableLogging();
 			return true;
 
 		case MGComponent_PE_INT_STOREFILENAME_FILENAME:

@@ -1,0 +1,67 @@
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:678 (ID:0) INFO: Logging enabled.
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:692 (ID:0) INFO: Mini map enabled.
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:240 (ID:0) INFO: MGFramework::parse starting to parse script file script1.mgf
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >create mo 5 -owner 1
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(create mo 5 -owner 1)
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >create pe 1
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(create pe 1)
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >pe 0 setuptimer 2000
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(pe 0 setuptimer 2000)
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >pe 0 activate
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(pe 0 activate)
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >pe 0 logging on
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(pe 0 logging on)
+[0:0:0:564] ..\..\..\..\src\mgframework\mgperiodicevent.cpp:105 (ID:13) INFO: Logging enabled.
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >window help
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(window help)
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >map help
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(map help)
+-----------------------------------------------------------------------------
+
+map help - Displays help information for console commands implemented in the
+           map object.
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >map << map_level1.mgf
+[0:0:0:564] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(map << map_level1.mgf)
+[0:0:0:565] ..\..\..\..\src\mgframework\mgmap.cpp:151 (ID:2) ERROR: MGMap::runConsoleCommand received MGComponent_UNDEFINED from MGMap::detectMGComponentConsoleCommand
+Unknown command
+[0:0:0:565] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >pe 0 << script2.mgf
+[0:0:0:565] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(pe 0 << script2.mgf)
+[0:0:0:565] ..\..\..\..\src\mgframework\mgperiodicevent.cpp:115 (ID:13) INFO: MGPeriodicEvent::runConsoleCommand: Storing file name script2.mgf
+[0:0:0:565] ..\..\..\..\src\mgframework\mgperiodicevent.cpp:173 (ID:13) INFO: MGPeriodicEvent::setFileName1: Allocating 12 bytes for file name 1
+[0:0:0:565] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:565] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:565] ..\..\..\..\src\mgframework\mgframework.cpp:289 (ID:0) INFO: MGFramework::parse finished parsing script file script1.mgf
+[0:0:0:566] ..\..\..\..\src\mgframework\mgframework.cpp:974 (ID:0) WARNING: FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): m_FrameTime:2, result:500
+[0:0:0:570] ..\..\..\..\src\mgframework\mgframework.cpp:974 (ID:0) WARNING: FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): m_FrameTime:2, result:500
+[0:0:2:569] ..\..\..\..\src\project2.cpp:59 (ID:0) INFO: PE triggered an update
+[0:0:2:569] ..\..\..\..\src\mgframework\mgframework.cpp:240 (ID:0) INFO: MGFramework::parse starting to parse script file script2.mgf
+[0:0:2:569] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >add mo 5 -owner 2
+[0:0:2:569] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(add mo 5 -owner 2)
+[0:0:2:569] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:2:569] ..\..\..\..\src\mgframework\mgframework.cpp:289 (ID:0) INFO: MGFramework::parse finished parsing script file script2.mgf
+[0:0:2:933] ..\..\..\..\src\mgframework\mgframework.cpp:134 (ID:0) INFO: Map (right click): index = 1167, x = 15, y = 9
+[0:0:2:933] ..\..\..\..\src\mgframework\mgframework.cpp:139 (ID:0) INFO: SDL_MOUSEBUTTONDOWN: Button 3 at (504,289)
+[0:0:3:577] ..\..\..\..\src\mgframework\mgframework.cpp:159 (ID:0) INFO: SDL_MOUSEBUTTONUP: Button 3 at (552,324)
+[0:0:4:109] ..\..\..\..\src\mgframework\mgframework.cpp:130 (ID:0) INFO: Map (left click): index = 3105, x = 33, y = 24
+[0:0:4:109] ..\..\..\..\src\mgframework\mgframework.cpp:139 (ID:0) INFO: SDL_MOUSEBUTTONDOWN: Button 1 at (352,204)
+[0:0:4:375] ..\..\..\..\src\mgframework\mgframework.cpp:159 (ID:0) INFO: SDL_MOUSEBUTTONUP: Button 1 at (516,328)
+[0:0:4:571] ..\..\..\..\src\project2.cpp:59 (ID:0) INFO: PE triggered an update
+[0:0:4:571] ..\..\..\..\src\mgframework\mgframework.cpp:240 (ID:0) INFO: MGFramework::parse starting to parse script file script2.mgf
+[0:0:4:571] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >add mo 5 -owner 2
+[0:0:4:571] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(add mo 5 -owner 2)
+[0:0:4:571] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:4:571] ..\..\..\..\src\mgframework\mgframework.cpp:289 (ID:0) INFO: MGFramework::parse finished parsing script file script2.mgf
+[0:0:4:753] ..\..\..\..\src\mgframework\mgframework.cpp:134 (ID:0) INFO: Map (right click): index = 3876, x = 36, y = 30
+[0:0:4:753] ..\..\..\..\src\mgframework\mgframework.cpp:139 (ID:0) INFO: SDL_MOUSEBUTTONDOWN: Button 3 at (431,383)
+[0:0:4:851] ..\..\..\..\src\mgframework\mgframework.cpp:159 (ID:0) INFO: SDL_MOUSEBUTTONUP: Button 3 at (431,383)
+Path: (37, 26) (36, 27) (36, 28) (36, 29) (36, 30) 
+[0:0:5:215] ..\..\..\..\src\mgframework\mgframework.cpp:130 (ID:0) INFO: Map (left click): index = 3882, x = 42, y = 30
+[0:0:5:215] ..\..\..\..\src\mgframework\mgframework.cpp:139 (ID:0) INFO: SDL_MOUSEBUTTONDOWN: Button 1 at (620,394)
+[0:0:5:327] ..\..\..\..\src\mgframework\mgframework.cpp:159 (ID:0) INFO: SDL_MOUSEBUTTONUP: Button 1 at (620,394)
+[0:0:6:573] ..\..\..\..\src\project2.cpp:59 (ID:0) INFO: PE triggered an update
+[0:0:6:573] ..\..\..\..\src\mgframework\mgframework.cpp:240 (ID:0) INFO: MGFramework::parse starting to parse script file script2.mgf
+[0:0:6:573] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >add mo 5 -owner 2
+[0:0:6:573] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(add mo 5 -owner 2)
+[0:0:6:573] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:6:573] ..\..\..\..\src\mgframework\mgframework.cpp:289 (ID:0) INFO: MGFramework::parse finished parsing script file script2.mgf
+[0:0:6:705] ..\..\..\..\src\mgframework\mgframework.cpp:62 (ID:0) INFO: SDL_QUIT

@@ -1,0 +1,12 @@
+
+logging on
+help
+getfps
+map help
+window help
+logging off
+
+
+
+// Exiting application when all tests have run
+exit application

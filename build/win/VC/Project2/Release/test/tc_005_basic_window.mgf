@@ -1,0 +1,11 @@
+
+
+window logging on
+window help
+window logging off
+
+
+
+
+// Exiting application when all tests have run
+exit application
