@@ -1,7 +1,7 @@
-[0:0:0:557] PRINT (ID:0) Logging enabled.
-[0:0:0:557] PRINT (ID:0) Mini map enabled.
-[0:0:0:558] LOG ..\..\..\..\src\mgframework\mgframework.cpp:240(ID:0) INFO: MGFramework::parse starting to parse script file .\\test\\tc_001_basic_exit.mgf
-[0:0:0:558] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :exit application
-[0:0:0:558] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(exit application)
+[0:0:0:536] ..\..\..\..\src\mgframework\mgframework.cpp:678 (ID:0) INFO: Logging enabled.
+[0:0:0:537] ..\..\..\..\src\mgframework\mgframework.cpp:692 (ID:0) INFO: Mini map enabled.
+[0:0:0:537] ..\..\..\..\src\mgframework\mgframework.cpp:240 (ID:0) INFO: MGFramework::parse starting to parse script file .\test\tc_001_basic_exit.mgf
+[0:0:0:537] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >exit application
+[0:0:0:537] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(exit application)
 Exiting application...
-[0:0:0:558] LOG ..\..\..\..\src\mgframework\mgframework.cpp:289(ID:0) INFO: MGFramework::parse finished parsing script file .\\test\\tc_001_basic_exit.mgf
+[0:0:0:537] ..\..\..\..\src\mgframework\mgframework.cpp:289 (ID:0) INFO: MGFramework::parse finished parsing script file .\test\tc_001_basic_exit.mgf

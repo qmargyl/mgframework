@@ -40,7 +40,7 @@ public:
 	void setDestTileXY(int x, int y);
 	void setSpeed(double s, int tileSize); // Seconds, Distance to next tile (pixels)
 	void update(MGFramework *w);
-	void copy(const MGMovingObject *src);
+	void copy(MGMovingObject *src);
 
 	int getTileX(){ return m_TileX;}
 	int getTileY(){ return m_TileY;}

@@ -1,98 +1,115 @@
-[0:0:0:552] PRINT (ID:0) Logging enabled.
-[0:0:0:552] PRINT (ID:0) Mini map enabled.
-[0:0:0:552] LOG ..\..\..\..\src\mgframework\mgframework.cpp:240(ID:0) INFO: MGFramework::parse starting to parse script file .\\test\\tc_002_basic_mo.mgf
-[0:0:0:552] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:552] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:552] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:552] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:552] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :create mo 1
-[0:0:0:552] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(create mo 1)
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmo 1
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmo 1)
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:801(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (1)
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :delete all mo
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(delete all mo)
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmo 0
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmo 0)
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:801(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (0)
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :create mo 1 -owner 1
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(create mo 1 -owner 1)
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmo 1
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmo 1)
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:801(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (1)
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :add mo 1 -owner 2
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(add mo 1 -owner 2)
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmo 2
-[0:0:0:553] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmo 2)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:801(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (2)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :delete all mo -owner 1
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(delete all mo -owner 1)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmo 1
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmo 1)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:805(ID:0) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (1 != 2)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :delete all mo -owner 2
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(delete all mo -owner 2)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmo 0
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmo 0)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:805(ID:0) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (0 != 1)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :add mo 20 -owner 0
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(add mo 20 -owner 0)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmo 20
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmo 20)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:805(ID:0) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (20 != 21)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmarkedmo 0
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmarkedmo 0)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:787(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (0)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :mo 10 mark
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(mo 10 mark)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmarkedmo 1
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmarkedmo 1)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:787(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (1)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :mo 11 mark
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(mo 11 mark)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmarkedmo 2
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmarkedmo 2)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:787(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (2)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :mo 2 mark
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(mo 2 mark)
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmarkedmo 3
-[0:0:0:554] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmarkedmo 3)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:787(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (3)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :mo 7 unmark
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(mo 7 unmark)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmarkedmo 3
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmarkedmo 3)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:787(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (3)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :mo 11 unmark
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(mo 11 unmark)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmarkedmo 2
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmarkedmo 2)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:787(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (2)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :mo all unmark
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(mo all unmark)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmarkedmo 0
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmarkedmo 0)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:787(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (0)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :delete all mo
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(delete all mo)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmo 0
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmo 0)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:801(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (0)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :expect getnumberofmarkedmo 0
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(expect getnumberofmarkedmo 0)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:787(ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (0)
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:274(ID:0) :exit application
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:278(ID:0) : runConsoleCommand(exit application)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:678 (ID:0) INFO: Logging enabled.
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:692 (ID:0) INFO: Mini map enabled.
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:240 (ID:0) INFO: MGFramework::parse starting to parse script file .\test\tc_002_basic_mo.mgf
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >create mo 1
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(create mo 1)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmo 1
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmo 1)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:801 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (1)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >delete all mo
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(delete all mo)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmo 0
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmo 0)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:801 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (0)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >create mo 1 -owner 1
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(create mo 1 -owner 1)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmo 1
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmo 1)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:801 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (1)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >add mo 1 -owner 2
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(add mo 1 -owner 2)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmo 2
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmo 2)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:801 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (2)
+[0:0:0:545] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >delete all mo -owner 1
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(delete all mo -owner 1)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmo 1
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmo 1)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:801 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (1)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >delete all mo -owner 2
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(delete all mo -owner 2)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmo 0
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmo 0)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:801 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (0)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >add mo 20 -owner 0
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(add mo 20 -owner 0)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmo 20
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmo 20)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:801 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (20)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmarkedmo 0
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmarkedmo 0)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:787 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (0)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >mo 10 mark
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(mo 10 mark)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmarkedmo 1
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmarkedmo 1)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:787 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (1)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >mo 11 mark
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(mo 11 mark)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmarkedmo 2
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmarkedmo 2)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:787 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (2)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >mo 2 mark
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(mo 2 mark)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmarkedmo 3
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmarkedmo 3)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:787 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (3)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >mo 7 unmark
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(mo 7 unmark)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmarkedmo 3
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmarkedmo 3)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:787 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (3)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >mo 11 unmark
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(mo 11 unmark)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmarkedmo 2
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmarkedmo 2)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:787 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (2)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >mo all unmark
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(mo all unmark)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmarkedmo 0
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmarkedmo 0)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:787 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (0)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >delete all mo
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(delete all mo)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmo 0
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmo 0)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:801 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (0)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmarkedmo 0
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmarkedmo 0)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:787 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (0)
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >create mo 10000 -owner 1
+[0:0:0:546] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(create mo 10000 -owner 1)
+[0:0:0:548] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >add mo 10000 -owner 2
+[0:0:0:548] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(add mo 10000 -owner 2)
+[0:0:0:552] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmo 20000
+[0:0:0:552] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmo 20000)
+[0:0:0:552] ..\..\..\..\src\mgframework\mgframework.cpp:801 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (20000)
+[0:0:0:552] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >delete all mo
+[0:0:0:552] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(delete all mo)
+[0:0:1:499] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >expect getnumberofmo 0
+[0:0:1:499] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(expect getnumberofmo 0)
+[0:0:1:499] ..\..\..\..\src\mgframework\mgframework.cpp:801 (ID:0) INFO: MGFramework::detectComponentConsoleCommand found the expected value (0)
+[0:0:1:499] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:1:499] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:1:499] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:1:499] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:1:499] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >exit application
+[0:0:1:499] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(exit application)
 Exiting application...
-[0:0:0:555] LOG ..\..\..\..\src\mgframework\mgframework.cpp:289(ID:0) INFO: MGFramework::parse finished parsing script file .\\test\\tc_002_basic_mo.mgf
+[0:0:1:499] ..\..\..\..\src\mgframework\mgframework.cpp:289 (ID:0) INFO: MGFramework::parse finished parsing script file .\test\tc_002_basic_mo.mgf

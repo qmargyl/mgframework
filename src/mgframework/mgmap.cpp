@@ -148,7 +148,7 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFLOG(std::cout << "ERROR: MGMap::runConsoleCommand received MGComponent_UNDEFINED from MGMap::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG_ERROR(std::cout << "MGMap::runConsoleCommand received MGComponent_UNDEFINED from MGMap::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
 
 		case MGComponent_MAP_HELP:
@@ -166,17 +166,17 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 			int x2 = MGFramework::toInt(cmdvec[4]);
 			int y2 = MGFramework::toInt(cmdvec[5]);
 
-			std::cout << "Calculating closest path from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ")." << std::endl;
+			MGFLOG_INFO(std::cout << "Calculating closest path from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ")." << std::endl;);
 			calculatePath(MGFSKYPATH, x1, y1, x2, y2);
 			return true;
 		}
 
 		default:
-			MGFLOG(std::cout << "ERROR: MGMap::detectComponentConsoleCommand returned a bad value" << std::endl;); 
+			MGFLOG_ERROR(std::cout << "MGMap::detectComponentConsoleCommand returned a bad value" << std::endl;); 
 			return true;
 	}
 
-	MGFPRINT(std::cout << "Unknown command" << std::endl;);
+	std::cout << "Unknown command" << std::endl;
 	return true;
 }
 
@@ -249,8 +249,8 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 			}
 			else
 			{
-				std::cout << "WARNING: MGMap::calculatePath() executed a case which should never happen" << std::endl;
-				std::cout << "Data: x=" << x << ", y=" << y << ", ax=" << ax << ", ay=" << ay << ", bx=" << bx << ", by=" << by << std::endl;
+				MGFLOG_ERROR(std::cout << "WARNING: MGMap::calculatePath() executed a case which should never happen" << std::endl;);
+				MGFLOG_ERROR(std::cout << "Data: x=" << x << ", y=" << y << ", ax=" << ax << ", ay=" << ay << ", bx=" << bx << ", by=" << by << std::endl;);
 			}
 
 			PathItem *pI = new PathItem(x, y);
@@ -259,6 +259,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 
 		}
 
+		// This will not look like this later... leave it for now.
 		if(!path.empty())
 		{
 			std::cout << "Path: ";

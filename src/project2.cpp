@@ -56,7 +56,7 @@ void Project2::handleGameLogics()
 	{
 		if(m_PE[i].update())
 		{
-			MGFLOG(std::cout << "INFO: PE triggered an update" << std::endl;);
+			MGFLOG_INFO(std::cout << "PE triggered an update" << std::endl;);
 			m_PE[i].runFile1(this);
 		}
 	}

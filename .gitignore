@@ -31,3 +31,7 @@ Buildlog.htm
 *.ncb
 *.manifest.res
 
+build/win/VC/Project2/Debug/*.*
+
+*.cd
+

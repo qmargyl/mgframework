@@ -78,7 +78,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFLOG(std::cout << "ERROR: MGPeriodicEvent::runConsoleCommand received MGComponent_UNDEFINED from MGPeriodicEvent::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG_ERROR(std::cout << "MGPeriodicEvent::runConsoleCommand received MGComponent_UNDEFINED from MGPeriodicEvent::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
 
 		case MGComponent_PE_INT_HELP:
@@ -102,17 +102,17 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_PE_INT_LOGGING_ON:
 			enableLogging();
-			MGFPRINT(std::cout << "Logging enabled." << std::endl;);
+			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
 			return true;
 
 		case MGComponent_PE_INT_LOGGING_OFF:
 			disableLogging();
-			MGFPRINT(std::cout << "Logging disabled." << std::endl;);
+			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
 			return true;
 
 		case MGComponent_PE_INT_STOREFILENAME_FILENAME:
 		{
-			MGFPRINT(std::cout << "MGPeriodicEvent::runConsoleCommand: Storing file name " << cmdvec[3].c_str() << std::endl;);
+			MGFLOG_INFO(std::cout << "MGPeriodicEvent::runConsoleCommand: Storing file name " << cmdvec[3].c_str() << std::endl;);
 			setFileName1(cmdvec[3].c_str());
 			return true;
 		}
@@ -121,7 +121,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 			break;
 	}
 
-	MGFPRINT(std::cout << "Unknown command" << std::endl;);
+	std::cout << "Unknown command" << std::endl;
 	return true;
 }
 
@@ -170,7 +170,7 @@ eMGComponentConsoleCommand MGPeriodicEvent::detectMGComponentConsoleCommand(cons
 
 void MGPeriodicEvent::setFileName1(const char *c)
 {
-	MGFLOG(std::cout << "MGPeriodicEvent::setFileName1: Allocating " << strlen(c)+1 << " bytes for file name 1" << std::endl;);
+	MGFLOG_INFO(std::cout << "MGPeriodicEvent::setFileName1: Allocating " << strlen(c)+1 << " bytes for file name 1" << std::endl;);
 	delete [] m_FileName1;
 	m_FileName1 = new char(strlen(c)+1);
 	strcpy(m_FileName1,c);
@@ -186,11 +186,11 @@ void MGPeriodicEvent::runFile1(MGFramework *w)
 		}
 		else
 		{
-			MGFLOG(std::cout << "ERROR: MGPeriodicEvent::runFile1 was called with no callback framework pointer." << std::endl;);
+			MGFLOG_ERROR(std::cout << "MGPeriodicEvent::runFile1 was called with no callback framework pointer." << std::endl;);
 		}
 	}
 	else
 	{
-		MGFLOG(std::cout << "ERROR: MGPeriodicEvent::runFile1 was called with no file name set." << std::endl;); 
+		MGFLOG_ERROR(std::cout << "MGPeriodicEvent::runFile1 was called with no file name set." << std::endl;); 
 	}
 }

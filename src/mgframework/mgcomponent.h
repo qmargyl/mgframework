@@ -22,10 +22,7 @@ class MGFramework;
 class MGComponent
 {
 private:
-
 	static int m_IDGenerator;
-	unsigned int m_Owner;
-	bool m_LoggingEnabled;		// Setting allows extended logging to console.
 
 	void setID(int id){ m_ID=id;}
 	int generateID(){ return m_IDGenerator++;}
@@ -33,6 +30,8 @@ private:
 protected:
 
 	int m_ID;
+	unsigned int m_Owner;
+	bool m_LoggingEnabled;		// Setting allows extended logging to console.
 
 	void setID()
 	{

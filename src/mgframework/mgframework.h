@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.20.0"
+#define MGFRAMEWORKVERSION "1.0.20.1"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -24,13 +24,9 @@
 // Macros...
 #define MGFTIMESTAMP(x) (x/3600000) << ":" << (x%3600000)/60000 << ":" << (x%60000)/1000 << ":" << (x%1000) 
 
-#define MGFLOG(x) if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] LOG " << __FILE__ << ":" << __LINE__ << "(ID:" << getID() << ") ";  x; }
-#define MGFPRINT(x) { Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] PRINT (ID:" << getID() << ") ";  x; }
-
-//Change to...
-//MGFLOG_WARNING
-//MGFLOG_INFO
-//MGFLOG_ERROR
+#define MGFLOG_WARNING(x)	if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: ";  x; }
+#define MGFLOG_INFO(x)		if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: ";  x; }
+#define MGFLOG_ERROR(x)							{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") ERROR: ";  x; }
 //MGFCONSRETURN
 
 enum eMGComponentConsoleCommand{
@@ -260,7 +256,7 @@ class MGFramework :public MGComponent
 
 		//Socket terminal related
 		bool socketTerminalOpen(){return m_KeepSocketTerminalOpen;}
-		void logIfEnabled(const char *log){MGFLOG(std::cout << "" << log << std::endl;)}
+		void logIfEnabled(const char *log){MGFLOG_INFO(std::cout << "" << log << std::endl;)}
 		void addConsoleCommandToQueue(const char *c);
 
 		// Program version

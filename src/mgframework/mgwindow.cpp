@@ -94,7 +94,7 @@ bool MGWindow::setProperties(eMGWindowScreenResolution screenResolution, int bpp
 			break;
 
 		default:
-			MGFLOG(std::cout << "ERROR: MGWindow::setProperties was given unsupported screen resolution" << std::endl;); 
+			MGFLOG_ERROR(std::cout << "MGWindow::setProperties was given unsupported screen resolution" << std::endl;); 
 			return false;
 
 	}
@@ -114,7 +114,7 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFLOG(std::cout << "ERROR: MGWindow::runConsoleCommand received MGComponent_UNDEFINED from MGWindow::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG_ERROR(std::cout << "MGWindow::runConsoleCommand received MGComponent_UNDEFINED from MGWindow::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
 
 		case MGComponent_WINDOW_HELP:
@@ -133,23 +133,23 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_WINDOW_LOGGING_ON:
 		{
 			enableLogging();
-			MGFPRINT(std::cout << "Logging enabled." << std::endl;);
+			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
 			return true;
 		}
 
 		case MGComponent_WINDOW_LOGGING_OFF:
 		{
 			disableLogging();
-			MGFPRINT(std::cout << "Logging disabled." << std::endl;);
+			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
 			return true;
 		}
 
 		default:
-			MGFLOG(std::cout << "ERROR: MGWindow::detectComponentConsoleCommand returned a bad value" << std::endl;); 
+			MGFLOG_ERROR(std::cout << "MGWindow::detectComponentConsoleCommand returned a bad value" << std::endl;); 
 			return true;
 	}
 
-	MGFPRINT(std::cout << "Unknown command" << std::endl;);
+	std::cout << "Unknown command" << std::endl;
 	return true;
 }
 

@@ -192,7 +192,7 @@ void MGMovingObject::update(MGFramework *w)
 }
 
 
-void MGMovingObject::copy(const MGMovingObject *src)
+void MGMovingObject::copy(MGMovingObject *src)
 {
 	//Copy ALL class variables!
 	m_Speed = src->m_Speed;
@@ -211,8 +211,8 @@ void MGMovingObject::copy(const MGMovingObject *src)
 	m_NextTileX = src->m_NextTileX;
 	m_NextTileY = src->m_NextTileY;
 	m_ID = src->m_ID;
-//	m_Owner = src->m_Owner;
-//	m_LoggingEnabled = src->m_LoggingEnabled;
+	m_Owner = src->m_Owner;
+	m_LoggingEnabled = src->m_LoggingEnabled;
 }
 
 bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
@@ -223,7 +223,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFLOG(std::cout << "ERROR: MGMovingObject::runConsoleCommand received MGComponent_UNDEFINED from MGMovingObject::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG_ERROR(std::cout << "MGMovingObject::runConsoleCommand received MGComponent_UNDEFINED from MGMovingObject::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
 
 		case MGComponent_MO_INT_MARK:
@@ -299,11 +299,11 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 
 
 		default:
-			MGFLOG(std::cout << "ERROR: MGMovingObject::detectComponentConsoleCommand returned a bad value" << std::endl;); 
+			MGFLOG_ERROR(std::cout << "MGMovingObject::detectComponentConsoleCommand returned a bad value" << std::endl;); 
 			return true;
 	}
 
-	MGFPRINT(std::cout << "Unknown command" << std::endl;);
+	std::cout << "Unknown command" << std::endl;
 	return true;
 }
 

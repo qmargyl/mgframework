@@ -1,13 +1,11 @@
 MG Framework list of known issues to be fixed/investigated
 ======================================================================
 
-* MOs sometimes walk outside the map
+* MOs sometimes (very rarely) walk outside the map.
 
 * Creating large amounts of MOs can cause free function to crash. This
   is likely due to lack of thread safety in the terminal server.
 
-
-
-
+* Terminating the example application by clicking the top right X makes it crash.
 
 

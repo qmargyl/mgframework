@@ -42,5 +42,15 @@ expect getnumberofmo 0
 expect getnumberofmarkedmo 0
 
 
+
+// Large number creation
+create mo 10000 -owner 1
+add mo 10000 -owner 2
+expect getnumberofmo 20000
+delete all mo
+expect getnumberofmo 0
+
+
+
 // Exiting application when all tests have run
 exit application
