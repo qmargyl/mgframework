@@ -1,12 +1,12 @@
-[0:0:0:548] ..\..\..\..\src\mgframework\mgframework.cpp:678 (ID:0) INFO: Logging enabled.
-[0:0:0:548] ..\..\..\..\src\mgframework\mgframework.cpp:692 (ID:0) INFO: Mini map enabled.
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:240 (ID:0) INFO: MGFramework::parse starting to parse script file .\test\tc_004_basic_misc.mgf
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >logging on
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(logging on)
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:678 (ID:0) INFO: Logging enabled.
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >help
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(help)
+[0:0:0:555] ..\..\..\..\src\mgframework\mgframework.cpp:678 (ID:0) INFO: Logging enabled.
+[0:0:0:555] ..\..\..\..\src\mgframework\mgframework.cpp:692 (ID:0) INFO: Mini map enabled.
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:240 (ID:0) INFO: MGFramework::parse starting to parse script file .\test\tc_004_basic_misc.mgf
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >logging on
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(logging on)
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:678 (ID:0) INFO: Logging enabled.
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >help
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(help)
 Command help
 [<object> [<object identifier>]] <command> [<parameter 1> ... <parameter n>]
 -----------------------------------------------------------------------------
@@ -31,18 +31,33 @@ close <terminalserver> - Closes the terminal server for framework commands
 
 map help - Displays help information for console commands implemented in the
            map object.
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >getfps
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(getfps)
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:754 (ID:0) INFO: 62
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >map help
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(map help)
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >getfps
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(getfps)
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:754 (ID:0) INFO: 62
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >map help
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(map help)
 -----------------------------------------------------------------------------
 
 map help - Displays help information for console commands implemented in the
            map object.
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >window help
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(window help)
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >logging off
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(logging off)
-[0:0:0:549] ..\..\..\..\src\mgframework\mgframework.cpp:684 (ID:0) INFO: Logging disabled.
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >window help
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(window help)
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >setfps 60
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(setfps 60)
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >setfps 30
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(setfps 30)
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >setfps 55
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(setfps 55)
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >minimap on
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(minimap on)
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:692 (ID:0) INFO: Mini map enabled.
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >minimap off
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(minimap off)
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:699 (ID:0) INFO: Mini map disabled.
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >minimap on
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(minimap on)
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:692 (ID:0) INFO: Mini map enabled.
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >logging off
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(logging off)
+[0:0:0:556] ..\..\..\..\src\mgframework\mgframework.cpp:684 (ID:0) INFO: Logging disabled.
 Exiting application...

@@ -4,6 +4,12 @@ help
 getfps
 map help
 window help
+setfps 60
+setfps 30
+setfps 55
+minimap on
+minimap off
+minimap on
 logging off
 
 

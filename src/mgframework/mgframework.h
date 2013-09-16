@@ -18,7 +18,7 @@
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
-//#define MGF_DEBUGGING_ENABLED
+#define MGF_DEBUGGING_ENABLED
 
 
 // Macros...

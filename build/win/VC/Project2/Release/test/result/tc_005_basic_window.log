@@ -1,22 +1,22 @@
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:678 (ID:0) INFO: Logging enabled.
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:692 (ID:0) INFO: Mini map enabled.
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:240 (ID:0) INFO: MGFramework::parse starting to parse script file .\test\tc_005_basic_window.mgf
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >window logging on
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(window logging on)
-[0:0:0:559] ..\..\..\..\src\mgframework\mgwindow.cpp:136 (ID:1) INFO: Logging enabled.
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >window help
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(window help)
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >window logging off
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(window logging off)
-[0:0:0:559] ..\..\..\..\src\mgframework\mgwindow.cpp:142 (ID:1) INFO: Logging disabled.
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >exit application
-[0:0:0:559] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(exit application)
+[0:0:0:537] ..\..\..\..\src\mgframework\mgframework.cpp:678 (ID:0) INFO: Logging enabled.
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:692 (ID:0) INFO: Mini map enabled.
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:240 (ID:0) INFO: MGFramework::parse starting to parse script file .\test\tc_005_basic_window.mgf
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >window logging on
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(window logging on)
+[0:0:0:538] ..\..\..\..\src\mgframework\mgwindow.cpp:136 (ID:1) INFO: Logging enabled.
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >window help
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(window help)
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >window logging off
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(window logging off)
+[0:0:0:538] ..\..\..\..\src\mgframework\mgwindow.cpp:142 (ID:1) INFO: Logging disabled.
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:274 (ID:0) INFO: >exit application
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:278 (ID:0) INFO: MGFramework::parse calls runConsoleCommand(exit application)
 Exiting application...
-[0:0:0:560] ..\..\..\..\src\mgframework\mgframework.cpp:289 (ID:0) INFO: MGFramework::parse finished parsing script file .\test\tc_005_basic_window.mgf
+[0:0:0:538] ..\..\..\..\src\mgframework\mgframework.cpp:289 (ID:0) INFO: MGFramework::parse finished parsing script file .\test\tc_005_basic_window.mgf
