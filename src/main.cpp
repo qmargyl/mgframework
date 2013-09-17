@@ -11,30 +11,40 @@ int main(int argc, char **argv)
 	eMGFInstanceType instanceType = MGFSINGLEPLAYERINSTANCE;
 	bool loggingOn = false;
 	bool scriptFile = false;
+	bool logEval = false;
 	char scriptFileName[128] = "";
+	char logEvalFileName[128] = "";
 
-	if(argc==1){
+	if(argc==1)
+	{
 		// No parameters were given
 	}
-	else{
-		for(int i=1; i<argc; i++){
-			if(strcmp(argv[i], "-logging")==0){
+	else
+	{
+		for(int i=1; i<argc; i++)
+		{
+			if(strcmp(argv[i], "-logging")==0)
+			{
 				loggingOn = true;
 			}
-			else if(strcmp(argv[i], "-help")==0){
+			else if(strcmp(argv[i], "-help")==0)
+			{
 				std::cout << std::endl << argv[0] << " supports the following parameters:" << std::endl;
 				std::cout << "-logging" << std::endl;
 				std::cout << " Enables debug logging to console." << std::endl;
 
 				goto EXIT_MAIN_RIGHT_AWAY;
 			}
-			else if(strcmp(argv[i], "-server")==0){
+			else if(strcmp(argv[i], "-server")==0)
+			{
 				instanceType = MGFSERVERINSTANCE;
 			}
-			else if(strcmp(argv[i], "-client")==0){
+			else if(strcmp(argv[i], "-client")==0)
+			{
 				instanceType = MGFCLIENTINSTANCE;
 			}
-			else if(strcmp(argv[i], "-script")==0){
+			else if(strcmp(argv[i], "-script")==0)
+			{
 				if(i+1 == argc)
 				{
 					//No parameter after -script
@@ -47,7 +57,23 @@ int main(int argc, char **argv)
 					scriptFile = true;
 				}
 			}
-			else{
+			else if(strcmp(argv[i], "-log_eval")==0)
+			{
+				if(i+1 == argc)
+				{
+					//No parameter after -log_eval
+					goto EXIT_MAIN_RIGHT_AWAY;
+				}
+				else
+				{
+					//Store argv[++i] as script file name..
+					strcpy(logEvalFileName, argv[++i]);
+					logEval = true;
+					instanceType = MGFSERVERINSTANCE;
+				}
+			}
+			else
+			{
 				// Unknown parameter.
 			}
 		}
@@ -78,7 +104,13 @@ int main(int argc, char **argv)
 
 	if(loggingOn) p2->enableLogging();
 
-	if(p2->windowPropertiesSet())
+	if(logEval)
+	{
+		p2->logEval(logEvalFileName);
+		// Dummy implementation...
+		//std::cout << "Evaluating file: " << logEvalFileName << " ... PASS" << std::endl;
+	}
+	else if(p2->windowPropertiesSet())
 	{
 		// If initialization is ok, run the framework...
 		if(p2->init(128, 128, 32, 32))

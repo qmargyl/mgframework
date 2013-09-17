@@ -290,6 +290,59 @@ void MGFramework::parse(const char *scriptFileName)
 	}
 }
 
+void MGFramework::logEval(const char *logFileName)
+{
+	FILE *lf = NULL;
+	errno_t logError = fopen_s(&lf, logFileName, "rt");
+	if(lf == NULL)
+	{
+		MGFLOG_ERROR(std::cout << "MGFramework::logEval failed to open log file " << logFileName << ", error(" << logError << ")" << std::endl;);
+	}
+	else
+	{
+		std::cout << "Evaluating file: " << logFileName << " ... ";
+
+		char logLine[MGF_LOGLINE_MAXLENGTH] = "";
+		char *neof = NULL;
+		//MGFLOG_INFO(std::cout << "MGFramework::logEval starting to parse log file " << logFileName << std::endl;);
+
+		int nErrors=0;
+		while(true)
+		{
+			// Read until new line or end of file, whichever happens first..
+			neof = fgets(logLine, MGF_LOGLINE_MAXLENGTH, lf);
+			if(neof == NULL)
+			{
+				break;
+			}
+			else
+			{
+				// An error defined as a log line containing at least one "ERROR".
+				std::string line(logLine);
+				std::string errSubstr("ERROR");
+				std::size_t found = line.find(errSubstr);
+				if (found!=std::string::npos) nErrors++;
+			}
+		}
+
+		if(nErrors!=0)
+		{
+			std::cout << "FAIL (" << nErrors << " errors)" << std::endl;
+		}
+		else
+		{
+			std::cout << "PASS" << std::endl;
+		}
+
+		if(lf != NULL)
+		{
+			fclose(lf);
+		}
+
+		//MGFLOG_INFO(std::cout << "MGFramework::logEval finished parsing log file " << logFileName << std::endl;);
+	}
+}
+
 
 void MGFramework::run(const char *scriptFileName)
 {

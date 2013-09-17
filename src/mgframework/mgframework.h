@@ -14,10 +14,11 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.20.2"
+#define MGFRAMEWORKVERSION "1.0.21.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
+#define MGF_LOGLINE_MAXLENGTH		1024
 #define MGF_DEBUGGING_ENABLED
 
 
@@ -270,6 +271,9 @@ class MGFramework :public MGComponent
 
 		// Parsing script files containing mgf commands
 		void parse(const char *scriptFileName);
+
+		// Evaluating log files to PASS/FAIL
+		void logEval(const char *logFileName);
 
 		// Mini map
 		void enableMiniMap(){m_MiniMapEnabled = true;}
