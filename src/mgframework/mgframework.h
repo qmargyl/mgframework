@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.21.0"
+#define MGFRAMEWORKVERSION "1.0.21.1"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -34,9 +34,9 @@ enum eMGComponentConsoleCommand{
 	MGComponent_UNDEFINED = 0,
 
 	//MGFramework commands
-	MGComponent_HELP,
-	MGComponent_EXIT,
-	MGComponent_EXIT_APPLICATION,
+	MGComponent_HELP,										//help (Prints help information to console)
+	MGComponent_EXIT,										//exit (Exits console, resumes graphics execution) 
+	MGComponent_EXIT_APPLICATION,							//exit application (Terminates application)
 
 	MGComponent_GETFPS,
 	MGComponent_GETNUMBEROFMARKEDMO,
@@ -54,8 +54,8 @@ enum eMGComponentConsoleCommand{
 	MGComponent_SETFPS_INT,
 	MGComponent_OPEN_TERMINALSERVER,
 	MGComponent_CLOSE_TERMINALSERVER,
-	MGComponent_MINIMAP_ON,
-	MGComponent_MINIMAP_OFF,
+	MGComponent_MINIMAP_ON,									//minimap on (Activates mini map in graphics window)
+	MGComponent_MINIMAP_OFF,								//minimap off (Deactivates mini map in graphics window)
 	MGComponent_LOGGING_ON,
 	MGComponent_LOGGING_OFF,
 	MGComponent_INPUT_OFF,
@@ -70,10 +70,10 @@ enum eMGComponentConsoleCommand{
 	MGComponent_PE_INT_SETUPTIMER_INT,
 	MGComponent_PE_INT_LOGGING_ON,
 	MGComponent_PE_INT_LOGGING_OFF,
-	MGComponent_PE_INT_STOREFILENAME_FILENAME,
+	MGComponent_PE_INT_STOREFILENAME_FILENAME,				//pe <int> << | storefilename <file> (Stores the file name of the script file to be executed periodically)
 
 	//MGMovingObject commands
-	MGComponent_MO_INT_X,
+	MGComponent_MO_INT_X,									//mo <int> ... (Forwards any MO command to an MO)
 	MGComponent_MO_INT_MARK,
 	MGComponent_MO_ALL_MARK,
 	MGComponent_MO_INT_UNMARK,
@@ -85,7 +85,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_MO_INT_GETSPEED,
 	MGComponent_MO_INT_HELP,
 	MGComponent_MO_MARKED_X,
-	MGComponent_MO_ALL_X,
+	MGComponent_MO_ALL_X,									//mo all ... (Forwards any MO command to all MOs)
 	MGComponent_MO_INT_SETDESTINATION_INT_INT,
 	MGComponent_MO_ALL_SETDESTINATION_INT_INT,
 	MGComponent_MO_MARKED_SETDESTINATION_INT_INT,
@@ -93,6 +93,12 @@ enum eMGComponentConsoleCommand{
 	MGComponent_MO_INT_LOGGING_ON,
 	MGComponent_MO_ALL_LOGGING_OFF,
 	MGComponent_MO_ALL_LOGGING_ON,
+
+	// TODO: Implement these..
+	MGComponent_MO_INT_SETSPEED_INT,
+	MGComponent_MO_INT_EXPECT_GETSPEED_INT,
+	MGComponent_MO_INT_EXPECT_GETDESTINATION_INT_INT,
+
 
 	//MGMap commands
 	MGComponent_MAP_X,

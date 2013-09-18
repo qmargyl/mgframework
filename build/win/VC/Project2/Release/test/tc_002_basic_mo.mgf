@@ -19,6 +19,31 @@ delete all mo -owner 1
 expect getnumberofmo 1
 delete all mo -owner 2
 expect getnumberofmo 0
+create mo 5 -owner 1
+expect getnumberofmo 5
+create mo 5 -owner 2
+expect getnumberofmo 5
+create mo 5 -owner 1
+expect getnumberofmo 5
+add mo 5 -owner 2
+expect getnumberofmo 10
+add mo 5 -owner 3
+expect getnumberofmo 15
+add mo 5 -owner 4
+expect getnumberofmo 20
+add mo 5 -owner 5
+expect getnumberofmo 25
+delete all mo -owner 1
+expect getnumberofmo 20
+delete all mo -owner 2
+expect getnumberofmo 15
+delete all mo -owner 3
+expect getnumberofmo 10
+delete all mo -owner 4
+expect getnumberofmo 5
+delete all mo -owner 5
+expect getnumberofmo 0
+
 
 
 

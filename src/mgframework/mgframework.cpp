@@ -551,31 +551,36 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 			}
 
-			for(int i = getNumberOfMO()-1; i>=0; --i)
+
+
+			if(ownerParamSet)
 			{
-				if(ownerParamSet)
+				// Delete only MOs connected to a specific owner
+				MGFLOG_INFO(std::cout << "Deleting MOs owned by " << owner << std::endl;);
+				for(int i = getNumberOfMO()-1; i>=0; --i)
 				{
 					if(m_MO[i].getOwner() == owner)
 					{
 						deleteMO(i);
 					}
 				}
-				else
+			}
+			else
+			{
+				//Deleting ALL MOs is faster than deleting them per owner 
+				for(int y=0; y<m_Map.getHeight(); y++)
 				{
-					deleteMO(i);
+					for(int x=0; x<m_Map.getWidth(); x++)
+					{
+						m_Map.unOccupy(x, y);
+					}
 				}
+				// ...and then create zero new MOs.
+				MGFLOG_INFO(std::cout << "Creating zero MO..." << std::endl;);
+				createMO(0);
 			}
 
-//			for(int y=0; y<m_Map.getHeight(); y++)
-//			{
-//				for(int x=0; x<m_Map.getWidth(); x++)
-//				{
-//					m_Map.unOccupy(x, y);
-//				}
-//			}
-//			// ...and then create zero new MOs.
-//			MGFLOG(std::cout << "INFO: Creating zero MO..." << std::endl;);
-//			createMO(0);
+
 			return true;
 		}
 
