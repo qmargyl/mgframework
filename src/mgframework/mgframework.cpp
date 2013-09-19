@@ -533,7 +533,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_DELETE_ALL_MO_PARAMLIST:
 		{
 			// Clear the map of occupied marks...
-			// TODO: Add support for -owner parameter (delete only one owner's MOs)
 			int owner = 0;
 			bool ownerParamSet=false;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
