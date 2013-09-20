@@ -65,9 +65,14 @@ int MGPeriodicEvent::timeLeft()
 
 void MGPeriodicEvent::copy(const MGPeriodicEvent *src)
 {
+	//Copy ALL class variables!
 	m_Period = src->m_Period;
 	m_StartTime = src->m_StartTime;
 	m_isActive = src->m_isActive;
+	m_Owner = src->m_Owner;
+	m_LoggingEnabled = src->m_LoggingEnabled;
+	m_FileName1 = src->m_FileName1;
+	m_ID = src->m_ID;
 }
 
 bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
@@ -78,20 +83,28 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
+		{
 			MGFLOG_ERROR(std::cout << "MGPeriodicEvent::runConsoleCommand received MGComponent_UNDEFINED from MGPeriodicEvent::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
+		}
 
 		case MGComponent_PE_INT_HELP:
+		{
 			std::cout << "Help for PE console commands: " << std::endl;
 			return true;
+		}
 
 		case MGComponent_PE_INT_ACTIVATE:
+		{
 			activate();
 			return true;
+		}
 
 		case MGComponent_PE_INT_DEACTIVATE:
+		{
 			deactivate();
 			return true;
+		}
 
 		case MGComponent_PE_INT_SETUPTIMER_INT:
 		{
@@ -101,14 +114,18 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 		}
 
 		case MGComponent_PE_INT_LOGGING_ON:
+		{
 			enableLogging();
 			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
 			return true;
+		}
 
 		case MGComponent_PE_INT_LOGGING_OFF:
+		{
 			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
 			disableLogging();
 			return true;
+		}
 
 		case MGComponent_PE_INT_STOREFILENAME_FILENAME:
 		{
@@ -172,7 +189,7 @@ void MGPeriodicEvent::setFileName1(const char *c)
 {
 	MGFLOG_INFO(std::cout << "MGPeriodicEvent::setFileName1: Allocating " << strlen(c)+1 << " bytes for file name 1" << std::endl;);
 	delete [] m_FileName1;
-	m_FileName1 = new char(strlen(c)+1);
+	m_FileName1 = new char[strlen(c)+1];
 	strcpy(m_FileName1,c);
 }
 

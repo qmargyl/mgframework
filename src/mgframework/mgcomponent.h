@@ -24,6 +24,7 @@ class MGComponent
 private:
 	static int m_IDGenerator;
 
+	// Methods for setting the object ID..
 	void setID(int id){ m_ID=id;}
 	int generateID(){ return m_IDGenerator++;}
 
@@ -46,8 +47,6 @@ public:
 		  m_Owner (MGF_NOPLAYER)
 	{
 		setID();
-//		disableLogging();
-//		m_Owner = MGF_NOPLAYER;
 	}
 
 	// Force all classes inheriting MGComponent to take console commands. 

@@ -6,6 +6,4 @@ MG Framework list of known issues to be fixed/investigated
 * Creating large amounts of MOs can cause free function to crash. This
   is likely due to lack of thread safety in the terminal server.
 
-* Terminating the example application by clicking the top right X makes it crash.
-
 * Hitting escape to open the console in the example application causes it to crash. 
