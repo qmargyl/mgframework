@@ -1,0 +1,83 @@
+
+
+
+// Creation and deletion
+create pe 1
+pe 0 logging on
+expect getnumberofpe 1
+delete all pe
+expect getnumberofpe 0
+
+
+
+// Creation and deletion with -owner
+create pe 1 -owner 1
+expect getnumberofpe 1
+add pe 1 -owner 2
+expect getnumberofpe 2
+delete all pe -owner 1
+expect getnumberofpe 1
+delete all pe -owner 2
+expect getnumberofpe 0
+create pe 5 -owner 1
+expect getnumberofpe 5
+create pe 5 -owner 2
+expect getnumberofpe 5
+create pe 5 -owner 1
+expect getnumberofpe 5
+add pe 5 -owner 2
+expect getnumberofpe 10
+add pe 5 -owner 3
+expect getnumberofpe 15
+add pe 5 -owner 4
+expect getnumberofpe 20
+add pe 5 -owner 5
+expect getnumberofpe 25
+delete all pe -owner 1
+expect getnumberofpe 20
+delete all pe -owner 2
+expect getnumberofpe 15
+delete all pe -owner 3
+expect getnumberofpe 10
+delete all pe -owner 4
+expect getnumberofpe 5
+delete all pe -owner 5
+expect getnumberofpe 0
+
+
+
+// Large number creation
+create pe 10000 -owner 1
+add pe 10000 -owner 2
+expect getnumberofpe 20000
+delete all pe
+expect getnumberofpe 0
+
+
+
+// Activating
+create pe 1 -owner 1
+expect getnumberofpe 1
+add pe 1 -owner 2
+expect getnumberofpe 2
+pe all activate
+pe all deactivate
+pe all activate -owner 1
+pe all deactivate -owner 1
+delete all pe
+create pe 1 -owner 1
+expect getnumberofpe 1
+add pe 1 -owner 2
+expect getnumberofpe 2
+pe 0 activate
+pe 1 activate
+pe 0 deactivate
+pe 1 deactivate
+delete all pe -owner 1
+expect getnumberofpe 1
+delete all pe -owner 2
+expect getnumberofpe 0
+
+
+// Exiting application when all tests have run
+exit application
