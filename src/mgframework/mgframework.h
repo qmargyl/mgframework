@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.21.2"
+#define MGFRAMEWORKVERSION "1.0.22.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -38,18 +38,22 @@ enum eMGComponentConsoleCommand{
 	MGComponent_EXIT,										//exit (Exits console, resumes graphics execution) 
 	MGComponent_EXIT_APPLICATION,							//exit application (Terminates application)
 
+	//Getters
 	MGComponent_GETFPS,
 	MGComponent_GETNUMBEROFMARKEDMO,
 	MGComponent_GETNUMBEROFMO,
 
+	//Expect functions
 	MGComponent_EXPECT_GETNUMBEROFMARKEDMO_INT,
 	MGComponent_EXPECT_GETNUMBEROFMO_INT,
+	MGComponent_EXPECT_GETNUMBEROFPE_INT,
 
 	MGComponent_CREATE_MO_INT_PARAMLIST,
 	MGComponent_ADD_MO_INT_PARAMLIST,
-	MGComponent_CREATE_PE_INT,
-	MGComponent_ADD_PE_INT,
+	MGComponent_CREATE_PE_INT_PARAMLIST,
+	MGComponent_ADD_PE_INT_PARAMLIST,
 	MGComponent_DELETE_ALL_MO_PARAMLIST,
+	MGComponent_DELETE_ALL_PE_PARAMLIST,
 	MGComponent_RUNFRAMES_INT,
 	MGComponent_SETFPS_INT,
 	MGComponent_OPEN_TERMINALSERVER,
@@ -199,7 +203,8 @@ class MGFramework :public MGComponent
 		// PE related
 		void createPE(int n);
 		void addPE(int n);
-		int getNumberOfPE(){ return m_NPE;}
+		int getNumberOfPE(){ return biggest(m_NPE, 0);}
+		void deletePE(int index);
 
 		// Event related
 		unsigned int m_Keys[SDLK_LAST];	// Stores keys that are pressed

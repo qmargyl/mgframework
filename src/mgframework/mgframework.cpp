@@ -550,8 +550,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 			}
 
-
-
 			if(ownerParamSet)
 			{
 				// Delete only MOs connected to a specific owner
@@ -578,8 +576,49 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				MGFLOG_INFO(std::cout << "Creating zero MO..." << std::endl;);
 				createMO(0);
 			}
+			return true;
+		}
 
 
+
+		case MGComponent_DELETE_ALL_PE_PARAMLIST:
+		{
+			// Clear the map of occupied marks...
+			int owner = 0;
+			bool ownerParamSet=false;
+			for(unsigned int i = 3; i < cmdvec.size(); ++i)
+			{
+				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
+				{
+					owner = toInt(cmdvec[i+1]);
+					ownerParamSet=true;
+					++i;
+				}
+				else
+				{
+					MGFLOG_ERROR(std::cout << "Error in command (delete all pe), bad parameter list" << std::endl;);
+					return true;
+				}
+			}
+
+			if(ownerParamSet)
+			{
+				// Delete only PEs connected to a specific owner
+				MGFLOG_INFO(std::cout << "Deleting PEs owned by " << owner << std::endl;);
+				for(int i = getNumberOfPE()-1; i>=0; --i)
+				{
+					if(m_PE[i].getOwner() == owner)
+					{
+						deletePE(i);
+					}
+				}
+			}
+			else
+			{
+				// Create zero new PEs.
+				MGFLOG_INFO(std::cout << "Creating zero PE..." << std::endl;);
+				createPE(0);
+			}
 			return true;
 		}
 
@@ -632,24 +671,66 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		}
 
 
-		case MGComponent_CREATE_PE_INT:
+		case MGComponent_CREATE_PE_INT_PARAMLIST:
 		{
 			int n = toInt(cmdvec[2]);
-			if(n>0)
+			int owner = 0;
+			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
+				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
+				{
+					owner = toInt(cmdvec[i+1]);
+					++i;
+				}
+				else
+				{
+					MGFLOG_ERROR(std::cout << "Error in command (create pe <n>), bad parameter list" << std::endl;);
+					n = 0; // Abort PE creation..
+				}
+			}
+			if(n > 0)
+			{
+				// Create the new MOs.
 				createPE(n);
 			}
 			else
 			{
 				MGFLOG_ERROR(std::cout << "Error in command (create pe <n>)" << std::endl;);
+				return true;
+			}
+			for(int i=0;i<getNumberOfPE();i++)
+			{
+				if(m_PE != NULL)
+				{
+					m_PE[i].setOwner(owner);
+				}
+				if(m_PE == NULL)
+				{
+					MGFLOG_WARNING(std::cout << "m_PE = NULL and getNumberOfPE() = " << getNumberOfPE() << std::endl;)
+				}
 			}
 			return true;
 		}
 
-		case MGComponent_ADD_PE_INT:
+
+		case MGComponent_ADD_PE_INT_PARAMLIST:
 		{
 			int nBefore=getNumberOfPE();
 			int n = toInt(cmdvec[2]);
+			int owner = 0;
+			for(unsigned int i = 3; i < cmdvec.size(); ++i)
+			{
+				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
+				{
+					owner = toInt(cmdvec[i+1]);
+					++i;
+				}
+				else
+				{
+					MGFLOG_ERROR(std::cout << "Error in command (add pe <n>), bad parameter list" << std::endl;);
+					n = 0; // Abort PE creation..
+				}
+			}
 			if(n>0)
 			{
 				addPE(n);
@@ -657,15 +738,28 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			else
 			{
 				MGFLOG_ERROR(std::cout << "Error in command (add pe <n>)" << std::endl;);
+				return true;
+			}
+			for(int i=nBefore; i<getNumberOfPE(); i++)
+			{
+				if(m_PE != NULL)
+				{
+					m_PE[i].setOwner(owner);
+				}
+				if(m_PE == NULL)
+				{
+					MGFLOG_WARNING(std::cout << "m_PE = NULL and getNumberOfPE() = " << getNumberOfPE() << std::endl;)
+				}
 			}
 			return true;
 		}
 
+
 		case MGComponent_OPEN_TERMINALSERVER:
 		{
 			MGFLOG_INFO(std::cout << "Opening terminal server..." << std::endl;);
-			openSocketTerminal();
 #ifndef MGF_DEBUGGING_ENABLED
+			openSocketTerminal();
 			m_SocketTerminal = SDL_CreateThread(runMGFrameworkSocketTerminal, this);
 #endif
 			return true;
@@ -674,10 +768,12 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_CLOSE_TERMINALSERVER:
 		{
 			MGFLOG_INFO(std::cout << "Closing terminal server..." << std::endl;);
+#ifndef MGF_DEBUGGING_ENABLED
 			if(socketTerminalOpen())
 			{
 				closeSocketTerminal();
 			}
+#endif
 			return true;
 		}
 
@@ -864,6 +960,20 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
+		case MGComponent_EXPECT_GETNUMBEROFPE_INT:
+		{
+			int exp = toInt(cmdvec[2]);
+			if(exp == getNumberOfPE())
+			{
+				MGFLOG_INFO(std::cout << "MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")" << std::endl;);
+			}
+			else
+			{
+				MGFLOG_ERROR(std::cout << "MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfPE() << ")" << std::endl;);
+			}
+			return true;
+		}
+
 		default:
 			MGFLOG_ERROR(std::cout << "MGFramework::detectComponentConsoleCommand returned a bad value" << std::endl;); 
 			return true;
@@ -959,11 +1069,11 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		}
 		else if(cmdvec[0]=="create" && cmdvec[1]=="pe")
 		{
-			return MGComponent_CREATE_PE_INT;
+			return MGComponent_CREATE_PE_INT_PARAMLIST; // Zero or more parameters..
 		}
 		else if(cmdvec[0]=="add" && cmdvec[1]=="pe")
 		{
-			return MGComponent_ADD_PE_INT;
+			return MGComponent_ADD_PE_INT_PARAMLIST; // Zero or more parameters..
 		}
 		else if(cmdvec[0]=="mo" && cmdvec[1]=="marked")
 		{
@@ -987,7 +1097,11 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		}
 		else if(cmdvec[0]=="delete" && cmdvec[1]=="all" && cmdvec[2]=="mo" )
 		{
-			return MGComponent_DELETE_ALL_MO_PARAMLIST;
+			return MGComponent_DELETE_ALL_MO_PARAMLIST; // Zero or more parameters..
+		}
+		else if(cmdvec[0]=="delete" && cmdvec[1]=="all" && cmdvec[2]=="pe" )
+		{
+			return MGComponent_DELETE_ALL_PE_PARAMLIST; // Zero or more parameters..
 		}
 		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofmarkedmo")
 		{
@@ -996,6 +1110,10 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofmo")
 		{
 			return MGComponent_EXPECT_GETNUMBEROFMO_INT;
+		}
+		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofpe")
+		{
+			return MGComponent_EXPECT_GETNUMBEROFPE_INT;
 		}
 	}
 
@@ -1149,6 +1267,8 @@ void MGFramework::deleteMO(int index)
 	}
 }
 
+
+
 void MGFramework::createPE(int n)
 {
 	delete[] m_PE;
@@ -1179,6 +1299,43 @@ void MGFramework::addPE(int n)
 		m_PE[i].copy(&oldPE[i]);
 	}
 }
+
+
+void MGFramework::deletePE(int index)
+{
+	if(index < 0 || index >= getNumberOfPE())
+	{
+		MGFLOG_ERROR(std::cout << "MGFramework::deletePE was given a bad index: " << index << std::endl;)
+	}
+	else
+	{
+		for(int i=0; i<getNumberOfPE(); ++i)
+		{
+			if(i<index)
+			{
+				// Do nothing...
+			}
+			else if(i>=index && i<getNumberOfPE()-1)
+			{
+				// Overwrite pe(i) with mo(i+1)
+				m_PE[i].copy(&m_PE[i+1]);
+			}
+			else if(i==getNumberOfPE()-1)
+			{
+				//No need to actually delete the PE since we will not access it if it's outside getNumberOfPE()...
+				//delete m_PE[i];
+			}
+			else
+			{
+				MGFLOG_ERROR(std::cout << "MGFramework::deletePE was not able to find the given index: " << index << std::endl;)
+				return;
+			}
+		}
+		m_NPE = getNumberOfPE()-1;
+	}
+}
+
+
 
 void MGFramework::drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {
