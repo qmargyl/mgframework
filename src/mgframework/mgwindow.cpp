@@ -119,11 +119,13 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_WINDOW_HELP:
 		{
+			w->registerUsedCommand(MGComponent_WINDOW_HELP);
 			return true;
 		}
 
 		case MGComponent_WINDOW_FULLSCREEN_ON:
 		{
+			w->registerUsedCommand(MGComponent_WINDOW_FULLSCREEN_ON);
 			m_Fullscreen = true;
 			setFlags(SDL_FULLSCREEN | SDL_DOUBLEBUF | SDL_HWSURFACE);
 			m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, getFlags() );
@@ -132,6 +134,7 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_WINDOW_LOGGING_ON:
 		{
+			w->registerUsedCommand(MGComponent_WINDOW_LOGGING_ON);
 			enableLogging();
 			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
 			return true;
@@ -139,6 +142,7 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_WINDOW_LOGGING_OFF:
 		{
+			w->registerUsedCommand(MGComponent_WINDOW_LOGGING_OFF);
 			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
 			disableLogging();
 			return true;

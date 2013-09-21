@@ -29,6 +29,19 @@ MGFramework::MGFramework():
 {
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
+
+	// Setup the framework for automatic regression testing...
+
+	// At framework creation, no commands have been used..
+	for(int i=0; i<MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
+	{
+		m_UsedCommands[i] = false;
+	}
+	// MGComponent_UNDEFINED does not represent a command or forwarding a command
+	m_UsedCommands[MGComponent_UNDEFINED] = true;
+	// MGComponent_EXIT_APPLICATION is impossible to call before evaluating the 
+	// number of used commands as it will terminate execution of the application
+	m_UsedCommands[MGComponent_EXIT_APPLICATION] = true;
 }
 
 MGFramework::~MGFramework()
@@ -427,16 +440,20 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
+		{
 			MGFLOG_ERROR(std::cout << "MGFramework::runConsoleCommand received MGComponent_UNDEFINED from MGFramework::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
+		}
 
 		case MGComponent_MAP_X:
 		{
+			registerUsedCommand(MGComponent_MAP_X);
 			return m_Map.runConsoleCommand(c, this);
 		}
 
 		case MGComponent_WINDOW_X:
 		{
+			registerUsedCommand(MGComponent_WINDOW_X);
 			return m_Window.runConsoleCommand(c, this);
 		}
 
@@ -449,6 +466,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_PE_INT_LOGGING_OFF:
 		case MGComponent_PE_INT_STOREFILENAME_FILENAME:
 		{
+			registerUsedCommand(MGComponent_PE_INT_X);
 			int peIndex=toInt(cmdvec[1]);
 			if(peIndex >= 0 && peIndex < getNumberOfPE())
 			{
@@ -460,6 +478,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_PE_ALL_X:
 		{
+			registerUsedCommand(MGComponent_PE_ALL_X);
 			for(int i=0; i<getNumberOfPE(); i++)
 			{
 				m_PE[i].runConsoleCommand(c, this);
@@ -469,6 +488,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_SETFPS_INT:
 		{
+			registerUsedCommand(MGComponent_SETFPS_INT);
 			setDesiredFPS(toInt(cmdvec[1]));
 			return true;
 		}
@@ -476,6 +496,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_CREATE_MO_INT_PARAMLIST:
 		{
+			registerUsedCommand(MGComponent_CREATE_MO_INT_PARAMLIST);
 			int n = toInt(cmdvec[2]);
 			int owner = 0;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
@@ -532,6 +553,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_DELETE_ALL_MO_PARAMLIST:
 		{
+			registerUsedCommand(MGComponent_DELETE_ALL_MO_PARAMLIST);
 			// Clear the map of occupied marks...
 			int owner = 0;
 			bool ownerParamSet=false;
@@ -583,6 +605,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_DELETE_ALL_PE_PARAMLIST:
 		{
+			registerUsedCommand(MGComponent_DELETE_ALL_PE_PARAMLIST);
 			// Clear the map of occupied marks...
 			int owner = 0;
 			bool ownerParamSet=false;
@@ -626,6 +649,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_ADD_MO_INT_PARAMLIST:
 		{
+			registerUsedCommand(MGComponent_ADD_MO_INT_PARAMLIST);
 			int nBefore=getNumberOfMO();
 			int n = toInt(cmdvec[2]);
 			int owner = 0;
@@ -673,6 +697,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_CREATE_PE_INT_PARAMLIST:
 		{
+			registerUsedCommand(MGComponent_CREATE_PE_INT_PARAMLIST);
 			int n = toInt(cmdvec[2]);
 			int owner = 0;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
@@ -715,6 +740,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_ADD_PE_INT_PARAMLIST:
 		{
+			registerUsedCommand(MGComponent_ADD_PE_INT_PARAMLIST);
 			int nBefore=getNumberOfPE();
 			int n = toInt(cmdvec[2]);
 			int owner = 0;
@@ -757,6 +783,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_OPEN_TERMINALSERVER:
 		{
+			registerUsedCommand(MGComponent_OPEN_TERMINALSERVER);
 			MGFLOG_INFO(std::cout << "Opening terminal server..." << std::endl;);
 #ifndef MGF_DEBUGGING_ENABLED
 			openSocketTerminal();
@@ -767,6 +794,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_CLOSE_TERMINALSERVER:
 		{
+			registerUsedCommand(MGComponent_CLOSE_TERMINALSERVER);
 			MGFLOG_INFO(std::cout << "Closing terminal server..." << std::endl;);
 #ifndef MGF_DEBUGGING_ENABLED
 			if(socketTerminalOpen())
@@ -777,9 +805,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
+
 		case MGComponent_MO_INT_X:
 		case MGComponent_MO_INT_MARK:
 		{
+			registerUsedCommand(MGComponent_MO_INT_X);
 			int moIndex=toInt(cmdvec[1]);
 			if(m_MO != NULL && moIndex >= 0 && moIndex < getNumberOfMO())
 			{
@@ -795,6 +825,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_MO_MARKED_X:
 		{
+			registerUsedCommand(MGComponent_MO_MARKED_X);
 			for(int i=0; i<getNumberOfMO(); i++)
 			{
 				if(m_MO != NULL && m_MO[i].isMarked())
@@ -811,6 +842,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_MO_ALL_X:
 		{
+			registerUsedCommand(MGComponent_MO_ALL_X);
 			for(int i=0; i<getNumberOfMO(); i++)
 			{
 				if(m_MO != NULL)
@@ -827,6 +859,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_LOGGING_ON:
 		{
+			registerUsedCommand(MGComponent_LOGGING_ON);
 			enableLogging();
 			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
 			return true;
@@ -834,6 +867,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_LOGGING_OFF:
 		{
+			registerUsedCommand(MGComponent_LOGGING_OFF);
 			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
 			disableLogging();
 			return true;
@@ -841,6 +875,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_MINIMAP_ON:
 		{
+			registerUsedCommand(MGComponent_MINIMAP_ON);
 			enableMiniMap();
 			MGFLOG_INFO(std::cout << "Mini map enabled." << std::endl;);
 			return true;
@@ -848,6 +883,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_MINIMAP_OFF:
 		{
+			registerUsedCommand(MGComponent_MINIMAP_OFF);
 			disableMiniMap();
 			MGFLOG_INFO(std::cout << "Mini map disabled." << std::endl;);
 			return true;
@@ -855,6 +891,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_RUNFRAMES_INT:
 		{
+			registerUsedCommand(MGComponent_RUNFRAMES_INT);
 			enableFrameCountdown();
 			setFrameNumber(toInt(cmdvec[1]));
 			return false;
@@ -862,12 +899,14 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_EXIT:
 		{
+			registerUsedCommand(MGComponent_EXIT);
 			std::cout << "Exiting console..." << std::endl;
 			return false;
 		}
 
 		case MGComponent_EXIT_APPLICATION:
 		{
+			registerUsedCommand(MGComponent_EXIT_APPLICATION);
 			std::cout << "Exiting application..." << std::endl;
 			quit();
 			return false;
@@ -875,6 +914,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_HELP:
 		{
+			registerUsedCommand(MGComponent_HELP);
 			std::cout << "Command help" << std::endl;
 			std::cout << "[<object> [<object identifier>]] <command> [<parameter 1> ... <parameter n>]" << std::endl;
 			std::cout << "-----------------------------------------------------------------------------" << std::endl << std::endl;
@@ -904,36 +944,42 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_GETFPS:
 		{
+			registerUsedCommand(MGComponent_GETFPS);
 			MGFLOG_INFO(std::cout << "" << getFPS() << std::endl;);
 			return true;
 		}
 
 		case MGComponent_GETNUMBEROFMARKEDMO:
 		{
+			registerUsedCommand(MGComponent_GETNUMBEROFMARKEDMO);
 			MGFLOG_INFO(std::cout << "" << getNumberOfMarkedMO() << std::endl;);
 			return true;
 		}
 
 		case MGComponent_GETNUMBEROFMO:
 		{
+			registerUsedCommand(MGComponent_GETNUMBEROFMO);
 			MGFLOG_INFO(std::cout << "" << getNumberOfMO() << std::endl;);
 			return true;
 		}
 
 		case MGComponent_INPUT_ON:
 		{
+			registerUsedCommand(MGComponent_INPUT_ON);
 			enableInput();
 			return true;
 		}
 
 		case MGComponent_INPUT_OFF:
 		{
+			registerUsedCommand(MGComponent_INPUT_OFF);
 			disableInput();
 			return true;
 		}
 
 		case MGComponent_EXPECT_GETNUMBEROFMARKEDMO_INT:
 		{
+			registerUsedCommand(MGComponent_EXPECT_GETNUMBEROFMARKEDMO_INT);
 			int exp = toInt(cmdvec[2]);
 			if(exp == getNumberOfMarkedMO())
 			{
@@ -948,6 +994,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_EXPECT_GETNUMBEROFMO_INT:
 		{
+			registerUsedCommand(MGComponent_EXPECT_GETNUMBEROFMO_INT);
 			int exp = toInt(cmdvec[2]);
 			if(exp == getNumberOfMO())
 			{
@@ -960,8 +1007,23 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
+		case MGComponent_GETNUMBEROFUSEDCOMMANDS:
+		{
+			registerUsedCommand(MGComponent_GETNUMBEROFUSEDCOMMANDS);
+			MGFLOG_INFO(std::cout << "" << getNumberOfUsedCommands() << std::endl;);
+			return true;
+		}
+
+		case MGComponent_GETNUMBEROFCOMMANDS:
+		{
+			registerUsedCommand(MGComponent_GETNUMBEROFCOMMANDS);
+			MGFLOG_INFO(std::cout << "" << getNumberOfCommands() << std::endl;);
+			return true;
+		}
+
 		case MGComponent_EXPECT_GETNUMBEROFPE_INT:
 		{
+			registerUsedCommand(MGComponent_EXPECT_GETNUMBEROFPE_INT);
 			int exp = toInt(cmdvec[2]);
 			if(exp == getNumberOfPE())
 			{
@@ -970,6 +1032,26 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			else
 			{
 				MGFLOG_ERROR(std::cout << "MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfPE() << ")" << std::endl;);
+			}
+			return true;
+		}
+
+		case MGComponent_EXPECT_GETNUMBEROFUSEDCOMMANDS_PERCENTAGE_INT:
+		{
+			registerUsedCommand(MGComponent_EXPECT_GETNUMBEROFUSEDCOMMANDS_PERCENTAGE_INT);
+			int exp = toInt(cmdvec[3]);
+			int actual = (100 * getNumberOfUsedCommands())/MGComponent_NUMBEROFCOMMANDIDENTIFIERS;
+			if(actual >= exp)
+			{
+				MGFLOG_INFO(std::cout << "Number of executed commands is more than expected (" << actual << " >= " << exp << ")" << std::endl;);
+			}
+			else
+			{
+				MGFLOG_ERROR(std::cout << "Number of executed commands is less than expected (" << actual << " < " << exp << ")" << std::endl;);
+			}
+			for(int i=MGComponent_UNDEFINED; i<MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
+			{
+				MGFLOG_INFO(std::cout << "" << i << ": " << toString(m_UsedCommands[i]).c_str() << std::endl;);
 			}
 			return true;
 		}
@@ -1007,6 +1089,14 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		else if(cmdvec[0]=="getnumberofmo")
 		{
 			return MGComponent_GETNUMBEROFMO;
+		}
+		else if(cmdvec[0]=="getnumberofcommands")
+		{
+			return MGComponent_GETNUMBEROFCOMMANDS;
+		}
+		else if(cmdvec[0]=="getnumberofusedcommands")
+		{
+			return MGComponent_GETNUMBEROFUSEDCOMMANDS;
 		}
 
 	}
@@ -1114,6 +1204,10 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofpe")
 		{
 			return MGComponent_EXPECT_GETNUMBEROFPE_INT;
+		}
+		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofusedcommands" && cmdvec[2]=="percentage")
+		{
+			return MGComponent_EXPECT_GETNUMBEROFUSEDCOMMANDS_PERCENTAGE_INT;
 		}
 	}
 
@@ -1335,6 +1429,16 @@ void MGFramework::deletePE(int index)
 	}
 }
 
+
+int MGFramework::getNumberOfUsedCommands()
+{
+	int n=0;
+	for(int i=0; i<MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
+	{
+		if(m_UsedCommands[i]) n++;
+	}
+	return n;
+}
 
 
 void MGFramework::drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)

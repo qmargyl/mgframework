@@ -153,6 +153,7 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_MAP_HELP:
 		{
+			w->registerUsedCommand(MGComponent_MAP_HELP);
 			std::cout << "-----------------------------------------------------------------------------" << std::endl << std::endl;
 			std::cout << "map help - Displays help information for console commands implemented in the" << std::endl;
 			std::cout << "           map object." << std::endl;
@@ -161,6 +162,7 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_MAP_PATH_INT_INT_INT_INT:
 		{
+			w->registerUsedCommand(MGComponent_MAP_PATH_INT_INT_INT_INT);
 			int x1 = MGFramework::toInt(cmdvec[2]);
 			int y1 = MGFramework::toInt(cmdvec[3]);
 			int x2 = MGFramework::toInt(cmdvec[4]);

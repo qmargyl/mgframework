@@ -1,0 +1,142 @@
+
+
+
+
+
+// MO creation, deletion, marking, unmarking, logging, help
+create mo 1 -owner 1
+add mo 1 -owner 2
+mo 0 logging on
+mo 0 logging off
+mo 0 logging on
+mo 0 help
+mo 0 mark
+mo marked logging on
+mo marked logging off
+mo marked logging on
+mo marked help
+expect getnumberofmarkedmo 1
+expect getnumberofmo 2
+mo 0 unmark
+expect getnumberofmarkedmo 0
+mo 0 mark
+expect getnumberofmarkedmo 1
+mo marked unmark
+expect getnumberofmarkedmo 0
+mo all mark
+expect getnumberofmarkedmo 2
+mo all logging on
+mo all logging off
+mo all logging on
+mo all help
+mo all unmark
+expect getnumberofmarkedmo 0
+delete all mo -owner 1
+expect getnumberofmo 1
+delete all mo -owner 2
+expect getnumberofmo 0
+
+
+// MO getters, setters
+create mo 1 -owner 1
+expect getnumberofmo 1
+mo 0 getdistance
+mo 0 getdestination
+mo 0 getspeed
+mo 0 setdestination 0 0
+delete all mo -owner 2
+expect getnumberofmo 1
+delete all mo -owner 1
+expect getnumberofmo 0
+create mo 1 -owner 1
+add mo 1 -owner 2
+mo all getdistance
+mo all getdestination
+mo all getspeed
+mo all setdestination 0 0
+mo 0 mark
+mo marked getdistance
+mo marked getdestination
+mo marked getspeed
+mo marked setdestination 0 0
+delete all mo
+expect getnumberofmo 0
+
+
+// Misc
+input off
+runframes 100
+delete all mo
+input on
+
+
+
+// Framework
+logging on
+logging off
+logging on
+help
+getfps
+map help
+setfps 60
+minimap on
+minimap off
+minimap on
+
+
+
+// Window
+window logging on
+window help
+window logging off
+
+
+
+
+
+// PE creation, deletion, activating, etc
+create pe 1
+pe 0 logging on
+pe 0 logging off
+pe 0 logging on
+pe 0 << script2.mgf
+pe 0 << storefilename script2.mgf
+expect getnumberofpe 1
+delete all pe
+expect getnumberofpe 0
+create pe 1 -owner 1
+expect getnumberofpe 1
+add pe 1 -owner 2
+expect getnumberofpe 2
+pe all activate
+pe all deactivate
+pe all activate -owner 1
+pe all deactivate -owner 1
+delete all pe
+create pe 1 -owner 1
+expect getnumberofpe 1
+add pe 1 -owner 2
+expect getnumberofpe 2
+pe 0 activate
+pe 1 activate
+pe 0 deactivate
+pe 1 deactivate
+pe 0 help
+delete all pe -owner 1
+expect getnumberofpe 1
+delete all pe -owner 2
+expect getnumberofpe 0
+
+
+exit
+getnumberofcommands
+getnumberofusedcommands
+getnumberofmo
+getnumberofmarkedmo
+
+
+expect getnumberofusedcommands percentage 80
+
+
+// Exit application last
+exit application

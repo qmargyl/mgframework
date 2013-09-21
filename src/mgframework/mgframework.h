@@ -14,7 +14,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.22.0"
+#define MGFRAMEWORKVERSION "1.0.23.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -37,6 +37,8 @@ enum eMGComponentConsoleCommand{
 	MGComponent_HELP,										//help (Prints help information to console)
 	MGComponent_EXIT,										//exit (Exits console, resumes graphics execution) 
 	MGComponent_EXIT_APPLICATION,							//exit application (Terminates application)
+	MGComponent_GETNUMBEROFUSEDCOMMANDS,
+	MGComponent_GETNUMBEROFCOMMANDS,
 
 	//Getters
 	MGComponent_GETFPS,
@@ -47,6 +49,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_EXPECT_GETNUMBEROFMARKEDMO_INT,
 	MGComponent_EXPECT_GETNUMBEROFMO_INT,
 	MGComponent_EXPECT_GETNUMBEROFPE_INT,
+	MGComponent_EXPECT_GETNUMBEROFUSEDCOMMANDS_PERCENTAGE_INT,
 
 	MGComponent_CREATE_MO_INT_PARAMLIST,
 	MGComponent_ADD_MO_INT_PARAMLIST,
@@ -70,7 +73,9 @@ enum eMGComponentConsoleCommand{
 	MGComponent_PE_ALL_X,
 	MGComponent_PE_INT_HELP,
 	MGComponent_PE_INT_ACTIVATE,
+	MGComponent_PE_ALL_ACTIVATE_PARAMLIST,
 	MGComponent_PE_INT_DEACTIVATE,
+	MGComponent_PE_ALL_DEACTIVATE_PARAMLIST,
 	MGComponent_PE_INT_SETUPTIMER_INT,
 	MGComponent_PE_INT_LOGGING_ON,
 	MGComponent_PE_INT_LOGGING_OFF,
@@ -114,7 +119,11 @@ enum eMGComponentConsoleCommand{
 	MGComponent_WINDOW_HELP,
 	MGComponent_WINDOW_FULLSCREEN_ON,
 	MGComponent_WINDOW_LOGGING_OFF,
-	MGComponent_WINDOW_LOGGING_ON
+	MGComponent_WINDOW_LOGGING_ON,
+
+
+	//This is a counter for number of command identifiers and not an actual command.
+	MGComponent_NUMBEROFCOMMANDIDENTIFIERS
 
 };
 
@@ -126,6 +135,11 @@ int runMGFrameworkSocketTerminal(void *fm);
 class MGFramework :public MGComponent
 {
 	private:
+		// Test coverage functionality
+		bool m_UsedCommands[MGComponent_NUMBEROFCOMMANDIDENTIFIERS];
+		int getNumberOfUsedCommands();
+		int getNumberOfCommands(){ return (int) MGComponent_NUMBEROFCOMMANDIDENTIFIERS; }
+
 		// Enable/disable input functionality
 		bool m_InputEnabled;
 		void enableInput(){ m_InputEnabled = true;}
@@ -286,6 +300,9 @@ class MGFramework :public MGComponent
 		// Evaluating log files to PASS/FAIL
 		void logEval(const char *logFileName);
 
+		// Test coverage related
+		void registerUsedCommand(eMGComponentConsoleCommand c){ m_UsedCommands[(int)c]=true; }
+
 		// Mini map
 		void enableMiniMap(){m_MiniMapEnabled = true;}
 		void disableMiniMap(){m_MiniMapEnabled = false;}
@@ -301,6 +318,7 @@ class MGFramework :public MGComponent
 		static double distance(int x1, int y1, int x2, int y2);
 		static std::vector<std::string> split(std::string str, char c);
 		static int toInt(const string &s);
+		static std::string toString(bool b){ if(b) return std::string("true"); return std::string("false"); }
 		static int randomN(int upperLimit){return std::rand()%upperLimit;}
 		static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
 		static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);

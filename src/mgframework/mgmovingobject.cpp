@@ -227,8 +227,19 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			break;
 
 		case MGComponent_MO_INT_MARK:
+		{
+			w->registerUsedCommand(MGComponent_MO_INT_MARK);
+			if(!isMarked())
+			{
+				mark();
+				w->countMark();
+			}
+			return true;
+		}
+
 		case MGComponent_MO_ALL_MARK:
 		{
+			w->registerUsedCommand(MGComponent_MO_ALL_MARK);
 			if(!isMarked())
 			{
 				mark();
@@ -238,9 +249,30 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 		}
 
 		case MGComponent_MO_MARKED_UNMARK:
+		{
+			w->registerUsedCommand(MGComponent_MO_MARKED_UNMARK);
+			if(isMarked())
+			{
+				unMark();
+				w->countUnMark();
+			}
+			return true;
+		}
+
 		case MGComponent_MO_INT_UNMARK:
+		{
+			w->registerUsedCommand(MGComponent_MO_INT_UNMARK);
+			if(isMarked())
+			{
+				unMark();
+				w->countUnMark();
+			}
+			return true;
+		}
+
 		case MGComponent_MO_ALL_UNMARK:
 		{
+			w->registerUsedCommand(MGComponent_MO_ALL_UNMARK);
 			if(isMarked())
 			{
 				unMark();
@@ -251,30 +283,35 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_MO_INT_GETDISTANCE:
 		{
+			w->registerUsedCommand(MGComponent_MO_INT_GETDISTANCE);
 			std::cout << getDistance(getDestTileX(), getDestTileY()) << std::endl;
 			return true;
 		}
 
 		case MGComponent_MO_INT_GETLOCATION:
 		{
+			w->registerUsedCommand(MGComponent_MO_INT_GETLOCATION);
 			std::cout << "{" << getTileX() << "," << getTileY() << "}" << std::endl;
 			return true;
 		}
 
 		case MGComponent_MO_INT_GETDESTINATION:
 		{
+			w->registerUsedCommand(MGComponent_MO_INT_GETDESTINATION);
 			std::cout << "{" << getDestTileX() << "," << getDestTileY() << "}" << std::endl;
 			return true;
 		}
 
 		case MGComponent_MO_INT_GETSPEED:
 		{
+			w->registerUsedCommand(MGComponent_MO_INT_GETSPEED);
 			std::cout << "" << getSpeed() << std::endl;
 			return true;
 		}
 
 		case MGComponent_MO_INT_HELP:
 		{
+			w->registerUsedCommand(MGComponent_MO_INT_HELP);
 			std::cout << std::endl << "mo <i> help - Displays help information for console commands implemented" << std::endl;
 			std::cout << "          in MGMovingObject. <i> is the ID of the MO." << std::endl;
 			std::cout << "mo <i> getspeed - Returns the speed of the MO with ID <i>, in pixels per" << std::endl;
@@ -287,9 +324,28 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 		}
 
 		case MGComponent_MO_INT_SETDESTINATION_INT_INT:
+		{
+			w->registerUsedCommand(MGComponent_MO_INT_SETDESTINATION_INT_INT);
+			int dx=MGFramework::toInt(cmdvec[3]);
+			int dy=MGFramework::toInt(cmdvec[4]);
+			setDestTileXY(dx, dy);
+			w->m_Map.calculatePath(MGFSKYPATH, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+			return true;
+		}
+
 		case MGComponent_MO_ALL_SETDESTINATION_INT_INT:
+		{
+			w->registerUsedCommand(MGComponent_MO_ALL_SETDESTINATION_INT_INT);
+			int dx=MGFramework::toInt(cmdvec[3]);
+			int dy=MGFramework::toInt(cmdvec[4]);
+			setDestTileXY(dx, dy);
+			w->m_Map.calculatePath(MGFSKYPATH, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+			return true;
+		}
+
 		case MGComponent_MO_MARKED_SETDESTINATION_INT_INT:
 		{
+			w->registerUsedCommand(MGComponent_MO_MARKED_SETDESTINATION_INT_INT);
 			int dx=MGFramework::toInt(cmdvec[3]);
 			int dy=MGFramework::toInt(cmdvec[4]);
 			setDestTileXY(dx, dy);
@@ -298,14 +354,36 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 		}
 
 		case MGComponent_MO_INT_LOGGING_ON:
+		{
+			w->registerUsedCommand(MGComponent_MO_INT_LOGGING_ON);
 			enableLogging();
 			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
 			return true;
+		}
 
 		case MGComponent_MO_INT_LOGGING_OFF:
+		{
+			w->registerUsedCommand(MGComponent_MO_INT_LOGGING_OFF);
 			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
 			disableLogging();
 			return true;
+		}
+
+		case MGComponent_MO_ALL_LOGGING_ON:
+		{
+			w->registerUsedCommand(MGComponent_MO_ALL_LOGGING_ON);
+			enableLogging();
+			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
+			return true;
+		}
+
+		case MGComponent_MO_ALL_LOGGING_OFF:
+		{
+			w->registerUsedCommand(MGComponent_MO_ALL_LOGGING_OFF);
+			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
+			disableLogging();
+			return true;
+		}
 
 
 		default:
@@ -352,6 +430,14 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 	}
 	else if(cmdvec.size() == 4)
 	{
+		if(cmdvec[0]=="mo" && cmdvec[1]=="all" &&cmdvec[2]=="logging" && cmdvec[3]=="on")
+		{
+			return MGComponent_MO_ALL_LOGGING_ON;
+		}
+		else if(cmdvec[0]=="mo" && cmdvec[1]=="all" &&cmdvec[2]=="logging" && cmdvec[3]=="off")
+		{
+			return MGComponent_MO_ALL_LOGGING_OFF;
+		}
 		if(cmdvec[0]=="mo" && cmdvec[2]=="logging" && cmdvec[3]=="on")
 		{
 			return MGComponent_MO_INT_LOGGING_ON;
