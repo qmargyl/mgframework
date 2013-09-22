@@ -16,12 +16,12 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.23.2"
+#define MGFRAMEWORKVERSION "1.0.24.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
 #define MGF_LOGLINE_MAXLENGTH		1024
-//#define MGF_DEBUGGING_ENABLED
+//#define MGF_DEBUGGING_ENABLED		// This flag disables socket and TTF as these are not possible to compile for Debug.
 
 
 // Macros...
@@ -298,7 +298,7 @@ class MGFramework :public MGComponent
 		void run(const char *scriptFileName);
 
 		// Parsing script files containing mgf commands
-		void parse(const char *scriptFileName);
+		void parse(const char *sFileName);
 
 		// Evaluating log files to PASS/FAIL
 		void logEval(const char *logFileName);
@@ -322,6 +322,8 @@ class MGFramework :public MGComponent
 		static std::vector<std::string> split(std::string str, char c);
 		static int toInt(const string &s);
 		static std::string toString(bool b){ if(b) return std::string("true"); return std::string("false"); }
+		static std::string firstWord(const char *str);
+		static std::string secondWord(const char *str);
 		static int randomN(int upperLimit){return std::rand()%upperLimit;}
 		static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
 		static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);

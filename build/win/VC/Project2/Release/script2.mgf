@@ -1,2 +1,11 @@
-add mo 5 -owner 2
 
+// testing some sub routines..
+
+delete all mo
+
+
+function create_five_mo
+add mo 5 -owner 2
+end function
+
+delete all mo

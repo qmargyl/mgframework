@@ -238,9 +238,23 @@ bool MGFramework::processEvents()
 	return true;
 }
 
-void MGFramework::parse(const char *scriptFileName)
+void MGFramework::parse(const char *sFileName)
 {
+	MGFLOG_INFO(std::cout << "MGFramework::parse was called with argument " << sFileName << std::endl;);
 	FILE *sf = NULL;
+	char *functionName=NULL;
+	char scriptFileName[128];
+	strcpy(scriptFileName,sFileName);
+
+	std::size_t foundColon = string(scriptFileName).find(string(":"));
+	if (foundColon!=std::string::npos && foundColon>0)
+	{
+		functionName = scriptFileName + foundColon + 1;
+		scriptFileName[foundColon]='\0';
+		MGFLOG_INFO(std::cout << "MGFramework::parse will parse file " << scriptFileName << " and function " << functionName << std::endl;);
+
+	}
+
 	errno_t scriptError = fopen_s(&sf, scriptFileName, "rt");
 	if(sf == NULL)
 	{
@@ -250,7 +264,12 @@ void MGFramework::parse(const char *scriptFileName)
 	{
 		char scriptLine[MGF_SCRIPTLINE_MAXLENGTH] = "";
 		char *neof = NULL;
+		bool foundFunction=false;
 		MGFLOG_INFO(std::cout << "MGFramework::parse starting to parse script file " << scriptFileName << std::endl;);
+		if(functionName!=NULL)
+		{
+			MGFLOG_INFO(std::cout << "MGFramework::parse starting to execute function " << functionName << std::endl;);
+		}
 
 		while(true)
 		{
@@ -284,12 +303,54 @@ void MGFramework::parse(const char *scriptFileName)
 					}
 				}
 
+				// TODO: Remove "special" characters in the beginning of the script line
+
 				MGFLOG_INFO(std::cout << ">" << scriptLine << std::endl;);
 
-				if(okMGFrameworkSyntax(scriptLine))
+				if(functionName!=NULL)
 				{
-					MGFLOG_INFO(std::cout << "MGFramework::parse calls runConsoleCommand(" << scriptLine << ")" << std::endl;);
-					runConsoleCommand(scriptLine, this);
+					if(foundFunction)
+					{
+						if(string("end function") == string(scriptLine))
+						{
+							break;
+						}
+						else
+						{
+							if(okMGFrameworkSyntax(scriptLine))
+							{
+								MGFLOG_INFO(std::cout << "MGFramework::parse calls runConsoleCommand(" << scriptLine << ")" << std::endl;);
+								runConsoleCommand(scriptLine, this);
+							}
+						}
+					}
+					else
+					{
+						if(string("function ")+string(functionName) == string(scriptLine))
+						{
+							foundFunction=true;
+						}
+					}
+				}
+				else if(okMGFrameworkSyntax(scriptLine))
+				{
+					if(firstWord(scriptLine) == string("call"))
+					{
+						string sw = secondWord(scriptLine);
+						std::size_t fColon = sw.find(string(":"));
+						if (fColon!=std::string::npos)
+						{
+							parse(sw.c_str());
+						}
+						else{
+							parse((string(scriptFileName)+string(":")+sw).c_str());
+						}
+					}
+					else
+					{
+						MGFLOG_INFO(std::cout << "MGFramework::parse calls runConsoleCommand(" << scriptLine << ")" << std::endl;);
+						runConsoleCommand(scriptLine, this);
+					}
 				}
 			}
 		}
@@ -1632,6 +1693,37 @@ std::vector<std::string> MGFramework::split(std::string str, char c)
     }
 	return splitLine;
 }
+
+std::string MGFramework::firstWord(const char *str)
+{ 
+	std::string s_str(str);
+	std::vector<std::string> strvec = split(s_str, ' ');
+	if(strvec.empty())
+	{
+		std::cout << "MGFramework::firstWord was called with a string containing too few words" << std::endl;
+		return string("");
+	}
+	else
+	{
+		return strvec[0];
+	}
+}
+
+std::string MGFramework::secondWord(const char *str)
+{ 
+	std::string s_str(str);
+	std::vector<std::string> strvec = split(s_str, ' ');
+	if(strvec.size()<2)
+	{
+		std::cout << "MGFramework::secondWord was called with a string containing too few words" << std::endl;
+		return string("");
+	}
+	else
+	{
+		return strvec[1];
+	}
+}
+
 
 int MGFramework::toInt(const string &s)
 {

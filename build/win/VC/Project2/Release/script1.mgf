@@ -6,6 +6,6 @@ pe 0 logging on
 window help
 map help
 map << map_level1.mgf
-pe 0 << script2.mgf
+pe 0 << script2.mgf:create_five_mo
 
 
