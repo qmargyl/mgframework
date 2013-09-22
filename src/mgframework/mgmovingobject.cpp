@@ -419,9 +419,21 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 		{
 			return MGComponent_MO_INT_GETDISTANCE;
 		}
+		else if(cmdvec[1]=="all" && cmdvec[2]=="mark")
+		{
+			return MGComponent_MO_ALL_MARK;
+		}
 		else if(cmdvec[2]=="mark")
 		{
 			return MGComponent_MO_INT_MARK;
+		}
+		else if(cmdvec[1]=="all" && cmdvec[2]=="unmark")
+		{
+			return MGComponent_MO_ALL_UNMARK;
+		}
+		else if(cmdvec[1]=="marked" && cmdvec[2]=="unmark")
+		{
+			return MGComponent_MO_MARKED_UNMARK;
 		}
 		else if(cmdvec[2]=="unmark")
 		{
@@ -449,7 +461,15 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 	}
 	else if(cmdvec.size() == 5)
 	{
-		if(cmdvec[2]=="setdestination")
+		if(cmdvec[1]=="all" && cmdvec[2]=="setdestination")
+		{
+			return MGComponent_MO_ALL_SETDESTINATION_INT_INT;
+		}
+		else if(cmdvec[1]=="marked" && cmdvec[2]=="setdestination")
+		{
+			return MGComponent_MO_MARKED_SETDESTINATION_INT_INT;
+		}
+		else if(cmdvec[2]=="setdestination")
 		{
 			return MGComponent_MO_INT_SETDESTINATION_INT_INT;
 		}

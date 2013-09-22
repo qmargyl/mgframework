@@ -41,6 +41,7 @@ expect getnumberofmo 0
 create mo 1 -owner 1
 expect getnumberofmo 1
 mo 0 getdistance
+mo 0 getlocation
 mo 0 getdestination
 mo 0 getspeed
 mo 0 setdestination 0 0
@@ -63,21 +64,19 @@ delete all mo
 expect getnumberofmo 0
 
 
-// Misc
+
+// Framework
 input off
 runframes 100
 delete all mo
 input on
-
-
-
-// Framework
+open terminalserver
+close terminalserver
 logging on
 logging off
 logging on
 help
 getfps
-map help
 setfps 60
 minimap on
 minimap off
@@ -87,11 +86,15 @@ minimap on
 
 // Window
 window logging on
+window fullscreen on
 window help
+window fullscreen off
 window logging off
 
 
-
+// Map
+map help
+map path 0 0 10 10
 
 
 // PE creation, deletion, activating, etc
@@ -101,6 +104,7 @@ pe 0 logging off
 pe 0 logging on
 pe 0 << script2.mgf
 pe 0 << storefilename script2.mgf
+pe 0 setuptimer 3000
 expect getnumberofpe 1
 delete all pe
 expect getnumberofpe 0
@@ -135,7 +139,7 @@ getnumberofmo
 getnumberofmarkedmo
 
 
-expect getnumberofusedcommands percentage 80
+expect getnumberofusedcommands percentage 100
 
 
 // Exit application last

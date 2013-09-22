@@ -38,7 +38,7 @@ bool Project2::init(int w, int h, int tw, int th)
 
 		runConsoleCommand("logging on", this); // Turn on logging for the MGFramework class
 		runConsoleCommand("setfps 60", this); // Framework default is 20 FPS
-//		runConsoleCommand("open terminalserver", this);
+		runConsoleCommand("open terminalserver", this);
 		runConsoleCommand("minimap on", this);
 
 		return true;
@@ -156,9 +156,9 @@ void Project2::draw()
 
 	// Example of how text can be printed on the surface.. Here FPS and time left between frames.
 #ifndef MGF_DEBUGGING_ENABLED
-	drawText(getSurface(), (string("MOs: ") + MGFramework::toString(getNumberOfMO())).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 30, 0, 0, 0, 0, 255, 0);
-	drawText(getSurface(), (string("FD : ") + MGFramework::toString(getLastFrameDelayTime())).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 50, 0, 0, 0, 0, 255, 0);
-	drawText(getSurface(), (string("FPS: ") + MGFramework::toString(getFPS())).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 70, 0, 0, 0, 0, 255, 0);
+	drawText(getSurface(), (string("MOs: ") + MGFramework::toString((int)getNumberOfMO())).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 30, 0, 0, 0, 0, 255, 0);
+	drawText(getSurface(), (string("FD : ") + MGFramework::toString((int)getLastFrameDelayTime())).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 50, 0, 0, 0, 0, 255, 0);
+	drawText(getSurface(), (string("FPS: ") + MGFramework::toString((int)getFPS())).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 70, 0, 0, 0, 0, 255, 0);
 #endif
 
 

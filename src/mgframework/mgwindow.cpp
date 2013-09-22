@@ -132,6 +132,15 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
 			return false; // Deactivate console
 		}
 
+		case MGComponent_WINDOW_FULLSCREEN_OFF:
+		{
+			w->registerUsedCommand(MGComponent_WINDOW_FULLSCREEN_OFF);
+			m_Fullscreen = false;
+			setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
+			m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, getFlags() );
+			return true;
+		}
+
 		case MGComponent_WINDOW_LOGGING_ON:
 		{
 			w->registerUsedCommand(MGComponent_WINDOW_LOGGING_ON);
@@ -171,6 +180,10 @@ eMGComponentConsoleCommand MGWindow::detectMGComponentConsoleCommand(const std::
 		if(cmdvec[1]=="fullscreen" && cmdvec[2]=="on")
 		{
 			return MGComponent_WINDOW_FULLSCREEN_ON;
+		}
+		if(cmdvec[1]=="fullscreen" && cmdvec[2]=="off")
+		{
+			return MGComponent_WINDOW_FULLSCREEN_OFF;
 		}
 		else if(cmdvec[1]=="logging" && cmdvec[2]=="on")
 		{

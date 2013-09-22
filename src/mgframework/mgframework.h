@@ -14,12 +14,12 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.23.0"
+#define MGFRAMEWORKVERSION "1.0.23.1"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
 #define MGF_LOGLINE_MAXLENGTH		1024
-#define MGF_DEBUGGING_ENABLED
+//#define MGF_DEBUGGING_ENABLED
 
 
 // Macros...
@@ -104,9 +104,9 @@ enum eMGComponentConsoleCommand{
 	MGComponent_MO_ALL_LOGGING_ON,
 
 	// TODO: Implement these..
-	MGComponent_MO_INT_SETSPEED_INT,
-	MGComponent_MO_INT_EXPECT_GETSPEED_INT,
-	MGComponent_MO_INT_EXPECT_GETDESTINATION_INT_INT,
+	//MGComponent_MO_INT_SETSPEED_INT,
+	//MGComponent_MO_INT_EXPECT_GETSPEED_INT,
+	//MGComponent_MO_INT_EXPECT_GETDESTINATION_INT_INT,
 
 
 	//MGMap commands
@@ -118,6 +118,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_WINDOW_X,
 	MGComponent_WINDOW_HELP,
 	MGComponent_WINDOW_FULLSCREEN_ON,
+	MGComponent_WINDOW_FULLSCREEN_OFF,
 	MGComponent_WINDOW_LOGGING_OFF,
 	MGComponent_WINDOW_LOGGING_ON,
 

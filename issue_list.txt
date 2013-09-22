@@ -6,4 +6,10 @@ MG Framework list of known issues to be fixed/investigated
 * Creating large amounts of MOs can cause free function to crash. This
   is likely due to lack of thread safety in the terminal server.
 
-* Hitting escape to open the console in the example application causes it to crash. 
+* Hitting escape to open the console in the example application while
+  saving console output to log file will result in input in console and
+  output in log file. It bahaves as usual otherwise but is not very
+  practical. One can easily mistake it for a crash since the prompt is
+  not seen and the applicatio crashes if you try to control the graphical
+  window while in console mode.
+

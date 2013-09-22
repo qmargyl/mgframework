@@ -60,6 +60,7 @@ create pe 1 -owner 1
 expect getnumberofpe 1
 add pe 1 -owner 2
 expect getnumberofpe 2
+pe 0 setuptimer 2000
 pe all activate
 pe all deactivate
 pe all activate -owner 1
