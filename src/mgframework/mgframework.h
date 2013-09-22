@@ -8,13 +8,15 @@
 #include "SDL_ttf.h"
 #include <vector>
 #include <string>
+#include <iostream>
+#include <iomanip>
 #include "mgcomponent.h"
 #include "mgmovingobject.h"
 #include "mgperiodicevent.h"
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.23.1"
+#define MGFRAMEWORKVERSION "1.0.23.2"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -23,7 +25,7 @@
 
 
 // Macros...
-#define MGFTIMESTAMP(x) (x/3600000) << ":" << (x%3600000)/60000 << ":" << (x%60000)/1000 << ":" << (x%1000) 
+#define MGFTIMESTAMP(x) std::setw(3) << (x/3600000) << ":" << std::setw(3) << (x%3600000)/60000 << ":" << std::setw(3) << (x%60000)/1000 << ":" << std::setw(3) << (x%1000) 
 
 #define MGFLOG_WARNING(x)	if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: ";  x; }
 #define MGFLOG_INFO(x)		if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: ";  x; }
