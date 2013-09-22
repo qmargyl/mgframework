@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.24.0"
+#define MGFRAMEWORKVERSION "1.0.25.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -60,6 +60,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_DELETE_ALL_MO_PARAMLIST,
 	MGComponent_DELETE_ALL_PE_PARAMLIST,
 	MGComponent_RUNFRAMES_INT,
+	MGComponent_RUNONEFRAME,
 	MGComponent_SETFPS_INT,
 	MGComponent_OPEN_TERMINALSERVER,
 	MGComponent_CLOSE_TERMINALSERVER,
@@ -295,7 +296,7 @@ class MGFramework :public MGComponent
 		const char *getMGFrameworkVersion(){return MGFRAMEWORKVERSION;}
 
 		// Execute the framework
-		void run(const char *scriptFileName);
+		void run(const char *scriptFileName, bool runOneFrame = false);
 
 		// Parsing script files containing mgf commands
 		void parse(const char *sFileName);

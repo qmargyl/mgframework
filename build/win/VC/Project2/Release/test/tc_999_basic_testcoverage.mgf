@@ -81,7 +81,7 @@ setfps 60
 minimap on
 minimap off
 minimap on
-
+runoneframe
 
 
 // Window

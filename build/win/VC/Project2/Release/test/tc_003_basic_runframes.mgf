@@ -1,6 +1,54 @@
 input off
 create mo 10 -owner 1
 runframes 100
+
+
+mo 0 setdestination 0 0
+mo 1 setdestination 10 10
+mo 2 setdestination 3 10
+mo 3 setdestination 10 3
+mo 4 setdestination 5 5
+mo 5 setdestination 2 10
+mo 6 setdestination 10 2
+mo 7 setdestination 4 4
+mo 8 setdestination 5 5
+mo 9 setdestination 7 2
+
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+
 delete all mo
 input on
 exit application

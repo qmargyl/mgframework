@@ -10,6 +10,7 @@ setfps 55
 minimap on
 minimap off
 minimap on
+runoneframe
 logging off
 
 

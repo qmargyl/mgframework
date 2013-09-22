@@ -240,6 +240,12 @@ bool MGFramework::processEvents()
 
 void MGFramework::parse(const char *sFileName)
 {
+	if(sFileName==NULL)
+	{
+		MGFLOG_INFO(std::cout << "MGFramework::parse was called with argument NULL, exiting function..." << std::endl;);
+		return;
+	}
+
 	MGFLOG_INFO(std::cout << "MGFramework::parse was called with argument " << sFileName << std::endl;);
 	FILE *sf = NULL;
 	char *functionName=NULL;
@@ -418,7 +424,7 @@ void MGFramework::logEval(const char *logFileName)
 }
 
 
-void MGFramework::run(const char *scriptFileName)
+void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 {
 	parse(scriptFileName);
 
@@ -476,8 +482,12 @@ void MGFramework::run(const char *scriptFileName)
 		{
 			Sleep((DWORD)m_DelayTime);
 		}
+
+		if(runOneFrame) break;
 	}
 }
+
+
 
 void MGFramework::activateConsole()
 {
@@ -504,6 +514,13 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			MGFLOG_ERROR(std::cout << "MGFramework::runConsoleCommand received MGComponent_UNDEFINED from MGFramework::detectMGComponentConsoleCommand" << std::endl;); 
 			break;
+		}
+
+		case MGComponent_RUNONEFRAME:
+		{
+			registerUsedCommand(MGComponent_RUNONEFRAME);
+			run(NULL, true);
+			return true;
 		}
 
 		case MGComponent_MAP_X:
@@ -1158,6 +1175,10 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		else if(cmdvec[0]=="getnumberofusedcommands")
 		{
 			return MGComponent_GETNUMBEROFUSEDCOMMANDS;
+		}
+		else if(cmdvec[0]=="runoneframe")
+		{
+			return MGComponent_RUNONEFRAME;
 		}
 
 	}
