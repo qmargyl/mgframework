@@ -16,12 +16,12 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.25.1"
+#define MGFRAMEWORKVERSION "1.0.25.2"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
 #define MGF_LOGLINE_MAXLENGTH		1024
-//#define MGF_DEBUGGING_ENABLED		// This flag disables socket and TTF as these are not possible to compile for Debug.
+//#define MGF_DEBUGGING_ENABLED		// This flag disables the socket terminal and TTF as these are not possible to compile for Debug.
 
 
 // Macros...

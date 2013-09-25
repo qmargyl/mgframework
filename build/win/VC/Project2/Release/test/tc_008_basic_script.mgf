@@ -1,0 +1,49 @@
+
+call main_tc
+
+// Generate error if ever ending up here..
+create mo 1 -owner 1
+expect getnumberofmo 0
+
+function and_then_exit
+exit application
+// Generate error if ever ending up here..
+create mo 1 -owner 1
+expect getnumberofmo 0
+end function
+
+// Generate error if ever ending up here..
+create mo 1 -owner 1
+expect getnumberofmo 0
+
+function main_tc
+create mo 1
+call create_an_mo
+call create_another_mo
+expect getnumberofmo 3
+call and_then_exit
+end function
+
+delete all mo
+
+
+
+function create_an_mo
+add mo 1
+end function
+
+delete all mo
+
+
+
+function create_another_mo
+add mo 1
+end function
+
+
+
+// Generate error if ever ending up here..
+create mo 1 -owner 1
+expect getnumberofmo 0
+
+exit application

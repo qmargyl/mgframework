@@ -329,8 +329,28 @@ void MGFramework::parse(const char *sFileName)
 						{
 							if(okMGFrameworkSyntax(scriptLine))
 							{
-								MGFLOG_INFO(std::cout << "MGFramework::parse calls runConsoleCommand(" << scriptLine << ")" << std::endl;);
-								runConsoleCommand(scriptLine, this);
+								if(firstWord(scriptLine) == string("call"))
+								{
+									string sw = secondWord(scriptLine);
+									std::size_t fColon = sw.find(string(":"));
+									if (fColon!=std::string::npos)
+									{
+										parse(sw.c_str());
+									}
+									else
+									{
+										parse((string(scriptFileName)+string(":")+sw).c_str());
+									}
+								}
+								else
+								{
+									MGFLOG_INFO(std::cout << "MGFramework::parse calls runConsoleCommand(" << scriptLine << ")" << std::endl;);
+									runConsoleCommand(scriptLine, this);
+									if(getQuitFlag())
+									{
+										break;
+									}
+								}
 							}
 						}
 					}
@@ -352,7 +372,8 @@ void MGFramework::parse(const char *sFileName)
 						{
 							parse(sw.c_str());
 						}
-						else{
+						else
+						{
 							parse((string(scriptFileName)+string(":")+sw).c_str());
 						}
 					}
@@ -361,7 +382,7 @@ void MGFramework::parse(const char *sFileName)
 						MGFLOG_INFO(std::cout << "MGFramework::parse calls runConsoleCommand(" << scriptLine << ")" << std::endl;);
 						runConsoleCommand(scriptLine, this);
 						// This stops parsing for example after exit application has been executed
-						if(!processEvents())
+						if(getQuitFlag())
 						{
 							break;
 						}
@@ -427,7 +448,15 @@ void MGFramework::logEval(const char *logFileName)
 		}
 		else
 		{
-			std::cout << "PASS (" << nWarnings << " warnings)" << std::endl;
+			std::cout << "PASS";
+			if(nWarnings>0)
+			{
+				std::cout << " (" << nWarnings << " warnings)" << std::endl;
+			}
+			else
+			{
+				std::cout << std::endl;
+			}
 		}
 
 		
@@ -1745,6 +1774,7 @@ std::string MGFramework::firstWord(const char *str)
 	}
 	else
 	{
+		std::cout << "MGFramework::firstWord found: " << strvec[0] << std::endl;
 		return strvec[0];
 	}
 }
