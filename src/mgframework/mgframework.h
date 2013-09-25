@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.25.0"
+#define MGFRAMEWORKVERSION "1.0.25.1"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -116,6 +116,9 @@ enum eMGComponentConsoleCommand{
 	MGComponent_MAP_X,
 	MGComponent_MAP_HELP,
 	MGComponent_MAP_PATH_INT_INT_INT_INT,
+	MGComponent_MAP_SETSIZE_INT_INT_INT_INT,				//map setsize <x> <y> <tx> <ty> (Sets the size of the map to x*y tiles, each tx*ty pixels big)
+	MGComponent_MAP_LOGGING_ON,
+	MGComponent_MAP_LOGGING_OFF,
 
 	//MGWindow commands
 	MGComponent_WINDOW_X,

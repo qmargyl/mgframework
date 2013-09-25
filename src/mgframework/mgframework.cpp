@@ -60,6 +60,9 @@ bool MGFramework::processEvents()
 	// No events for a server instance..
 	if(getInstanceType() == MGFSERVERINSTANCE) return true;
 
+	// Quit if it has been decided to do so..
+	if(getQuitFlag()) return false;
+
 	// Don't handle input if input is disabled..
 	if(!isInputEnabled()) return true;
 
@@ -232,9 +235,6 @@ bool MGFramework::processEvents()
 		}
 	}
 
-	// Quit if it has been decided to do so..
-	if(getQuitFlag()) return false;
-
 	return true;
 }
 
@@ -276,6 +276,10 @@ void MGFramework::parse(const char *sFileName)
 		{
 			MGFLOG_INFO(std::cout << "MGFramework::parse starting to execute function " << functionName << std::endl;);
 		}
+
+		// No input during file parsing. Turn back on after parsing, and if it was enabled in the first place.
+		bool inputEnabled = isInputEnabled();
+		disableInput();
 
 		while(true)
 		{
@@ -356,10 +360,18 @@ void MGFramework::parse(const char *sFileName)
 					{
 						MGFLOG_INFO(std::cout << "MGFramework::parse calls runConsoleCommand(" << scriptLine << ")" << std::endl;);
 						runConsoleCommand(scriptLine, this);
+						// This stops parsing for example after exit application has been executed
+						if(!processEvents())
+						{
+							break;
+						}
 					}
 				}
 			}
 		}
+
+		// Enable input if it was enabled when we started parsing.
+		if(inputEnabled) enableInput();
 
 		if(sf != NULL)
 		{
@@ -387,6 +399,7 @@ void MGFramework::logEval(const char *logFileName)
 		//MGFLOG_INFO(std::cout << "MGFramework::logEval starting to parse log file " << logFileName << std::endl;);
 
 		int nErrors=0;
+		int nWarnings=0;
 		while(true)
 		{
 			// Read until new line or end of file, whichever happens first..
@@ -400,19 +413,24 @@ void MGFramework::logEval(const char *logFileName)
 				// An error defined as a log line containing at least one "ERROR".
 				std::string line(logLine);
 				std::string errSubstr("ERROR");
-				std::size_t found = line.find(errSubstr);
-				if (found!=std::string::npos) nErrors++;
+				std::string warnSubstr("WARNING");
+				std::size_t foundErr = line.find(errSubstr);
+				std::size_t foundWarn = line.find(warnSubstr);
+				if (foundErr!=std::string::npos) nErrors++;
+				if (foundWarn!=std::string::npos) nWarnings++;
 			}
 		}
 
 		if(nErrors!=0)
 		{
-			std::cout << "FAIL (" << nErrors << " errors)" << std::endl;
+			std::cout << "FAIL (" << nErrors << " errors, " << nWarnings << " warnings)" << std::endl;
 		}
 		else
 		{
-			std::cout << "PASS" << std::endl;
+			std::cout << "PASS (" << nWarnings << " warnings)" << std::endl;
 		}
+
+		
 
 		if(lf != NULL)
 		{
@@ -430,7 +448,8 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 
 	Uint32 frameStartTime = 0; 
 	m_DelayTime = 0;
-	Uint32 lastFrameTime = SDL_GetTicks()-1; // SDL_GetTicks() - lastFrameTime cannot be zero.
+	// Assume an initial value of m_FrameTime of 1000/getDesiredFPS().
+	Uint32 lastFrameTime = SDL_GetTicks()-(1000/getDesiredFPS()); // SDL_GetTicks() - lastFrameTime cannot be zero.
 
 	// Frame loop (processEvents, handleGameLogics, draw)
 	while(processEvents())

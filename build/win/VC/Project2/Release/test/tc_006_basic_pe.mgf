@@ -80,5 +80,34 @@ delete all pe -owner 2
 expect getnumberofpe 0
 
 
+create pe 1 -owner 1
+expect getnumberofpe 1
+pe 0 setuptimer 1
+pe 0 << .\\test\\tc_006_basic_pe.mgf:pe_delete_all_mo
+create mo 1 -owner 1
+pe 0 activate
+setfps 10
+runoneframe
+runoneframe
+runoneframe
+delete all pe
+expect getnumberofpe 0
+// Fail if not pe_delete_all_mo has been called
+expect getnumberofmo 0
+
+
 // Exiting application when all tests have run
 exit application
+
+
+
+// Functions
+
+function pe_delete_all_mo
+delete all mo
+end function
+
+
+
+
+

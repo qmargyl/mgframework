@@ -31,6 +31,9 @@ project2.exe -logging -script .\test\tc_005_basic_window.mgf		>	.\test\result\tc
 echo Running test case .\test\tc_006_basic_pe.mgf
 project2.exe -logging -script .\test\tc_006_basic_pe.mgf		>	.\test\result\tc_006_basic_pe.log
 
+echo Running test case .\test\tc_007_basic_map.mgf
+project2.exe -logging -script .\test\tc_007_basic_map.mgf		>	.\test\result\tc_007_basic_map.log
+
 echo Running test case .\test\tc_999_basic_testcoverage.mgf
 project2.exe -logging -script .\test\tc_999_basic_testcoverage.mgf	>	.\test\result\tc_999_basic_testcoverage.log
 
@@ -44,6 +47,7 @@ project2.exe -log_eval .\test\result\tc_003_basic_runframes.log
 project2.exe -log_eval .\test\result\tc_004_basic_misc.log
 project2.exe -log_eval .\test\result\tc_005_basic_window.log
 project2.exe -log_eval .\test\result\tc_006_basic_pe.log
+project2.exe -log_eval .\test\result\tc_007_basic_map.log
 project2.exe -log_eval .\test\result\tc_999_basic_testcoverage.log
 
 

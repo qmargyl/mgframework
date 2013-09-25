@@ -94,7 +94,24 @@ window logging off
 
 // Map
 map help
+map logging on
+map logging off
+map logging on
 map path 0 0 10 10
+delete all mo
+map setsize 64 64 32 32
+map path 3 5 39 60
+map path 5 43 55 2
+create mo 10 -owner 1
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+delete all mo
 
 
 // PE creation, deletion, activating, etc

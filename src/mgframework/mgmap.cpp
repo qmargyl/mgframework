@@ -19,10 +19,8 @@ MGMap::MGMap()
 
 MGMap::~MGMap()
 {
-	if(m_TileProperty != NULL)
-	{
-		delete[] m_TileProperty;
-	}
+	delete[] m_TileProperty;
+	delete[] m_Occupied;
 }
 
 
@@ -35,6 +33,8 @@ void MGMap::setScrollOffset(int px, int py)
 
 void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight)
 {
+	delete[] m_TileProperty;
+	delete[] m_Occupied;
 	m_TileProperty = new Uint32[w*h];
 	m_Occupied = new int[w*h];
 	m_Width = w;
@@ -68,6 +68,12 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 	setTileProperty(7, 3, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
 	setTileProperty(8, 2, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
 
+}
+
+
+void MGMap::reInit(int w, int h, int tw, int th)
+{
+	init(w, h, tw, th, getWindowWidth(), getWindowHeight());
 }
 
 
@@ -173,6 +179,33 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
+		case MGComponent_MAP_SETSIZE_INT_INT_INT_INT:
+		{
+			w->registerUsedCommand(MGComponent_MAP_SETSIZE_INT_INT_INT_INT);
+			int x = MGFramework::toInt(cmdvec[2]);
+			int y = MGFramework::toInt(cmdvec[3]);
+			int tx = MGFramework::toInt(cmdvec[4]);
+			int ty = MGFramework::toInt(cmdvec[5]);
+			reInit(x,y,tx,ty);
+			return true;
+		}
+
+		case MGComponent_MAP_LOGGING_ON:
+		{
+			w->registerUsedCommand(MGComponent_MAP_LOGGING_ON);
+			enableLogging();
+			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
+			return true;
+		}
+
+		case MGComponent_MAP_LOGGING_OFF:
+		{
+			w->registerUsedCommand(MGComponent_MAP_LOGGING_OFF);
+			disableLogging();
+			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
+			return true;
+		}
+
 		default:
 			MGFLOG_ERROR(std::cout << "MGMap::detectComponentConsoleCommand returned a bad value" << std::endl;); 
 			return true;
@@ -191,11 +224,26 @@ eMGComponentConsoleCommand MGMap::detectMGComponentConsoleCommand(const std::vec
 			return MGComponent_MAP_HELP;
 		}
 	}
+	else if(cmdvec.size() == 3)
+	{
+		if(cmdvec[1]=="logging" && cmdvec[2]=="on")
+		{
+			return MGComponent_MAP_LOGGING_ON;
+		}
+		if(cmdvec[1]=="logging" && cmdvec[2]=="off")
+		{
+			return MGComponent_MAP_LOGGING_OFF;
+		}
+	}
 	else if(cmdvec.size() == 6)
 	{
 		if(cmdvec[1]=="path")
 		{
 			return MGComponent_MAP_PATH_INT_INT_INT_INT;
+		}
+		else if(cmdvec[1]=="setsize")
+		{
+			return MGComponent_MAP_SETSIZE_INT_INT_INT_INT;
 		}
 	}
 

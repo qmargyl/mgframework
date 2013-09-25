@@ -64,7 +64,6 @@ bool MGWindow::createWindow()
 
 bool MGWindow::setProperties(int width, int height, int bpp, bool fullscreen, const string& title)
 {
-	//Copy the values incase we need them
 	setSize(width, height);
 	m_Title = title;
 	m_Fullscreen = fullscreen;

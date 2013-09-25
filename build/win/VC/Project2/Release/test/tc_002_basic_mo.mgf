@@ -76,9 +76,34 @@ expect getnumberofmarkedmo 0
 
 
 // Large number creation
-create mo 10000 -owner 1
-add mo 10000 -owner 2
-expect getnumberofmo 20000
+create mo 100000 -owner 1
+add mo 100000 -owner 2
+expect getnumberofmo 200000
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+getfps
 delete all mo
 expect getnumberofmo 0
 

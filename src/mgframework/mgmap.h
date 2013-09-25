@@ -76,6 +76,7 @@ public:
 
 
 	void init(int w, int h, int tw, int th, int windowWidth, int windowHeight);
+	void reInit(int w, int h, int tw, int th);
 	void setTileProperty(int x, int y, Uint32 value){ m_TileProperty[y*getWidth()+x]=value;}
 	Uint32 getTileProperty(int x, int y){ return m_TileProperty[y*getWidth()+x];}
 
