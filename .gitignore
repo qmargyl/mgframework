@@ -35,3 +35,5 @@ build/win/VC/Project2/Debug/*.*
 
 *.cd
 
+# All log files..
+*.log

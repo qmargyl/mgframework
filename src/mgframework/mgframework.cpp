@@ -505,7 +505,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 				std::cout << "\tAverage sleep time per frame: " << (double)sleepKPI / (double)nFrames << std::endl;
 				sleepKPI = 0;
 				nFrames = 0;
-				activateConsole();
+				if(!runOneFrame)activateConsole();
 			}
 			else if (getFrameNumber() > 0)
 			{
@@ -519,8 +519,13 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 			}
 		}
 
+		// General game logics..
+		handleMGFGameLogics();
+
+		// Application specific game logics and graphics..
 		handleGameLogics();
 		draw();
+
 		if(getInstanceType() != MGFSERVERINSTANCE) SDL_Flip(getSurface()); // A server instance of the framework has no graphics.
 
 		// Sleep if there is time to spare..
@@ -535,6 +540,11 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 	}
 }
 
+
+void MGFramework::handleMGFGameLogics()
+{
+
+}
 
 
 void MGFramework::activateConsole()
@@ -1774,7 +1784,7 @@ std::string MGFramework::firstWord(const char *str)
 	}
 	else
 	{
-		std::cout << "MGFramework::firstWord found: " << strvec[0] << std::endl;
+		//std::cout << "MGFramework::firstWord found: " << strvec[0] << std::endl;
 		return strvec[0];
 	}
 }

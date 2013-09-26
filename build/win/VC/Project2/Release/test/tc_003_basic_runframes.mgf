@@ -1,6 +1,6 @@
 input off
 create mo 10 -owner 1
-runframes 100
+runframes 50
 
 
 mo 0 setdestination 0 0
@@ -47,6 +47,25 @@ runoneframe
 runoneframe
 runoneframe
 runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+
+
 runoneframe
 
 delete all mo

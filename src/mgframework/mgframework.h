@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.25.2"
+#define MGFRAMEWORKVERSION "1.0.25.3"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -208,6 +208,9 @@ class MGFramework :public MGComponent
 		void activateFraming(int x, int y){setFrameStartX(x); setFrameStartY(y); setFrameEndX(x); setFrameEndY(y); m_FramingOngoing=true;}
 		void deactivateFraming(){ m_FramingOngoing = false;}
 		void updateFraming(int x, int y){setFrameEndX(x); setFrameEndY(y);}
+
+		// Execution, game logics..
+		void handleMGFGameLogics();
 
 	protected:
 		MGWindow m_Window;		// The framework window
