@@ -52,24 +52,24 @@ bool Project2::init(int w, int h, int tw, int th)
 void Project2::handleGameLogics()
 {
 	// Update periodic event to trigger rare events
-	for(int i=0;i<getNumberOfPE();i++)
-	{
-		if(m_PE[i].update())
-		{
-			MGFLOG_INFO(std::cout << "PE triggered an update" << std::endl;);
-			m_PE[i].runFile1(this);
-		}
-	}
+//	for(int i=0;i<getNumberOfPE();i++)
+//	{
+//		if(m_PE[i].update())
+//		{
+//			MGFLOG_INFO(std::cout << "PE triggered an update" << std::endl;);
+//			m_PE[i].runFile1(this);
+//		}
+//	}
 
 	// Update all moving objects
-	for(int i=0;i<getNumberOfMO();i++)
-	{
-		m_MO[i].update(this);
-	}
+//	for(int i=0;i<getNumberOfMO();i++)
+//	{
+//		m_MO[i].update(this);
+//	}
 
 	// Example of how FPS can be controlled dynamically
-	if(getLastFrameDelayTime()>10) setDesiredFPS(getFPS()+1);
-	if(getLastFrameDelayTime()<7) setDesiredFPS(getFPS()-1);
+//	if(getLastFrameDelayTime()>10) setDesiredFPS(getFPS()+1);
+//	if(getLastFrameDelayTime()<7) setDesiredFPS(getFPS()-1);
 }
 
 void Project2::draw()

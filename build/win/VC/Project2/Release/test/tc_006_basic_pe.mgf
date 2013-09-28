@@ -90,6 +90,7 @@ setfps 10
 runoneframe
 runoneframe
 runoneframe
+runoneframe
 delete all pe
 expect getnumberofpe 0
 // Fail if not pe_delete_all_mo has been called

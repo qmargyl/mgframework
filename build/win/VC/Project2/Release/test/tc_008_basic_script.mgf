@@ -28,17 +28,18 @@ delete all mo
 
 
 
-function create_an_mo
-add mo 1
-end function
+function create_an_mo 
+	// Add an mo..
+	add mo 1
+end function	  
 
 delete all mo
 
 
 
 function create_another_mo
-add mo 1
-end function
+  add mo 1  	
+end function  
 
 
 

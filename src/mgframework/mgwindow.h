@@ -1,7 +1,6 @@
 #ifndef _MG_WINDOW_H
 #define _MG_WINDOW_H
 
-#include <string>
 #include "mgcomponent.h"
 
 struct SDL_Surface;

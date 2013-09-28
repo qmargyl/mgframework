@@ -106,9 +106,8 @@ int main(int argc, char **argv)
 
 	if(logEval)
 	{
+		// In case of using the framework for log evaluation, don't init and run.
 		p2->logEval(logEvalFileName);
-		// Dummy implementation...
-		//std::cout << "Evaluating file: " << logEvalFileName << " ... PASS" << std::endl;
 	}
 	else if(p2->windowPropertiesSet())
 	{

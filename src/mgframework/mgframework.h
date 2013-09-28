@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.25.3"
+#define MGFRAMEWORKVERSION "1.0.25.4"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -329,15 +329,13 @@ class MGFramework :public MGComponent
 		static std::vector<std::string> split(std::string str, char c);
 		static int toInt(const string &s);
 		static std::string toString(bool b){ if(b) return std::string("true"); return std::string("false"); }
-		static std::string firstWord(const char *str);
-		static std::string secondWord(const char *str);
 		static int randomN(int upperLimit){return std::rand()%upperLimit;}
 		static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
 		static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);
 #ifndef MGF_DEBUGGING_ENABLED
 		static int initializeWinsock(WORD wVersionRequested);
 #endif
-		static bool okMGFrameworkSyntax(const char *c);
+		static bool okMGFrameworkSyntax(/*const char *c*/const std::vector<std::string> &v_s);
 		static bool oneOf(int x, int a1, int a2){ if(x==a1) return true;  if(x==a2) return true; return false;}
 		static int smallest(int a, int b){ if(a<b) return a; return b;}
 		static int biggest(int a, int b){ if(a>b) return a; return b;}
