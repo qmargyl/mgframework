@@ -15,10 +15,12 @@ MGMap::MGMap()
 	m_MouseScrollingOngoing = false;
 	m_MouseScrollingXClick=0;
 	m_MouseScrollingYClick=0;
+	registerMemoryAllocation(sizeof(MGMap));
 }
 
 MGMap::~MGMap()
 {
+	registerMemoryDeallocation(sizeof(MGMap));
 	delete[] m_TileProperty;
 	delete[] m_Occupied;
 }

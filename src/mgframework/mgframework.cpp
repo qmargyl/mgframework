@@ -30,6 +30,8 @@ MGFramework::MGFramework():
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
 
+	registerMemoryAllocation(sizeof(MGFramework));
+
 	// Setup the framework for automatic regression testing...
 
 	// At framework creation, no commands have been used..
@@ -46,22 +48,19 @@ MGFramework::MGFramework():
 
 MGFramework::~MGFramework()
 {
+	registerMemoryDeallocation(sizeof(MGFramework));
 	delete[] m_MO;
 	delete[] m_PE;
 }
 
-void MGFramework::resize(int x, int y)
-{
-	// Not implemented yet
-}
 
 bool MGFramework::processEvents()
 {
+	// Quit if it has been decided to do so.. also for server instances
+	if(getQuitFlag()) return false;
+
 	// No events for a server instance..
 	if(getInstanceType() == MGFSERVERINSTANCE) return true;
-
-	// Quit if it has been decided to do so..
-	if(getQuitFlag()) return false;
 
 	// Don't handle input if input is disabled..
 	if(!isInputEnabled()) return true;
@@ -77,8 +76,6 @@ bool MGFramework::processEvents()
 			{
 				MGFLOG_INFO(std::cout << "SDL_QUIT" << std::endl;)
 				// Return false because we are quitting.
-				//quit();
-				//break;
 				return false;
 			}
 
@@ -104,15 +101,6 @@ bool MGFramework::processEvents()
 					MGFLOG_INFO(std::cout << "SDL_KEYUP" << std::endl << "  " << SDL_GetKeyName(sym) << std::endl;)
 					m_Keys[sym] = 0;
 				}
-				break;
-			}
-
-			case SDL_VIDEORESIZE:
-			{
-				MGFLOG_INFO(std::cout << "SDL_VIDEORESIZE" << std::endl << "  " << "Resizing Window to " << event.resize.w << "x" << event.resize.h << std::endl;)
-				//Not implemented yet
-				//The window has been resized so we need to set up our viewport and projection according to the new size
-				resize(event.resize.w, event.resize.h);
 				break;
 			}
 
@@ -547,6 +535,9 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 
 void MGFramework::handleMGFGameLogics()
 {
+	// Handle all events in the event queue
+	// Not implemented yet
+
 	// Update periodic event to trigger rare events
 	for(int i=0;i<getNumberOfPE();i++)
 	{
@@ -587,6 +578,8 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 {
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = split(cmd, ' ');
+
+	//MGFLOG_INFO(std::cout << "Framework memory allocation: " << getMemoryAllocation() << std::endl;);
 
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
@@ -1573,7 +1566,7 @@ void MGFramework::deletePE(int index)
 			}
 			else if(i>=index && i<getNumberOfPE()-1)
 			{
-				// Overwrite pe(i) with mo(i+1)
+				// Overwrite pe(i) with pe(i+1)
 				m_PE[i].copy(&m_PE[i+1]);
 			}
 			else if(i==getNumberOfPE()-1)
@@ -1621,21 +1614,14 @@ void MGFramework::drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurfa
 
 SDL_Surface *MGFramework::loadBMPImage( std::string filename ) 
 {
-	//Temporary storage for the image that's loaded
 	SDL_Surface* loadedImage = NULL;
-	//The optimized image that will be used
 	SDL_Surface* optimizedImage = NULL;
-	//Load the image
 	loadedImage = SDL_LoadBMP( filename.c_str() );
-	//If nothing went wrong in loading the image
 	if( loadedImage != NULL )
 	{
-		//Create an optimized image
 		optimizedImage = SDL_DisplayFormat( loadedImage );
-		//Free the old image
 		SDL_FreeSurface( loadedImage );
 	}
-	//Return the optimized image
 	return optimizedImage;
 }
 
@@ -1782,13 +1768,7 @@ std::vector<std::string> MGFramework::split(std::string str, char c)
     {
         if(str[i] == c)
 		{
-//			int n=0;
-//			for(n=i; n<nLineSize && str[n] == c; ++n)
-//			{
-				// Step n to the last of the c:s before next word
-//			}
             splitIndices.push_back(i);
-			//splitIndices.push_back(n-1);
 		}
     }
     splitIndices.push_back(nLineSize); // end index

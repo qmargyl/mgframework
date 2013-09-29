@@ -14,6 +14,12 @@ MGMovingObject::MGMovingObject()
 	setID();
 	setOwner(MGF_NOPLAYER);
 	disableLogging();
+	registerMemoryAllocation(sizeof(MGMovingObject));
+}
+
+MGMovingObject::~MGMovingObject()
+{
+	registerMemoryDeallocation(sizeof(MGMovingObject));
 }
 
 void MGMovingObject::setTileXY(int x, int y, MGFramework *world)

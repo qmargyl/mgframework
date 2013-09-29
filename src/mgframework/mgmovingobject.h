@@ -35,6 +35,7 @@ private:
 public:
 
 	MGMovingObject();
+	~MGMovingObject();
 
 	void setTileXY(int x, int y, MGFramework *world);
 	void setDestTileXY(int x, int y);

@@ -1,6 +1,7 @@
+
+
 :: Basic regression test for mgframework
 @ECHO OFF
-
 echo Basic regression test for mgframework
 
 
@@ -37,6 +38,9 @@ project2.exe -logging -script .\test\tc_007_basic_map.mgf		>	.\test\result\tc_00
 echo Running test case .\test\tc_008_basic_script.mgf
 project2.exe -logging -script .\test\tc_008_basic_script.mgf		>	.\test\result\tc_008_basic_script.log
 
+echo Running server instance with test case .\test\tc_009_basic_server.mgf
+project2.exe -server -logging -script .\test\tc_009_basic_server.mgf	>	.\test\result\tc_009_basic_server.log
+
 echo Running test case .\test\tc_999_basic_testcoverage.mgf
 project2.exe -logging -script .\test\tc_999_basic_testcoverage.mgf	>	.\test\result\tc_999_basic_testcoverage.log
 
@@ -52,6 +56,7 @@ project2.exe -log_eval .\test\result\tc_005_basic_window.log
 project2.exe -log_eval .\test\result\tc_006_basic_pe.log
 project2.exe -log_eval .\test\result\tc_007_basic_map.log
 project2.exe -log_eval .\test\result\tc_008_basic_script.log
+project2.exe -log_eval .\test\result\tc_009_basic_server.log
 project2.exe -log_eval .\test\result\tc_999_basic_testcoverage.log
 
 

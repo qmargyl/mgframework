@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.25.4"
+#define MGFRAMEWORKVERSION "1.0.25.5"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -237,8 +237,6 @@ class MGFramework :public MGComponent
 		// Force a derived sub-class to implement this as it is not framework related.
 		virtual void draw() = 0;
 		virtual void handleGameLogics() = 0;
-
-		virtual void resize(int x, int y);	// Not implemented yet
 
 		// Frame selection related (click drag and release)
 		bool isFramingOngoing(){ return m_FramingOngoing;}

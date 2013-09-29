@@ -1,9 +1,17 @@
 
 
+call testcoverage_mo
+call testcoverage_fw
+call testcoverage_window
+call testcoverage_map
+call testcoverage_pe
+call testcoverage_evalandexit
 
+exit application
 
 
 // MO creation, deletion, marking, unmarking, logging, help
+function testcoverage_mo
 create mo 1 -owner 1
 add mo 1 -owner 2
 mo 0 logging on
@@ -36,7 +44,6 @@ expect getnumberofmo 1
 delete all mo -owner 2
 expect getnumberofmo 0
 
-
 // MO getters, setters
 create mo 1 -owner 1
 expect getnumberofmo 1
@@ -62,10 +69,14 @@ mo marked getspeed
 mo marked setdestination 0 0
 delete all mo
 expect getnumberofmo 0
+end function
+
+
 
 
 
 // Framework
+function testcoverage_fw
 input off
 runframes 100
 delete all mo
@@ -82,17 +93,26 @@ minimap on
 minimap off
 minimap on
 runoneframe
+end function
+
+
 
 
 // Window
+function testcoverage_window
 window logging on
 window fullscreen on
 window help
 window fullscreen off
 window logging off
+end function
+
+
+
 
 
 // Map
+function testcoverage_map
 map help
 map logging on
 map logging off
@@ -112,9 +132,14 @@ runoneframe
 runoneframe
 runoneframe
 delete all mo
+end function
+
+
+
 
 
 // PE creation, deletion, activating, etc
+function testcoverage_pe
 create pe 1
 pe 0 logging on
 pe 0 logging off
@@ -147,17 +172,20 @@ delete all pe -owner 1
 expect getnumberofpe 1
 delete all pe -owner 2
 expect getnumberofpe 0
+end function
 
 
+
+
+
+function testcoverage_evalandexit
 exit
 getnumberofcommands
 getnumberofusedcommands
 getnumberofmo
 getnumberofmarkedmo
-
-
 expect getnumberofusedcommands percentage 100
-
 
 // Exit application last
 exit application
+end function

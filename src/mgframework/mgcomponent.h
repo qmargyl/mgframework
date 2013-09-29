@@ -23,6 +23,7 @@ class MGComponent
 {
 private:
 	static int m_IDGenerator;
+	static size_t m_allocatedMemory;
 
 	// Methods for setting the object ID..
 	void setID(int id){ m_ID=id;}
@@ -37,6 +38,21 @@ protected:
 	void setID()
 	{
 		setID(generateID());
+	}
+
+	void registerMemoryAllocation(size_t amount)
+	{
+		m_allocatedMemory += amount;
+	}
+
+	void registerMemoryDeallocation(size_t amount)
+	{
+		m_allocatedMemory -= amount;
+	}
+
+	size_t getMemoryAllocation()
+	{
+		return m_allocatedMemory;
 	}
 
 	virtual eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) = 0;

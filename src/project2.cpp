@@ -34,7 +34,7 @@ bool Project2::init(int w, int h, int tw, int th)
 		m_Map.init(w, h, tw, th, m_Window.getWidth(), m_Window.getHeight()); // width (in number of tiles), height, tile width (in pixels), tile height, resolution x and y.
 
 
-		// Setup game logics..
+		// Setup application specific game logics..
 
 		runConsoleCommand("logging on", this); // Turn on logging for the MGFramework class
 		runConsoleCommand("setfps 60", this); // Framework default is 20 FPS
@@ -51,25 +51,7 @@ bool Project2::init(int w, int h, int tw, int th)
 
 void Project2::handleGameLogics()
 {
-	// Update periodic event to trigger rare events
-//	for(int i=0;i<getNumberOfPE();i++)
-//	{
-//		if(m_PE[i].update())
-//		{
-//			MGFLOG_INFO(std::cout << "PE triggered an update" << std::endl;);
-//			m_PE[i].runFile1(this);
-//		}
-//	}
-
-	// Update all moving objects
-//	for(int i=0;i<getNumberOfMO();i++)
-//	{
-//		m_MO[i].update(this);
-//	}
-
-	// Example of how FPS can be controlled dynamically
-//	if(getLastFrameDelayTime()>10) setDesiredFPS(getFPS()+1);
-//	if(getLastFrameDelayTime()<7) setDesiredFPS(getFPS()-1);
+	// Application specific game logics are updated here..
 }
 
 void Project2::draw()
