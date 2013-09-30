@@ -332,8 +332,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_MO_INT_SETDESTINATION_INT_INT:
 		{
 			w->registerUsedCommand(MGComponent_MO_INT_SETDESTINATION_INT_INT);
-			int dx=MGFramework::toInt(cmdvec[3]);
-			int dy=MGFramework::toInt(cmdvec[4]);
+			int dx=w->toInt(cmdvec[3]);
+			int dy=w->toInt(cmdvec[4]);
 			setDestTileXY(dx, dy);
 			w->m_Map.calculatePath(MGFSKYPATH, getTileX(), getTileY(), getDestTileX(), getDestTileY());
 			return true;
@@ -342,8 +342,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_MO_ALL_SETDESTINATION_INT_INT:
 		{
 			w->registerUsedCommand(MGComponent_MO_ALL_SETDESTINATION_INT_INT);
-			int dx=MGFramework::toInt(cmdvec[3]);
-			int dy=MGFramework::toInt(cmdvec[4]);
+			int dx=w->toInt(cmdvec[3]);
+			int dy=w->toInt(cmdvec[4]);
 			setDestTileXY(dx, dy);
 			w->m_Map.calculatePath(MGFSKYPATH, getTileX(), getTileY(), getDestTileX(), getDestTileY());
 			return true;
@@ -352,8 +352,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_MO_MARKED_SETDESTINATION_INT_INT:
 		{
 			w->registerUsedCommand(MGComponent_MO_MARKED_SETDESTINATION_INT_INT);
-			int dx=MGFramework::toInt(cmdvec[3]);
-			int dy=MGFramework::toInt(cmdvec[4]);
+			int dx=w->toInt(cmdvec[3]);
+			int dy=w->toInt(cmdvec[4]);
 			setDestTileXY(dx, dy);
 			w->m_Map.calculatePath(MGFSKYPATH, getTileX(), getTileY(), getDestTileX(), getDestTileY());
 			return true;

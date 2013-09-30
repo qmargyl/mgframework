@@ -40,20 +40,10 @@ protected:
 		setID(generateID());
 	}
 
-	void registerMemoryAllocation(size_t amount)
-	{
-		m_allocatedMemory += amount;
-	}
-
-	void registerMemoryDeallocation(size_t amount)
-	{
-		m_allocatedMemory -= amount;
-	}
-
-	size_t getMemoryAllocation()
-	{
-		return m_allocatedMemory;
-	}
+	// Memory allocation related
+	void registerMemoryAllocation(size_t amount){ m_allocatedMemory += amount; }
+	void registerMemoryDeallocation(size_t amount){	m_allocatedMemory -= amount; }
+	size_t getMemoryAllocation(){ return m_allocatedMemory;	}
 
 	virtual eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) = 0;
 

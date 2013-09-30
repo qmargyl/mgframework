@@ -13,10 +13,11 @@
 #include "mgcomponent.h"
 #include "mgmovingobject.h"
 #include "mgperiodicevent.h"
+#include "mgsymboltable.h"
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.25.5"
+#define MGFRAMEWORKVERSION "1.0.26.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -70,6 +71,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_LOGGING_OFF,
 	MGComponent_INPUT_OFF,
 	MGComponent_INPUT_ON,
+	//MGComponent_SYMBOL_EQUALS_INT,						//var1 = 32, var2 = getnumberofmo, etc
 
 	//MGPeriodicEvent commands
 	MGComponent_PE_INT_X,
@@ -213,10 +215,10 @@ class MGFramework :public MGComponent
 		void handleMGFGameLogics();
 
 	protected:
-		MGWindow m_Window;		// The framework window
-		
-		MGMovingObject *m_MO;	// Moving Objects
-		MGPeriodicEvent *m_PE;  // Periodic Events
+		MGWindow m_Window;				// The framework window
+		MGMovingObject *m_MO;			// Moving Objects
+		MGPeriodicEvent *m_PE;			// Periodic Events
+		MGSymbolTable *m_SymbolTable;	// Symbols
 
 		// MO related
 		void createMO(int n);
@@ -290,6 +292,9 @@ class MGFramework :public MGComponent
 		// Console command handling
 		bool runConsoleCommand(const char *c, MGFramework *w);
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
+		bool MGFramework::isNumericalInt(const string &s); // returns true if the argument contains only numbers.
+		int toInt(const string &s); // returns an int converted from either a constant or a symbol.
+		bool okMGFrameworkSyntax(/*const char *c*/const std::vector<std::string> &v_s);
 
 		//Socket terminal related
 		bool socketTerminalOpen(){return m_KeepSocketTerminalOpen;}
@@ -325,7 +330,6 @@ class MGFramework :public MGComponent
 		static string toString(int number);
 		static double distance(int x1, int y1, int x2, int y2);
 		static std::vector<std::string> split(std::string str, char c);
-		static int toInt(const string &s);
 		static std::string toString(bool b){ if(b) return std::string("true"); return std::string("false"); }
 		static int randomN(int upperLimit){return std::rand()%upperLimit;}
 		static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
@@ -333,7 +337,6 @@ class MGFramework :public MGComponent
 #ifndef MGF_DEBUGGING_ENABLED
 		static int initializeWinsock(WORD wVersionRequested);
 #endif
-		static bool okMGFrameworkSyntax(/*const char *c*/const std::vector<std::string> &v_s);
 		static bool oneOf(int x, int a1, int a2){ if(x==a1) return true;  if(x==a2) return true; return false;}
 		static int smallest(int a, int b){ if(a<b) return a; return b;}
 		static int biggest(int a, int b){ if(a>b) return a; return b;}

@@ -97,6 +97,16 @@ expect getnumberofpe 0
 expect getnumberofmo 0
 
 
+
+
+// Random integer test
+create pe 5
+pe random_pe activate
+//todo: verification method needed here
+delete all pe
+expect getnumberofmo 0
+
+
 // Exiting application when all tests have run
 exit application
 

@@ -65,6 +65,33 @@ runoneframe
 runoneframe
 
 
+
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+map path random_x random_y random_x random_y
+
+
+
+
 map logging off
 
 exit application

@@ -123,6 +123,32 @@ mo 0 help
 mo 0 setdestination 0 0
 delete all mo
 expect getnumberofmo 0
+create mo 1
+expect getnumberofmo 1
+mo 0 setdestination random_x random_y
+mo 0 setdestination random_x random_y
+mo 0 setdestination random_x random_y
+mo 0 setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+delete all mo
+expect getnumberofmo 0
+
+
+
+
+// Random mo test
+create mo 5
+mo random_mo mark
+expect getnumberofmarkedmo 1
+mo random_mo setdestination random_x random_y
+mo random_mo getdestination
+mo random_mo getspeed
+mo random_mo getdistance
+delete all mo
+expect getnumberofmo 0
 
 
 

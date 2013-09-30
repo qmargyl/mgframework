@@ -44,6 +44,8 @@ MGFramework::MGFramework():
 	// MGComponent_EXIT_APPLICATION is impossible to call before evaluating the 
 	// number of used commands as it will terminate execution of the application
 	m_UsedCommands[MGComponent_EXIT_APPLICATION] = true;
+
+	m_SymbolTable = new MGSymbolTable();
 }
 
 MGFramework::~MGFramework()
@@ -51,6 +53,7 @@ MGFramework::~MGFramework()
 	registerMemoryDeallocation(sizeof(MGFramework));
 	delete[] m_MO;
 	delete[] m_PE;
+	delete[] m_SymbolTable;
 }
 
 
@@ -1784,13 +1787,85 @@ std::vector<std::string> MGFramework::split(std::string str, char c)
 }
 
 
+bool MGFramework::isNumericalInt(const string &s)
+{
+	if(s.size()==0)
+	{
+		return false;
+	}
+	else if(s.size()==1)
+	{
+		return s[0]>='0' && s[0]<='9';
+	}
+	else
+	{
+		for(unsigned int i=1;i<s.size(); ++i)
+		{
+			if(s[i]<'0' || s[i]>'9')
+			{
+				return false;
+			}
+		}
+		if(s[0]<'0' || s[0]>'9')
+		{
+			if(s[0]!='-')
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	MGFLOG_ERROR(std::cout << "MGFramework::isNumericalInt failed to parse string" << std::endl;);
+}
+
+
 int MGFramework::toInt(const string &s)
 {
-	std::istringstream buffer(s);
-	int value;
-	buffer >> value;
-	return value;
+	if(isNumericalInt(s))
+	{
+		std::istringstream buffer(s);
+		int value;
+		buffer >> value;
+		return value;
+	}
+	else
+	{
+		if(s == string("random_mo"))
+		{
+			if(getNumberOfMO()==0)
+			{
+				MGFLOG_ERROR(std::cout << "MGFramework::toInt was called with 'random_mo' when no MO existed" << std::endl;);
+			}
+			else
+			{
+				return randomN(getNumberOfMO());
+			}
+		}
+		else if(s == string("random_pe"))
+		{
+			if(getNumberOfPE()==0)
+			{
+				MGFLOG_ERROR(std::cout << "MGFramework::toInt was called with 'random_pe' when no PE existed" << std::endl;);
+			}
+			else
+			{
+				return randomN(getNumberOfPE());
+			}
+		}
+		else if(s == string("random_x"))
+		{
+			return randomN(m_Map.getWidth());
+		}
+		else if(s == string("random_y"))
+		{
+			return randomN(m_Map.getHeight());
+		}
+	}
+	MGFLOG_ERROR(std::cout << "MGFramework::toInt failed to convert string to integer: " << s << std::endl;);
+	return 0;
 }
+
+
 
 bool MGFramework::detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2)
 {

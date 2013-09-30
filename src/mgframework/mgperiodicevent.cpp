@@ -113,7 +113,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_PE_INT_SETUPTIMER_INT:
 		{
 			w->registerUsedCommand(MGComponent_PE_INT_SETUPTIMER_INT);
-			int ms=MGFramework::toInt(cmdvec[3]);
+			int ms=w->toInt(cmdvec[3]);
 			setupTimer(ms);
 			return true;
 		}
@@ -149,7 +149,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					int owner = MGFramework::toInt(cmdvec[i+1]);
+					int owner = w->MGFramework::toInt(cmdvec[i+1]);
 					++i;
 					if(getOwner() == owner)
 					{
@@ -172,7 +172,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					int owner = MGFramework::toInt(cmdvec[i+1]);
+					int owner = w->MGFramework::toInt(cmdvec[i+1]);
 					++i;
 					if(getOwner() == owner)
 					{
