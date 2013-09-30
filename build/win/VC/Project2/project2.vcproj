@@ -208,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\src\mgframework\mgsymboltable.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\src\mgframework\mgwindow.cpp"
 				>
 			</File>
@@ -247,6 +251,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\src\mgframework\mgperiodicevent.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\src\mgframework\mgsymboltable.h"
 				>
 			</File>
 			<File
