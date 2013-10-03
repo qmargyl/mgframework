@@ -16,7 +16,7 @@ private:
 	int m_DestTileY;
 	double m_X;
 	double m_Y;
-	int m_TileSize;
+	static int m_TileSize;
 	bool m_FinishingLastMove;
 	int m_TempDestTileX;
 	int m_TempDestTileY;
@@ -31,6 +31,19 @@ private:
 
 	//Marking related
 	bool m_Marked;
+
+	//State
+	enum MOState{
+		MOStateCreated = 0,
+		MOStateIdle,
+		MOStateMoving,
+		MOStateStuck
+	};
+
+	MOState m_CurrentState;
+	MOState getCurrentState(){ return m_CurrentState; }
+	void changeState(MOState toState);
+	const char* toString(MOState s);
 
 public:
 
@@ -62,6 +75,13 @@ public:
 
 	void setTimeOfLastUpdate(Uint32 ms){ m_TimeOfLastUpdate = ms; }
 	Uint32 getTimeOfLastUpdate(){ return m_TimeOfLastUpdate; }
+
+	//State related
+	bool isCreated(){ return m_CurrentState == MOStateCreated; }
+	bool isIdle(){ return m_CurrentState == MOStateIdle; }
+	bool isMoving(){ return m_CurrentState == MOStateMoving; }
+	bool isStuck(){ return m_CurrentState == MOStateStuck; }
+
 
 };
 

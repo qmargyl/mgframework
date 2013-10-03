@@ -2,7 +2,10 @@
 #include "mgmovingobject.h"
 #include <iostream>
 
-MGMovingObject::MGMovingObject()
+int MGMovingObject::m_TileSize = 0;
+
+MGMovingObject::MGMovingObject():
+  m_CurrentState(MOStateCreated)
 {
 	setTimeOfLastUpdate(SDL_GetTicks());
 	m_FinishingLastMove=false;
@@ -15,6 +18,7 @@ MGMovingObject::MGMovingObject()
 	setOwner(MGF_NOPLAYER);
 	disableLogging();
 	registerMemoryAllocation(sizeof(MGMovingObject));
+	changeState(MOStateIdle);
 }
 
 MGMovingObject::~MGMovingObject()
@@ -33,6 +37,10 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 	m_X=0.0;
 	m_Y=0.0;
 	m_FinishingLastMove=false;
+	if(getDestTileX()==getTileX() && getDestTileY()==getTileY() && isMoving())
+	{
+		changeState(MOStateIdle);
+	}
 }
 
 void MGMovingObject::setNextXY(int x, int y, MGFramework *world)
@@ -78,6 +86,11 @@ void MGMovingObject::update(MGFramework *w)
 
 	if(getDestTileX()!=getTileX() || getDestTileY()!=getTileY())
 	{
+		if(!isStuck())
+		{
+			changeState(MOStateMoving);
+		}
+
 		if(getDestTileX()>getTileX() && getDestTileY()>getTileY())
 		{
 			if(MGFramework::oneOf(w->m_Map.occupant(getTileX()+1, getTileY()+1), 0, getID()))
@@ -172,7 +185,7 @@ void MGMovingObject::update(MGFramework *w)
 			//std::cout << "D" << std::endl;
 			setTileXY(getTileX()-1, getTileY(), w);
 		}
-		if(m_X>=getTileSize() && -m_Y>=getTileSize())
+		else if(m_X>=getTileSize() && -m_Y>=getTileSize())
 		{
 			//std::cout << "E" << std::endl;
 			setTileXY(getTileX()+1, getTileY()-1, w);
@@ -209,7 +222,7 @@ void MGMovingObject::copy(MGMovingObject *src)
 	m_DestTileY = src->m_DestTileY;
 	m_X = src->m_X;
 	m_Y = src->m_Y;
-	m_TileSize = src->m_TileSize;
+	//m_TileSize = src->m_TileSize;
 	m_FinishingLastMove = src->m_FinishingLastMove;
 	m_TempDestTileX = src->m_TempDestTileX;
 	m_TempDestTileY = src->m_TempDestTileY;
@@ -219,6 +232,7 @@ void MGMovingObject::copy(MGMovingObject *src)
 	m_ID = src->m_ID;
 	m_Owner = src->m_Owner;
 	m_LoggingEnabled = src->m_LoggingEnabled;
+	m_CurrentState = src->m_CurrentState;
 }
 
 bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
@@ -482,4 +496,45 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 	}
 
 	return MGComponent_UNDEFINED;
+}
+
+
+void MGMovingObject::changeState(MOState toState)
+{
+	if(toState==MOStateCreated)
+	{
+		MGFLOG_ERROR(std::cout << "MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", MOStateCreated should not be re-entered" << std::endl;);
+	}
+	else if(getCurrentState()==MOStateCreated && toState==MOStateMoving)
+	{
+		MGFLOG_ERROR(std::cout << "MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", expected MOStateIdle" << std::endl;);
+	}
+	MGFLOG_INFO(std::cout << "MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << std::endl;);
+}
+
+const char* MGMovingObject::toString(MOState s)
+{
+	switch(s)
+	{
+		case MOStateCreated:
+		{
+			return "MOStateCreated";
+		}
+		case MOStateIdle:
+		{
+			return "MOStateIdle";
+		}
+		case MOStateMoving:
+		{
+			return "MOStateMoving";
+		}
+		case MOStateStuck:
+		{
+			return "MOStateStuck";
+		}
+		default:
+		{
+			return "ERROR";
+		}
+	}
 }
