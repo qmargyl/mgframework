@@ -4,8 +4,7 @@
 
 int MGMovingObject::m_TileSize = 0;
 
-MGMovingObject::MGMovingObject():
-  m_CurrentState(MOStateCreated)
+MGMovingObject::MGMovingObject()
 {
 	setTimeOfLastUpdate(SDL_GetTicks());
 	m_FinishingLastMove=false;
@@ -14,11 +13,9 @@ MGMovingObject::MGMovingObject():
 	m_TileY=0;
 	m_NextTileX=0;
 	m_NextTileY=0;
-	setID();
+	m_CurrentState=MOStateCreated;
 	setOwner(MGF_NOPLAYER);
-	disableLogging();
 	registerMemoryAllocation(sizeof(MGMovingObject));
-	changeState(MOStateIdle);
 }
 
 MGMovingObject::~MGMovingObject()
@@ -26,11 +23,27 @@ MGMovingObject::~MGMovingObject()
 	registerMemoryDeallocation(sizeof(MGMovingObject));
 }
 
+void MGMovingObject::initialize()
+{
+	setTimeOfLastUpdate(SDL_GetTicks());
+	m_FinishingLastMove=false;
+	m_Marked=false;
+	m_TileX=0;
+	m_TileY=0;
+	m_NextTileX=0;
+	m_NextTileY=0;
+	setOwner(MGF_NOPLAYER);
+	//enableLogging();
+	registerMemoryAllocation(sizeof(MGMovingObject));
+	if(!isCreated())
+	{
+		MGFLOG_ERROR(std::cout << "MGMovingObject::initialize was called in the wrong state: " << toString(getCurrentState()) << std::endl;); 
+	}
+	changeState(MOStateIdle);
+}
+
 void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 {
-	//std::cout << "MGMovingObject::setTileXY: m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
-	//std::cout << "MO: Setting XY (" << x << "," << y << ") m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
-	//world->m_Map.occupy(x, y);
 	world->m_Map.unOccupy(getTileX(), getTileY());
 	m_TileX=x;
 	m_TileY=y;
@@ -59,10 +72,6 @@ void MGMovingObject::setDestTileXY(int x, int y)
 		m_TempDestTileY=m_DestTileY;
 		m_FinishingLastMove=true;
 		//std::cout << "MGMovingObject::setDestTileXY, When finished: m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
-	}
-	else
-	{
-		//std::cout << "MGMovingObject::setDestTileXY, Now: m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
 	}
 	m_DestTileX=x;
 	m_DestTileY=y;
@@ -161,7 +170,7 @@ void MGMovingObject::update(MGFramework *w)
 		}
 		else
 		{
-			std::cout << "WARNING: MGMovingObject::update() executed a case which should never happen" << std::endl;
+			MGFLOG_ERROR(std::cout << "MGMovingObject::update executed a case which should never happen" << std::endl;);
 			setTileXY(getTileX(), getTileY(), w);
 		}
 
@@ -509,7 +518,15 @@ void MGMovingObject::changeState(MOState toState)
 	{
 		MGFLOG_ERROR(std::cout << "MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", expected MOStateIdle" << std::endl;);
 	}
-	MGFLOG_INFO(std::cout << "MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << std::endl;);
+	else if(getCurrentState() != toState)
+	{
+		MGFLOG_INFO(std::cout << "MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << std::endl;);
+		m_CurrentState = toState;
+	}
+	else
+	{
+		// Keep current state...
+	}
 }
 
 const char* MGMovingObject::toString(MOState s)

@@ -1458,6 +1458,10 @@ void MGFramework::createMO(int n)
 	if(getNumberOfMO() > 0)
 	{
 		m_MO = new MGMovingObject[getNumberOfMO()];
+		for(int i=0; i<getNumberOfMO(); ++i)
+		{
+			m_MO[i].initialize();
+		}
 	}
 	else
 	{
@@ -1480,6 +1484,10 @@ void MGFramework::addMO(int n)
 	for(int i=0; i<nOld; i++)
 	{
 		m_MO[i].copy(&oldMO[i]);
+	}
+	for(int i=nOld; i<getNumberOfMO(); ++i)
+	{
+		m_MO[i].initialize();
 	}
 }
 

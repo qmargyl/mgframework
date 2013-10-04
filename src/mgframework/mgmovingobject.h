@@ -50,6 +50,8 @@ public:
 	MGMovingObject();
 	~MGMovingObject();
 
+	void initialize();
+
 	void setTileXY(int x, int y, MGFramework *world);
 	void setDestTileXY(int x, int y);
 	void setSpeed(double s, int tileSize); // Seconds, Distance to next tile (pixels)
