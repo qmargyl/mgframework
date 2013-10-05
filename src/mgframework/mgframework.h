@@ -1,15 +1,18 @@
 #ifndef _MG_FRAMEWORK_H
 #define _MG_FRAMEWORK_H
 
-#include "mgwindow.h"
-#include <SDL/SDL.h>
-#include <SDL/SDL_thread.h>
-#include "mgmap.h"
-#include "SDL_ttf.h"
+// Standard libs
 #include <vector>
 #include <string>
 #include <iostream>
 #include <iomanip>
+// SDL
+#include <SDL/SDL.h>
+#include <SDL/SDL_thread.h>
+#include "SDL_ttf.h"
+// MGF
+#include "mgwindow.h"
+#include "mgmap.h"
 #include "mgcomponent.h"
 #include "mgmovingobject.h"
 #include "mgperiodicevent.h"
@@ -17,7 +20,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.26.1"
+#define MGFRAMEWORKVERSION "1.0.27.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -59,6 +62,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_CREATE_PE_INT_PARAMLIST,
 	MGComponent_ADD_PE_INT_PARAMLIST,
 	MGComponent_DELETE_ALL_MO_PARAMLIST,
+	MGComponent_DELETE_MO_INT,
 	MGComponent_DELETE_ALL_PE_PARAMLIST,
 	MGComponent_RUNFRAMES_INT,
 	MGComponent_RUNONEFRAME,

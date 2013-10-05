@@ -43,6 +43,13 @@ delete all mo -owner 1
 expect getnumberofmo 1
 delete all mo -owner 2
 expect getnumberofmo 0
+add mo 4 -owner 2
+expect getnumberofmo 4
+delete mo 2
+expect getnumberofmo 3
+delete all mo -owner 2
+expect getnumberofmo 0
+
 
 // MO getters, setters
 create mo 1 -owner 1

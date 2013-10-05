@@ -697,7 +697,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				if(m_MO == NULL)
 				{
-					MGFLOG_WARNING(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
+					MGFLOG_ERROR(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
 				}
 			}
 			return true;
@@ -842,7 +842,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				if(m_MO == NULL)
 				{
-					MGFLOG_WARNING(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
+					MGFLOG_ERROR(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
 				}
 			}
 			return true;
@@ -971,7 +971,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			if(m_MO == NULL)
 			{
-				MGFLOG_WARNING(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
+				MGFLOG_ERROR(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
 			}
 			MGFLOG_WARNING(std::cout << "Console command was not forwarded to MO " << moIndex << std::endl;); 
 			return true;
@@ -986,7 +986,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				{
 					m_MO[i].runConsoleCommand(c, this);
 				}
-				if(m_MO == NULL)
+				else if(m_MO == NULL)
 				{
 					MGFLOG_ERROR(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
 				}
@@ -1003,10 +1003,25 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				{
 					m_MO[i].runConsoleCommand(c, this);
 				}
-				if(m_MO == NULL)
+				else
 				{
 					MGFLOG_ERROR(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
 				}
+			}
+			return true;
+		}
+
+		case MGComponent_DELETE_MO_INT:
+		{
+			registerUsedCommand(MGComponent_DELETE_MO_INT);
+			int moIndex=toInt(cmdvec[2]);
+			if(m_MO != NULL && moIndex >= 0 && moIndex < getNumberOfMO())
+			{
+				deleteMO(moIndex);
+			}
+			else if(m_MO == NULL)
+			{
+				MGFLOG_ERROR(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
 			}
 			return true;
 		}
@@ -1367,6 +1382,10 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		{
 			return MGComponent_EXPECT_GETNUMBEROFUSEDCOMMANDS_PERCENTAGE_INT;
 		}
+		else if(cmdvec[0]=="delete" && cmdvec[1]=="mo")
+		{
+			return MGComponent_DELETE_MO_INT;
+		}
 	}
 
 
@@ -1453,6 +1472,13 @@ bool MGFramework::setWindowProperties(eMGWindowScreenResolution screenResolution
 
 void MGFramework::createMO(int n)
 {
+	if(n > m_Map.getWidth()*m_Map.getHeight())
+	{
+		MGFLOG_ERROR(std::cout	<< "MGFramework::createMO cannot create " << n << " MO on a " 
+								<< m_Map.getWidth() << " by " << m_Map.getHeight() << " map" << std::endl;)
+		return;
+	}
+
 	delete[] m_MO;
 	m_NMO=n;
 	if(getNumberOfMO() > 0)
@@ -1472,6 +1498,14 @@ void MGFramework::createMO(int n)
 
 void MGFramework::addMO(int n)
 {
+	int tmpTotal = n + getNumberOfMO();
+	if(tmpTotal > m_Map.getWidth()*m_Map.getHeight())
+	{
+		MGFLOG_ERROR(std::cout	<< "MGFramework::addMO cannot create " << tmpTotal << " MO on a " 
+								<< m_Map.getWidth() << " by " << m_Map.getHeight() << " map" << std::endl;)
+		return;
+	}
+
 	MGMovingObject *oldMO = new MGMovingObject[getNumberOfMO()];
 	int nOld=getNumberOfMO();
 	for(int i=0; i<nOld; i++)
@@ -1515,7 +1549,6 @@ void MGFramework::deleteMO(int index)
 			else if(i==getNumberOfMO()-1)
 			{
 				//No need to actually delete the MO since we will not access it if it's outside getNumberOfMO()...
-				//delete m_MO[i];
 			}
 			else
 			{
@@ -1583,7 +1616,6 @@ void MGFramework::deletePE(int index)
 			else if(i==getNumberOfPE()-1)
 			{
 				//No need to actually delete the PE since we will not access it if it's outside getNumberOfPE()...
-				//delete m_PE[i];
 			}
 			else
 			{

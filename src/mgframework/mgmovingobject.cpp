@@ -65,13 +65,13 @@ void MGMovingObject::setNextXY(int x, int y, MGFramework *world)
 
 void MGMovingObject::setDestTileXY(int x, int y)
 {
-	//std::cout << "MGMovingObject::setDestTileXY (" << x << "," << y << ")" << std::endl;
+	// If we are still finishing our last move, save current 
+	// destination to temp variable and then set new destination
 	if(m_X!=0.0 || m_Y!=0.0 || m_FinishingLastMove)
 	{
 		m_TempDestTileX=m_DestTileX;
 		m_TempDestTileY=m_DestTileY;
 		m_FinishingLastMove=true;
-		//std::cout << "MGMovingObject::setDestTileXY, When finished: m_X=" << m_X << ", m_Y=" << m_Y << std::endl;
 	}
 	m_DestTileX=x;
 	m_DestTileY=y;
