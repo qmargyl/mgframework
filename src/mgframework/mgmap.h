@@ -16,7 +16,8 @@
 enum eMGFPathType{
 	MGFSTRAIGHTLINE = 0,
 	MGFSKYPATH = 1,
-	MGFGROUNDPATH = 2
+	MGFGROUNDPATH = 2,
+	MGFBASICPATH1
 };
 
 class MGMap :public MGComponent
@@ -48,13 +49,15 @@ private:
 		double m_Heuristic;
 	public:
 		PathItem();
-		PathItem(int x, int y){m_X=x; m_Y=y; m_Heuristic=1;};
+		PathItem(int x, int y){m_X=x; m_Y=y; m_Heuristic=1; };
+		PathItem(int x, int y, double h){m_X=x; m_Y=y; m_Heuristic=h; };
 		~PathItem(){/*std::cout << "PathItem::~PathItem()\n";*/};
 		int getX(){ return m_X;}
 		int getY(){ return m_Y;}
 		double getH(){ return m_Heuristic;}
+		void setH(double h){ m_Heuristic = h; }
 		void setPI(int x, int y, int h){ m_X=x; m_Y=y; m_Heuristic=h;}
-		bool equalCoordinate(PathItem *pi){ return (getX()==pi->getX()) && (getY()==pi->getY());}
+		bool equalCoordinate(PathItem* pi){ return (getX()==pi->getX()) && (getY()==pi->getY());}
 	};
 
 public:

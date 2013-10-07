@@ -343,6 +343,13 @@ class MGFramework :public MGComponent
 #endif
 		static bool oneOf(int x, int a1, int a2){ if(x==a1) return true;  if(x==a2) return true; return false;}
 		static int smallest(int a, int b){ if(a<b) return a; return b;}
+		static int smallest(int a, int b, int c){ return smallest(a, smallest(b, c)); }
+		static int smallest(int a, int b, int c, int d){ return smallest(smallest(a, b), smallest(c, d)); }
+		static int smallest(int a, int b, int c, int d, int e){ return smallest(smallest(a, b), smallest(c, d, e)); }
+		static int smallest(int a, int b, int c, int d, int e, int f){ return smallest(smallest(a, b, c), smallest(d, e, f)); }
+		static int smallest(int a, int b, int c, int d, int e, int f, int g){ return smallest(smallest(a, b, c), smallest(d, e, f, g)); }
+		static int smallest(int a, int b, int c, int d, int e, int f, int g, int h){ return smallest(smallest(a, b, c, d), smallest(e, f, g, h)); }
+
 		static int biggest(int a, int b){ if(a>b) return a; return b;}
 };
 

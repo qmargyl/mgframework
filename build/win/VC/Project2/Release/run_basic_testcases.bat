@@ -21,7 +21,11 @@ echo Running test case .\test\tc_002_basic_mo.mgf
 project2.exe -logging -script .\test\tc_002_basic_mo.mgf		>	.\test\result\tc_002_basic_mo.log
 
 echo Running test case .\test\tc_003_basic_runframes.mgf
-project2.exe -logging -script .\test\tc_003_basic_runframes.mgf		>	.\test\result\tc_003_basic_runframes.log
+project2.exe -logging -script .\test\tc_003_basic_runframes.mgf		>	.\test\result\tc_003_basic_runframes1.log
+echo Running test case .\test\tc_003_basic_runframes.mgf
+project2.exe -logging -script .\test\tc_003_basic_runframes.mgf		>	.\test\result\tc_003_basic_runframes2.log
+echo Running test case .\test\tc_003_basic_runframes.mgf
+project2.exe -logging -script .\test\tc_003_basic_runframes.mgf		>	.\test\result\tc_003_basic_runframes3.log
 
 echo Running test case .\test\tc_004_basic_misc.mgf
 project2.exe -logging -script .\test\tc_004_basic_misc.mgf		>	.\test\result\tc_004_basic_misc.log
@@ -50,7 +54,9 @@ project2.exe -logging -script .\test\tc_999_basic_testcoverage.mgf	>	.\test\resu
 :: Evaluate all log files..
 project2.exe -log_eval .\test\result\tc_001_basic_exit.log
 project2.exe -log_eval .\test\result\tc_002_basic_mo.log
-project2.exe -log_eval .\test\result\tc_003_basic_runframes.log
+project2.exe -log_eval .\test\result\tc_003_basic_runframes1.log
+project2.exe -log_eval .\test\result\tc_003_basic_runframes2.log
+project2.exe -log_eval .\test\result\tc_003_basic_runframes3.log
 project2.exe -log_eval .\test\result\tc_004_basic_misc.log
 project2.exe -log_eval .\test\result\tc_005_basic_window.log
 project2.exe -log_eval .\test\result\tc_006_basic_pe.log

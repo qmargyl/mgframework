@@ -7,6 +7,21 @@ mo 0 logging on
 expect getnumberofmo 1
 delete all mo
 expect getnumberofmo 0
+create mo 5
+expect getnumberofmo 5
+delete mo 2
+delete mo 2
+expect getnumberofmo 3
+add mo 1
+delete mo 1
+expect getnumberofmo 3
+delete mo 0
+expect getnumberofmo 2
+delete mo 1
+expect getnumberofmo 1
+delete all mo
+expect getnumberofmo 0
+
 
 
 
@@ -72,6 +87,13 @@ expect getnumberofmarkedmo 0
 delete all mo
 expect getnumberofmo 0
 expect getnumberofmarkedmo 0
+create mo 2
+mo 1 mark
+delete mo 0
+expect getnumberofmarkedmo 1
+delete mo 0
+expect getnumberofmarkedmo 0
+expect getnumberofmo 0
 
 
 
@@ -119,22 +141,6 @@ expect getnumberofmo 0
 
 
 
-// Deleting specific mo
-create mo 5
-expect getnumberofmo 5
-delete mo 2
-delete mo 2
-expect getnumberofmo 3
-add mo 1
-delete mo 1
-expect getnumberofmo 3
-delete mo 0
-expect getnumberofmo 2
-delete mo 1
-expect getnumberofmo 1
-delete all mo
-expect getnumberofmo 0
-
 
 
 
@@ -144,6 +150,16 @@ map setsize 512 512 32 32
 create mo 100000 -owner 1
 add mo 100000 -owner 2
 expect getnumberofmo 200000
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+mo all setdestination random_x random_y
 runoneframe
 runoneframe
 runoneframe
@@ -182,6 +198,69 @@ getfps
 expect getnumberofmo 199990
 delete all mo
 expect getnumberofmo 0
+
+
+
+
+// Stressing
+map setsize 256 256 32 32
+create mo 400 -owner 1
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+add mo 400 -owner 2
+add mo 400 -owner 3
+delete all mo -owner 2
+delete all mo -owner 1
+delete all mo -owner 3
+expect getnumberofmo 0
+
+
 
 
 // Exiting application when all tests have run

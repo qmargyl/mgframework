@@ -177,7 +177,7 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 			int y2 = w->toInt(cmdvec[5]);
 
 			MGFLOG_INFO(std::cout << "Calculating closest path from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ")." << std::endl;);
-			calculatePath(MGFSKYPATH, x1, y1, x2, y2);
+			calculatePath(MGFBASICPATH1, x1, y1, x2, y2);
 			return true;
 		}
 
@@ -254,9 +254,182 @@ eMGComponentConsoleCommand MGMap::detectMGComponentConsoleCommand(const std::vec
 
 void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 {
+	// Algorithm MGFSKYPATH:
+	// 1) Step (x,y) towards target. Diagonally first and then straight ahead.
+
+	// Algorithm MGFBASICPATH1:
+	// 1) For all non-blocked adjacent tiles of (x,y) not already in the path, calculate estimated distance to target.
+	// 2) Push the "best" alternative to the path.
+	// 3) Step (x,y) and goto 1)
+
 	std::list<PathItem> path;
 
-	if(pathType==MGFSKYPATH)
+	if(pathType==MGFBASICPATH1)
+	{
+		int x=ax;
+		int y=ay;
+		std::list<PathItem> neighbors;
+		PathItem *n;
+
+		while (x!=bx || y!=by)
+		{
+			if(!occupant(x+1,y+1))
+			{
+				n = new PathItem(x+1, y+1, MGFramework::distance(x+1, y+1, bx, by));
+				//n->setH(MGFramework::distance(x+1, y+1, bx, by));
+				bool skip = false;
+				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				{
+					if(n->equalCoordinate(&(*it)))
+					{
+						skip = true;
+					}
+				}
+				if(!skip) neighbors.push_back(*n);
+			}
+			if(!occupant(x-1,y-1))
+			{
+				n = new PathItem(x-1, y-1, MGFramework::distance(x-1, y-1, bx, by));
+				//n->setH(MGFramework::distance(x-1, y-1, bx, by));
+				bool skip = false;
+				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				{
+					if(n->equalCoordinate(&(*it)))
+					{
+						skip = true;
+					}
+				}
+				if(!skip) neighbors.push_back(*n);
+			}
+			if(!occupant(x+1,y-1))
+			{
+				n = new PathItem(x+1, y-1, MGFramework::distance(x+1, y-1, bx, by));
+				//n->setH(MGFramework::distance(x+1, y-1, bx, by));
+				bool skip = false;
+				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				{
+					if(n->equalCoordinate(&(*it)))
+					{
+						skip = true;
+					}
+				}
+				if(!skip) neighbors.push_back(*n);
+			}
+			if(!occupant(x-1,y+1))
+			{
+				n = new PathItem(x-1, y+1, MGFramework::distance(x-1, y+1, bx, by));
+				//n->setH(MGFramework::distance(x-1, y+1, bx, by));
+				bool skip = false;
+				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				{
+					if(n->equalCoordinate(&(*it)))
+					{
+						skip = true;
+					}
+				}
+				if(!skip) neighbors.push_back(*n);
+			}
+			if(!occupant(x,y+1))
+			{
+				n = new PathItem(x, y+1, MGFramework::distance(x, y+1, bx, by));
+				//n->setH(MGFramework::distance(x, y+1, bx, by));
+				bool skip = false;
+				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				{
+					if(n->equalCoordinate(&(*it)))
+					{
+						skip = true;
+					}
+				}
+				if(!skip) neighbors.push_back(*n);
+			}
+			if(!occupant(x,y-1))
+			{
+				n = new PathItem(x, y-1, MGFramework::distance(x, y-1, bx, by));
+				//n->setH(MGFramework::distance(x, y-1, bx, by));
+				bool skip = false;
+				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				{
+					if(n->equalCoordinate(&(*it)))
+					{
+						skip = true;
+					}
+				}
+				if(!skip) neighbors.push_back(*n);
+			}
+			if(!occupant(x+1,y))
+			{
+				n = new PathItem(x+1, y, MGFramework::distance(x+1, y, bx, by));
+				//n->setH(MGFramework::distance(x+1, y, bx, by));
+				bool skip = false;
+				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				{
+					if(n->equalCoordinate(&(*it)))
+					{
+						skip = true;
+					}
+				}
+				if(!skip) neighbors.push_back(*n);
+			}
+			if(!occupant(x-1,y))
+			{
+				n = new PathItem(x-1, y, MGFramework::distance(x-1, y, bx, by));
+				//n->setH(MGFramework::distance(x-1, y, bx, by));
+				bool skip = false;
+				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				{
+					if(n->equalCoordinate(&(*it)))
+					{
+						skip = true;
+					}
+				}
+				if(!skip) neighbors.push_back(*n);
+			}
+
+			if(!neighbors.empty())
+			{
+				//MGFLOG_INFO(std::cout <<	"MGMap::calculatePath has a neighbor list of " << neighbors.size() << 
+				//							" elements and a path of " << path.size() << " elements" << std::endl;);
+				int bestx=0;
+				int besty=0;
+				double besth=MGFramework::distance(0, 0, getWidth(), getHeight());
+				bool found=false;
+
+				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				{
+					if((*it).getH()<=besth)
+					{
+						bestx=(*it).getX();
+						besty=(*it).getY();
+						besth=(*it).getH();
+						found=true;
+					}
+				}
+
+				if(found)
+				{
+					PathItem *pI = new PathItem(bestx, besty);
+					path.push_back(*pI);
+					x=bestx;
+					y=besty;
+				}
+				else
+				{
+					MGFLOG_WARNING(std::cout << "MGMap::calculatePath was not able to find a path" << std::endl;);
+					break;
+				}
+			}
+			else
+			{
+				MGFLOG_WARNING(std::cout << "MGMap::calculatePath was not able to find a path" << std::endl;);
+				break;
+			}
+			
+		}//while
+
+	}
+
+	else if(pathType==MGFSKYPATH)
 	{
 		int x=ax;
 		int y=ay;
@@ -301,17 +474,22 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "WARNING: MGMap::calculatePath() executed a case which should never happen" << std::endl;);
+				MGFLOG_ERROR(std::cout << "MGMap::calculatePath executed a case which should never happen" << std::endl;);
 				MGFLOG_ERROR(std::cout << "Data: x=" << x << ", y=" << y << ", ax=" << ax << ", ay=" << ay << ", bx=" << bx << ", by=" << by << std::endl;);
 			}
 
 			PathItem *pI = new PathItem(x, y);
 			path.push_back(*pI);
-			//std::cout << "Add to path: " << pI->getX() << ", " << pI->getY() << std::endl;
 
-		}
+		}//while
 
-		// This will not look like this later... leave it for now.
+
+
+	}
+	//delete [] path;
+
+	// This will not look like this later... leave it for now.
+	MGFLOG_INFO(
 		if(!path.empty())
 		{
 			std::cout << "Path: ";
@@ -321,7 +499,9 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 			}
 			std::cout << std::endl;
 		}
-
-	}
-	//delete [] path;
+		else
+		{
+			std::cout << "MGMap::calculatePath was not able to find a path" << std::endl;
+		}
+	);
 }
