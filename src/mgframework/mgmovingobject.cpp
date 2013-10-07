@@ -37,7 +37,7 @@ void MGMovingObject::initialize()
 	registerMemoryAllocation(sizeof(MGMovingObject));
 	if(!isCreated())
 	{
-		MGFLOG_ERROR(std::cout << "MGMovingObject::initialize was called in the wrong state: " << toString(getCurrentState()) << std::endl;); 
+		MGFLOG_ERROR("MGMovingObject::initialize was called in the wrong state: " << toString(getCurrentState())); 
 	}
 	changeState(MOStateIdle);
 }
@@ -170,7 +170,7 @@ void MGMovingObject::update(MGFramework *w)
 		}
 		else
 		{
-			MGFLOG_ERROR(std::cout << "MGMovingObject::update executed a case which should never happen" << std::endl;);
+			MGFLOG_ERROR("MGMovingObject::update executed a case which should never happen");
 			setTileXY(getTileX(), getTileY(), w);
 		}
 
@@ -252,7 +252,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFLOG_ERROR(std::cout << "MGMovingObject::runConsoleCommand received MGComponent_UNDEFINED from MGMovingObject::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG_ERROR("MGMovingObject::runConsoleCommand received MGComponent_UNDEFINED from MGMovingObject::detectMGComponentConsoleCommand"); 
 			break;
 
 		case MGComponent_MO_INT_MARK:
@@ -386,14 +386,14 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			w->registerUsedCommand(MGComponent_MO_INT_LOGGING_ON);
 			enableLogging();
-			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
+			MGFLOG_INFO("Logging enabled.");
 			return true;
 		}
 
 		case MGComponent_MO_INT_LOGGING_OFF:
 		{
 			w->registerUsedCommand(MGComponent_MO_INT_LOGGING_OFF);
-			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
+			MGFLOG_INFO("Logging disabled.");
 			disableLogging();
 			return true;
 		}
@@ -402,21 +402,21 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			w->registerUsedCommand(MGComponent_MO_ALL_LOGGING_ON);
 			enableLogging();
-			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
+			MGFLOG_INFO("Logging enabled.");
 			return true;
 		}
 
 		case MGComponent_MO_ALL_LOGGING_OFF:
 		{
 			w->registerUsedCommand(MGComponent_MO_ALL_LOGGING_OFF);
-			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
+			MGFLOG_INFO("Logging disabled.");
 			disableLogging();
 			return true;
 		}
 
 
 		default:
-			MGFLOG_ERROR(std::cout << "MGMovingObject::detectComponentConsoleCommand returned a bad value" << std::endl;); 
+			MGFLOG_ERROR("MGMovingObject::detectComponentConsoleCommand returned a bad value"); 
 			return true;
 	}
 
@@ -512,15 +512,15 @@ void MGMovingObject::changeState(MOState toState)
 {
 	if(toState==MOStateCreated)
 	{
-		MGFLOG_ERROR(std::cout << "MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", MOStateCreated should not be re-entered" << std::endl;);
+		MGFLOG_ERROR("MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", MOStateCreated should not be re-entered");
 	}
 	else if(getCurrentState()==MOStateCreated && toState==MOStateMoving)
 	{
-		MGFLOG_ERROR(std::cout << "MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", expected MOStateIdle" << std::endl;);
+		MGFLOG_ERROR("MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", expected MOStateIdle");
 	}
 	else if(getCurrentState() != toState)
 	{
-		MGFLOG_INFO(std::cout << "MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << std::endl;);
+		MGFLOG_INFO("MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState));
 		m_CurrentState = toState;
 	}
 	else

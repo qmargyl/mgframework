@@ -85,7 +85,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 	{
 		case MGComponent_UNDEFINED:
 		{
-			MGFLOG_ERROR(std::cout << "MGPeriodicEvent::runConsoleCommand received MGComponent_UNDEFINED from MGPeriodicEvent::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG_ERROR("MGPeriodicEvent::runConsoleCommand received MGComponent_UNDEFINED from MGPeriodicEvent::detectMGComponentConsoleCommand"); 
 			break;
 		}
 
@@ -122,14 +122,14 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			w->registerUsedCommand(MGComponent_PE_INT_LOGGING_ON);
 			enableLogging();
-			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
+			MGFLOG_INFO("Logging enabled.");
 			return true;
 		}
 
 		case MGComponent_PE_INT_LOGGING_OFF:
 		{
 			w->registerUsedCommand(MGComponent_PE_INT_LOGGING_OFF);
-			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
+			MGFLOG_INFO("Logging disabled.");
 			disableLogging();
 			return true;
 		}
@@ -137,7 +137,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_PE_INT_STOREFILENAME_FILENAME:
 		{
 			w->registerUsedCommand(MGComponent_PE_INT_STOREFILENAME_FILENAME);
-			MGFLOG_INFO(std::cout << "MGPeriodicEvent::runConsoleCommand: Storing file name " << cmdvec[3].c_str() << std::endl;);
+			MGFLOG_INFO("MGPeriodicEvent::runConsoleCommand: Storing file name " << cmdvec[3].c_str());
 			setFileName1(cmdvec[3].c_str());
 			return true;
 		}
@@ -158,7 +158,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				else
 				{
-					MGFLOG_ERROR(std::cout << "Error in command (pe all activate <paramlist>), bad parameter list" << std::endl;);
+					MGFLOG_ERROR("Error in command (pe all activate <paramlist>), bad parameter list");
 				}
 			}
 			return true;
@@ -181,7 +181,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				else
 				{
-					MGFLOG_ERROR(std::cout << "Error in command (pe all deactivate <paramlist>), bad parameter list" << std::endl;);
+					MGFLOG_ERROR("Error in command (pe all deactivate <paramlist>), bad parameter list");
 				}
 			}
 			return true;
@@ -248,7 +248,7 @@ eMGComponentConsoleCommand MGPeriodicEvent::detectMGComponentConsoleCommand(cons
 
 void MGPeriodicEvent::setFileName1(const char *c)
 {
-	MGFLOG_INFO(std::cout << "MGPeriodicEvent::setFileName1: Allocating " << strlen(c)+1 << " bytes for file name 1" << std::endl;);
+	MGFLOG_INFO("MGPeriodicEvent::setFileName1: Allocating " << strlen(c)+1 << " bytes for file name 1");
 	delete [] m_FileName1;
 	m_FileName1 = new char[strlen(c)+1];
 	strcpy(m_FileName1,c);
@@ -264,11 +264,11 @@ void MGPeriodicEvent::runFile1(MGFramework *w)
 		}
 		else
 		{
-			MGFLOG_ERROR(std::cout << "MGPeriodicEvent::runFile1 was called with no callback framework pointer." << std::endl;);
+			MGFLOG_ERROR("MGPeriodicEvent::runFile1 was called with no callback framework pointer.");
 		}
 	}
 	else
 	{
-		MGFLOG_ERROR(std::cout << "MGPeriodicEvent::runFile1 was called with no file name set." << std::endl;); 
+		MGFLOG_ERROR("MGPeriodicEvent::runFile1 was called with no file name set."); 
 	}
 }

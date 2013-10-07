@@ -156,7 +156,7 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:
-			MGFLOG_ERROR(std::cout << "MGMap::runConsoleCommand received MGComponent_UNDEFINED from MGMap::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG_ERROR("MGMap::runConsoleCommand received MGComponent_UNDEFINED from MGMap::detectMGComponentConsoleCommand"); 
 			break;
 
 		case MGComponent_MAP_HELP:
@@ -176,7 +176,7 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 			int x2 = w->toInt(cmdvec[4]);
 			int y2 = w->toInt(cmdvec[5]);
 
-			MGFLOG_INFO(std::cout << "Calculating closest path from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ")." << std::endl;);
+			MGFLOG_INFO("Calculating closest path from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ").");
 			calculatePath(MGFBASICPATH1, x1, y1, x2, y2);
 			return true;
 		}
@@ -196,7 +196,7 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			w->registerUsedCommand(MGComponent_MAP_LOGGING_ON);
 			enableLogging();
-			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
+			MGFLOG_INFO("Logging enabled.");
 			return true;
 		}
 
@@ -204,12 +204,12 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			w->registerUsedCommand(MGComponent_MAP_LOGGING_OFF);
 			disableLogging();
-			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
+			MGFLOG_INFO("Logging disabled.");
 			return true;
 		}
 
 		default:
-			MGFLOG_ERROR(std::cout << "MGMap::detectComponentConsoleCommand returned a bad value" << std::endl;); 
+			MGFLOG_ERROR("MGMap::detectComponentConsoleCommand returned a bad value"); 
 			return true;
 	}
 
@@ -415,13 +415,13 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				}
 				else
 				{
-					MGFLOG_WARNING(std::cout << "MGMap::calculatePath was not able to find a path" << std::endl;);
+					MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
 					break;
 				}
 			}
 			else
 			{
-				MGFLOG_WARNING(std::cout << "MGMap::calculatePath was not able to find a path" << std::endl;);
+				MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
 				break;
 			}
 			
@@ -474,8 +474,8 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "MGMap::calculatePath executed a case which should never happen" << std::endl;);
-				MGFLOG_ERROR(std::cout << "Data: x=" << x << ", y=" << y << ", ax=" << ax << ", ay=" << ay << ", bx=" << bx << ", by=" << by << std::endl;);
+				MGFLOG_ERROR("MGMap::calculatePath executed a case which should never happen");
+				MGFLOG_ERROR("Data: x=" << x << ", y=" << y << ", ax=" << ax << ", ay=" << ay << ", bx=" << bx << ", by=" << by);
 			}
 
 			PathItem *pI = new PathItem(x, y);
@@ -489,19 +489,18 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 	//delete [] path;
 
 	// This will not look like this later... leave it for now.
-	MGFLOG_INFO(
-		if(!path.empty())
+
+	if(!path.empty())
+	{
+		MGFLOG_INFO("Path:");
+		for (std::list<PathItem>::iterator it=path.begin(); it != path.end(); ++it)
 		{
-			std::cout << "Path: ";
-			for (std::list<PathItem>::iterator it=path.begin(); it != path.end(); ++it)
-			{
-				std::cout << "(" << (*it).getX() << ", " << (*it).getY() << ") ";
-			}
-			std::cout << std::endl;
+			MGFLOG_INFO("(" << (*it).getX() << ", " << (*it).getY() << ")");
 		}
-		else
-		{
-			std::cout << "MGMap::calculatePath was not able to find a path" << std::endl;
-		}
-	);
+	}
+	else
+	{
+		MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
+	}
+
 }

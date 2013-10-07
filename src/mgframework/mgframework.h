@@ -20,7 +20,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.27.0"
+#define MGFRAMEWORKVERSION "1.0.27.1"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -31,10 +31,10 @@
 // Macros...
 #define MGFTIMESTAMP(x) std::setw(3) << (x/3600000) << ":" << std::setw(3) << (x%3600000)/60000 << ":" << std::setw(3) << (x%60000)/1000 << ":" << std::setw(3) << (x%1000) 
 
-#define MGFLOG_WARNING(x)	if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: ";  x; }
-#define MGFLOG_INFO(x)		if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: ";  x; }
-#define MGFLOG_ERROR(x)							{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") ERROR: ";  x; }
-//MGFCONSRETURN
+#define MGFLOG_WARNING(x)	if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: "	<< x << std::endl; }
+#define MGFLOG_INFO(x)		if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: "		<< x << std::endl; }
+#define MGFLOG_ERROR(x)							{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") ERROR: "	<< x << std::endl; }
+
 
 enum eMGComponentConsoleCommand{
 	MGComponent_UNDEFINED = 0,
@@ -302,7 +302,7 @@ class MGFramework :public MGComponent
 
 		//Socket terminal related
 		bool socketTerminalOpen(){return m_KeepSocketTerminalOpen;}
-		void logIfEnabled(const char *log){MGFLOG_INFO(std::cout << "" << log << std::endl;)}
+		void logIfEnabled(const char *log){MGFLOG_INFO("" << log)}
 		void addConsoleCommandToQueue(const char *c);
 
 		// Program version

@@ -77,7 +77,7 @@ bool MGFramework::processEvents()
 			// Quit event
 			case SDL_QUIT:
 			{
-				MGFLOG_INFO(std::cout << "SDL_QUIT" << std::endl;)
+				MGFLOG_INFO("SDL_QUIT")
 				// Return false because we are quitting.
 				return false;
 			}
@@ -101,7 +101,7 @@ bool MGFramework::processEvents()
 				if(!typingEnabled())
 				{
 					SDLKey sym = event.key.keysym.sym;
-					MGFLOG_INFO(std::cout << "SDL_KEYUP" << std::endl << "  " << SDL_GetKeyName(sym) << std::endl;)
+					MGFLOG_INFO("SDL_KEYUP" << std::endl << "  " << SDL_GetKeyName(sym))
 					m_Keys[sym] = 0;
 				}
 				break;
@@ -129,33 +129,33 @@ bool MGFramework::processEvents()
 							}
 							if(m_MO == NULL)
 							{
-								MGFLOG_WARNING(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
+								MGFLOG_WARNING("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
 							}
 						}
 
 						activateFraming(event.button.x, event.button.y);
-						MGFLOG_INFO(std::cout << "Map (left click): index = " << iClick << ", x = " << xClick << ", y = " << yClick << std::endl;)
+						MGFLOG_INFO("Map (left click): index = " << iClick << ", x = " << xClick << ", y = " << yClick)
 					}
 					else if (((int) event.button.button) == 3)
 					{
-						MGFLOG_INFO(std::cout << "Map (right click): index = " << iClick << ", x = " << xClick << ", y = " << yClick << std::endl;)
+						MGFLOG_INFO("Map (right click): index = " << iClick << ", x = " << xClick << ", y = " << yClick)
 						m_Map.mouseScrollingClick(event.button.x, event.button.y);
 					}
 
 					// Log debug information to console.
-					MGFLOG_INFO(std::cout << "SDL_MOUSEBUTTONDOWN: Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;)
+					MGFLOG_INFO("SDL_MOUSEBUTTONDOWN: Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")")
 
 				}
 				else
 				{
-					MGFLOG_INFO(std::cout << "SDL_MOUSEBUTTONDOWN" << std::endl << "  " << "Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;)
+					MGFLOG_INFO("SDL_MOUSEBUTTONDOWN" << std::endl << "  " << "Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")")
 					if (((int) event.button.button) == 1)
 					{
-						MGFLOG_INFO(std::cout << "Map (left click): index = -1, x = <not calculated>, y = <not calculated>" << std::endl;)
+						MGFLOG_INFO("Map (left click): index = -1, x = <not calculated>, y = <not calculated>")
 					}
 					else if (((int) event.button.button) == 3)
 					{
-						MGFLOG_INFO(std::cout << "Map (right click): index = -1, x = <not calculated>, y = <not calculated>" << std::endl;)
+						MGFLOG_INFO("Map (right click): index = -1, x = <not calculated>, y = <not calculated>")
 					}
 				}
 				break;
@@ -163,7 +163,7 @@ bool MGFramework::processEvents()
 
 			case SDL_MOUSEBUTTONUP:
 			{
-				MGFLOG_INFO(std::cout << "SDL_MOUSEBUTTONUP: Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")" << std::endl;)
+				MGFLOG_INFO("SDL_MOUSEBUTTONUP: Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")")
 				if (((int) event.button.button) == 1)
 				{
 					int endClickX = m_Map.getTileX(m_Map.getTileIndex(getFrameEndX(), getFrameEndY()));
@@ -186,7 +186,7 @@ bool MGFramework::processEvents()
 								}
 								if(m_MO == NULL)
 								{
-									MGFLOG_WARNING(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
+									MGFLOG_WARNING("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
 								}
 							}
 						}
@@ -233,11 +233,11 @@ void MGFramework::parse(const char *sFileName)
 {
 	if(sFileName==NULL)
 	{
-		MGFLOG_INFO(std::cout << "MGFramework::parse was called with argument NULL, exiting function..." << std::endl;);
+		MGFLOG_INFO("MGFramework::parse was called with argument NULL, exiting function...");
 		return;
 	}
 
-	MGFLOG_INFO(std::cout << "MGFramework::parse was called with argument " << sFileName << std::endl;);
+	MGFLOG_INFO("MGFramework::parse was called with argument " << sFileName);
 	FILE *sf = NULL;
 	char *functionName=NULL;
 	char scriptFileName[128];
@@ -251,23 +251,23 @@ void MGFramework::parse(const char *sFileName)
 	{
 		functionName = scriptFileName + foundColon + 1;
 		scriptFileName[foundColon]='\0';
-		MGFLOG_INFO(std::cout << "MGFramework::parse will parse file " << scriptFileName << " and function " << functionName << std::endl;);
+		MGFLOG_INFO("MGFramework::parse will parse file " << scriptFileName << " and function " << functionName);
 
 	}
 
 	errno_t scriptError = fopen_s(&sf, scriptFileName, "rt");
 	if(sf == NULL)
 	{
-		MGFLOG_ERROR(std::cout << "MGFramework::parse failed to open script file " << scriptFileName << ", error(" << scriptError << ")" << std::endl;);
+		MGFLOG_ERROR("MGFramework::parse failed to open script file " << scriptFileName << ", error(" << scriptError << ")");
 	}
 	else
 	{
 		char scriptLine[MGF_SCRIPTLINE_MAXLENGTH] = "";
 		char *neof = NULL;
-		MGFLOG_INFO(std::cout << "MGFramework::parse starting to parse script file " << scriptFileName << std::endl;);
+		MGFLOG_INFO("MGFramework::parse starting to parse script file " << scriptFileName);
 		if(functionName!=NULL)
 		{
-			MGFLOG_INFO(std::cout << "MGFramework::parse starting to execute function " << functionName << std::endl;);
+			MGFLOG_INFO("MGFramework::parse starting to execute function " << functionName);
 		}
 		else
 		{
@@ -284,7 +284,7 @@ void MGFramework::parse(const char *sFileName)
 			neof = fgets(scriptLine, MGF_SCRIPTLINE_MAXLENGTH, sf);
 			if(neof == NULL)
 			{
-				MGFLOG_INFO(std::cout << "MGFramework::parse detected end of file" << std::endl;);
+				MGFLOG_INFO("MGFramework::parse detected end of file");
 				break;
 			}
 			else
@@ -331,12 +331,12 @@ void MGFramework::parse(const char *sFileName)
 					{
 						if(functionName!=NULL)
 						{
-							MGFLOG_INFO(std::cout << "MGFramework::parse ending function" << std::endl;);
+							MGFLOG_INFO("MGFramework::parse ending function");
 							break;
 						}
 						else
 						{
-							MGFLOG_ERROR(std::cout << "MGFramework::parse found 'end function' outside a function" << std::endl;);
+							MGFLOG_ERROR("MGFramework::parse found 'end function' outside a function");
 						}
 					}
 					else if(okMGFrameworkSyntax(v_scriptLine))
@@ -347,12 +347,12 @@ void MGFramework::parse(const char *sFileName)
 							std::size_t fColon = v_scriptLine[1].find(string(":"));
 							if (fColon!=std::string::npos)
 							{
-								MGFLOG_INFO(std::cout << "MGFramework::parse calling " << v_scriptLine[1].c_str() << std::endl;);
+								MGFLOG_INFO("MGFramework::parse calling " << v_scriptLine[1].c_str());
 								parse(v_scriptLine[1].c_str());
 							}
 							else
 							{
-								MGFLOG_INFO(std::cout << "MGFramework::parse calling " << (string(scriptFileName)+string(":")+v_scriptLine[1]).c_str() << std::endl;);
+								MGFLOG_INFO("MGFramework::parse calling " << (string(scriptFileName)+string(":")+v_scriptLine[1]).c_str());
 								parse((string(scriptFileName)+string(":")+v_scriptLine[1]).c_str());
 							}
 						}
@@ -371,11 +371,11 @@ void MGFramework::parse(const char *sFileName)
 									}
 								}
 							}
-							MGFLOG_INFO(std::cout << "MGFramework::parse calls runConsoleCommand(" << cmd.c_str() << ")" << std::endl;);
+							MGFLOG_INFO("MGFramework::parse calls runConsoleCommand(" << cmd.c_str() << ")");
 							runConsoleCommand(cmd.c_str(), this);
 							if(getQuitFlag())
 							{
-								MGFLOG_INFO(std::cout << "MGFramework::parse stops parsing" << std::endl;);
+								MGFLOG_INFO("MGFramework::parse stops parsing");
 								break;
 							}
 						}
@@ -396,7 +396,7 @@ void MGFramework::parse(const char *sFileName)
 			fclose(sf);
 		}
 
-		MGFLOG_INFO(std::cout << "MGFramework::parse finished parsing script file " << scriptFileName << std::endl;);
+		MGFLOG_INFO("MGFramework::parse finished parsing script file " << scriptFileName);
 	}
 }
 
@@ -406,7 +406,7 @@ void MGFramework::logEval(const char *logFileName)
 	errno_t logError = fopen_s(&lf, logFileName, "rt");
 	if(lf == NULL)
 	{
-		MGFLOG_ERROR(std::cout << "MGFramework::logEval failed to open log file " << logFileName << ", error(" << logError << ")" << std::endl;);
+		MGFLOG_ERROR("MGFramework::logEval failed to open log file " << logFileName << ", error(" << logError << ")");
 	}
 	else
 	{
@@ -510,7 +510,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "Error in frame countdown feature" << std::endl;);
+				MGFLOG_ERROR("Error in frame countdown feature");
 			}
 		}
 
@@ -546,7 +546,7 @@ void MGFramework::handleMGFGameLogics()
 	{
 		if(m_PE[i].update())
 		{
-			MGFLOG_INFO(std::cout << "PE triggered an update" << std::endl;);
+			MGFLOG_INFO("PE triggered an update");
 			m_PE[i].runFile1(this);
 		}
 	}
@@ -588,7 +588,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 	{
 		case MGComponent_UNDEFINED:
 		{
-			MGFLOG_ERROR(std::cout << "MGFramework::runConsoleCommand received MGComponent_UNDEFINED from MGFramework::detectMGComponentConsoleCommand" << std::endl;); 
+			MGFLOG_ERROR("MGFramework::runConsoleCommand received MGComponent_UNDEFINED from MGFramework::detectMGComponentConsoleCommand"); 
 			break;
 		}
 
@@ -626,7 +626,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			{
 				return m_PE[toInt(cmdvec[1])].runConsoleCommand(c, this);
 			}
-			MGFLOG_WARNING(std::cout << "Console command was not forwarded to PE " << peIndex << std::endl;); 
+			MGFLOG_WARNING("Console command was not forwarded to PE " << peIndex); 
 			return true;
 		}
 
@@ -662,7 +662,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				else
 				{
-					MGFLOG_ERROR(std::cout << "Error in command (create mo <n>), bad parameter list" << std::endl;);
+					MGFLOG_ERROR("Error in command (create mo <n>), bad parameter list");
 					n = 0; // Abort MO creation..
 				}
 			}
@@ -681,7 +681,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "Error in command (create mo <n>)" << std::endl;);
+				MGFLOG_ERROR("Error in command (create mo <n>)");
 				return true;
 			}
 			for(int i=0;i<getNumberOfMO();i++)
@@ -697,7 +697,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				if(m_MO == NULL)
 				{
-					MGFLOG_ERROR(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
+					MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
 				}
 			}
 			return true;
@@ -721,7 +721,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				else
 				{
-					MGFLOG_ERROR(std::cout << "Error in command (delete all mo), bad parameter list" << std::endl;);
+					MGFLOG_ERROR("Error in command (delete all mo), bad parameter list");
 					return true;
 				}
 			}
@@ -729,7 +729,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			if(ownerParamSet)
 			{
 				// Delete only MOs connected to a specific owner
-				MGFLOG_INFO(std::cout << "Deleting MOs owned by " << owner << std::endl;);
+				MGFLOG_INFO("Deleting MOs owned by " << owner);
 				for(int i = getNumberOfMO()-1; i>=0; --i)
 				{
 					if(m_MO[i].getOwner() == owner)
@@ -749,7 +749,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 					}
 				}
 				// ...and then create zero new MOs.
-				MGFLOG_INFO(std::cout << "Creating zero MO..." << std::endl;);
+				MGFLOG_INFO("Creating zero MO...");
 				createMO(0);
 			}
 			return true;
@@ -773,7 +773,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				else
 				{
-					MGFLOG_ERROR(std::cout << "Error in command (delete all pe), bad parameter list" << std::endl;);
+					MGFLOG_ERROR("Error in command (delete all pe), bad parameter list");
 					return true;
 				}
 			}
@@ -781,7 +781,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			if(ownerParamSet)
 			{
 				// Delete only PEs connected to a specific owner
-				MGFLOG_INFO(std::cout << "Deleting PEs owned by " << owner << std::endl;);
+				MGFLOG_INFO("Deleting PEs owned by " << owner);
 				for(int i = getNumberOfPE()-1; i>=0; --i)
 				{
 					if(m_PE[i].getOwner() == owner)
@@ -793,7 +793,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			else
 			{
 				// Create zero new PEs.
-				MGFLOG_INFO(std::cout << "Creating zero PE..." << std::endl;);
+				MGFLOG_INFO("Creating zero PE...");
 				createPE(0);
 			}
 			return true;
@@ -816,7 +816,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				else
 				{
-					MGFLOG_ERROR(std::cout << "Error in command (add mo <n>), bad parameter list" << std::endl;);
+					MGFLOG_ERROR("Error in command (add mo <n>), bad parameter list");
 					n = 0; // Abort MO creation..
 				}
 			}
@@ -826,7 +826,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "Error in command (add mo <n>)" << std::endl;);
+				MGFLOG_ERROR("Error in command (add mo <n>)");
 				return true;
 			}
 			for(int i=nBefore; i<getNumberOfMO(); i++)
@@ -842,7 +842,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				if(m_MO == NULL)
 				{
-					MGFLOG_ERROR(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
+					MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
 				}
 			}
 			return true;
@@ -863,7 +863,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				else
 				{
-					MGFLOG_ERROR(std::cout << "Error in command (create pe <n>), bad parameter list" << std::endl;);
+					MGFLOG_ERROR("Error in command (create pe <n>), bad parameter list");
 					n = 0; // Abort PE creation..
 				}
 			}
@@ -874,7 +874,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "Error in command (create pe <n>)" << std::endl;);
+				MGFLOG_ERROR("Error in command (create pe <n>)");
 				return true;
 			}
 			for(int i=0;i<getNumberOfPE();i++)
@@ -885,7 +885,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				if(m_PE == NULL)
 				{
-					MGFLOG_WARNING(std::cout << "m_PE = NULL and getNumberOfPE() = " << getNumberOfPE() << std::endl;)
+					MGFLOG_WARNING("m_PE = NULL and getNumberOfPE() = " << getNumberOfPE())
 				}
 			}
 			return true;
@@ -907,7 +907,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				else
 				{
-					MGFLOG_ERROR(std::cout << "Error in command (add pe <n>), bad parameter list" << std::endl;);
+					MGFLOG_ERROR("Error in command (add pe <n>), bad parameter list");
 					n = 0; // Abort PE creation..
 				}
 			}
@@ -917,7 +917,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "Error in command (add pe <n>)" << std::endl;);
+				MGFLOG_ERROR("Error in command (add pe <n>)");
 				return true;
 			}
 			for(int i=nBefore; i<getNumberOfPE(); i++)
@@ -928,7 +928,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				if(m_PE == NULL)
 				{
-					MGFLOG_WARNING(std::cout << "m_PE = NULL and getNumberOfPE() = " << getNumberOfPE() << std::endl;)
+					MGFLOG_WARNING("m_PE = NULL and getNumberOfPE() = " << getNumberOfPE())
 				}
 			}
 			return true;
@@ -938,7 +938,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_OPEN_TERMINALSERVER:
 		{
 			registerUsedCommand(MGComponent_OPEN_TERMINALSERVER);
-			MGFLOG_INFO(std::cout << "Opening terminal server..." << std::endl;);
+			MGFLOG_INFO("Opening terminal server...");
 #ifndef MGF_DEBUGGING_ENABLED
 			openSocketTerminal();
 			m_SocketTerminal = SDL_CreateThread(runMGFrameworkSocketTerminal, this);
@@ -949,7 +949,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_CLOSE_TERMINALSERVER:
 		{
 			registerUsedCommand(MGComponent_CLOSE_TERMINALSERVER);
-			MGFLOG_INFO(std::cout << "Closing terminal server..." << std::endl;);
+			MGFLOG_INFO("Closing terminal server...");
 #ifndef MGF_DEBUGGING_ENABLED
 			if(socketTerminalOpen())
 			{
@@ -971,9 +971,9 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			if(m_MO == NULL)
 			{
-				MGFLOG_ERROR(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
+				MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
 			}
-			MGFLOG_WARNING(std::cout << "Console command was not forwarded to MO " << moIndex << std::endl;); 
+			MGFLOG_WARNING("Console command was not forwarded to MO " << moIndex); 
 			return true;
 		}
 
@@ -988,7 +988,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				else if(m_MO == NULL)
 				{
-					MGFLOG_ERROR(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
+					MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
 				}
 			}
 			return true;
@@ -1005,7 +1005,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				}
 				else
 				{
-					MGFLOG_ERROR(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
+					MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
 				}
 			}
 			return true;
@@ -1021,7 +1021,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			else if(m_MO == NULL)
 			{
-				MGFLOG_ERROR(std::cout << "m_MO = NULL and getNumberOfMO() = " << getNumberOfMO() << std::endl;)
+				MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
 			}
 			return true;
 		}
@@ -1030,14 +1030,14 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			registerUsedCommand(MGComponent_LOGGING_ON);
 			enableLogging();
-			MGFLOG_INFO(std::cout << "Logging enabled." << std::endl;);
+			MGFLOG_INFO("Logging enabled.");
 			return true;
 		}
 
 		case MGComponent_LOGGING_OFF:
 		{
 			registerUsedCommand(MGComponent_LOGGING_OFF);
-			MGFLOG_INFO(std::cout << "Logging disabled." << std::endl;);
+			MGFLOG_INFO("Logging disabled.");
 			disableLogging();
 			return true;
 		}
@@ -1046,7 +1046,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			registerUsedCommand(MGComponent_MINIMAP_ON);
 			enableMiniMap();
-			MGFLOG_INFO(std::cout << "Mini map enabled." << std::endl;);
+			MGFLOG_INFO("Mini map enabled.");
 			return true;
 		}
 
@@ -1054,7 +1054,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			registerUsedCommand(MGComponent_MINIMAP_OFF);
 			disableMiniMap();
-			MGFLOG_INFO(std::cout << "Mini map disabled." << std::endl;);
+			MGFLOG_INFO("Mini map disabled.");
 			return true;
 		}
 
@@ -1114,21 +1114,21 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_GETFPS:
 		{
 			registerUsedCommand(MGComponent_GETFPS);
-			MGFLOG_INFO(std::cout << "" << getFPS() << std::endl;);
+			MGFLOG_INFO("" << getFPS());
 			return true;
 		}
 
 		case MGComponent_GETNUMBEROFMARKEDMO:
 		{
 			registerUsedCommand(MGComponent_GETNUMBEROFMARKEDMO);
-			MGFLOG_INFO(std::cout << "" << getNumberOfMarkedMO() << std::endl;);
+			MGFLOG_INFO("" << getNumberOfMarkedMO());
 			return true;
 		}
 
 		case MGComponent_GETNUMBEROFMO:
 		{
 			registerUsedCommand(MGComponent_GETNUMBEROFMO);
-			MGFLOG_INFO(std::cout << "" << getNumberOfMO() << std::endl;);
+			MGFLOG_INFO("" << getNumberOfMO());
 			return true;
 		}
 
@@ -1152,11 +1152,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			int exp = toInt(cmdvec[2]);
 			if(exp == getNumberOfMarkedMO())
 			{
-				MGFLOG_INFO(std::cout << "MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")" << std::endl;);
+				MGFLOG_INFO("MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")");
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfMarkedMO() << ")" << std::endl;);
+				MGFLOG_ERROR("MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfMarkedMO() << ")");
 			}
 			return true;
 		}
@@ -1167,11 +1167,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			int exp = toInt(cmdvec[2]);
 			if(exp == getNumberOfMO())
 			{
-				MGFLOG_INFO(std::cout << "MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")" << std::endl;);
+				MGFLOG_INFO("MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")");
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfMO() << ")" << std::endl;);
+				MGFLOG_ERROR("MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfMO() << ")");
 			}
 			return true;
 		}
@@ -1179,14 +1179,14 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_GETNUMBEROFUSEDCOMMANDS:
 		{
 			registerUsedCommand(MGComponent_GETNUMBEROFUSEDCOMMANDS);
-			MGFLOG_INFO(std::cout << "" << getNumberOfUsedCommands() << std::endl;);
+			MGFLOG_INFO("" << getNumberOfUsedCommands());
 			return true;
 		}
 
 		case MGComponent_GETNUMBEROFCOMMANDS:
 		{
 			registerUsedCommand(MGComponent_GETNUMBEROFCOMMANDS);
-			MGFLOG_INFO(std::cout << "" << getNumberOfCommands() << std::endl;);
+			MGFLOG_INFO("" << getNumberOfCommands());
 			return true;
 		}
 
@@ -1196,11 +1196,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			int exp = toInt(cmdvec[2]);
 			if(exp == getNumberOfPE())
 			{
-				MGFLOG_INFO(std::cout << "MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")" << std::endl;);
+				MGFLOG_INFO("MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")");
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfPE() << ")" << std::endl;);
+				MGFLOG_ERROR("MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfPE() << ")");
 			}
 			return true;
 		}
@@ -1212,21 +1212,21 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			int actual = (100 * getNumberOfUsedCommands())/MGComponent_NUMBEROFCOMMANDIDENTIFIERS;
 			if(actual >= exp)
 			{
-				MGFLOG_INFO(std::cout << "Number of executed commands is more than expected (" << actual << " >= " << exp << ")" << std::endl;);
+				MGFLOG_INFO("Number of executed commands is more than expected (" << actual << " >= " << exp << ")");
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "Number of executed commands is less than expected (" << actual << " < " << exp << ")" << std::endl;);
+				MGFLOG_ERROR("Number of executed commands is less than expected (" << actual << " < " << exp << ")");
 			}
 			for(int i=MGComponent_UNDEFINED; i<MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
 			{
-				MGFLOG_INFO(std::cout << "" << i << ": " << toString(m_UsedCommands[i]).c_str() << std::endl;);
+				MGFLOG_INFO("" << i << ": " << toString(m_UsedCommands[i]).c_str());
 			}
 			return true;
 		}
 
 		default:
-			MGFLOG_ERROR(std::cout << "MGFramework::detectComponentConsoleCommand returned a bad value" << std::endl;); 
+			MGFLOG_ERROR("MGFramework::detectComponentConsoleCommand returned a bad value"); 
 			return true;
 	}
 
@@ -1417,13 +1417,13 @@ Uint32 MGFramework::getFPS()
 		}
 		else
 		{
-			MGFLOG_WARNING(std::cout << "FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << "m_FrameTime:" << m_FrameTime << ", result:" << result << std::endl;)
+			MGFLOG_WARNING("FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << "m_FrameTime:" << m_FrameTime << ", result:" << result);
 			return getDesiredFPS();
 		}
 	}
 	else
 	{
-		MGFLOG_WARNING(std::cout << "FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << m_FrameTime << std::endl;)
+		MGFLOG_WARNING("FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << m_FrameTime);
 		return getDesiredFPS();
 	}
 }
@@ -1436,7 +1436,7 @@ void MGFramework::setDesiredFPS(Uint32 f)
 	}
 	else
 	{
-		MGFLOG_WARNING(std::cout << "FPS incorrectly calculated (void MGFramework::setDesiredFPS(Uint32 f)): " << f << std::endl;)
+		MGFLOG_WARNING("FPS incorrectly calculated (void MGFramework::setDesiredFPS(Uint32 f)): " << f);
 	}
 }
 
@@ -1448,7 +1448,7 @@ Uint32 MGFramework::getDesiredFPS()
 	}
 	else
 	{
-		MGFLOG_WARNING(std::cout << "FPS incorrectly calculated (Uint32 MGFramework::getDesiredFPS()): " << m_FPS << ", returning 1" << std::endl;)
+		MGFLOG_WARNING("FPS incorrectly calculated (Uint32 MGFramework::getDesiredFPS()): " << m_FPS << ", returning 1");
 		return 1;
 	}
 }
@@ -1474,8 +1474,8 @@ void MGFramework::createMO(int n)
 {
 	if(n > m_Map.getWidth()*m_Map.getHeight())
 	{
-		MGFLOG_ERROR(std::cout	<< "MGFramework::createMO cannot create " << n << " MO on a " 
-								<< m_Map.getWidth() << " by " << m_Map.getHeight() << " map" << std::endl;)
+		MGFLOG_ERROR(	"MGFramework::createMO cannot create " << n << " MO on a " 
+						<< m_Map.getWidth() << " by " << m_Map.getHeight() << " map")
 		return;
 	}
 
@@ -1501,8 +1501,8 @@ void MGFramework::addMO(int n)
 	int tmpTotal = n + getNumberOfMO();
 	if(tmpTotal > m_Map.getWidth()*m_Map.getHeight())
 	{
-		MGFLOG_ERROR(std::cout	<< "MGFramework::addMO cannot create " << tmpTotal << " MO on a " 
-								<< m_Map.getWidth() << " by " << m_Map.getHeight() << " map" << std::endl;)
+		MGFLOG_ERROR(	"MGFramework::addMO cannot create " << tmpTotal << " MO on a " 
+						<< m_Map.getWidth() << " by " << m_Map.getHeight() << " map")
 		return;
 	}
 
@@ -1529,7 +1529,7 @@ void MGFramework::deleteMO(int index)
 {
 	if(index < 0 || index >= getNumberOfMO())
 	{
-		MGFLOG_ERROR(std::cout << "MGFramework::deleteMO was given a bad index: " << index << std::endl;)
+		MGFLOG_ERROR("MGFramework::deleteMO was given a bad index: " << index)
 	}
 	else
 	{
@@ -1552,7 +1552,7 @@ void MGFramework::deleteMO(int index)
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "MGFramework::deleteMO was not able to find the given index: " << index << std::endl;)
+				MGFLOG_ERROR("MGFramework::deleteMO was not able to find the given index: " << index)
 				return;
 			}
 		}
@@ -1598,7 +1598,7 @@ void MGFramework::deletePE(int index)
 {
 	if(index < 0 || index >= getNumberOfPE())
 	{
-		MGFLOG_ERROR(std::cout << "MGFramework::deletePE was given a bad index: " << index << std::endl;)
+		MGFLOG_ERROR("MGFramework::deletePE was given a bad index: " << index)
 	}
 	else
 	{
@@ -1619,7 +1619,7 @@ void MGFramework::deletePE(int index)
 			}
 			else
 			{
-				MGFLOG_ERROR(std::cout << "MGFramework::deletePE was not able to find the given index: " << index << std::endl;)
+				MGFLOG_ERROR("MGFramework::deletePE was not able to find the given index: " << index)
 				return;
 			}
 		}
@@ -1855,7 +1855,7 @@ bool MGFramework::isNumericalInt(const string &s)
 		}
 		return true;
 	}
-	MGFLOG_ERROR(std::cout << "MGFramework::isNumericalInt failed to parse string" << std::endl;);
+	MGFLOG_ERROR("MGFramework::isNumericalInt failed to parse string");
 }
 
 
@@ -1874,7 +1874,7 @@ int MGFramework::toInt(const string &s)
 		{
 			if(getNumberOfMO()==0)
 			{
-				MGFLOG_ERROR(std::cout << "MGFramework::toInt was called with 'random_mo' when no MO existed" << std::endl;);
+				MGFLOG_ERROR("MGFramework::toInt was called with 'random_mo' when no MO existed");
 			}
 			else
 			{
@@ -1885,7 +1885,7 @@ int MGFramework::toInt(const string &s)
 		{
 			if(getNumberOfPE()==0)
 			{
-				MGFLOG_ERROR(std::cout << "MGFramework::toInt was called with 'random_pe' when no PE existed" << std::endl;);
+				MGFLOG_ERROR("MGFramework::toInt was called with 'random_pe' when no PE existed");
 			}
 			else
 			{
@@ -1901,7 +1901,7 @@ int MGFramework::toInt(const string &s)
 			return randomN(m_Map.getHeight());
 		}
 	}
-	MGFLOG_ERROR(std::cout << "MGFramework::toInt failed to convert string to integer: " << s << std::endl;);
+	MGFLOG_ERROR("MGFramework::toInt failed to convert string to integer: " << s);
 	return 0;
 }
 
