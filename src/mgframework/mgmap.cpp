@@ -273,10 +273,9 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 
 		while (x!=bx || y!=by)
 		{
-			if(!occupant(x+1,y+1))
+			if(x+1<getWidth() && y+1<getHeight() && !occupant(x+1,y+1))
 			{
 				n = new PathItem(x+1, y+1, MGFramework::distance(x+1, y+1, bx, by));
-				//n->setH(MGFramework::distance(x+1, y+1, bx, by));
 				bool skip = false;
 				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
@@ -287,10 +286,9 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				}
 				if(!skip) neighbors.push_back(*n);
 			}
-			if(!occupant(x-1,y-1))
+			if(x-1>=0 && y-1>=0 && !occupant(x-1,y-1))
 			{
 				n = new PathItem(x-1, y-1, MGFramework::distance(x-1, y-1, bx, by));
-				//n->setH(MGFramework::distance(x-1, y-1, bx, by));
 				bool skip = false;
 				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
@@ -301,10 +299,9 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				}
 				if(!skip) neighbors.push_back(*n);
 			}
-			if(!occupant(x+1,y-1))
+			if(x+1<getWidth() && y-1>=0 && !occupant(x+1,y-1))
 			{
 				n = new PathItem(x+1, y-1, MGFramework::distance(x+1, y-1, bx, by));
-				//n->setH(MGFramework::distance(x+1, y-1, bx, by));
 				bool skip = false;
 				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
@@ -315,10 +312,9 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				}
 				if(!skip) neighbors.push_back(*n);
 			}
-			if(!occupant(x-1,y+1))
+			if(x-1>=0 && y+1<getHeight() && !occupant(x-1,y+1))
 			{
 				n = new PathItem(x-1, y+1, MGFramework::distance(x-1, y+1, bx, by));
-				//n->setH(MGFramework::distance(x-1, y+1, bx, by));
 				bool skip = false;
 				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
@@ -329,10 +325,9 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				}
 				if(!skip) neighbors.push_back(*n);
 			}
-			if(!occupant(x,y+1))
+			if(y+1<getHeight() && !occupant(x,y+1))
 			{
 				n = new PathItem(x, y+1, MGFramework::distance(x, y+1, bx, by));
-				//n->setH(MGFramework::distance(x, y+1, bx, by));
 				bool skip = false;
 				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
@@ -343,10 +338,9 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				}
 				if(!skip) neighbors.push_back(*n);
 			}
-			if(!occupant(x,y-1))
+			if(y-1>=0 && !occupant(x,y-1))
 			{
 				n = new PathItem(x, y-1, MGFramework::distance(x, y-1, bx, by));
-				//n->setH(MGFramework::distance(x, y-1, bx, by));
 				bool skip = false;
 				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
@@ -357,10 +351,9 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				}
 				if(!skip) neighbors.push_back(*n);
 			}
-			if(!occupant(x+1,y))
+			if(x+1<getWidth() && !occupant(x+1,y))
 			{
 				n = new PathItem(x+1, y, MGFramework::distance(x+1, y, bx, by));
-				//n->setH(MGFramework::distance(x+1, y, bx, by));
 				bool skip = false;
 				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
@@ -371,10 +364,9 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				}
 				if(!skip) neighbors.push_back(*n);
 			}
-			if(!occupant(x-1,y))
+			if(x-1>=0 && !occupant(x-1,y))
 			{
 				n = new PathItem(x-1, y, MGFramework::distance(x-1, y, bx, by));
-				//n->setH(MGFramework::distance(x-1, y, bx, by));
 				bool skip = false;
 				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
@@ -388,8 +380,8 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 
 			if(!neighbors.empty())
 			{
-				//MGFLOG_INFO(std::cout <<	"MGMap::calculatePath has a neighbor list of " << neighbors.size() << 
-				//							" elements and a path of " << path.size() << " elements" << std::endl;);
+				//MGFLOG_INFO(	"MGMap::calculatePath has a neighbor list of " << neighbors.size() << 
+				//				" elements and a path of " << path.size() << " elements");
 				int bestx=0;
 				int besty=0;
 				double besth=MGFramework::distance(0, 0, getWidth(), getHeight());
@@ -408,7 +400,12 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 
 				if(found)
 				{
-					PathItem *pI = new PathItem(bestx, besty);
+					if(x<bestx-1 || x>bestx+1 || y<besty-1 || y>besty+1)
+					{
+						MGFLOG_ERROR("MGMap::calculatePath found a best neighbor that is not a real neighbor, aborting");
+						break;
+					}
+					PathItem *pI = new PathItem(bestx, besty, MGFramework::distance(bestx, besty, bx, by));
 					path.push_back(*pI);
 					x=bestx;
 					y=besty;
@@ -425,6 +422,18 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				break;
 			}
 			
+
+			// Some additional error checks..
+			if(neighbors.size() > 1000)
+			{
+				MGFLOG_ERROR("MGMap::calculatePath created a too long neighbor list, aborting");
+				break;
+			}
+			if(path.size() > 1000)
+			{
+				MGFLOG_ERROR("MGMap::calculatePath created a too long path, aborting");
+				break;
+			}
 		}//while
 
 	}

@@ -358,7 +358,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			int dx=w->toInt(cmdvec[3]);
 			int dy=w->toInt(cmdvec[4]);
 			setDestTileXY(dx, dy);
-			w->m_Map.calculatePath(MGFSKYPATH, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+			w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
 			return true;
 		}
 

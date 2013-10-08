@@ -20,7 +20,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.27.1"
+#define MGFRAMEWORKVERSION "1.0.28.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -138,6 +138,28 @@ enum eMGComponentConsoleCommand{
 	//This is a counter for number of command identifiers and not an actual command.
 	MGComponent_NUMBEROFCOMMANDIDENTIFIERS
 
+};
+
+
+
+
+class PathItem
+{
+private:
+	int m_X;
+	int m_Y;
+	double m_Heuristic;
+public:
+	PathItem();
+	PathItem(int x, int y){m_X=x; m_Y=y; m_Heuristic=1; };
+	PathItem(int x, int y, double h){m_X=x; m_Y=y; m_Heuristic=h; };
+	~PathItem(){/*std::cout << "PathItem::~PathItem()\n";*/};
+	int getX(){ return m_X;}
+	int getY(){ return m_Y;}
+	double getH(){ return m_Heuristic;}
+	void setH(double h){ m_Heuristic = h; }
+	void setPI(int x, int y, int h){ m_X=x; m_Y=y; m_Heuristic=h;}
+	bool equalCoordinate(PathItem* pi){ return (getX()==pi->getX()) && (getY()==pi->getY());}
 };
 
 

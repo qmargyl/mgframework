@@ -1,5 +1,5 @@
 input off
-create mo 10 -owner 1
+create mo 50 -owner 1 -speed 6
 runframes 50
 
 
@@ -13,6 +13,50 @@ mo 6 setdestination 10 2
 mo 7 setdestination 4 4
 mo 8 setdestination 5 5
 mo 9 setdestination 7 2
+
+mo 10 setdestination random_x random_y
+mo 11 setdestination random_x random_y
+mo 12 setdestination random_x random_y
+mo 13 setdestination random_x random_y
+mo 14 setdestination random_x random_y
+mo 15 setdestination random_x random_y
+mo 16 setdestination random_x random_y
+mo 17 setdestination random_x random_y
+mo 18 setdestination random_x random_y
+mo 19 setdestination random_x random_y
+
+mo 20 setdestination random_x random_y
+mo 21 setdestination random_x random_y
+mo 22 setdestination random_x random_y
+mo 23 setdestination random_x random_y
+mo 24 setdestination random_x random_y
+mo 25 setdestination random_x random_y
+mo 26 setdestination random_x random_y
+mo 27 setdestination random_x random_y
+mo 28 setdestination random_x random_y
+mo 29 setdestination random_x random_y
+
+mo 30 setdestination random_x random_y
+mo 31 setdestination random_x random_y
+mo 32 setdestination random_x random_y
+mo 33 setdestination random_x random_y
+mo 34 setdestination random_x random_y
+mo 35 setdestination random_x random_y
+mo 36 setdestination random_x random_y
+mo 37 setdestination random_x random_y
+mo 38 setdestination random_x random_y
+mo 39 setdestination random_x random_y
+
+mo 40 setdestination random_x random_y
+mo 41 setdestination random_x random_y
+mo 42 setdestination random_x random_y
+mo 43 setdestination random_x random_y
+mo 44 setdestination random_x random_y
+mo 45 setdestination random_x random_y
+mo 46 setdestination random_x random_y
+mo 47 setdestination random_x random_y
+mo 48 setdestination random_x random_y
+mo 49 setdestination random_x random_y
 
 runoneframe
 runoneframe

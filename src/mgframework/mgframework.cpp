@@ -653,11 +653,41 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			registerUsedCommand(MGComponent_CREATE_MO_INT_PARAMLIST);
 			int n = toInt(cmdvec[2]);
 			int owner = 0;
+			int x = -1; // Invalid default value
+			int y = -1; // Invalid default value
+			int speed = 2; // Tiles per second.
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
 					owner = toInt(cmdvec[i+1]);
+					++i;
+				}
+				else if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
+				{
+					x = toInt(cmdvec[i+1]);
+					++i;
+					if(n!=1)
+					{
+						MGFLOG_ERROR("Parameter -x can only be set when creating one MO");
+						n = 0; // Abort MO creation..
+					}
+					
+				}
+				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
+				{
+					y = toInt(cmdvec[i+1]);
+					++i;
+					if(n!=1)
+					{
+						MGFLOG_ERROR("Parameter -y can only be set when creating one MO");
+						n = 0; // Abort MO creation..
+					}
+					
+				}
+				else if(cmdvec[i]=="-speed" && cmdvec.size() > (i + 1))
+				{
+					speed = toInt(cmdvec[i+1]);
 					++i;
 				}
 				else
@@ -684,18 +714,23 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				MGFLOG_ERROR("Error in command (create mo <n>)");
 				return true;
 			}
+
 			for(int i=0;i<getNumberOfMO();i++)
 			{
-				// Here there should be a check whether the tile is already occupied..
 				if(m_MO != NULL)
 				{
-					m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()), this);
+					if(x<0) x = MGFramework::randomN(m_Map.getWidth());
+					if(y<0) y = MGFramework::randomN(m_Map.getHeight());
+					// TODO: Here there should be a check whether the tile is already occupied..
+					m_MO[i].setTileXY(x, y, this);
+					x = -1;
+					y = -1;
 					m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
-					m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
+					m_MO[i].setSpeed(1.0/(double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
 					m_MO[i].setOwner(owner);
 					m_Map.occupy(m_MO[i].getTileX(), m_MO[i].getTileY(), m_MO[i].getID());
 				}
-				if(m_MO == NULL)
+				else
 				{
 					MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
 				}
@@ -807,11 +842,41 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			int nBefore=getNumberOfMO();
 			int n = toInt(cmdvec[2]);
 			int owner = 0;
+			int x = -1; // Invalid default value
+			int y = -1; // Invalid default value
+			int speed = 2; // Tiles per second.
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
 					owner = toInt(cmdvec[i+1]);
+					++i;
+				}
+				else if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
+				{
+					x = toInt(cmdvec[i+1]);
+					++i;
+					if(n!=1)
+					{
+						MGFLOG_ERROR("Parameter -x can only be set when adding one MO");
+						n = 0; // Abort MO creation..
+					}
+					
+				}
+				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
+				{
+					y = toInt(cmdvec[i+1]);
+					++i;
+					if(n!=1)
+					{
+						MGFLOG_ERROR("Parameter -y can only be set when adding one MO");
+						n = 0; // Abort MO creation..
+					}
+					
+				}
+				else if(cmdvec[i]=="-speed" && cmdvec.size() > (i + 1))
+				{
+					speed = toInt(cmdvec[i+1]);
 					++i;
 				}
 				else
@@ -831,16 +896,20 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			for(int i=nBefore; i<getNumberOfMO(); i++)
 			{
-				// Here there should be a check whether the tile is already occupied..
 				if(m_MO != NULL)
 				{
-					m_MO[i].setTileXY(MGFramework::randomN(m_Map.getWidth()), MGFramework::randomN(m_Map.getHeight()), this);
+					if(x<0) x = MGFramework::randomN(m_Map.getWidth());
+					if(y<0) y = MGFramework::randomN(m_Map.getHeight());
+					// TODO: Here there should be a check whether the tile is already occupied..
+					m_MO[i].setTileXY(x, y, this);
+					x = -1;
+					y = -1;
 					m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
-					m_MO[i].setSpeed(0.5, m_Map.getTileHeight()); // Move two tiles per second
+					m_MO[i].setSpeed(1.0/(double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
 					m_MO[i].setOwner(owner);
 					m_Map.occupy(m_MO[i].getTileX(), m_MO[i].getTileY(), m_MO[i].getID());
 				}
-				if(m_MO == NULL)
+				else
 				{
 					MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
 				}

@@ -20,6 +20,7 @@ enum eMGFPathType{
 	MGFBASICPATH1
 };
 
+
 class MGMap :public MGComponent
 {
 private:
@@ -40,25 +41,6 @@ private:
 	int m_MouseScrollingXClick;
 	int m_MouseScrollingYClick;
 
-
-	class PathItem
-	{
-	private:
-		int m_X;
-		int m_Y;
-		double m_Heuristic;
-	public:
-		PathItem();
-		PathItem(int x, int y){m_X=x; m_Y=y; m_Heuristic=1; };
-		PathItem(int x, int y, double h){m_X=x; m_Y=y; m_Heuristic=h; };
-		~PathItem(){/*std::cout << "PathItem::~PathItem()\n";*/};
-		int getX(){ return m_X;}
-		int getY(){ return m_Y;}
-		double getH(){ return m_Heuristic;}
-		void setH(double h){ m_Heuristic = h; }
-		void setPI(int x, int y, int h){ m_X=x; m_Y=y; m_Heuristic=h;}
-		bool equalCoordinate(PathItem* pi){ return (getX()==pi->getX()) && (getY()==pi->getY());}
-	};
 
 public:
 	MGMap();
@@ -85,7 +67,7 @@ public:
 
 	void occupy(int x, int y, int id){ m_Occupied[y*getWidth()+x]=id;}
 	void unOccupy(int x, int y){ m_Occupied[y*getWidth()+x]=0;}
-	int occupant(int x, int y){ return m_Occupied[y*getWidth()+x];}
+	int occupant(int x, int y){ if(x<0) return 0; if(y<0) return 0; if(x>=getWidth()) return 0; if(x>=getHeight()) return 0; return m_Occupied[y*getWidth()+x];}
 
 
 	int getTileIndex(int clickX, int clickY);
