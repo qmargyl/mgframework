@@ -20,7 +20,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.28.0"
+#define MGFRAMEWORKVERSION "1.0.28.1"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -149,6 +149,7 @@ private:
 	int m_X;
 	int m_Y;
 	double m_Heuristic;
+	//bool m_blocked; // Not implemented yet
 public:
 	PathItem();
 	PathItem(int x, int y){m_X=x; m_Y=y; m_Heuristic=1; };

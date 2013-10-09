@@ -284,7 +284,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 						skip = true;
 					}
 				}
-				if(!skip) neighbors.push_back(*n);
+				if(!skip) neighbors.push_front(*n);
 			}
 			if(x-1>=0 && y-1>=0 && !occupant(x-1,y-1))
 			{
@@ -297,7 +297,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 						skip = true;
 					}
 				}
-				if(!skip) neighbors.push_back(*n);
+				if(!skip) neighbors.push_front(*n);
 			}
 			if(x+1<getWidth() && y-1>=0 && !occupant(x+1,y-1))
 			{
@@ -310,7 +310,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 						skip = true;
 					}
 				}
-				if(!skip) neighbors.push_back(*n);
+				if(!skip) neighbors.push_front(*n);
 			}
 			if(x-1>=0 && y+1<getHeight() && !occupant(x-1,y+1))
 			{
@@ -323,7 +323,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 						skip = true;
 					}
 				}
-				if(!skip) neighbors.push_back(*n);
+				if(!skip) neighbors.push_front(*n);
 			}
 			if(y+1<getHeight() && !occupant(x,y+1))
 			{
@@ -336,7 +336,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 						skip = true;
 					}
 				}
-				if(!skip) neighbors.push_back(*n);
+				if(!skip) neighbors.push_front(*n);
 			}
 			if(y-1>=0 && !occupant(x,y-1))
 			{
@@ -349,7 +349,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 						skip = true;
 					}
 				}
-				if(!skip) neighbors.push_back(*n);
+				if(!skip) neighbors.push_front(*n);
 			}
 			if(x+1<getWidth() && !occupant(x+1,y))
 			{
@@ -362,7 +362,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 						skip = true;
 					}
 				}
-				if(!skip) neighbors.push_back(*n);
+				if(!skip) neighbors.push_front(*n);
 			}
 			if(x-1>=0 && !occupant(x-1,y))
 			{
@@ -375,7 +375,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 						skip = true;
 					}
 				}
-				if(!skip) neighbors.push_back(*n);
+				if(!skip) neighbors.push_front(*n);
 			}
 
 			if(!neighbors.empty())
@@ -387,14 +387,30 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				double besth=MGFramework::distance(0, 0, getWidth(), getHeight());
 				bool found=false;
 
+				MGFLOG_INFO("MGMap::calculatePath will now evaluate " << neighbors.size() << " neighbors");
+
+				// TODO: Set a limit for how many neighbors we will consider at the most, in each step. 
 				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
-					if((*it).getH()<=besth)
+					if((*it).getH()<besth)
 					{
-						bestx=(*it).getX();
-						besty=(*it).getY();
-						besth=(*it).getH();
-						found=true;
+						// First we check if the found tile is already in the path.
+						bool alreadyInPath=false;
+						for (std::list<PathItem>::iterator pit=path.begin(); pit != path.end(); ++pit)
+						{
+							if((*pit).equalCoordinate(&(*it)))
+							{
+								alreadyInPath = true;
+							}
+						}
+						if(!alreadyInPath)
+						{
+							MGFLOG_INFO("MGMap::calculatePath found better tile: " << besth << " > " << (*it).getH());
+							bestx=(*it).getX();
+							besty=(*it).getY();
+							besth=(*it).getH();
+							found=true;
+						}
 					}
 				}
 
@@ -402,8 +418,9 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				{
 					if(x<bestx-1 || x>bestx+1 || y<besty-1 || y>besty+1)
 					{
-						MGFLOG_ERROR("MGMap::calculatePath found a best neighbor that is not a real neighbor, aborting");
+						MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
 						break;
+						// TODO: Back track here to continue to try and find a path
 					}
 					PathItem *pI = new PathItem(bestx, besty, MGFramework::distance(bestx, besty, bx, by));
 					path.push_back(*pI);
@@ -412,6 +429,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				}
 				else
 				{
+					// XXX: Should we really give up here? What about back tracking?
 					MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
 					break;
 				}

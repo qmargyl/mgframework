@@ -61,6 +61,9 @@ project2.exe -logging -script .\test\tc_008_basic_script.mgf		>	.\test\result\tc
 echo Running server instance with test case .\test\tc_009_basic_server.mgf
 project2.exe -server -logging -script .\test\tc_009_basic_server.mgf	>	.\test\result\tc_009_basic_server.log
 
+echo Running server instance with test case .\test\tc_010_basic_path.mgf
+project2.exe -logging -script .\test\tc_010_basic_path.mgf		>	.\test\result\tc_010_basic_path.log
+
 echo Running test case .\test\tc_999_basic_testcoverage.mgf
 project2.exe -logging -script .\test\tc_999_basic_testcoverage.mgf	>	.\test\result\tc_999_basic_testcoverage.log
 
@@ -87,6 +90,7 @@ project2.exe -log_eval .\test\result\tc_008_basic_script4.log
 project2.exe -log_eval .\test\result\tc_008_basic_script5.log
 project2.exe -log_eval .\test\result\tc_008_basic_script6.log
 project2.exe -log_eval .\test\result\tc_009_basic_server.log
+project2.exe -log_eval .\test\result\tc_010_basic_path.log
 project2.exe -log_eval .\test\result\tc_999_basic_testcoverage.log
 
 

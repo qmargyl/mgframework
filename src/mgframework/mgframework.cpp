@@ -528,7 +528,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 
 		if(m_DelayTime > 0)
 		{
-			Sleep((DWORD)m_DelayTime);
+			if(!runOneFrame) Sleep((DWORD)m_DelayTime);
 		}
 
 		if(runOneFrame) break;

@@ -1,0 +1,538 @@
+
+
+
+call setup_testcase
+call runframes_400
+call runframes_400
+call runframes_400
+call runframes_400
+call runframes_400
+call runframes_400
+call runframes_400
+call runframes_400
+
+
+// All mo should have reached their destination by now (if it's not occupied...)
+
+
+delete all mo
+input on
+exit application
+
+
+
+// We should never reach this point, generate error
+create mo 1
+expect getnumberofmo 0
+
+
+function setup_testcase
+
+input off
+delete all pe
+expect getnumberofpe 0
+delete all mo
+expect getnumberofmo 0
+create mo 50 -owner 1 -speed 8
+map logging on
+map setsize 128 128 32 32
+
+mo 0 setdestination 0 0
+mo 1 setdestination 10 10
+mo 2 setdestination 3 10
+mo 3 setdestination 10 3
+mo 4 setdestination 5 5
+mo 5 setdestination 2 10
+mo 6 setdestination 10 2
+mo 7 setdestination 4 4
+mo 8 setdestination 5 5
+mo 9 setdestination 7 2
+
+mo 10 setdestination random_x random_y
+mo 11 setdestination random_x random_y
+mo 12 setdestination random_x random_y
+mo 13 setdestination random_x random_y
+mo 14 setdestination random_x random_y
+mo 15 setdestination random_x random_y
+mo 16 setdestination random_x random_y
+mo 17 setdestination random_x random_y
+mo 18 setdestination random_x random_y
+mo 19 setdestination random_x random_y
+
+mo 20 setdestination random_x random_y
+mo 21 setdestination random_x random_y
+mo 22 setdestination random_x random_y
+mo 23 setdestination random_x random_y
+mo 24 setdestination random_x random_y
+mo 25 setdestination random_x random_y
+mo 26 setdestination random_x random_y
+mo 27 setdestination random_x random_y
+mo 28 setdestination random_x random_y
+mo 29 setdestination random_x random_y
+
+mo 30 setdestination random_x random_y
+mo 31 setdestination random_x random_y
+mo 32 setdestination random_x random_y
+mo 33 setdestination random_x random_y
+mo 34 setdestination random_x random_y
+mo 35 setdestination random_x random_y
+mo 36 setdestination random_x random_y
+mo 37 setdestination random_x random_y
+mo 38 setdestination random_x random_y
+mo 39 setdestination random_x random_y
+
+mo 40 setdestination random_x random_y
+mo 41 setdestination random_x random_y
+mo 42 setdestination random_x random_y
+mo 43 setdestination random_x random_y
+mo 44 setdestination random_x random_y
+mo 45 setdestination random_x random_y
+mo 46 setdestination random_x random_y
+mo 47 setdestination random_x random_y
+mo 48 setdestination random_x random_y
+mo 49 setdestination random_x random_y
+
+end function
+
+
+// We should never reach this point, generate error
+create mo 1
+expect getnumberofmo 0
+
+
+function runframes_400
+
+runframes 400
+
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+
+
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+
+
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+
+
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+
+
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+
+
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+
+
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+
+
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+
+// Plus one to get out runframes statistics..
+runoneframe
+
+end function
+
+
+
+
+
+
+// We should never reach this point, generate error
+create mo 1
+expect getnumberofmo 0
+
+delete all mo
+input on
+exit application
