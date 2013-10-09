@@ -37,7 +37,6 @@ bool Project2::init(int w, int h, int tw, int th)
 		// Setup application specific game logics..
 
 		runConsoleCommand("logging on", this); // Turn on logging for the MGFramework class
-		runConsoleCommand("setfps 60", this); // Framework default is 20 FPS
 		runConsoleCommand("open terminalserver", this);
 		runConsoleCommand("minimap on", this);
 

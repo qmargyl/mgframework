@@ -471,7 +471,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 	parse(scriptFileName);
 
 	Uint32 frameStartTime = 0; 
-	m_DelayTime = 0;
+	if(!runOneFrame) m_DelayTime = 0;
 	// Assume an initial value of m_FrameTime of 1000/getDesiredFPS().
 	Uint32 lastFrameTime = SDL_GetTicks()-(1000/getDesiredFPS()); // SDL_GetTicks() - lastFrameTime cannot be zero.
 
@@ -528,7 +528,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 
 		if(m_DelayTime > 0)
 		{
-			if(!runOneFrame) Sleep((DWORD)m_DelayTime);
+			Sleep((DWORD)m_DelayTime);
 		}
 
 		if(runOneFrame) break;
