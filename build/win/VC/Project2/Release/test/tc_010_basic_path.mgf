@@ -1,24 +1,15 @@
 
 
 
-call setup_testcase
-call runframes_400
-call runframes_400
-call runframes_400
-call runframes_400
-call runframes_400
-call runframes_400
-call runframes_400
-call runframes_400
+call testcase_1
+call testcase_2
 
 
-// All mo should have reached their destination by now (if it's not occupied...)
-
-
+// After running all testcases, exit.. (not needed since testcase_2 will exit)
 delete all mo
+delete all pe
 input on
 exit application
-
 
 
 // We should never reach this point, generate error
@@ -26,7 +17,71 @@ create mo 1
 expect getnumberofmo 0
 
 
-function setup_testcase
+
+
+
+// *******************************************************************
+// Test case 2 - Create some MO on a 128x128 map, set their destinations 
+// and run some frames, not enough for MO to reach their destinations.
+// The test is to see if the MO can find paths or not
+//
+// *******************************************************************
+function testcase_2
+input off
+delete all pe
+expect getnumberofpe 0
+delete all mo
+expect getnumberofmo 0
+map logging on
+map setsize 128 128 32 32
+
+// These MO will be given destinations..
+create mo 1 -x 127 -y 127 -speed 6
+add mo 1 -x 75 -y 75 -speed 6
+add mo 1 -x 95 -y 127 -speed 6
+add mo 1 -x 127 -y 95 -speed 6
+add mo 1 -x 75 -y 127 -speed 6
+add mo 1 -x 127 -y 75 -speed 6
+add mo 1 -x 55 -y 127 -speed 6
+add mo 1 -x 127 -y 55 -speed 6
+add mo 1 -x 25 -y 127 -speed 6
+add mo 1 -x 127 -y 25 -speed 6
+add mo 1 -x 5 -y 127 -speed 6
+add mo 1 -x 127 -y 5 -speed 6
+
+
+// These MO are used to block the ones with destinations
+add mo 2000
+
+mo 0 setdestination random_x random_y
+mo 1 setdestination random_x random_y
+mo 2 setdestination random_x random_y
+mo 3 setdestination random_x random_y
+mo 4 setdestination random_x random_y
+mo 5 setdestination random_x random_y
+mo 6 setdestination random_x random_y
+mo 7 setdestination random_x random_y
+mo 8 setdestination random_x random_y
+mo 9 setdestination random_x random_y
+mo 10 setdestination random_x random_y
+mo 11 setdestination random_x random_y
+
+call runframes_400
+
+delete all mo
+delete all pe
+input on
+exit application
+end function
+
+
+// *******************************************************************
+// Test case 1 - Create 50 MO on a 128x128 map, set their destinations 
+// and run enough frames so that they will reach their destinations.
+// The test is to see if the MO can reach their destinations or not.
+//
+// *******************************************************************
+function testcase_1
 
 input off
 delete all pe
@@ -92,6 +147,16 @@ mo 47 setdestination random_x random_y
 mo 48 setdestination random_x random_y
 mo 49 setdestination random_x random_y
 
+// Run 3200 frames
+call runframes_400
+call runframes_400
+call runframes_400
+call runframes_400
+call runframes_400
+call runframes_400
+call runframes_400
+call runframes_400
+
 end function
 
 
@@ -102,7 +167,7 @@ expect getnumberofmo 0
 
 function runframes_400
 
-runframes 400
+//runframes 400
 
 runoneframe
 runoneframe
@@ -520,7 +585,7 @@ runoneframe
 runoneframe
 
 // Plus one to get out runframes statistics..
-runoneframe
+//runoneframe
 
 end function
 

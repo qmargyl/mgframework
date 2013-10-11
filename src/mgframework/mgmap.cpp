@@ -262,6 +262,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 	// 2) Push the "best" alternative to the path.
 	// 3) Step (x,y) and goto 1)
 
+	MGFLOG_INFO("MGMap::calculatePath will find a path (" << ax << ", " << ay << ") -> (" << bx << ", " << by << ")");
 	std::list<PathItem> path;
 
 	if(pathType==MGFBASICPATH1)

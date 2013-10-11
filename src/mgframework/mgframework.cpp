@@ -498,6 +498,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 				std::cout << "\tSum of frame sleep time: " << sleepKPI << std::endl;
 				std::cout << "\tNumber of frames executed: " << nFrames << std::endl;
 				std::cout << "\tAverage sleep time per frame: " << (double)sleepKPI / (double)nFrames << std::endl;
+				// XXX: Print warnings based on the KPIs?
 				sleepKPI = 0;
 				nFrames = 0;
 				if(!runOneFrame)activateConsole();
