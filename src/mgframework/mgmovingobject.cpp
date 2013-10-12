@@ -242,6 +242,7 @@ void MGMovingObject::copy(MGMovingObject *src)
 	m_Owner = src->m_Owner;
 	m_LoggingEnabled = src->m_LoggingEnabled;
 	m_CurrentState = src->m_CurrentState;
+	m_Path = src->m_Path;
 }
 
 bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
@@ -368,7 +369,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			int dx=w->toInt(cmdvec[3]);
 			int dy=w->toInt(cmdvec[4]);
 			setDestTileXY(dx, dy);
-			w->m_Map.calculatePath(MGFSKYPATH, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+			w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
 			return true;
 		}
 
@@ -378,7 +379,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			int dx=w->toInt(cmdvec[3]);
 			int dy=w->toInt(cmdvec[4]);
 			setDestTileXY(dx, dy);
-			w->m_Map.calculatePath(MGFSKYPATH, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+			w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
 			return true;
 		}
 

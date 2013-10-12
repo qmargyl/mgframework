@@ -2,8 +2,7 @@
 
 :: Basic regression test for mgframework
 @ECHO OFF
-echo Basic regression test for mgframework
-
+echo Basic regression test for mgframework path calculation
 
 
 :: Create directory for log files..

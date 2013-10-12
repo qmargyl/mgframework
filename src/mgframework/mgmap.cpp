@@ -259,7 +259,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 
 	// Algorithm MGFBASICPATH1:
 	// 1) For all non-blocked adjacent tiles of (x,y) not already in the path, calculate estimated distance to target.
-	// 2) Push the "best" alternative to the path.
+	// 2) Push the "best" alternative to the path. Back-track if necessary.
 	// 3) Step (x,y) and goto 1)
 
 	MGFLOG_INFO("MGMap::calculatePath will find a path (" << ax << ", " << ay << ") -> (" << bx << ", " << by << ")");
@@ -407,10 +407,35 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 						if(!alreadyInPath)
 						{
 							MGFLOG_INFO("MGMap::calculatePath found better tile: " << besth << " > " << (*it).getH());
-							bestx=(*it).getX();
-							besty=(*it).getY();
-							besth=(*it).getH();
-							found=true;
+							if(x<(*it).getX()-1 || x>(*it).getX()+1 || y<(*it).getY()-1 || y>(*it).getY()+1)
+							{
+								// The found tile is not a neighbor of {x,y}
+								// TODO: Back tack somehow?
+								// Set H to a large number to not try this neighbor again.
+								(*it).setH(MGFramework::distance(0, 0, getWidth(), getHeight()));
+								if(it != neighbors.begin())
+								{
+									--it;
+									if(path.size()>0)
+									{
+										path.pop_back();
+									}
+								}
+								else
+								{
+									MGFLOG_WARNING("MGMap::calculatePath was not able to find a path by back-tracking");
+									break;
+								}
+								// XXX: Also back-track here, not only mark the neighbor tile as bad.
+
+							}
+							else
+							{
+								bestx=(*it).getX();
+								besty=(*it).getY();
+								besth=(*it).getH();
+								found=true;
+							}
 						}
 					}
 				}
@@ -419,9 +444,10 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				{
 					if(x<bestx-1 || x>bestx+1 || y<besty-1 || y>besty+1)
 					{
-						MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
+						// The found {bestx,besty} is not a neighbor of {x,y} -> ERROR, since 
+						// we have already handled this case above
+						MGFLOG_ERROR("MGMap::calculatePath suggested a non-neighbor as next step in path");
 						break;
-						// TODO: Back track here to continue to try and find a path
 					}
 					PathItem *pI = new PathItem(bestx, besty, MGFramework::distance(bestx, besty, bx, by));
 					path.push_back(*pI);
@@ -431,25 +457,28 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				else
 				{
 					// XXX: Should we really give up here? What about back tracking?
+					//      Yes i think so. We have already tried to back-track...
 					MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
 					break;
 				}
 			}
 			else
 			{
-				MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
+				MGFLOG_WARNING("MGMap::calculatePath was not able to find a path as there are no available neighbor tiles to evaluate");
 				break;
 			}
 			
 
-			// Some additional error checks..
+			// Some additional checks..
 			if(neighbors.size() > 1000)
 			{
+				// XXX: This is not necessarily an error but keep it like that for now so it stands out more...
 				MGFLOG_ERROR("MGMap::calculatePath created a too long neighbor list, aborting");
 				break;
 			}
 			if(path.size() > 1000)
 			{
+				// XXX: This is not necessarily an error but keep it like that for now so it stands out more...
 				MGFLOG_ERROR("MGMap::calculatePath created a too long path, aborting");
 				break;
 			}

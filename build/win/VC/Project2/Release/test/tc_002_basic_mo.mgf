@@ -142,66 +142,6 @@ expect getnumberofmo 0
 
 
 
-
-
-
-// Large number of mos
-map setsize 512 512 32 32
-create mo 100000 -owner 1
-add mo 100000 -owner 2
-expect getnumberofmo 200000
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-mo all setdestination random_x random_y
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-delete mo 5
-delete mo 133
-delete mo 1
-delete mo 76571
-delete mo 66661
-delete mo 77
-delete mo 192002
-delete mo 0
-delete mo 3422
-delete mo 34231
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-getfps
-expect getnumberofmo 199990
-delete all mo
-expect getnumberofmo 0
-
-
-
-
 // Stressing
 map setsize 256 256 32 32
 create mo 400 -owner 1

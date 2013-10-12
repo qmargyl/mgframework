@@ -1,9 +1,10 @@
 #ifndef _MG_MOVINGOBJECT_H
 #define _MG_MOVINGOBJECT_H
 #include "mgcomponent.h"
+#include <list>
 
 class MGFramework;
-
+class PathItem;
 
 class MGMovingObject :public MGComponent
 {
@@ -44,6 +45,8 @@ private:
 	MOState getCurrentState(){ return m_CurrentState; }
 	void changeState(MOState toState);
 	const char* toString(MOState s);
+
+	std::list<PathItem> m_Path;
 
 public:
 
