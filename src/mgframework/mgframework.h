@@ -20,7 +20,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.28.3"
+#define MGFRAMEWORKVERSION "1.0.28.4"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -29,7 +29,7 @@
 
 
 // Macros...
-#define MGFTIMESTAMP(x) std::setw(3) << (x/3600000) << ":" << std::setw(3) << (x%3600000)/60000 << ":" << std::setw(3) << (x%60000)/1000 << ":" << std::setw(3) << (x%1000) 
+#define MGFTIMESTAMP(x) std::setfill('0') << std::setw(3) << (x/3600000) << ":" << std::setfill('0') << std::setw(3) << (x%3600000)/60000 << ":" << std::setfill('0') << std::setw(3) << (x%60000)/1000 << ":" << std::setfill('0') << std::setw(3) << (x%1000) 
 
 #define MGFLOG_WARNING(x)	if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: "	<< x << std::endl; }
 #define MGFLOG_INFO(x)		if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: "		<< x << std::endl; }
