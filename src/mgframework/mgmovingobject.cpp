@@ -15,12 +15,13 @@ MGMovingObject::MGMovingObject()
 	m_NextTileY=0;
 	m_CurrentState=MOStateCreated;
 	setOwner(MGF_NOPLAYER);
-	registerMemoryAllocation(sizeof(MGMovingObject));
+	//registerMemoryAllocation(sizeof(MGMovingObject));
 }
 
 MGMovingObject::~MGMovingObject()
 {
-	registerMemoryDeallocation(sizeof(MGMovingObject));
+	//registerMemoryDeallocation(sizeof(MGMovingObject));
+	m_Path.clear();
 }
 
 void MGMovingObject::initialize()
@@ -34,7 +35,7 @@ void MGMovingObject::initialize()
 	m_NextTileY=0;
 	setOwner(MGF_NOPLAYER);
 	//enableLogging();
-	registerMemoryAllocation(sizeof(MGMovingObject));
+	//registerMemoryAllocation(sizeof(MGMovingObject));
 	if(!isCreated())
 	{
 		MGFLOG_ERROR("MGMovingObject::initialize was called in the wrong state: " << toString(getCurrentState())); 
@@ -75,6 +76,9 @@ void MGMovingObject::setDestTileXY(int x, int y)
 	}
 	m_DestTileX=x;
 	m_DestTileY=y;
+
+	m_Path.clear();
+	// XXX: create a path and set it here..
 }
 
 double MGMovingObject::getDistance(int wx, int wy)

@@ -19,12 +19,12 @@ MGWindow::MGWindow():
 	m_Screen(NULL),
 	m_Flags(0)
 {
-	registerMemoryAllocation(sizeof(MGWindow));
+	//registerMemoryAllocation(sizeof(MGWindow));
 }
 
 MGWindow::~MGWindow()
 {
-	registerMemoryDeallocation(sizeof(MGWindow));
+	//registerMemoryDeallocation(sizeof(MGWindow));
 	SDL_Quit();
 }
 	

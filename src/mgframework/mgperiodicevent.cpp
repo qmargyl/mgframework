@@ -11,12 +11,12 @@ MGPeriodicEvent::MGPeriodicEvent()
 	m_isActive(false), 
 	m_FileName1(NULL)
 {
-	registerMemoryAllocation(sizeof(MGPeriodicEvent));
+	//registerMemoryAllocation(sizeof(MGPeriodicEvent));
 }
 
 MGPeriodicEvent::~MGPeriodicEvent()
 {
-	registerMemoryDeallocation(sizeof(MGPeriodicEvent));
+	//registerMemoryDeallocation(sizeof(MGPeriodicEvent));
 	delete [] m_FileName1;
 }
 

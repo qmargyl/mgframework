@@ -30,7 +30,7 @@ MGFramework::MGFramework():
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
 
-	registerMemoryAllocation(sizeof(MGFramework));
+	//registerMemoryAllocation(sizeof(MGFramework));
 
 	// Setup the framework for automatic regression testing...
 
@@ -50,7 +50,7 @@ MGFramework::MGFramework():
 
 MGFramework::~MGFramework()
 {
-	registerMemoryDeallocation(sizeof(MGFramework));
+	//registerMemoryDeallocation(sizeof(MGFramework));
 	delete[] m_MO;
 	delete[] m_PE;
 	delete[] m_SymbolTable;
