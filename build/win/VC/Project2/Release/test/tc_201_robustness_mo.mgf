@@ -2,7 +2,7 @@
 
 
 // Large number of mos
-map setsize 512 512 32 32
+map setsize 450 450 32 32
 create mo 100000 -owner 1
 add mo 100000 -owner 2
 expect getnumberofmo 200000
@@ -115,6 +115,7 @@ delete all mo -owner 2
 delete all mo -owner 1
 delete all mo -owner 3
 expect getnumberofmo 0
+
 
 
 

@@ -716,25 +716,18 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				return true;
 			}
 
-			for(int i=0;i<getNumberOfMO();i++)
+			if(m_MO != NULL)
 			{
-				if(m_MO != NULL)
+				for(int i=0;i<getNumberOfMO();i++)
 				{
-					if(x<0) x = MGFramework::randomN(m_Map.getWidth());
-					if(y<0) y = MGFramework::randomN(m_Map.getHeight());
-					// TODO: Here there should be a check whether the tile is already occupied..
-					m_MO[i].setTileXY(x, y, this);
-					x = -1;
-					y = -1;
-					m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
-					m_MO[i].setSpeed(1.0/(double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
-					m_MO[i].setOwner(owner);
-					m_Map.occupy(m_MO[i].getTileX(), m_MO[i].getTileY(), m_MO[i].getID());
+					// If setup fails we must setup the same index again 
+					// since the failing MO has been deleted.
+					if(!setupMO(i, x, y, owner, speed))--i;
 				}
-				else
-				{
-					MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
-				}
+			}
+			else
+			{
+				MGFLOG_ERROR("MO storage is undefined");
 			}
 			return true;
 		}
@@ -895,25 +888,19 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				MGFLOG_ERROR("Error in command (add mo <n>)");
 				return true;
 			}
-			for(int i=nBefore; i<getNumberOfMO(); i++)
+
+			if(m_MO != NULL)
 			{
-				if(m_MO != NULL)
+				for(int i=nBefore; i<getNumberOfMO(); i++)
 				{
-					if(x<0) x = MGFramework::randomN(m_Map.getWidth());
-					if(y<0) y = MGFramework::randomN(m_Map.getHeight());
-					// TODO: Here there should be a check whether the tile is already occupied..
-					m_MO[i].setTileXY(x, y, this);
-					x = -1;
-					y = -1;
-					m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
-					m_MO[i].setSpeed(1.0/(double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
-					m_MO[i].setOwner(owner);
-					m_Map.occupy(m_MO[i].getTileX(), m_MO[i].getTileY(), m_MO[i].getID());
+					// If setup fails we must setup the same index again 
+					// since the failing MO has been deleted.
+					if(!setupMO(i, x, y, owner, speed))--i;
 				}
-				else
-				{
-					MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
-				}
+			}
+			else
+			{
+				MGFLOG_ERROR("MO storage is undefined");
 			}
 			return true;
 		}
@@ -939,7 +926,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			if(n > 0)
 			{
-				// Create the new MOs.
+				// Create the new PEs.
 				createPE(n);
 			}
 			else
@@ -1631,6 +1618,51 @@ void MGFramework::deleteMO(int index)
 }
 
 
+
+bool MGFramework::setupMO(int i, int x, int y, int owner, int speed)
+{
+	if(i < 0 || i >= getNumberOfMO())
+	{
+		MGFLOG_ERROR("MGFramework::setupMO was given a bad index: " << i)
+	}
+	else
+	{
+		if(x<0) x = MGFramework::randomN(m_Map.getWidth());
+		if(y<0) y = MGFramework::randomN(m_Map.getHeight());
+		bool successful=false;
+
+		for(int q=0; q<MGF_MOPOSITIONINGATTEMPTS; ++q)
+		{
+			if(m_Map.occupant(x,y) != 0)
+			{
+				x = MGFramework::randomN(m_Map.getWidth());
+				y = MGFramework::randomN(m_Map.getHeight());
+			}
+			else
+			{
+				successful=true;
+				break;
+			}
+		}
+		// XXX: Here we should find the first available (x,y) since the random placement failed.
+		if(successful)
+		{
+			m_MO[i].setTileXY(x, y, this);
+			m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
+			m_MO[i].setSpeed(1.0/(double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
+			m_MO[i].setOwner(owner);
+			m_Map.occupy(m_MO[i].getTileX(), m_MO[i].getTileY(), m_MO[i].getID());
+		}
+		else
+		{
+			MGFLOG_ERROR("Failed to find space for MO at creation");
+			deleteMO(i);
+			return false;
+		}
+
+	}
+	return true;
+}
 
 void MGFramework::createPE(int n)
 {

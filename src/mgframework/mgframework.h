@@ -20,11 +20,12 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.28.5"
+#define MGFRAMEWORKVERSION "1.0.28.6"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
 #define MGF_LOGLINE_MAXLENGTH		1024
+#define MGF_MOPOSITIONINGATTEMPTS	100
 //#define MGF_DEBUGGING_ENABLED		// This flag disables the socket terminal and TTF as these are not possible to compile for Debug.
 
 
@@ -251,7 +252,8 @@ class MGFramework :public MGComponent
 		void createMO(int n);
 		void addMO(int n);
 		int getNumberOfMO(){ return biggest(m_NMO, 0);}
-		void deleteMO(int index);
+		void deleteMO(int index);		// Deletes the MO with a specified index
+		bool setupMO(int i, int x, int y, int owner, int speed);		// Setups the MO with a specified index
 
 		// PE related
 		void createPE(int n);

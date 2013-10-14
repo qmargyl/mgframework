@@ -18,6 +18,9 @@ echo Running test case .\test\tc_201_robustness_mo.mgf
 project2.exe -logging -script .\test\tc_201_robustness_mo.mgf		>	.\test\result\tc_201_robustness_mo.log
 project2.exe -log_eval .\test\result\tc_201_robustness_mo.log
 
+echo Running test case .\test\tc_202_robustness_path.mgf
+project2.exe -logging -script .\test\tc_202_robustness_path.mgf		>	.\test\result\tc_202_robustness_path.log
+project2.exe -log_eval .\test\result\tc_202_robustness_path.log
 
 pause
 

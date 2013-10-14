@@ -358,8 +358,11 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			w->registerUsedCommand(MGComponent_MO_INT_SETDESTINATION_INT_INT);
 			int dx=w->toInt(cmdvec[3]);
 			int dy=w->toInt(cmdvec[4]);
-			setDestTileXY(dx, dy);
-			w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+			if(!w->m_Map.occupant(dx, dy))
+			{
+				setDestTileXY(dx, dy);
+				w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+			}
 			return true;
 		}
 
@@ -368,8 +371,11 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			w->registerUsedCommand(MGComponent_MO_ALL_SETDESTINATION_INT_INT);
 			int dx=w->toInt(cmdvec[3]);
 			int dy=w->toInt(cmdvec[4]);
-			setDestTileXY(dx, dy);
-			w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+			if(!w->m_Map.occupant(dx, dy))
+			{
+				setDestTileXY(dx, dy);
+				w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+			}
 			return true;
 		}
 
@@ -378,8 +384,11 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			w->registerUsedCommand(MGComponent_MO_MARKED_SETDESTINATION_INT_INT);
 			int dx=w->toInt(cmdvec[3]);
 			int dy=w->toInt(cmdvec[4]);
-			setDestTileXY(dx, dy);
-			w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+			if(!w->m_Map.occupant(dx, dy))
+			{
+				setDestTileXY(dx, dy);
+				w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+			}
 			return true;
 		}
 
