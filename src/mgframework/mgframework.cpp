@@ -1644,7 +1644,21 @@ bool MGFramework::setupMO(int i, int x, int y, int owner, int speed)
 				break;
 			}
 		}
-		// XXX: Here we should find the first available (x,y) since the random placement failed.
+		// Find the first available (x,y) since the random placement failed.
+		if(!successful)
+		{
+			for(int t=0; t < m_Map.getWidth()*m_Map.getHeight(); ++t)
+			{
+				if(m_Map.occupant(m_Map.getTileX(t), m_Map.getTileY(t))==0)
+				{
+					x = m_Map.getTileX(t);
+					y = m_Map.getTileY(t);
+					successful = true;
+					break;
+				}
+			}
+		}
+
 		if(successful)
 		{
 			m_MO[i].setTileXY(x, y, this);
