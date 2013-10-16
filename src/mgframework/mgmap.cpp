@@ -10,11 +10,19 @@
 
 
 MGMap::MGMap()
+: 	m_TopEdge(0),
+	m_BottomEdge(0),
+	m_LeftEdge(0),
+	m_RightEdge(0),
+	m_TileProperty(NULL),
+	m_MouseScrollingOngoing(false),
+	m_MouseScrollingXClick(0),
+	m_MouseScrollingYClick(0)
 {
-	m_TileProperty = NULL;
-	m_MouseScrollingOngoing = false;
-	m_MouseScrollingXClick=0;
-	m_MouseScrollingYClick=0;
+	//m_TileProperty = NULL;
+	//m_MouseScrollingOngoing = false;
+	//m_MouseScrollingXClick=0;
+	//m_MouseScrollingYClick=0;
 	//registerMemoryAllocation(sizeof(MGMap));
 }
 
@@ -86,16 +94,20 @@ void MGMap::reInit(int w, int h, int tw, int th)
  ***************************************************/
 int MGMap::getTileIndex(int clickX, int clickY)
 {
-	int x = (clickX - getScrollX()) / getTileWidth();
-	int y = (clickY - getScrollY()) / getTileHeight();
-	if((x < getWidth()) && (y < getHeight()))
+	MGFLOG_INFO("MGMap::getTileIndex(" << clickX << ", " << clickY << ")");
+	if(	clickX > getLeftEdge() &&
+		clickX < (getWindowWidth()-getRightEdge()) && 
+		clickY > getTopEdge() && 
+		clickY < (getWindowHeight()-getBottomEdge()))
 	{
-		return y * getWidth() + x;
+		int x = (clickX - getScrollX()) / getTileWidth();
+		int y = (clickY - getScrollY()) / getTileHeight();
+		if(x < getWidth() && y < getHeight())
+		{
+			return y * getWidth() + x;
+		}
 	}
-	else
-	{
-		return -1;
-	}
+	return -1;
 }
 
 
@@ -126,22 +138,22 @@ void MGMap::mouseScrollingUpdate(int x, int y)
 		int setY = getScrollY() + m_MouseScrollingYClick - y;
 		int setX = getScrollX() + m_MouseScrollingXClick - x;
 
-		if(setY > 0)
+		if(setY > getTopEdge())
 		{
-			setY = 0;
+			setY = getTopEdge();
 		}
-		if(setY < getWindowHeight() - getHeight() * getTileHeight())
+		if(setY < getWindowHeight() - getHeight() * getTileHeight() - getBottomEdge())
 		{
-			setY = getWindowHeight() - getHeight() * getTileHeight();
+			setY = getWindowHeight() - getHeight() * getTileHeight() - getBottomEdge();
 		}
 
-		if(setX > 0)
+		if(setX > getLeftEdge())
 		{
-			setX = 0;
+			setX = getLeftEdge();
 		}
-		if(setX < getWindowWidth() - getWidth() * getTileWidth())
+		if(setX < getWindowWidth() - getWidth() * getTileWidth() - getRightEdge())
 		{
-			setX = getWindowWidth() - getWidth() * getTileWidth();
+			setX = getWindowWidth() - getWidth() * getTileWidth() - getRightEdge();
 		}
 
 		setScrollOffset(setX, setY);

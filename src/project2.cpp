@@ -33,10 +33,16 @@ bool Project2::init(int w, int h, int tw, int th)
 		// Objcts such as the map are initialized here.
 		m_Map.init(w, h, tw, th, m_Window.getWidth(), m_Window.getHeight()); // width (in number of tiles), height, tile width (in pixels), tile height, resolution x and y.
 
+		// Setup the edge around the screen to allow scrolling to see the entire map.
+		m_Map.setTopEdge(8);
+		m_Map.setBottomEdge(64);
+		m_Map.setLeftEdge(8);
+		m_Map.setRightEdge(64);
 
 		// Setup application specific game logics..
 
 		runConsoleCommand("logging on", this); // Turn on logging for the MGFramework class
+		runConsoleCommand("map logging on", this); // Turn on logging for the MGMap class
 		runConsoleCommand("open terminalserver", this);
 		runConsoleCommand("minimap on", this);
 
@@ -98,6 +104,13 @@ void Project2::draw()
 		}
 	}
 
+	// Draw a frame around the edge of the map
+	vLine32(getSurface(), m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight()-m_Map.getBottomEdge()-m_Map.getTopEdge(), 0x000000FF);
+	vLine32(getSurface(), m_Map.getWindowWidth()-m_Map.getRightEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight()-m_Map.getBottomEdge()-m_Map.getTopEdge(), 0x000000FF);
+	hLine32(getSurface(), m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowWidth()-m_Map.getLeftEdge()-m_Map.getRightEdge(), 0x000000FF);
+	hLine32(getSurface(), m_Map.getLeftEdge(), m_Map.getWindowHeight()-m_Map.getBottomEdge(), m_Map.getWindowWidth()-m_Map.getLeftEdge()-m_Map.getRightEdge(), 0x000000FF);
+
+
 	// Draw the mini map if enabled. Also draw all objects on it...
 	if(miniMapEnabled())
 	{
@@ -155,5 +168,6 @@ void Project2::draw()
 		vLine32(getSurface(), uLX, uLY, yL, 0x00FF0000);
 		vLine32(getSurface(), uLX+xL, uLY, yL, 0x00FF0000);
 	}
+
 
 }

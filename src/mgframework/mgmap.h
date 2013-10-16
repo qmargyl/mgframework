@@ -41,6 +41,13 @@ private:
 	int m_MouseScrollingXClick;
 	int m_MouseScrollingYClick;
 
+	// A graphics edge around the screen means we have to scroll
+	// a bit more to be able to see the whole map.
+	unsigned int m_TopEdge;
+	unsigned int m_BottomEdge;
+	unsigned int m_LeftEdge;
+	unsigned int m_RightEdge;
+
 
 public:
 	MGMap();
@@ -59,6 +66,16 @@ public:
 	void mouseScrollingClick(int x, int y);
 	void mouseScrollingUpdate(int x, int y);
 
+	// A graphics edge around the screen means we have to scroll
+	// a bit more to be able to see the whole map.
+	int getTopEdge(){ return m_TopEdge; }
+	int getBottomEdge(){ return m_BottomEdge; }
+	int getLeftEdge(){ return m_LeftEdge; }
+	int getRightEdge(){ return m_RightEdge; }
+	void setTopEdge(int e){ m_TopEdge = e; }
+	void setBottomEdge(int e){ m_BottomEdge = e; }
+	void setLeftEdge(int e){ m_LeftEdge = e; }
+	void setRightEdge(int e){ m_RightEdge = e; }
 
 	void init(int w, int h, int tw, int th, int windowWidth, int windowHeight);
 	void reInit(int w, int h, int tw, int th);

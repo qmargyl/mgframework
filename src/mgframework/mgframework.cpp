@@ -199,11 +199,14 @@ bool MGFramework::processEvents()
 					if(getNumberOfMarkedMO()>0)
 					{
 						int iClick = m_Map.getTileIndex(event.button.x, event.button.y);
-						int xClick = m_Map.getTileX(iClick);
-						int yClick = m_Map.getTileY(iClick);
-						char c[64];
-						sprintf(c, "mo marked setdestination %d %d", xClick, yClick);
-						runConsoleCommand(c, this);
+						if(iClick >= 0)
+						{
+							int xClick = m_Map.getTileX(iClick);
+							int yClick = m_Map.getTileY(iClick);
+							char c[64];
+							sprintf(c, "mo marked setdestination %d %d", xClick, yClick);
+							runConsoleCommand(c, this);
+						}
 					}
 
 					m_Map.mouseScrollingRelease(event.button.x, event.button.y);
