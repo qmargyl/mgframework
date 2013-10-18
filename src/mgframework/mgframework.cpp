@@ -1630,16 +1630,16 @@ bool MGFramework::setupMO(int i, int x, int y, int owner, int speed)
 	}
 	else
 	{
-		if(x<0) x = MGFramework::randomN(m_Map.getWidth());
-		if(y<0) y = MGFramework::randomN(m_Map.getHeight());
+		if(x<0) x = randomN(m_Map.getWidth());
+		if(y<0) y = randomN(m_Map.getHeight());
 		bool successful=false;
 
 		for(int q=0; q<MGF_MOPOSITIONINGATTEMPTS; ++q)
 		{
 			if(m_Map.occupant(x,y) != 0)
 			{
-				x = MGFramework::randomN(m_Map.getWidth());
-				y = MGFramework::randomN(m_Map.getHeight());
+				x = randomN(m_Map.getWidth());
+				y = randomN(m_Map.getHeight());
 			}
 			else
 			{
@@ -1801,17 +1801,6 @@ void MGFramework::drawText(SDL_Surface* screen, const char* string, int size, in
 }
 #endif
 
-string MGFramework::toString(int number)
-{
-	stringstream ss;	//create a stringstream
-	ss << number;		//add number to the stream
-	return ss.str();	//return a string with the contents of the stream
-}
-
-double MGFramework::distance(int x1, int y1, int x2, int y2)
-{
-	return sqrt((double)(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1))));
-}
 
 void MGFramework::putPixel32(SDL_Surface *surface, int x, int y, Uint32 pixel )
 {
@@ -1917,35 +1906,6 @@ void MGFramework::hLine32(SDL_Surface *surface, int x, int y, int length, Uint32
 }
 
 
-std::vector<std::string> MGFramework::split(std::string str, char c)
-{
-	std::string strTempString;
-	std::vector<int> splitIndices;
-	std::vector<std::string> splitLine;
-    int nCharIndex = 0;
-    int nLineSize = (int)str.size();
-
-    // find indices
-    for(int i = 0; i < nLineSize; i++)
-    {
-        if(str[i] == c)
-		{
-            splitIndices.push_back(i);
-		}
-    }
-    splitIndices.push_back(nLineSize); // end index
-
-    // fill split lines
-    for(int i = 0; i < (int)splitIndices.size(); i++)
-    {
-        strTempString = str.substr(nCharIndex, (splitIndices[i] - nCharIndex));
-        splitLine.push_back(strTempString);
-        nCharIndex = splitIndices[i] + 1;
-    }
-	return splitLine;
-}
-
-
 bool MGFramework::isNumericalInt(const string &s)
 {
 	if(s.size()==0)
@@ -2026,27 +1986,6 @@ int MGFramework::toInt(const string &s)
 
 
 
-bool MGFramework::detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2)
-{
-	if(detectCollisionPointRectangle(x1, y1, a1, b1, a2, b2))
-		return true;
-	if(detectCollisionPointRectangle(x2, y2, a1, b1, a2, b2))
-		return true;
-	if(detectCollisionPointRectangle(a1, b1, x1, y1, x2, y2))
-		return true;
-	if(detectCollisionPointRectangle(a2, b2, x1, y1, x2, y2))
-		return true;
-	return false;
-}
-
-bool MGFramework::detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2)
-{ 
-	if(x1 >= px && px >=x2 && y1 >= py && py >= y2)
-		return true;
-	if(x2 >= px && px >=x1 && y2 >= py && py >= y1)
-		return true;
-	return false;
-}
 
 #ifndef MGF_DEBUGGING_ENABLED
 int MGFramework::initializeWinsock(WORD wVersionRequested)

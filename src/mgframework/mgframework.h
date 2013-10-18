@@ -1,11 +1,6 @@
 #ifndef _MG_FRAMEWORK_H
 #define _MG_FRAMEWORK_H
 
-// Standard libs
-#include <vector>
-#include <string>
-#include <iostream>
-#include <iomanip>
 // SDL
 #include <SDL/SDL.h>
 #include <SDL/SDL_thread.h>
@@ -20,7 +15,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.29.0"
+#define MGFRAMEWORKVERSION "1.0.29.1"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -29,12 +24,6 @@
 //#define MGF_DEBUGGING_ENABLED		// This flag disables the socket terminal and TTF as these are not possible to compile for Debug.
 
 
-// Macros...
-#define MGFTIMESTAMP(x) std::setfill('0') << std::setw(2) << (x/3600000) << ":" << std::setfill('0') << std::setw(2) << (x%3600000)/60000 << ":" << std::setfill('0') << std::setw(2) << (x%60000)/1000 << ":" << std::setfill('0') << std::setw(3) << (x%1000) 
-
-#define MGFLOG_WARNING(x)						{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: "	<< x << std::endl; }
-#define MGFLOG_INFO(x)		if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: "		<< x << std::endl; }
-#define MGFLOG_ERROR(x)							{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") ERROR: "	<< x << std::endl; }
 
 
 enum eMGComponentConsoleCommand{
@@ -135,6 +124,13 @@ enum eMGComponentConsoleCommand{
 	MGComponent_WINDOW_LOGGING_OFF,
 	MGComponent_WINDOW_LOGGING_ON,
 
+	// MGStationaryObject commands
+	MGComponent_SO_INT_GETLOCATION,
+	MGComponent_SO_INT_HELP,
+	MGComponent_SO_INT_LOGGING_ON,
+	MGComponent_SO_INT_LOGGING_OFF,
+	MGComponent_SO_ALL_LOGGING_ON,
+	MGComponent_SO_ALL_LOGGING_OFF,
 
 	//This is a counter for number of command identifiers and not an actual command.
 	MGComponent_NUMBEROFCOMMANDIDENTIFIERS
@@ -355,27 +351,12 @@ class MGFramework :public MGComponent
 		void countUnMark(){m_MarkedMOs--;}
 		int getNumberOfMarkedMO(){ return smallest(m_MarkedMOs, getNumberOfMO());}
 
-		// Utility functions
-		static string toString(int number);
-		static double distance(int x1, int y1, int x2, int y2);
-		static std::vector<std::string> split(std::string str, char c);
-		static std::string toString(bool b){ if(b) return std::string("true"); return std::string("false"); }
-		static int randomN(int upperLimit){return std::rand()%upperLimit;}
-		static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
-		static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);
+
 #ifndef MGF_DEBUGGING_ENABLED
 		static int initializeWinsock(WORD wVersionRequested);
 #endif
-		static bool oneOf(int x, int a1, int a2){ if(x==a1) return true;  if(x==a2) return true; return false;}
-		static int smallest(int a, int b){ if(a<b) return a; return b;}
-		static int smallest(int a, int b, int c){ return smallest(a, smallest(b, c)); }
-		static int smallest(int a, int b, int c, int d){ return smallest(smallest(a, b), smallest(c, d)); }
-		static int smallest(int a, int b, int c, int d, int e){ return smallest(smallest(a, b), smallest(c, d, e)); }
-		static int smallest(int a, int b, int c, int d, int e, int f){ return smallest(smallest(a, b, c), smallest(d, e, f)); }
-		static int smallest(int a, int b, int c, int d, int e, int f, int g){ return smallest(smallest(a, b, c), smallest(d, e, f, g)); }
-		static int smallest(int a, int b, int c, int d, int e, int f, int g, int h){ return smallest(smallest(a, b, c, d), smallest(e, f, g, h)); }
 
-		static int biggest(int a, int b){ if(a>b) return a; return b;}
+
 };
 
 #endif
