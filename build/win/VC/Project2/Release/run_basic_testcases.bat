@@ -110,9 +110,16 @@ echo Running test case .\test\tc_010_basic_path.mgf:testcase_2
 project2.exe -logging -script .\test\tc_010_basic_path.mgf:testcase_2	>	.\test\result\tc_010_basic_path_tescase_2_4.log
 project2.exe -log_eval .\test\result\tc_010_basic_path_tescase_2_4.log
 
+echo Running test case .\test\tc_011_basic_so.mgf
+project2.exe -logging -script .\test\tc_011_basic_so.mgf		>	.\test\result\tc_011_basic_so.log
+project2.exe -log_eval .\test\result\tc_011_basic_so.log
+
+
+
 echo Running test case .\test\tc_999_basic_testcoverage.mgf
 project2.exe -logging -script .\test\tc_999_basic_testcoverage.mgf	>	.\test\result\tc_999_basic_testcoverage.log
 project2.exe -log_eval .\test\result\tc_999_basic_testcoverage.log
+
 
 
 

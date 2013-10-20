@@ -12,10 +12,11 @@
 #include "mgmovingobject.h"
 #include "mgperiodicevent.h"
 #include "mgsymboltable.h"
+#include "mgstationaryobject.h"
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.29.1"
+#define MGFRAMEWORKVERSION "1.0.29.2"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -125,12 +126,18 @@ enum eMGComponentConsoleCommand{
 	MGComponent_WINDOW_LOGGING_ON,
 
 	// MGStationaryObject commands
+	MGComponent_SO_INT_X,
+	MGComponent_SO_ALL_X,
 	MGComponent_SO_INT_GETLOCATION,
 	MGComponent_SO_INT_HELP,
 	MGComponent_SO_INT_LOGGING_ON,
 	MGComponent_SO_INT_LOGGING_OFF,
 	MGComponent_SO_ALL_LOGGING_ON,
 	MGComponent_SO_ALL_LOGGING_OFF,
+	MGComponent_CREATE_SO_INT_PARAMLIST,
+	MGComponent_ADD_SO_INT_PARAMLIST,
+	MGComponent_DELETE_ALL_SO_PARAMLIST,
+	MGComponent_DELETE_SO_INT,
 
 	//This is a counter for number of command identifiers and not an actual command.
 	MGComponent_NUMBEROFCOMMANDIDENTIFIERS
@@ -146,7 +153,7 @@ private:
 	int m_X;
 	int m_Y;
 	double m_Heuristic;
-	//bool m_blocked; // Not implemented yet
+
 public:
 	PathItem();
 	PathItem(int x, int y){m_X=x; m_Y=y; m_Heuristic=1; };
@@ -215,6 +222,9 @@ class MGFramework :public MGComponent
 		//PE related
 		int m_NPE; // Number of Periodic Events
 
+		//SO related
+		int m_NSO; // Number of Stationary Objects
+
 		//Socket terminal related.
 		SDL_Thread *m_SocketTerminal;
 		bool m_KeepSocketTerminalOpen;
@@ -242,6 +252,7 @@ class MGFramework :public MGComponent
 		MGWindow m_Window;				// The framework window
 		MGMovingObject *m_MO;			// Moving Objects
 		MGPeriodicEvent *m_PE;			// Periodic Events
+		MGStationaryObject *m_SO;		// Stationary Objects
 		MGSymbolTable *m_SymbolTable;	// Symbols
 
 		// MO related
@@ -256,6 +267,13 @@ class MGFramework :public MGComponent
 		void addPE(int n);
 		int getNumberOfPE(){ return biggest(m_NPE, 0);}
 		void deletePE(int index);
+
+		// SO related
+		void createSO(int n);
+		void addSO(int n);
+		int getNumberOfSO(){ return biggest(m_NSO, 0);}
+		void deleteSO(int index);
+
 
 		// Event related
 		unsigned int m_Keys[SDLK_LAST];	// Stores keys that are pressed
@@ -317,7 +335,7 @@ class MGFramework :public MGComponent
 		// Console command handling
 		bool runConsoleCommand(const char *c, MGFramework *w);
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
-		bool MGFramework::isNumericalInt(const string &s); // returns true if the argument contains only numbers.
+		bool isNumericalInt(const string &s); // returns true if the argument contains only numbers.
 		int toInt(const string &s); // returns an int converted from either a constant or a symbol.
 		bool okMGFrameworkSyntax(/*const char *c*/const std::vector<std::string> &v_s);
 

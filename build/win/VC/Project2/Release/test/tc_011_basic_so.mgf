@@ -1,0 +1,90 @@
+
+
+
+call testcase_1
+call testcase_2
+call testcase_last
+
+
+// exit.. (not needed since testcase_2 will exit)
+delete all mo
+delete all pe
+delete all so
+input on
+exit application
+
+
+// We should never reach this point, generate error
+create mo 1
+expect getnumberofmo 0
+
+
+
+
+
+// *******************************************************************
+//
+// *******************************************************************
+function testcase_last
+input off
+delete all pe
+expect getnumberofpe 0
+delete all mo
+expect getnumberofmo 0
+map logging on
+map setsize 128 128 32 32
+
+// create so
+create so 3
+expect getnumberofso 3
+create so 1 -x 5 -y 5
+expect getnumberofso 1
+create so 500
+expect getnumberofso 500
+delete all so
+
+
+
+
+exit application
+end function
+
+
+// *******************************************************************
+//
+// *******************************************************************
+function testcase_1
+
+input off
+delete all pe
+expect getnumberofpe 0
+delete all mo
+expect getnumberofmo 0
+create mo 50 -owner 1 -speed 8
+map logging on
+map setsize 128 128 32 32
+
+
+end function
+
+
+
+
+
+
+// *******************************************************************
+//
+// *******************************************************************
+function testcase_2
+
+input off
+delete all pe
+expect getnumberofpe 0
+delete all mo
+expect getnumberofmo 0
+create mo 50 -owner 1 -speed 8
+map logging on
+map setsize 128 128 32 32
+
+
+end function

@@ -13,6 +13,7 @@ using namespace std;
 MGFramework::MGFramework():
 	m_NMO(0),
 	m_NPE(0),
+	m_NSO(0),
 	m_FrameTime(16),
 	m_FrameCountdownEnabled(false),
 	m_FrameNumber(0),
@@ -53,6 +54,7 @@ MGFramework::~MGFramework()
 	//registerMemoryDeallocation(sizeof(MGFramework));
 	delete[] m_MO;
 	delete[] m_PE;
+	delete[] m_SO;
 	delete[] m_SymbolTable;
 }
 
@@ -292,8 +294,14 @@ void MGFramework::parse(const char *sFileName)
 			}
 			else
 			{
+				if((int)strlen(scriptLine) > MGF_SCRIPTLINE_MAXLENGTH)
+				{
+					// XXX: Perhaps a warning would be nice here...
+					continue;
+				}
+
 				// Change all special characters to spaces
-				for(size_t i=0; i<strlen(scriptLine); ++i)
+				for(int i=0; i<(int)strlen(scriptLine); ++i)
 				{
 					if(scriptLine[i] <= 32) 
 					{
@@ -302,9 +310,14 @@ void MGFramework::parse(const char *sFileName)
 				}
 
 				// Remove the newline and any tailing "special" characters before sending command to runConsoleCommand
-				for(size_t i=strlen(scriptLine); i>=0 ; --i)
+				for(int i=(int)strlen(scriptLine); i>=0 ; --i)
 				{
-					if(scriptLine[i] <= 32) // Remove characters from 0 to space in the ASCII table
+					if(i<0 || i>MGF_SCRIPTLINE_MAXLENGTH)
+					{
+						MGFLOG_ERROR("MGFramework::parse found inconsistent indexing: " << i << " s='" << scriptLine << "'");
+						break;
+					}
+					else if(scriptLine[i] <= 32) // Remove characters from 0 to space in the ASCII table
 					{
 						scriptLine[i] = '\0';
 					}
@@ -315,8 +328,8 @@ void MGFramework::parse(const char *sFileName)
 				}
 
 				// Also remove comments..
-				size_t l=strlen(scriptLine);
-				for(size_t i=0; i<l; ++i)
+				int l=(int)strlen(scriptLine);
+				for(int i=0; i<l; ++i)
 				{
 					if(scriptLine[i] == '/') // Remove comments
 					{
@@ -640,6 +653,28 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			for(int i=0; i<getNumberOfPE(); i++)
 			{
 				m_PE[i].runConsoleCommand(c, this);
+			}
+			return true;
+		}
+
+		case MGComponent_SO_INT_X:
+		{
+			registerUsedCommand(MGComponent_SO_INT_X);
+			int soIndex=toInt(cmdvec[1]);
+			if(soIndex >= 0 && soIndex < getNumberOfSO())
+			{
+				return m_SO[toInt(cmdvec[1])].runConsoleCommand(c, this);
+			}
+			MGFLOG_WARNING("Console command was not forwarded to SO " << soIndex); 
+			return true;
+		}
+
+		case MGComponent_SO_ALL_X:
+		{
+			registerUsedCommand(MGComponent_SO_ALL_X);
+			for(int i=0; i<getNumberOfSO(); i++)
+			{
+				m_SO[i].runConsoleCommand(c, this);
 			}
 			return true;
 		}
@@ -990,6 +1025,90 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 				{
 					MGFLOG_WARNING("m_PE = NULL and getNumberOfPE() = " << getNumberOfPE())
 				}
+			}
+			return true;
+		}
+
+
+		case MGComponent_CREATE_SO_INT_PARAMLIST:
+		{
+			registerUsedCommand(MGComponent_CREATE_SO_INT_PARAMLIST);
+			int n = toInt(cmdvec[2]);
+			//int owner = 0;
+			int x = -1; // Invalid default value
+			int y = -1; // Invalid default value
+			//int speed = 2; // Tiles per second.
+			for(unsigned int i = 3; i < cmdvec.size(); ++i)
+			{
+			/*	if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
+				{
+					owner = toInt(cmdvec[i+1]);
+					++i;
+				}
+				else*/ if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
+				{
+					x = toInt(cmdvec[i+1]);
+					++i;
+					if(n!=1)
+					{
+						MGFLOG_ERROR("Parameter -x can only be set when creating one SO");
+						n = 0; // Abort MO creation..
+					}
+					
+				}
+				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
+				{
+					y = toInt(cmdvec[i+1]);
+					++i;
+					if(n!=1)
+					{
+						MGFLOG_ERROR("Parameter -y can only be set when creating one SO");
+						n = 0; // Abort MO creation..
+					}
+					
+				}
+			/*	else if(cmdvec[i]=="-speed" && cmdvec.size() > (i + 1))
+				{
+					speed = toInt(cmdvec[i+1]);
+					++i;
+				}*/
+				else
+				{
+					MGFLOG_ERROR("Error in command (create so <n>), bad parameter list");
+					n = 0; // Abort MO creation..
+				}
+			}
+			if(n > 0)
+			{
+				// Clear the map of occupied marks...
+			/*	for(int y=0; y<m_Map.getHeight(); y++)
+				{
+					for(int x=0; x<m_Map.getWidth(); x++)
+					{
+						m_Map.unOccupy(x, y);
+					}
+				}*/
+				// ...and then create the new MOs.
+				createSO(n);
+			}
+			else
+			{
+				MGFLOG_ERROR("Error in command (create so <n>)");
+				return true;
+			}
+
+			if(m_SO != NULL)
+			{
+			/*	for(int i=0;i<getNumberOfMO();i++)
+				{
+					// If setup fails we must setup the same index again 
+					// since the failing MO has been deleted.
+					if(!setupMO(i, x, y, owner, speed))--i;
+				}*/
+			}
+			else
+			{
+				MGFLOG_ERROR("SO storage is undefined");
 			}
 			return true;
 		}
@@ -1386,9 +1505,17 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		{
 			return MGComponent_CREATE_MO_INT_PARAMLIST; // Zero or more parameters..
 		}
+		if(cmdvec[0]=="create" && cmdvec[1]=="so")
+		{
+			return MGComponent_CREATE_SO_INT_PARAMLIST; // Zero or more parameters..
+		}
 		else if(cmdvec[0]=="add" && cmdvec[1]=="mo")
 		{
 			return MGComponent_ADD_MO_INT_PARAMLIST; // Zero or more parameters..
+		}
+		else if(cmdvec[0]=="add" && cmdvec[1]=="so")
+		{
+			return MGComponent_ADD_SO_INT_PARAMLIST; // Zero or more parameters..
 		}
 		else if(cmdvec[0]=="create" && cmdvec[1]=="pe")
 		{
@@ -1422,6 +1549,10 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		{
 			return MGComponent_DELETE_ALL_MO_PARAMLIST; // Zero or more parameters..
 		}
+		else if(cmdvec[0]=="delete" && cmdvec[1]=="all" && cmdvec[2]=="so" )
+		{
+			return MGComponent_DELETE_ALL_SO_PARAMLIST; // Zero or more parameters..
+		}
 		else if(cmdvec[0]=="delete" && cmdvec[1]=="all" && cmdvec[2]=="pe" )
 		{
 			return MGComponent_DELETE_ALL_PE_PARAMLIST; // Zero or more parameters..
@@ -1445,6 +1576,18 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		else if(cmdvec[0]=="delete" && cmdvec[1]=="mo")
 		{
 			return MGComponent_DELETE_MO_INT;
+		}
+		else if(cmdvec[0]=="delete" && cmdvec[1]=="so")
+		{
+			return MGComponent_DELETE_SO_INT;
+		}
+		else if(cmdvec[0]=="so" && cmdvec[1]=="all")
+		{
+			return MGComponent_SO_ALL_X;
+		}
+		else if(cmdvec[0]=="so")
+		{
+			return MGComponent_SO_INT_X;
 		}
 	}
 
@@ -2015,6 +2158,72 @@ void MGFramework::addConsoleCommandToQueue(const char *c)
 {
 
 }
+
+
+void MGFramework::createSO(int n)
+{
+	delete[] m_SO;
+	m_NSO=n;
+	if(getNumberOfSO() > 0)
+	{
+		m_SO = new MGStationaryObject[getNumberOfSO()];
+	}
+	else
+	{
+		m_SO = NULL;
+	}
+}
+
+void MGFramework::addSO(int n)
+{
+	MGStationaryObject *oldSO = new MGStationaryObject[getNumberOfSO()];
+	int nOld=getNumberOfSO();
+	for(int i=0; i<nOld; i++)
+	{
+		oldSO[i].copy(&m_SO[i]);
+	}
+	delete[] m_SO;
+	m_NSO=nOld+n;
+	m_SO = new MGStationaryObject[getNumberOfSO()];
+	for(int i=0; i<nOld; i++)
+	{
+		m_SO[i].copy(&oldSO[i]);
+	}
+}
+
+void MGFramework::deleteSO(int index)
+{
+	if(index < 0 || index >= getNumberOfSO())
+	{
+		MGFLOG_ERROR("MGFramework::deleteSO was given a bad index: " << index)
+	}
+	else
+	{
+		for(int i=0; i<getNumberOfSO(); ++i)
+		{
+			if(i<index)
+			{
+				// Do nothing...
+			}
+			else if(i>=index && i<getNumberOfSO()-1)
+			{
+				// Overwrite so(i) with so(i+1)
+				m_SO[i].copy(&m_SO[i+1]);
+			}
+			else if(i==getNumberOfSO()-1)
+			{
+				//No need to actually delete the SO since we will not access it if it's outside getNumberOfSO()...
+			}
+			else
+			{
+				MGFLOG_ERROR("MGFramework::deleteSO was not able to find the given index: " << index)
+				return;
+			}
+		}
+		m_NSO = getNumberOfSO()-1;
+	}
+}
+
 
 #ifndef MGF_DEBUGGING_ENABLED
 int runMGFrameworkSocketTerminal(void *fm)

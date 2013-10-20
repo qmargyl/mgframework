@@ -115,9 +115,49 @@ expect getnumberofmo 0
 create mo 1
 expect getnumberofmo 1
 mo 0 setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 mo 0 setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 mo 0 setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 mo 0 setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 runoneframe
 runoneframe
 runoneframe
@@ -147,70 +187,784 @@ map setsize 256 256 32 32
 create mo 400 -owner 1
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 1200
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 1600
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 2000
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 2400
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 2800
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 3200
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 3600
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 4000
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 4400
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 4800
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 5200
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 5600
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 6000
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 6400
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 6800
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 expect getnumberofmo 7200
 delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+mo random_mo setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 delete all mo -owner 2
 delete all mo -owner 1
 delete all mo -owner 3
