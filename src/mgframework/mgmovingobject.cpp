@@ -365,7 +365,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			if(!w->m_Map.occupant(dx, dy))
 			{
 				setDestTileXY(dx, dy);
-				w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+				m_Path = w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+				MGFLOG_INFO("Path length: " << m_Path.size());
 			}
 			return true;
 		}
@@ -378,7 +379,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			if(!w->m_Map.occupant(dx, dy))
 			{
 				setDestTileXY(dx, dy);
-				w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+				m_Path = w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+				MGFLOG_INFO("Path length: " << m_Path.size());
 			}
 			return true;
 		}
@@ -391,7 +393,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			if(!w->m_Map.occupant(dx, dy))
 			{
 				setDestTileXY(dx, dy);
-				w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+				m_Path = w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+				MGFLOG_INFO("Path length: " << m_Path.size());
 			}
 			return true;
 		}

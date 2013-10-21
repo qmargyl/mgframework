@@ -1,12 +1,12 @@
 
-#include "mgmap.h"
+
 #include <stdlib.h>
-#include "mgframework.h"
 #include <vector>
 #include <string>
 #include <cmath>
 #include <sstream>
-#include <list>
+#include "mgmap.h"
+#include "mgframework.h"
 
 
 MGMap::MGMap()
@@ -259,7 +259,7 @@ eMGComponentConsoleCommand MGMap::detectMGComponentConsoleCommand(const std::vec
 	return MGComponent_UNDEFINED;
 }
 
-void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
+std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 {
 	// Algorithm MGFSKYPATH:
 	// 1) Step (x,y) towards target. Diagonally first and then straight ahead.
@@ -454,6 +454,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 						// The found {bestx,besty} is not a neighbor of {x,y} -> ERROR, since 
 						// we have already handled this case above
 						MGFLOG_ERROR("MGMap::calculatePath suggested a non-neighbor as next step in path");
+						path.clear();
 						break;
 					}
 					PathItem *pI = new PathItem(bestx, besty, MGFramework::distance(bestx, besty, bx, by));
@@ -465,6 +466,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 				{
 					// XXX: Should we really give up here? What about back tracking?
 					//      Yes i think so. We have already tried to back-track...
+					//      No: Logs show this warning without any other previous warnings, such as failed back-tracks..
 					MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
 					break;
 				}
@@ -481,12 +483,14 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 			{
 				// XXX: This is not necessarily an error but keep it like that for now so it stands out more...
 				MGFLOG_ERROR("MGMap::calculatePath created a too long neighbor list, aborting");
+				path.clear();
 				break;
 			}
 			if(path.size() > 1000)
 			{
 				// XXX: This is not necessarily an error but keep it like that for now so it stands out more...
 				MGFLOG_ERROR("MGMap::calculatePath created a too long path, aborting");
+				path.clear();
 				break;
 			}
 		}//while
@@ -540,6 +544,7 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 			{
 				MGFLOG_ERROR("MGMap::calculatePath executed a case which should never happen");
 				MGFLOG_ERROR("Data: x=" << x << ", y=" << y << ", ax=" << ax << ", ay=" << ay << ", bx=" << bx << ", by=" << by);
+				path.clear();
 			}
 
 			PathItem *pI = new PathItem(x, y);
@@ -550,7 +555,6 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 
 
 	}
-	//delete [] path;
 
 	// This will not look like this later... leave it for now.
 
@@ -567,4 +571,5 @@ void MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 		MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
 	}
 
+	return path;
 }

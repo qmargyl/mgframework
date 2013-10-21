@@ -3,6 +3,7 @@
 
 #include <SDL/SDL.h>
 #include <iostream>
+#include <list>
 #include "mgcomponent.h"
 
 
@@ -13,11 +14,13 @@
 #define MGMAP_TP_PROPERTY_4  16
 #define MGMAP_TP_PROPERTY_5  32
 
+class PathItem;
+
 enum eMGFPathType{
 	MGFSTRAIGHTLINE = 0,
 	MGFSKYPATH = 1,
 	MGFGROUNDPATH = 2,
-	MGFBASICPATH1
+	MGFBASICPATH1 = 3
 };
 
 
@@ -97,7 +100,7 @@ public:
 	void save(); // Not implemented yet
 
 	// Path related
-	void calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by); // Calculates the path from A to B
+	std::list<PathItem> calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by); // Calculates the path from A to B
 
 	bool runConsoleCommand(const char *c, MGFramework *w);
 	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
