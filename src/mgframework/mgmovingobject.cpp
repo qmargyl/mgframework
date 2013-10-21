@@ -115,7 +115,36 @@ void MGMovingObject::update(MGFramework *w)
 		PathItem pathI = m_Path.front();
 		int x = pathI.getX();
 		int y = pathI.getY();
-		setDestTileXY(x, y);
+		if(w->m_Map.occupant(x, y) != getID() && w->m_Map.occupant(x, y) != 0)
+		{
+			// Calculate new path and if that did not work, set isStuck
+
+			// Try to find a new path to the last element in the path.
+			if(!isStuck())
+			{
+				//MGFLOG_WARNING("MGMovingObject::update concluded that the path is blocked. Will try to find a new Path...");
+				setPath(w->m_Map.calculatePath(/*MGFSKYPATH*/MGFBASICPATH1, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
+				setTimeOfLastUpdate(SDL_GetTicks());
+				changeState(MOStateStuck);
+			}
+			else if (isStuck() && timeSinceLastUpdate > 2000)
+			{
+				MGFLOG_WARNING("MGMovingObject::update found that MO has been stuck for a while");
+				setTimeOfLastUpdate(SDL_GetTicks());
+				changeState(MOStateMoving);
+			}
+
+			// XXX: If we got an empty path, set isStuck?
+		}
+		else
+		{
+			setDestTileXY(x, y);
+			setTimeOfLastUpdate(SDL_GetTicks());
+			if(isStuck())
+			{
+				changeState(MOStateMoving);
+			}
+		}
 
 		if(getDestTileX()!=getTileX() || getDestTileY()!=getTileY())
 		{
@@ -238,10 +267,11 @@ void MGMovingObject::update(MGFramework *w)
 				//std::cout << "H" << std::endl;
 				setTileXY(getTileX(), getTileY()-1, w);
 			}
+
+			setTimeOfLastUpdate(SDL_GetTicks());
 		}
 		else
 		{
-			// XXX: Pick next (x,y) from the path and set destination
 			if(m_Path.empty())
 			{
 				setTimeOfLastUpdate(SDL_GetTicks());
@@ -254,8 +284,7 @@ void MGMovingObject::update(MGFramework *w)
 		}
 	}
 
-
-	setTimeOfLastUpdate(SDL_GetTicks());
+	//setTimeOfLastUpdate(SDL_GetTicks());
 }
 
 
