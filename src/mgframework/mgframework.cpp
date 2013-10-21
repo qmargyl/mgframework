@@ -808,14 +808,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			else
 			{
 				//Deleting ALL MOs is faster than deleting them per owner 
-				for(int y=0; y<m_Map.getHeight(); y++)
-				{
-					for(int x=0; x<m_Map.getWidth(); x++)
-					{
-						m_Map.unOccupy(x, y);
-					}
-				}
-				// ...and then create zero new MOs.
 				MGFLOG_INFO("Creating zero MO...");
 				createMO(0);
 			}
@@ -1680,6 +1672,12 @@ void MGFramework::createMO(int n)
 		MGFLOG_ERROR(	"MGFramework::createMO cannot create " << n << " MO on a " 
 						<< m_Map.getWidth() << " by " << m_Map.getHeight() << " map")
 		return;
+	}
+
+	// Since all MO are deleted we can unoccupy all their tiles..
+	for(int i = 0; i < getNumberOfMO(); ++i)
+	{
+		m_Map.unOccupy(m_MO[i].getTileX(), m_MO[i].getTileY());
 	}
 
 	delete[] m_MO;

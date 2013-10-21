@@ -5,6 +5,7 @@ call testcoverage_fw
 call testcoverage_window
 call testcoverage_map
 call testcoverage_pe
+call testcoverage_so
 call testcoverage_evalandexit
 
 exit application
@@ -194,6 +195,16 @@ expect getnumberofpe 0
 end function
 
 
+function testcoverage_so
+create so 2
+so 0 logging on
+so 0 logging off
+so all logging on
+so all logging off
+so 1 getlocation
+so 1 help
+delete all so
+end function
 
 
 

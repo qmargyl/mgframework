@@ -115,6 +115,38 @@ bool MGStationaryObject::runConsoleCommand(const char *c, MGFramework *w)
 
 eMGComponentConsoleCommand MGStationaryObject::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
 {
+
+	if(cmdvec.size() == 3)
+	{
+		if(cmdvec[2]=="getlocation")
+		{
+			return MGComponent_SO_INT_GETLOCATION;
+		}
+		if(cmdvec[2]=="help")
+		{
+			return MGComponent_SO_INT_HELP;
+		}
+	}
+	else if(cmdvec.size() == 4)
+	{
+		if(cmdvec[1]=="all" && cmdvec[2]=="logging" && cmdvec[3]=="on")
+		{
+			return MGComponent_SO_ALL_LOGGING_ON;
+		}
+		else if(cmdvec[2]=="logging" && cmdvec[3]=="on")
+		{
+			return MGComponent_SO_INT_LOGGING_ON;
+		}	
+		else if(cmdvec[1]=="all" && cmdvec[2]=="logging" && cmdvec[3]=="off")
+		{
+			return MGComponent_SO_ALL_LOGGING_OFF;
+		}
+		else if(cmdvec[2]=="logging" && cmdvec[3]=="off")
+		{
+			return MGComponent_SO_INT_LOGGING_OFF;
+		}	
+	}
+
 	return MGComponent_UNDEFINED;
 }
 
