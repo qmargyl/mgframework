@@ -15,12 +15,10 @@ MGMovingObject::MGMovingObject()
 	m_NextTileY=0;
 	m_CurrentState=MOStateCreated;
 	setOwner(MGF_NOPLAYER);
-	//registerMemoryAllocation(sizeof(MGMovingObject));
 }
 
 MGMovingObject::~MGMovingObject()
 {
-	//registerMemoryDeallocation(sizeof(MGMovingObject));
 	m_Path.clear();
 }
 
@@ -34,8 +32,6 @@ void MGMovingObject::initialize()
 	m_NextTileX=0;
 	m_NextTileY=0;
 	setOwner(MGF_NOPLAYER);
-	//enableLogging();
-	//registerMemoryAllocation(sizeof(MGMovingObject));
 	if(!isCreated())
 	{
 		MGFLOG_ERROR("MGMovingObject::initialize was called in the wrong state: " << toString(getCurrentState())); 
@@ -77,9 +73,21 @@ void MGMovingObject::setDestTileXY(int x, int y)
 	m_DestTileX=x;
 	m_DestTileY=y;
 
-	m_Path.clear();
+	//m_Path.clear();
 	// XXX: create a path and set it here..
 }
+
+
+void MGMovingObject::setPath(std::list<PathItem> p)
+{
+	m_Path.clear();
+	m_Path = p;
+	if(!m_Path.empty())
+	{
+		setDestTileXY(m_Path.front().getX(), m_Path.front().getY());
+	}
+}
+
 
 double MGMovingObject::getDistance(int wx, int wy)
 { 
@@ -97,128 +105,155 @@ void MGMovingObject::update(MGFramework *w)
 	int timeSinceLastUpdate = SDL_GetTicks() - getTimeOfLastUpdate();
 	double d = m_Speed * (timeSinceLastUpdate / 1000.0);
 
-	if(getDestTileX()!=getTileX() || getDestTileY()!=getTileY())
+	if(m_Path.empty())
 	{
-		if(!isStuck())
-		{
-			changeState(MOStateMoving);
-		}
+		setTimeOfLastUpdate(SDL_GetTicks());
+		return;
+	}
+	else
+	{
+		PathItem pathI = m_Path.front();
+		int x = pathI.getX();
+		int y = pathI.getY();
+		setDestTileXY(x, y);
 
-		if(getDestTileX()>getTileX() && getDestTileY()>getTileY())
+		if(getDestTileX()!=getTileX() || getDestTileY()!=getTileY())
 		{
-			if(MGFramework::oneOf(w->m_Map.occupant(getTileX()+1, getTileY()+1), 0, getID()))
+			if(!isStuck())
 			{
-				setNextXY(getTileX()+1, getTileY()+1, w);
-				m_X += d;
-				m_Y += d;
+				changeState(MOStateMoving);
 			}
-		}
-		else if(getDestTileX()<getTileX() && getDestTileY()<getTileY())
-		{
-			if(MGFramework::oneOf(w->m_Map.occupant(getTileX()-1, getTileY()-1), 0, getID()))
+
+			if(getDestTileX()>getTileX() && getDestTileY()>getTileY())
 			{
-				setNextXY(getTileX()-1, getTileY()-1, w);
-				m_X -= d;
-				m_Y -= d;
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX()+1, getTileY()+1), 0, getID()))
+				{
+					setNextXY(getTileX()+1, getTileY()+1, w);
+					m_X += d;
+					m_Y += d;
+				}
 			}
-		}
-		else if(getDestTileX()>getTileX() && getDestTileY()<getTileY())
-		{
-			if(MGFramework::oneOf(w->m_Map.occupant(getTileX()+1, getTileY()-1), 0, getID()))
+			else if(getDestTileX()<getTileX() && getDestTileY()<getTileY())
 			{
-				setNextXY(getTileX()+1, getTileY()-1, w);
-				m_X += d;
-				m_Y -= d;
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX()-1, getTileY()-1), 0, getID()))
+				{
+					setNextXY(getTileX()-1, getTileY()-1, w);
+					m_X -= d;
+					m_Y -= d;
+				}
 			}
-		}
-		else if(getDestTileX()<getTileX() && getDestTileY()>getTileY())
-		{
-			if(MGFramework::oneOf(w->m_Map.occupant(getTileX()-1, getTileY()+1), 0, getID()))
+			else if(getDestTileX()>getTileX() && getDestTileY()<getTileY())
 			{
-				setNextXY(getTileX()-1, getTileY()+1, w);
-				m_X -= d;
-				m_Y += d;
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX()+1, getTileY()-1), 0, getID()))
+				{
+					setNextXY(getTileX()+1, getTileY()-1, w);
+					m_X += d;
+					m_Y -= d;
+				}
 			}
-		}
-		else if(getDestTileX()>getTileX())
-		{
-			if(MGFramework::oneOf(w->m_Map.occupant(getTileX()+1, getTileY()), 0, getID()))
+			else if(getDestTileX()<getTileX() && getDestTileY()>getTileY())
 			{
-				setNextXY(getTileX()+1, getTileY(), w);
-				m_X += d*1.414;
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX()-1, getTileY()+1), 0, getID()))
+				{
+					setNextXY(getTileX()-1, getTileY()+1, w);
+					m_X -= d;
+					m_Y += d;
+				}
 			}
-		}
-		else if(getDestTileX()<getTileX())
-		{
-			if(MGFramework::oneOf(w->m_Map.occupant(getTileX()-1, getTileY()), 0, getID()))
+			else if(getDestTileX()>getTileX())
 			{
-				setNextXY(getTileX()-1, getTileY(), w);
-				m_X -= d*1.414;
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX()+1, getTileY()), 0, getID()))
+				{
+					setNextXY(getTileX()+1, getTileY(), w);
+					m_X += d*1.414;
+				}
 			}
-		}
-		else if(getDestTileY()>getTileY())
-		{
-			if(MGFramework::oneOf(w->m_Map.occupant(getTileX(), getTileY()+1), 0, getID()))
+			else if(getDestTileX()<getTileX())
 			{
-				setNextXY(getTileX(), getTileY()+1, w);
-				m_Y += d*1.414;
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX()-1, getTileY()), 0, getID()))
+				{
+					setNextXY(getTileX()-1, getTileY(), w);
+					m_X -= d*1.414;
+				}
 			}
-		}
-		else if(getDestTileY()<getTileY())
-		{
-			if(MGFramework::oneOf(w->m_Map.occupant(getTileX(), getTileY()-1), 0, getID()))
+			else if(getDestTileY()>getTileY())
 			{
-				setNextXY(getTileX(), getTileY()-1, w);
-				m_Y -= d*1.414;
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX(), getTileY()+1), 0, getID()))
+				{
+					setNextXY(getTileX(), getTileY()+1, w);
+					m_Y += d*1.414;
+				}
+			}
+			else if(getDestTileY()<getTileY())
+			{
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX(), getTileY()-1), 0, getID()))
+				{
+					setNextXY(getTileX(), getTileY()-1, w);
+					m_Y -= d*1.414;
+				}
+			}
+			else
+			{
+				MGFLOG_ERROR("MGMovingObject::update executed a case which should never happen");
+				setTileXY(getTileX(), getTileY(), w);
+			}
+
+			if(m_X>=getTileSize() && m_Y>=getTileSize())
+			{
+				//std::cout << "A" << std::endl;
+				setTileXY(getTileX()+1, getTileY()+1, w);
+			}
+			else if(m_X>=getTileSize() && m_Y==0)
+			{
+				//std::cout << "B" << std::endl;
+				setTileXY(getTileX()+1, getTileY(), w);
+			}
+			else if(-m_X>=getTileSize() && -m_Y>=getTileSize())
+			{
+				//std::cout << "C" << std::endl;
+				setTileXY(getTileX()-1, getTileY()-1, w);
+			}
+			else if(-m_X>=getTileSize() && m_Y==0)
+			{
+				//std::cout << "D" << std::endl;
+				setTileXY(getTileX()-1, getTileY(), w);
+			}
+			else if(m_X>=getTileSize() && -m_Y>=getTileSize())
+			{
+				//std::cout << "E" << std::endl;
+				setTileXY(getTileX()+1, getTileY()-1, w);
+			}
+			else if(m_Y>=getTileSize() && m_X==0)
+			{
+				//std::cout << "F" << std::endl;
+				setTileXY(getTileX(), getTileY()+1, w);
+			}
+			else if(-m_X>=getTileSize() && m_Y>=getTileSize())
+			{
+				//std::cout << "G" << std::endl;
+				setTileXY(getTileX()-1, getTileY()+1, w);
+			}
+			else if(-m_Y>=getTileSize() && m_X==0)
+			{
+				//std::cout << "H" << std::endl;
+				setTileXY(getTileX(), getTileY()-1, w);
 			}
 		}
 		else
 		{
-			MGFLOG_ERROR("MGMovingObject::update executed a case which should never happen");
-			setTileXY(getTileX(), getTileY(), w);
-		}
-
-		if(m_X>=getTileSize() && m_Y>=getTileSize())
-		{
-			//std::cout << "A" << std::endl;
-			setTileXY(getTileX()+1, getTileY()+1, w);
-		}
-		else if(m_X>=getTileSize() && m_Y==0)
-		{
-			//std::cout << "B" << std::endl;
-			setTileXY(getTileX()+1, getTileY(), w);
-		}
-		else if(-m_X>=getTileSize() && -m_Y>=getTileSize())
-		{
-			//std::cout << "C" << std::endl;
-			setTileXY(getTileX()-1, getTileY()-1, w);
-		}
-		else if(-m_X>=getTileSize() && m_Y==0)
-		{
-			//std::cout << "D" << std::endl;
-			setTileXY(getTileX()-1, getTileY(), w);
-		}
-		else if(m_X>=getTileSize() && -m_Y>=getTileSize())
-		{
-			//std::cout << "E" << std::endl;
-			setTileXY(getTileX()+1, getTileY()-1, w);
-		}
-		else if(m_Y>=getTileSize() && m_X==0)
-		{
-			//std::cout << "F" << std::endl;
-			setTileXY(getTileX(), getTileY()+1, w);
-		}
-		else if(-m_X>=getTileSize() && m_Y>=getTileSize())
-		{
-			//std::cout << "G" << std::endl;
-			setTileXY(getTileX()-1, getTileY()+1, w);
-		}
-		else if(-m_Y>=getTileSize() && m_X==0)
-		{
-			//std::cout << "H" << std::endl;
-			setTileXY(getTileX(), getTileY()-1, w);
+			// XXX: Pick next (x,y) from the path and set destination
+			if(m_Path.empty())
+			{
+				setTimeOfLastUpdate(SDL_GetTicks());
+				return;
+			}
+			else
+			{
+				m_Path.pop_front();
+			}
 		}
 	}
+
 
 	setTimeOfLastUpdate(SDL_GetTicks());
 }
@@ -364,8 +399,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			int dy=w->toInt(cmdvec[4]);
 			if(!w->m_Map.occupant(dx, dy))
 			{
-				setDestTileXY(dx, dy);
-				m_Path = w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+				//setDestTileXY(dx, dy);
+				setPath(w->m_Map.calculatePath(/*MGFSKYPATH*/MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
 				MGFLOG_INFO("Path length: " << m_Path.size());
 			}
 			return true;
@@ -378,8 +413,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			int dy=w->toInt(cmdvec[4]);
 			if(!w->m_Map.occupant(dx, dy))
 			{
-				setDestTileXY(dx, dy);
-				m_Path = w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+				//setDestTileXY(dx, dy);
+				setPath(w->m_Map.calculatePath(/*MGFSKYPATH*/MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
 				MGFLOG_INFO("Path length: " << m_Path.size());
 			}
 			return true;
@@ -392,8 +427,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			int dy=w->toInt(cmdvec[4]);
 			if(!w->m_Map.occupant(dx, dy))
 			{
-				setDestTileXY(dx, dy);
-				m_Path = w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), getDestTileX(), getDestTileY());
+				//setDestTileXY(dx, dy);
+				setPath(w->m_Map.calculatePath(/*MGFSKYPATH*/MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
 				MGFLOG_INFO("Path length: " << m_Path.size());
 			}
 			return true;

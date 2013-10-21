@@ -56,7 +56,10 @@ public:
 	void initialize();
 
 	void setTileXY(int x, int y, MGFramework *world);
+
 	void setDestTileXY(int x, int y);
+	void setPath(std::list<PathItem> p);
+
 	void setSpeed(double s, int tileSize); // Seconds, Distance to next tile (pixels)
 	void update(MGFramework *w);
 	void copy(MGMovingObject *src);
