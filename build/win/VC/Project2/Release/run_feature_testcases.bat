@@ -1,0 +1,39 @@
+
+
+:: Feature regression test for mgframework
+@ECHO OFF
+echo Feature regression test for mgframework
+
+
+
+:: Create directory for log files..
+mkdir .\test\result
+
+
+
+
+:: Run all test cases and save log files..
+
+
+echo Running test case .\test\tc_401_feature_path.mgf:ext_testcase_001
+project2.exe -logging -script .\test\tc_401_feature_path.mgf:ext_testcase_001	>	.\test\result\tc_401_feature_path_testcase_001.log
+project2.exe -log_eval .\test\result\tc_401_feature_path_testcase_001.log
+
+echo Running test case .\test\tc_401_feature_path.mgf:ext_testcase_002
+project2.exe -logging -script .\test\tc_401_feature_path.mgf:ext_testcase_002	>	.\test\result\tc_401_feature_path_testcase_002.log
+project2.exe -log_eval .\test\result\tc_401_feature_path_testcase_002.log
+
+echo Running test case .\test\tc_401_feature_path.mgf:ext_testcase_003
+project2.exe -logging -script .\test\tc_401_feature_path.mgf:ext_testcase_003	>	.\test\result\tc_401_feature_path_testcase_003.log
+project2.exe -log_eval .\test\result\tc_401_feature_path_testcase_003.log
+
+
+pause
+
+
+
+
+
+
+
+

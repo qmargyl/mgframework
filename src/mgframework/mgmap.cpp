@@ -414,7 +414,7 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 						if(!alreadyInPath)
 						{
 							MGFLOG_INFO("MGMap::calculatePath found better tile: " << besth << " > " << (*it).getH());
-							if(x<(*it).getX()-1 || x>(*it).getX()+1 || y<(*it).getY()-1 || y>(*it).getY()+1)
+							while(x<(*it).getX()-1 || x>(*it).getX()+1 || y<(*it).getY()-1 || y>(*it).getY()+1)
 							{
 								// The found tile is not a neighbor of {x,y}
 								// Set H to a large number to not try this neighbor again.
@@ -422,6 +422,7 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 								(*it).setH(distance(0, 0, getWidth(), getHeight()));
 								if(it != neighbors.begin())
 								{
+									MGFLOG_INFO("MGMap::calculatePath back-tracking");
 									--it;
 									if(path.size()>0)
 									{
@@ -430,17 +431,20 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 								}
 								else
 								{
-									MGFLOG_WARNING("MGMap::calculatePath was not able to find a path by back-tracking");
 									break;
 								}
-								// XXX: Also back-track here, not only mark the neighbor tile as bad.
 
+							}
+
+							bestx=(*it).getX();
+							besty=(*it).getY();
+							besth=(*it).getH();
+							if(x<bestx-1 || x>bestx+1 || y<besty-1 || y>besty+1)
+							{
+								found=false;
 							}
 							else
 							{
-								bestx=(*it).getX();
-								besty=(*it).getY();
-								besth=(*it).getH();
 								found=true;
 							}
 						}
