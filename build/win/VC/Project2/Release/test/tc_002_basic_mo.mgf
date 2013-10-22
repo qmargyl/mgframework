@@ -97,6 +97,24 @@ expect getnumberofmo 0
 
 
 
+// Verify location
+create mo 1 -x 15 -y 18
+expect getnumberofmo 1
+mo 0 logging on
+runoneframe
+mo 0 expect getlocation 15 18
+add mo 1 -x 4 -y 3
+expect getnumberofmo 2
+mo 0 logging on
+runoneframe
+mo 1 expect getlocation 4 3
+delete mo 0
+expect getnumberofmo 1
+mo 0 expect getlocation 4 3
+delete all mo
+expect getnumberofmo 0
+
+
 
 // Ordering
 create mo 1

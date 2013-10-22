@@ -11,6 +11,10 @@ call testcoverage_evalandexit
 exit application
 
 
+
+
+
+
 // MO creation, deletion, marking, unmarking, logging, help
 function testcoverage_mo
 create mo 1 -owner 1
@@ -51,7 +55,6 @@ expect getnumberofmo 3
 delete all mo -owner 2
 expect getnumberofmo 0
 
-
 // MO getters, setters
 create mo 1 -owner 1
 expect getnumberofmo 1
@@ -77,6 +80,24 @@ mo marked getspeed
 mo marked setdestination 0 0
 delete all mo
 expect getnumberofmo 0
+
+// Verify MO location
+create mo 1 -x 15 -y 18
+expect getnumberofmo 1
+mo 0 logging on
+runoneframe
+mo 0 expect getlocation 15 18
+add mo 1 -x 4 -y 3
+expect getnumberofmo 2
+mo 0 logging on
+runoneframe
+mo 1 expect getlocation 4 3
+delete mo 0
+expect getnumberofmo 1
+mo 0 expect getlocation 4 3
+delete all mo
+expect getnumberofmo 0
+
 end function
 
 
@@ -118,6 +139,8 @@ end function
 
 
 
+
+
 // Window
 function testcoverage_window
 window logging on
@@ -126,6 +149,8 @@ window help
 window fullscreen off
 window logging off
 end function
+
+
 
 
 
@@ -153,6 +178,8 @@ runoneframe
 runoneframe
 delete all mo
 end function
+
+
 
 
 
@@ -195,6 +222,10 @@ expect getnumberofpe 0
 end function
 
 
+
+
+
+
 function testcoverage_so
 create so 2
 so 0 logging on
@@ -205,6 +236,9 @@ so 1 getlocation
 so 1 help
 delete all so
 end function
+
+
+
 
 
 

@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.29.6"
+#define MGFRAMEWORKVERSION "1.0.30.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -106,7 +106,7 @@ enum eMGComponentConsoleCommand{
 	// TODO: Implement these..
 	//MGComponent_MO_INT_SETSPEED_INT,
 	//MGComponent_MO_INT_EXPECT_GETSPEED_INT,
-	//MGComponent_MO_INT_EXPECT_GETDESTINATION_INT_INT,
+	MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT,
 
 
 	//MGMap commands

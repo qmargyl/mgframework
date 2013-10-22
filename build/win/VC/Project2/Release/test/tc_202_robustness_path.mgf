@@ -5,6 +5,8 @@
 
 // Large number of mos
 input off
+logging off
+map logging off
 map setsize 128 128 32 32
 create mo 1000 -owner 1
 add mo 1000 -owner 2
@@ -18,7 +20,7 @@ runoneframe
 runoneframe
 runoneframe
 runoneframe
-mo all logging on
+//mo all logging on
 mo all setdestination random_x random_y
 runoneframe
 runoneframe

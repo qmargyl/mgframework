@@ -107,7 +107,7 @@ void MGMovingObject::update(MGFramework *w)
 
 	if(m_Path.empty())
 	{
-		setTimeOfLastUpdate(SDL_GetTicks());
+		//setTimeOfLastUpdate(SDL_GetTicks());
 		return;
 	}
 	else
@@ -115,10 +115,10 @@ void MGMovingObject::update(MGFramework *w)
 		PathItem pathI = m_Path.front();
 		int x = pathI.getX();
 		int y = pathI.getY();
+
+		// Something has moved into the MO's path. A new path needs to be calculated.
 		if(w->m_Map.occupant(x, y) != getID() && w->m_Map.occupant(x, y) != 0)
 		{
-			// Calculate new path and if that did not work, set isStuck
-
 			// Try to find a new path to the last element in the path.
 			if(!isStuck())
 			{
@@ -126,8 +126,9 @@ void MGMovingObject::update(MGFramework *w)
 				setPath(w->m_Map.calculatePath(/*MGFSKYPATH*/MGFBASICPATH1, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
 				setTimeOfLastUpdate(SDL_GetTicks());
 				changeState(MOStateStuck);
+				return;
 			}
-			else if (isStuck() && timeSinceLastUpdate > 2000)
+			else if (isStuck() && timeSinceLastUpdate > 5000)
 			{
 				MGFLOG_WARNING("MGMovingObject::update found that MO has been stuck for a while");
 				setTimeOfLastUpdate(SDL_GetTicks());
@@ -146,12 +147,10 @@ void MGMovingObject::update(MGFramework *w)
 			}
 		}
 
-		if(getDestTileX()!=getTileX() || getDestTileY()!=getTileY())
+		// Not stuck and not at destination tile
+		if(!isStuck() && (getDestTileX() != getTileX() || getDestTileY() != getTileY()))
 		{
-			if(!isStuck())
-			{
-				changeState(MOStateMoving);
-			}
+			changeState(MOStateMoving);
 
 			if(getDestTileX()>getTileX() && getDestTileY()>getTileY())
 			{
@@ -229,42 +228,34 @@ void MGMovingObject::update(MGFramework *w)
 
 			if(m_X>=getTileSize() && m_Y>=getTileSize())
 			{
-				//std::cout << "A" << std::endl;
 				setTileXY(getTileX()+1, getTileY()+1, w);
 			}
 			else if(m_X>=getTileSize() && m_Y==0)
 			{
-				//std::cout << "B" << std::endl;
 				setTileXY(getTileX()+1, getTileY(), w);
 			}
 			else if(-m_X>=getTileSize() && -m_Y>=getTileSize())
 			{
-				//std::cout << "C" << std::endl;
 				setTileXY(getTileX()-1, getTileY()-1, w);
 			}
 			else if(-m_X>=getTileSize() && m_Y==0)
 			{
-				//std::cout << "D" << std::endl;
 				setTileXY(getTileX()-1, getTileY(), w);
 			}
 			else if(m_X>=getTileSize() && -m_Y>=getTileSize())
 			{
-				//std::cout << "E" << std::endl;
 				setTileXY(getTileX()+1, getTileY()-1, w);
 			}
 			else if(m_Y>=getTileSize() && m_X==0)
 			{
-				//std::cout << "F" << std::endl;
 				setTileXY(getTileX(), getTileY()+1, w);
 			}
 			else if(-m_X>=getTileSize() && m_Y>=getTileSize())
 			{
-				//std::cout << "G" << std::endl;
 				setTileXY(getTileX()-1, getTileY()+1, w);
 			}
 			else if(-m_Y>=getTileSize() && m_X==0)
 			{
-				//std::cout << "H" << std::endl;
 				setTileXY(getTileX(), getTileY()-1, w);
 			}
 
@@ -272,12 +263,8 @@ void MGMovingObject::update(MGFramework *w)
 		}
 		else
 		{
-			if(m_Path.empty())
-			{
-				setTimeOfLastUpdate(SDL_GetTicks());
-				return;
-			}
-			else
+			// Arrived at destination tile, set a new one from the path
+			if(!m_Path.empty())
 			{
 				m_Path.pop_front();
 			}
@@ -391,6 +378,21 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			w->registerUsedCommand(MGComponent_MO_INT_GETLOCATION);
 			std::cout << "{" << getTileX() << "," << getTileY() << "}" << std::endl;
 			return true;
+		}
+
+		case MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT:
+		{
+			w->registerUsedCommand(MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT);
+			int lx=w->toInt(cmdvec[4]);
+			int ly=w->toInt(cmdvec[5]);
+			if(lx == getTileX() && ly == getTileY())
+			{
+				MGFLOG_INFO("Expected location confirmed: (" << lx << ", " << ly << ")");
+			}
+			else
+			{
+				MGFLOG_ERROR("Expected location not confirmed: (" << lx << ", " << ly << "), MO at (" << getTileX() << ", " << getTileY() << ")");
+			}
 		}
 
 		case MGComponent_MO_INT_GETDESTINATION:
@@ -582,6 +584,13 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 		else if(cmdvec[2]=="setdestination")
 		{
 			return MGComponent_MO_INT_SETDESTINATION_INT_INT;
+		}
+	}
+	else if(cmdvec.size() == 6)
+	{
+		if(cmdvec[2]=="expect" && cmdvec[3]=="getlocation")
+		{
+			return MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT;
 		}
 	}
 
