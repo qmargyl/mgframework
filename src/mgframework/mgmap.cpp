@@ -277,7 +277,9 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 		int x=ax;
 		int y=ay;
 		std::list<PathItem> neighbors;
+		std::list<PathItem> evaluated;
 		PathItem *n;
+		PathItem *e;
 
 		while (x!=bx || y!=by)
 		{
@@ -403,18 +405,22 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 				{
 					if((*it).getH()<besth)
 					{
-						// First we check if the found tile is already in the path.
-						// XXX: Should be changed to alreadyEvaluated? Then we need a list of all evaluated path items.
-						bool alreadyInPath=false;
-						for (std::list<PathItem>::iterator pit=path.begin(); pit != path.end(); ++pit)
+						// First we check if the found tile has already been evaluated.
+						bool alreadyEvaluated = false;
+						for (std::list<PathItem>::iterator ae = evaluated.begin(); ae != evaluated.end(); ++ae)
 						{
-							if((*pit).equalCoordinate(&(*it)))
+							if((*ae).equalCoordinate(&(*it)))
 							{
-								alreadyInPath = true;
+								alreadyEvaluated = true;
 							}
 						}
-						if(!alreadyInPath)
+
+						if(!alreadyEvaluated)
 						{
+							// Add the current (x,y) to list of evaluated coordinates..
+							e = new PathItem(x, y, MGFramework::distance(x, y, bx, by));
+							evaluated.push_back(*e);
+
 							MGFLOG_INFO("MGMap::calculatePath found better candidate: " << besth << " > " << (*it).getH() << ", (" << (*it).getX() << "," << (*it).getY() << ")");
 							while(x<(*it).getX()-1 || x>(*it).getX()+1 || y<(*it).getY()-1 || y>(*it).getY()+1)
 							{
@@ -430,8 +436,16 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 									if(path.size()>0)
 									{
 										path.pop_back();
-										// XXX: Shouldn't wa also set (x,y) to the one we back-tracked to?
-										// XXX: We should back-track until we are on a tile that has the best neighbor as neighbor.
+
+										if(!path.empty())
+										{
+											x=path.back().getX();
+											y=path.back().getY();
+										}
+										else
+										{
+											break;
+										}
 									}
 								}
 								else
