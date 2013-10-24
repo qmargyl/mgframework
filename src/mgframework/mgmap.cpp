@@ -281,6 +281,7 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 
 		while (x!=bx || y!=by)
 		{
+			MGFLOG_INFO("MGMap::calculatePath has current (x,y) = (" << x << ", " << y << ")");
 			if(x+1<getWidth() && y+1<getHeight() && !occupant(x+1,y+1))
 			{
 				n = new PathItem(x+1, y+1, distance(x+1, y+1, bx, by));
@@ -403,6 +404,7 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 					if((*it).getH()<besth)
 					{
 						// First we check if the found tile is already in the path.
+						// XXX: Should be changed to alreadyEvaluated? Then we need a list of all evaluated path items.
 						bool alreadyInPath=false;
 						for (std::list<PathItem>::iterator pit=path.begin(); pit != path.end(); ++pit)
 						{
@@ -413,12 +415,13 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 						}
 						if(!alreadyInPath)
 						{
-							MGFLOG_INFO("MGMap::calculatePath found better tile: " << besth << " > " << (*it).getH());
+							MGFLOG_INFO("MGMap::calculatePath found better candidate: " << besth << " > " << (*it).getH() << ", (" << (*it).getX() << "," << (*it).getY() << ")");
 							while(x<(*it).getX()-1 || x>(*it).getX()+1 || y<(*it).getY()-1 || y>(*it).getY()+1)
 							{
 								// The found tile is not a neighbor of {x,y}
 								// Set H to a large number to not try this neighbor again.
 								// Back-track.
+								MGFLOG_INFO("MGMap::calculatePath marking bad neighbor: " << (*it).getX() << "," << (*it).getY());
 								(*it).setH(distance(0, 0, getWidth(), getHeight()));
 								if(it != neighbors.begin())
 								{
@@ -427,10 +430,13 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 									if(path.size()>0)
 									{
 										path.pop_back();
+										// XXX: Shouldn't wa also set (x,y) to the one we back-tracked to?
+										// XXX: We should back-track until we are on a tile that has the best neighbor as neighbor.
 									}
 								}
 								else
 								{
+									MGFLOG_INFO("MGMap::calculatePath break");
 									break;
 								}
 

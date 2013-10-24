@@ -27,6 +27,10 @@ echo Running test case .\test\tc_401_feature_path.mgf:ext_testcase_003
 project2.exe -logging -script .\test\tc_401_feature_path.mgf:ext_testcase_003	>	.\test\result\tc_401_feature_path_testcase_003.log
 project2.exe -log_eval .\test\result\tc_401_feature_path_testcase_003.log
 
+echo Running test case .\test\tc_401_feature_path.mgf:ext_testcase_004
+project2.exe -logging -script .\test\tc_401_feature_path.mgf:ext_testcase_004	>	.\test\result\tc_401_feature_path_testcase_004.log
+project2.exe -log_eval .\test\result\tc_401_feature_path_testcase_004.log
+
 
 pause
 

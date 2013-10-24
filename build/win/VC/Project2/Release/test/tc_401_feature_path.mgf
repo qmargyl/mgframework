@@ -6,6 +6,8 @@
 call testcase_001
 call testcase_002
 call testcase_003
+call testcase_004
+
 
 // ... and then exit.
 exit application
@@ -28,6 +30,13 @@ function ext_testcase_003
 call testcase_003
 exit application
 end function
+
+function ext_testcase_004
+call testcase_004
+exit application
+end function
+
+
 
 
 
@@ -123,7 +132,38 @@ end function
 
 
 
-
+// One MO goes around a wall
+function testcase_004
+logging on
+map logging on
+map setsize 128 128 32 32
+create mo 1 -x 5 -y 5 -speed 3
+add mo 1 -x 5 -y 6 -speed 3
+add mo 1 -x 5 -y 7 -speed 3
+add mo 1 -x 5 -y 8 -speed 3
+add mo 1 -x 5 -y 9 -speed 3
+add mo 1 -x 5 -y 10 -speed 3
+add mo 1 -x 5 -y 11 -speed 3
+mo 0 logging on
+mo 1 logging on
+mo 2 logging on
+mo 3 logging on
+mo 4 logging on
+mo 5 logging on
+mo 6 logging on
+add mo 1 -x 9 -y 7 -speed 3
+mo 7 logging on
+expect getnumberofmo 8
+mo 7 setdestination 4 7
+mo 7 expect getlocation 9 7
+call runframes_100
+call runframes_100
+call runframes_100
+mo 7 expect getlocation 4 7
+delete all mo
+expect getnumberofmo 0
+map logging off
+end function
 
 
 
