@@ -430,8 +430,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			int dy=w->toInt(cmdvec[4]);
 			if(!w->m_Map.occupant(dx, dy))
 			{
-				//setDestTileXY(dx, dy);
-				setPath(w->m_Map.calculatePath(/*MGFSKYPATH*/MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
+				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
 				MGFLOG_INFO("Path length: " << m_Path.size());
 			}
 			return true;
@@ -444,8 +443,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			int dy=w->toInt(cmdvec[4]);
 			if(!w->m_Map.occupant(dx, dy))
 			{
-				//setDestTileXY(dx, dy);
-				setPath(w->m_Map.calculatePath(/*MGFSKYPATH*/MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
+				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
 				MGFLOG_INFO("Path length: " << m_Path.size());
 			}
 			return true;
@@ -458,8 +456,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			int dy=w->toInt(cmdvec[4]);
 			if(!w->m_Map.occupant(dx, dy))
 			{
-				//setDestTileXY(dx, dy);
-				setPath(w->m_Map.calculatePath(/*MGFSKYPATH*/MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
+				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
 				MGFLOG_INFO("Path length: " << m_Path.size());
 			}
 			return true;

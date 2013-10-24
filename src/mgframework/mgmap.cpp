@@ -391,8 +391,6 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 
 			if(!neighbors.empty())
 			{
-				//MGFLOG_INFO(	"MGMap::calculatePath has a neighbor list of " << neighbors.size() << 
-				//				" elements and a path of " << path.size() << " elements");
 				int bestx=0;
 				int besty=0;
 				double besth=distance(0, 0, getWidth(), getHeight());
@@ -400,7 +398,7 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 
 				MGFLOG_INFO("MGMap::calculatePath will now evaluate " << neighbors.size() << " neighbors");
 
-				// TODO: Set a limit for how many neighbors we will consider at the most, in each step. 
+				// XXX: Set a limit for how many neighbors we will consider at the most, in each step. 
 				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
 					if((*it).getH()<besth)
@@ -450,33 +448,24 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 								}
 								else
 								{
-									MGFLOG_INFO("MGMap::calculatePath break");
+									MGFLOG_INFO("MGMap::calculatePath stopping back-tracking");
 									break;
 								}
-
 							}
 
 							bestx=(*it).getX();
 							besty=(*it).getY();
 							besth=(*it).getH();
-							if(x<bestx-1 || x>bestx+1 || y<besty-1 || y>besty+1)
-							{
-								found=false;
-							}
-							else
-							{
-								found=true;
-							}
+							found = !(x < bestx-1 || x > bestx+1 || y < besty-1 || y > besty+1);
 						}
 					}
 				}
 
 				if(found)
 				{
-					if(x<bestx-1 || x>bestx+1 || y<besty-1 || y>besty+1)
+					if(x < bestx-1 || x > bestx+1 || y < besty-1 || y > besty+1)
 					{
-						// The found {bestx,besty} is not a neighbor of {x,y} -> ERROR, since 
-						// we have already handled this case above
+						// XXX: Is this really necessary?
 						MGFLOG_ERROR("MGMap::calculatePath suggested a non-neighbor as next step in path");
 						path.clear();
 						break;
@@ -490,8 +479,18 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 				{
 					// XXX: Should we really give up here? What about back tracking?
 					//      Yes i think so. We have already tried to back-track...
-					//      No: Logs show this warning without any other previous warnings, such as failed back-tracks..
-					MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
+
+					// XXX: Why is this only ok one tile away from target? What if a cluster of tiles is occupied?
+					if(MGFramework::distance(x, y, bx, by) < 2 && occupant(bx,by) != 0)
+					{
+						// The tile we want to go to is occopied and we are one tile away
+
+					}
+					else
+					{
+						MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
+
+					}
 					break;
 				}
 			}
@@ -506,9 +505,13 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			if(neighbors.size() > 1000)
 			{
 				// XXX: This is not necessarily an error but keep it like that for now so it stands out more...
-				MGFLOG_ERROR("MGMap::calculatePath created a too long neighbor list, aborting");
-				path.clear();
-				break;
+				MGFLOG_WARNING("MGMap::calculatePath created a too long neighbor list, purging half...");
+				//path.clear();
+				int nSize = neighbors.size();
+				for(int i=0; i < nSize; ++i)
+				{
+					neighbors.pop_back();
+				}
 			}
 			if(path.size() > 1000)
 			{
@@ -580,8 +583,7 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 
 	}
 
-	// This will not look like this later... leave it for now.
-
+	// XXX: Perhaps come up with a better way to print the path?
 	if(!path.empty())
 	{
 		MGFLOG_INFO("Path:");
@@ -592,7 +594,8 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 	}
 	else
 	{
-		MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
+		// XXX: What is this caused by? It actually happens sometimes.
+		MGFLOG_WARNING("MGMap::calculatePath produced an empty path");
 	}
 
 	return path;
