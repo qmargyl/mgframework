@@ -3,6 +3,8 @@
 
 // Large number of mos
 map setsize 450 450 32 32
+logging off
+map logging off
 create mo 100000 -owner 1
 add mo 100000 -owner 2
 expect getnumberofmo 200000

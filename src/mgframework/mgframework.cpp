@@ -536,9 +536,13 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 
 		// Application specific game logics and graphics..
 		handleGameLogics();
-		draw();
-
-		if(getInstanceType() != MGFSERVERINSTANCE) SDL_Flip(getSurface()); // A server instance of the framework has no graphics.
+		
+		// A server instance of the framework has no graphics.
+		if(getInstanceType() != MGFSERVERINSTANCE) 
+		{
+			draw();
+			SDL_Flip(getSurface());
+		}
 
 		// Sleep if there is time to spare..
 		m_DelayTime = (1000/getDesiredFPS()) - (SDL_GetTicks() - frameStartTime);

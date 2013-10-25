@@ -72,9 +72,6 @@ void MGMovingObject::setDestTileXY(int x, int y)
 	}
 	m_DestTileX=x;
 	m_DestTileY=y;
-
-	//m_Path.clear();
-	// XXX: create a path and set it here..
 }
 
 
@@ -84,8 +81,11 @@ void MGMovingObject::setPath(std::list<PathItem> p)
 	m_Path = p;
 	if(!m_Path.empty())
 	{
+		//setNextXY(m_Path.front().getX(), m_Path.front().getY());
 		setDestTileXY(m_Path.front().getX(), m_Path.front().getY());
+		//setDestTileXY(getTileX(), getTileY());
 	}
+	// XXX: Otherwise perhaps start a timer that will trigger a new setPath?
 }
 
 
@@ -123,7 +123,7 @@ void MGMovingObject::update(MGFramework *w)
 			if(!isStuck())
 			{
 				//MGFLOG_WARNING("MGMovingObject::update concluded that the path is blocked. Will try to find a new Path...");
-				setPath(w->m_Map.calculatePath(/*MGFSKYPATH*/MGFBASICPATH1, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
+				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
 				setTimeOfLastUpdate(SDL_GetTicks());
 				changeState(MOStateStuck);
 				return;
@@ -428,7 +428,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			w->registerUsedCommand(MGComponent_MO_INT_SETDESTINATION_INT_INT);
 			int dx=w->toInt(cmdvec[3]);
 			int dy=w->toInt(cmdvec[4]);
-			if(!w->m_Map.occupant(dx, dy))
+			if(!w->m_Map.occupant(dx, dy) && (getTileX() != dx || getTileY() != dy))
 			{
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
 				MGFLOG_INFO("Path length: " << m_Path.size());
@@ -441,7 +441,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			w->registerUsedCommand(MGComponent_MO_ALL_SETDESTINATION_INT_INT);
 			int dx=w->toInt(cmdvec[3]);
 			int dy=w->toInt(cmdvec[4]);
-			if(!w->m_Map.occupant(dx, dy))
+			if(!w->m_Map.occupant(dx, dy) && (getTileX() != dx || getTileY() != dy))
 			{
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
 				MGFLOG_INFO("Path length: " << m_Path.size());
@@ -454,7 +454,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 			w->registerUsedCommand(MGComponent_MO_MARKED_SETDESTINATION_INT_INT);
 			int dx=w->toInt(cmdvec[3]);
 			int dy=w->toInt(cmdvec[4]);
-			if(!w->m_Map.occupant(dx, dy))
+			if(!w->m_Map.occupant(dx, dy) && (getTileX() != dx || getTileY() != dy))
 			{
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
 				MGFLOG_INFO("Path length: " << m_Path.size());

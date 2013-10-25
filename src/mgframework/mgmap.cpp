@@ -281,6 +281,9 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 		PathItem *n;
 		PathItem *e;
 
+		PathItem *now = new PathItem(ax, ay, MGFramework::distance(ax, ay, bx, by));
+		path.push_back(*now);
+
 		while (x!=bx || y!=by)
 		{
 			MGFLOG_INFO("MGMap::calculatePath has current (x,y) = (" << x << ", " << y << ")");
@@ -426,7 +429,8 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 								// Set H to a large number to not try this neighbor again.
 								// Back-track.
 								MGFLOG_INFO("MGMap::calculatePath marking bad neighbor: " << (*it).getX() << "," << (*it).getY());
-								(*it).setH(distance(0, 0, getWidth(), getHeight()));
+								(*it).setH(getWidth() + getHeight());
+
 								if(it != neighbors.begin())
 								{
 									MGFLOG_INFO("MGMap::calculatePath back-tracking");
@@ -507,8 +511,8 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 				// XXX: This is not necessarily an error but keep it like that for now so it stands out more...
 				MGFLOG_WARNING("MGMap::calculatePath created a too long neighbor list, purging half...");
 				//path.clear();
-				int nSize = neighbors.size();
-				for(int i=0; i < nSize; ++i)
+				size_t nToPurge = neighbors.size() / 2;
+				for(int i=0; i < (int)nToPurge; ++i)
 				{
 					neighbors.pop_back();
 				}
