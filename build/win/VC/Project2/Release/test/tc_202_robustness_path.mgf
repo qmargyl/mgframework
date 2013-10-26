@@ -26,6 +26,18 @@ runoneframe
 runoneframe
 runoneframe
 runoneframe
+mo 500 mark
+mo 501 mark
+mo 502 mark
+mo 503 mark
+mo 504 mark
+mo 505 mark
+mo 506 mark
+mo 507 mark
+mo 508 mark
+mo 509 mark
+mo marked setdestination random_x random_y
+mo all unmark
 runoneframe
 runoneframe
 runoneframe
@@ -41,6 +53,7 @@ delete mo 192
 delete mo 0
 delete mo 342
 delete mo 342
+expect getnumberofmo 1990
 runoneframe
 runoneframe
 runoneframe

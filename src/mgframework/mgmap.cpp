@@ -506,11 +506,9 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			
 
 			// Some additional checks..
-			if(neighbors.size() > 1000)
+			if(neighbors.size() > 200)
 			{
-				// XXX: This is not necessarily an error but keep it like that for now so it stands out more...
 				MGFLOG_WARNING("MGMap::calculatePath created a too long neighbor list, purging half...");
-				//path.clear();
 				size_t nToPurge = neighbors.size() / 2;
 				for(int i=0; i < (int)nToPurge; ++i)
 				{

@@ -609,8 +609,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 	std::string cmd(c);
 	std::vector<std::string> cmdvec = split(cmd, ' ');
 
-	//MGFLOG_INFO(std::cout << "Framework memory allocation: " << getMemoryAllocation() << std::endl;);
-
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
 		case MGComponent_UNDEFINED:

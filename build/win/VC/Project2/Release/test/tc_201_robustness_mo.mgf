@@ -87,6 +87,8 @@ delete all mo -owner 2
 add mo 400 -owner 2
 add mo 400 -owner 3
 delete all mo -owner 2
+mo all mark
+expect getnumberofmarkedmo 3600
 add mo 400 -owner 2
 add mo 400 -owner 3
 delete all mo -owner 2

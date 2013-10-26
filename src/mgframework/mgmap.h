@@ -51,6 +51,12 @@ private:
 	unsigned int m_LeftEdge;
 	unsigned int m_RightEdge;
 
+	// Statistics counters
+	static unsigned long int m_SC_CalculatedPaths;
+	static unsigned long int m_SC_LongestCalculatedPath;
+	static unsigned long int m_SC_FailedPathCalculations;
+
+
 
 public:
 	MGMap();
@@ -104,6 +110,12 @@ public:
 
 	bool runConsoleCommand(const char *c, MGFramework *w);
 	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
+
+	// Statistics counters
+	unsigned long int getSCCalculatedPaths(){ return m_SC_CalculatedPaths; }
+	unsigned long int getSCLongestCalculatedPath(){ return m_SC_LongestCalculatedPath; }
+	unsigned long int getSCFailedPathCalculations(){ return m_SC_FailedPathCalculations; }
+
 };
 
 

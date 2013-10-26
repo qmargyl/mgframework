@@ -55,9 +55,16 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 
 void MGMovingObject::setNextXY(int x, int y, MGFramework *world)
 {
-	world->m_Map.occupy(x, y, getID());
-	m_NextTileX = x; 
-	m_NextTileY = y;
+	if(MGFramework::distance(getTileX(), getTileY(), x, y) >= 2)
+	{
+		MGFLOG_ERROR("MGMovingObject::setNextXY detected a corrupt step size"); 
+	}
+	else
+	{
+		world->m_Map.occupy(x, y, getID());
+		m_NextTileX = x; 
+		m_NextTileY = y;
+	}
 }
 
 void MGMovingObject::setDestTileXY(int x, int y)
@@ -81,9 +88,7 @@ void MGMovingObject::setPath(std::list<PathItem> p)
 	m_Path = p;
 	if(!m_Path.empty())
 	{
-		//setNextXY(m_Path.front().getX(), m_Path.front().getY());
 		setDestTileXY(m_Path.front().getX(), m_Path.front().getY());
-		//setDestTileXY(getTileX(), getTileY());
 	}
 	// XXX: Otherwise perhaps start a timer that will trigger a new setPath?
 }
@@ -597,6 +602,7 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 
 void MGMovingObject::changeState(MOState toState)
 {
+	// XXX: This function should also update statistics counters.
 	if(toState==MOStateCreated)
 	{
 		MGFLOG_ERROR("MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", MOStateCreated should not be re-entered");
