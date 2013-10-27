@@ -8,6 +8,9 @@
 #include "mgmap.h"
 #include "mgframework.h"
 
+unsigned long int MGMap::m_SC_CalculatedPaths = 0;
+unsigned long int MGMap::m_SC_LongestCalculatedPath = 0;
+unsigned long int MGMap::m_SC_FailedPathCalculations = 0;
 
 MGMap::MGMap()
 : 	m_TopEdge(0),
@@ -601,4 +604,9 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 	}
 
 	return path;
+}
+
+void MGMap::printStatisticsCounters()
+{
+
 }

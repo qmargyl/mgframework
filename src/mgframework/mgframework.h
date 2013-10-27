@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.30.6"
+#define MGFRAMEWORKVERSION "1.0.30.7"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -188,7 +188,7 @@ class MGFramework :public MGComponent
 
 		// Exit application functionality
 		bool m_Quit;
-		void quit(){ m_Quit = true; }
+		void quit();
 		bool getQuitFlag(){ return m_Quit; }
 
 		bool m_TypingEnabled;		// Setting allows typing commands to console.

@@ -1907,6 +1907,15 @@ int MGFramework::getNumberOfUsedCommands()
 }
 
 
+
+void MGFramework::quit()
+{ 
+	m_Quit = true; 
+	m_Map.printStatisticsCounters();
+}
+
+
+
 void MGFramework::drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {
 	SDL_Rect srcRect;

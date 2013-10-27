@@ -112,6 +112,7 @@ public:
 	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
 	// Statistics counters
+	void printStatisticsCounters();
 	unsigned long int getSCCalculatedPaths(){ return m_SC_CalculatedPaths; }
 	unsigned long int getSCLongestCalculatedPath(){ return m_SC_LongestCalculatedPath; }
 	unsigned long int getSCFailedPathCalculations(){ return m_SC_FailedPathCalculations; }
