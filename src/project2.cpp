@@ -25,8 +25,10 @@ bool Project2::init(int w, int h, int tw, int th)
 		// All graphics should be loaded here.
 		m_Floor = loadBMPImage("tileset.bmp");
 		m_MovingObject = loadBMPImage("movingobject.bmp");
+		m_StationaryObject = loadBMPImage("stationaryobject.bmp");
 		m_Mark = loadBMPImage("mark.bmp");
 		SDL_SetColorKey(m_MovingObject, SDL_SRCCOLORKEY, 0);
+		SDL_SetColorKey(m_StationaryObject, SDL_SRCCOLORKEY, 0);
 		SDL_SetColorKey(m_Mark, SDL_SRCCOLORKEY, 0);
 
 
@@ -100,6 +102,22 @@ void Project2::draw()
 				{
 					drawSprite(m_Mark, getSurface(), 0, 0, oX, oY, m_Map.getTileWidth(), m_Map.getTileHeight());
 				}
+			}
+		}
+	}
+
+	// Draw all stationary objects...
+	int sX,sY;
+	for(int i=0;i<getNumberOfSO();i++)
+	{
+		if(m_SO != NULL)
+		{
+			sX=m_SO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX();
+			sY=m_SO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY();
+			// Only draw visible stationary objects...
+			if(detectCollisionRectangle(sX, sY, sX+m_Map.getTileWidth(), sY+m_Map.getTileHeight(), 0, 0, m_Window.getWidth(), m_Window.getHeight()))
+			{
+				drawSprite(m_StationaryObject, getSurface(), 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight());
 			}
 		}
 	}

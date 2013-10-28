@@ -1034,18 +1034,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			registerUsedCommand(MGComponent_CREATE_SO_INT_PARAMLIST);
 			int n = toInt(cmdvec[2]);
-			//int owner = 0;
 			int x = -1; // Invalid default value
 			int y = -1; // Invalid default value
-			//int speed = 2; // Tiles per second.
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
-			/*	if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
-				{
-					owner = toInt(cmdvec[i+1]);
-					++i;
-				}
-				else*/ if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
+				if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
 				{
 					x = toInt(cmdvec[i+1]);
 					++i;
@@ -1067,11 +1060,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 					}
 					
 				}
-			/*	else if(cmdvec[i]=="-speed" && cmdvec.size() > (i + 1))
-				{
-					speed = toInt(cmdvec[i+1]);
-					++i;
-				}*/
 				else
 				{
 					MGFLOG_ERROR("Error in command (create so <n>), bad parameter list");
@@ -1080,15 +1068,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			if(n > 0)
 			{
-				// Clear the map of occupied marks...
-			/*	for(int y=0; y<m_Map.getHeight(); y++)
-				{
-					for(int x=0; x<m_Map.getWidth(); x++)
-					{
-						m_Map.unOccupy(x, y);
-					}
-				}*/
-				// ...and then create the new MOs.
 				createSO(n);
 			}
 			else
@@ -1099,12 +1078,22 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 			if(m_SO != NULL)
 			{
-			/*	for(int i=0;i<getNumberOfMO();i++)
+				if(n>1)
 				{
-					// If setup fails we must setup the same index again 
-					// since the failing MO has been deleted.
-					if(!setupMO(i, x, y, owner, speed))--i;
-				}*/
+					for(int i=0;i<getNumberOfSO();i++)
+					{
+						m_SO[i].setTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()), this);
+
+					}
+				}
+				else if(n==1)
+				{
+					m_SO[0].setTileXY(x, y, this);
+				}
+				else
+				{
+
+				}
 			}
 			else
 			{

@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.30.8"
+#define MGFRAMEWORKVERSION "1.0.30.9"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
