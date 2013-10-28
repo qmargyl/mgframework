@@ -107,16 +107,15 @@ void MGMovingObject::setSpeed(double s, int tileSize)
 
 void MGMovingObject::update(MGFramework *w)
 {
-	int timeSinceLastUpdate = SDL_GetTicks() - getTimeOfLastUpdate();
-	double d = m_Speed * (timeSinceLastUpdate / 1000.0);
-
 	if(m_Path.empty())
 	{
-		//setTimeOfLastUpdate(SDL_GetTicks());
 		return;
 	}
 	else
 	{
+		int timeSinceLastUpdate = SDL_GetTicks() - getTimeOfLastUpdate();
+		double d = m_Speed * (timeSinceLastUpdate / 1000.0);
+
 		PathItem pathI = m_Path.front();
 		int x = pathI.getX();
 		int y = pathI.getY();
@@ -125,7 +124,7 @@ void MGMovingObject::update(MGFramework *w)
 		if(w->m_Map.occupant(x, y) != getID() && w->m_Map.occupant(x, y) != 0)
 		{
 			// Try to find a new path to the last element in the path.
-			if(!isStuck())
+			if(!isStuck() || (isStuck() && timeSinceLastUpdate > 5000))
 			{
 				//MGFLOG_WARNING("MGMovingObject::update concluded that the path is blocked. Will try to find a new Path...");
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
@@ -133,14 +132,6 @@ void MGMovingObject::update(MGFramework *w)
 				changeState(MOStateStuck);
 				return;
 			}
-			else if (isStuck() && timeSinceLastUpdate > 5000)
-			{
-				MGFLOG_WARNING("MGMovingObject::update found that MO has been stuck for a while");
-				setTimeOfLastUpdate(SDL_GetTicks());
-				changeState(MOStateMoving);
-			}
-
-			// XXX: If we got an empty path, set isStuck?
 		}
 		else
 		{
@@ -275,8 +266,6 @@ void MGMovingObject::update(MGFramework *w)
 			}
 		}
 	}
-
-	//setTimeOfLastUpdate(SDL_GetTicks());
 }
 
 
@@ -291,7 +280,6 @@ void MGMovingObject::copy(MGMovingObject *src)
 	m_DestTileY = src->m_DestTileY;
 	m_X = src->m_X;
 	m_Y = src->m_Y;
-	//m_TileSize = src->m_TileSize;
 	m_FinishingLastMove = src->m_FinishingLastMove;
 	m_TempDestTileX = src->m_TempDestTileX;
 	m_TempDestTileY = src->m_TempDestTileY;
@@ -373,6 +361,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_MO_INT_GETDISTANCE:
 		{
+			// XXX: This is not really relevant anymore since paths are used now instead..
 			w->registerUsedCommand(MGComponent_MO_INT_GETDISTANCE);
 			std::cout << getDistance(getDestTileX(), getDestTileY()) << std::endl;
 			return true;
@@ -402,6 +391,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 
 		case MGComponent_MO_INT_GETDESTINATION:
 		{
+			// XXX: This is not really relevant anymore since paths are used now instead..
 			w->registerUsedCommand(MGComponent_MO_INT_GETDESTINATION);
 			std::cout << "{" << getDestTileX() << "," << getDestTileY() << "}" << std::endl;
 			return true;

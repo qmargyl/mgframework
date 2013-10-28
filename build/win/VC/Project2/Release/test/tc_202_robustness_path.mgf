@@ -8,8 +8,8 @@ input off
 logging off
 map logging off
 map setsize 128 128 32 32
-create mo 1000 -owner 1
-add mo 1000 -owner 2
+create mo 1000 -owner 1 -speed 3
+add mo 1000 -owner 2 -speed 3
 expect getnumberofmo 2000
 runoneframe
 runoneframe
