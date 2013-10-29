@@ -55,15 +55,23 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 
 void MGMovingObject::setNextXY(int x, int y, MGFramework *world)
 {
-	if(MGFramework::distance(getTileX(), getTileY(), x, y) >= 2)
+	if(world->m_Map.occupant(x, y) == getID())
 	{
-		MGFLOG_ERROR("MGMovingObject::setNextXY detected a corrupt step size"); 
+
 	}
-	else
+	else if(MGFramework::distance(getTileX(), getTileY(), x, y) >= 1.5)
+	{
+		MGFLOG_ERROR("MGMovingObject::setNextXY detected an incorrect step size"); 
+	}
+	else if(world->m_Map.occupant(x, y) == 0)
 	{
 		world->m_Map.occupy(x, y, getID());
 		m_NextTileX = x; 
 		m_NextTileY = y;
+	}
+	else
+	{
+		MGFLOG_ERROR("MGMovingObject::setNextXY tried to occupy an occupied tile"); 
 	}
 }
 

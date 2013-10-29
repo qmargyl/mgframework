@@ -1078,21 +1078,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 
 			if(m_SO != NULL)
 			{
-				if(n>1)
+				for(int i=0;i<getNumberOfSO();i++)
 				{
-					for(int i=0;i<getNumberOfSO();i++)
-					{
-						m_SO[i].setTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()), this);
-
-					}
-				}
-				else if(n==1)
-				{
-					m_SO[0].setTileXY(x, y, this);
-				}
-				else
-				{
-
+					// If setup fails we must setup the same index again 
+					// since the failing SO has been deleted.
+					if(!setupSO(i, x, y))--i;
 				}
 			}
 			else
@@ -1819,6 +1809,66 @@ bool MGFramework::setupMO(int i, int x, int y, int owner, int speed)
 	return true;
 }
 
+
+
+
+bool MGFramework::setupSO(int i, int x, int y)
+{
+	if(i < 0 || i >= getNumberOfSO())
+	{
+		MGFLOG_ERROR("MGFramework::setupSO was given a bad index: " << i)
+	}
+	else
+	{
+		if(x<0) x = randomN(m_Map.getWidth());
+		if(y<0) y = randomN(m_Map.getHeight());
+		bool successful=false;
+
+		for(int q=0; q<MGF_SOPOSITIONINGATTEMPTS; ++q)
+		{
+			if(m_Map.occupant(x,y) != 0)
+			{
+				x = randomN(m_Map.getWidth());
+				y = randomN(m_Map.getHeight());
+			}
+			else
+			{
+				successful=true;
+				break;
+			}
+		}
+		// Find the first available (x,y) since the random placement failed.
+		if(!successful)
+		{
+			for(int t=0; t < m_Map.getWidth()*m_Map.getHeight(); ++t)
+			{
+				if(m_Map.occupant(m_Map.getTileX(t), m_Map.getTileY(t))==0)
+				{
+					x = m_Map.getTileX(t);
+					y = m_Map.getTileY(t);
+					successful = true;
+					break;
+				}
+			}
+		}
+
+		if(successful)
+		{
+			m_SO[i].setTileXY(x, y, this);
+			m_Map.occupy(m_SO[i].getTileX(), m_SO[i].getTileY(), m_SO[i].getID());
+		}
+		else
+		{
+			MGFLOG_ERROR("Failed to find space for SO at creation");
+			deleteSO(i);
+			return false;
+		}
+
+	}
+	return true;
+}
+
+
 void MGFramework::createPE(int n)
 {
 	delete[] m_PE;
@@ -2203,6 +2253,7 @@ void MGFramework::deleteSO(int index)
 	}
 	else
 	{
+		m_Map.unOccupy(m_SO[index].getTileX(), m_SO[index].getTileY());
 		for(int i=0; i<getNumberOfSO(); ++i)
 		{
 			if(i<index)

@@ -16,12 +16,13 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.30.9"
+#define MGFRAMEWORKVERSION "1.0.30.10"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
 #define MGF_LOGLINE_MAXLENGTH		1024
 #define MGF_MOPOSITIONINGATTEMPTS	100
+#define MGF_SOPOSITIONINGATTEMPTS	100
 //#define MGF_DEBUGGING_ENABLED		// This flag disables the socket terminal and TTF as these are not possible to compile for Debug.
 
 
@@ -273,6 +274,7 @@ class MGFramework :public MGComponent
 		void addSO(int n);
 		int getNumberOfSO(){ return biggest(m_NSO, 0);}
 		void deleteSO(int index);
+		bool setupSO(int i, int x, int y);		// Setups the MO with a specified index
 
 
 		// Event related

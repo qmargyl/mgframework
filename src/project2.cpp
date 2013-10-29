@@ -113,11 +113,11 @@ void Project2::draw()
 		if(m_SO != NULL)
 		{
 			sX=m_SO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX();
-			sY=m_SO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY();
+			sY=m_SO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY()-16;
 			// Only draw visible stationary objects...
 			if(detectCollisionRectangle(sX, sY, sX+m_Map.getTileWidth(), sY+m_Map.getTileHeight(), 0, 0, m_Window.getWidth(), m_Window.getHeight()))
 			{
-				drawSprite(m_StationaryObject, getSurface(), 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight());
+				drawSprite(m_StationaryObject, getSurface(), 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight()+16);
 			}
 		}
 	}
