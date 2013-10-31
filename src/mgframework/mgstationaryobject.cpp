@@ -28,6 +28,7 @@ void MGStationaryObject::setTileXY(int x, int y, MGFramework *world)
 	world->m_Map.unOccupy(getTileX(), getTileY());
 	m_TileX=x;
 	m_TileY=y;
+	world->m_Map.occupy(getTileX(), getTileY(), getID());
 }
 
 double MGStationaryObject::getDistance(int wx, int wy)

@@ -745,15 +745,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			if(n > 0)
 			{
-				// Clear the map of occupied marks...
-				for(int y=0; y<m_Map.getHeight(); y++)
-				{
-					for(int x=0; x<m_Map.getWidth(); x++)
-					{
-						m_Map.unOccupy(x, y);
-					}
-				}
-				// ...and then create the new MOs.
 				createMO(n);
 			}
 			else
