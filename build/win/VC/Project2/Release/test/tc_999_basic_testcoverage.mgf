@@ -228,13 +228,20 @@ end function
 
 function testcoverage_so
 create so 2
+expect getnumberofso 2
 so 0 logging on
 so 0 logging off
 so all logging on
 so all logging off
 so 1 getlocation
 so 1 help
+delete so 0
+expect getnumberofso 1
 delete all so
+add so 10
+expect getnumberofso 10
+delete all so
+expect getnumberofso 0
 end function
 
 

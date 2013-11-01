@@ -774,7 +774,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_DELETE_ALL_MO_PARAMLIST:
 		{
 			registerUsedCommand(MGComponent_DELETE_ALL_MO_PARAMLIST);
-			// Clear the map of occupied marks...
 			int owner = 0;
 			bool ownerParamSet=false;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
@@ -818,7 +817,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_DELETE_ALL_PE_PARAMLIST:
 		{
 			registerUsedCommand(MGComponent_DELETE_ALL_PE_PARAMLIST);
-			// Clear the map of occupied marks...
 			int owner = 0;
 			bool ownerParamSet=false;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
@@ -857,6 +855,48 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
+
+
+		case MGComponent_DELETE_ALL_SO_PARAMLIST:
+		{
+			registerUsedCommand(MGComponent_DELETE_ALL_SO_PARAMLIST);
+			int owner = 0;
+			bool ownerParamSet=false;
+			for(unsigned int i = 3; i < cmdvec.size(); ++i)
+			{
+				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
+				{
+					owner = toInt(cmdvec[i+1]);
+					ownerParamSet=true;
+					++i;
+				}
+				else
+				{
+					MGFLOG_ERROR("Error in command (delete all so), bad parameter list");
+					return true;
+				}
+			}
+
+			if(ownerParamSet)
+			{
+				// Delete only MOs connected to a specific owner
+				MGFLOG_INFO("Deleting SOs owned by " << owner);
+				for(int i = getNumberOfSO()-1; i>=0; --i)
+				{
+					if(m_SO[i].getOwner() == owner)
+					{
+						deleteSO(i);
+					}
+				}
+			}
+			else
+			{
+				//Deleting ALL SOs is faster than deleting them per owner 
+				MGFLOG_INFO("Creating zero SO...");
+				createSO(0);
+			}
+			return true;
+		}
 
 
 		case MGComponent_ADD_MO_INT_PARAMLIST:
@@ -933,6 +973,73 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			}
 			return true;
 		}
+
+
+
+		case MGComponent_ADD_SO_INT_PARAMLIST:
+		{
+			registerUsedCommand(MGComponent_ADD_SO_INT_PARAMLIST);
+			int nBefore=getNumberOfSO();
+			int n = toInt(cmdvec[2]);
+			int x = -1; // Invalid default value
+			int y = -1; // Invalid default value
+			for(unsigned int i = 3; i < cmdvec.size(); ++i)
+			{
+				if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
+				{
+					x = toInt(cmdvec[i+1]);
+					++i;
+					if(n!=1)
+					{
+						MGFLOG_ERROR("Parameter -x can only be set when adding one SO");
+						n = 0; // Abort SO creation..
+					}
+					
+				}
+				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
+				{
+					y = toInt(cmdvec[i+1]);
+					++i;
+					if(n!=1)
+					{
+						MGFLOG_ERROR("Parameter -y can only be set when adding one SO");
+						n = 0; // Abort SO creation..
+					}
+					
+				}
+				else
+				{
+					MGFLOG_ERROR("Error in command (add so <n>), bad parameter list");
+					n = 0; // Abort SO creation..
+				}
+			}
+			if(n>0)
+			{
+				addSO(n);
+			}
+			else
+			{
+				MGFLOG_ERROR("Error in command (add so <n>)");
+				return true;
+			}
+
+			if(m_SO != NULL)
+			{
+				for(int i=nBefore; i<getNumberOfSO(); i++)
+				{
+					// If setup fails we must setup the same index again 
+					// since the failing SO has been deleted.
+					if(!setupSO(i, x, y))--i;
+				}
+			}
+			else
+			{
+				MGFLOG_ERROR("SO storage is undefined");
+			}
+			return true;
+		}
+
+
 
 
 		case MGComponent_CREATE_PE_INT_PARAMLIST:
@@ -1175,6 +1282,21 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
+		case MGComponent_DELETE_SO_INT:
+		{
+			registerUsedCommand(MGComponent_DELETE_SO_INT);
+			int soIndex=toInt(cmdvec[2]);
+			if(m_SO != NULL && soIndex >= 0 && soIndex < getNumberOfSO())
+			{
+				deleteSO(soIndex);
+			}
+			else if(m_SO == NULL)
+			{
+				MGFLOG_ERROR("m_SO = NULL and getNumberOfSO() = " << getNumberOfSO())
+			}
+			return true;
+		}
+
 		case MGComponent_LOGGING_ON:
 		{
 			registerUsedCommand(MGComponent_LOGGING_ON);
@@ -1321,6 +1443,21 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			else
 			{
 				MGFLOG_ERROR("MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfMO() << ")");
+			}
+			return true;
+		}
+
+		case MGComponent_EXPECT_GETNUMBEROFSO_INT:
+		{
+			registerUsedCommand(MGComponent_EXPECT_GETNUMBEROFSO_INT);
+			int exp = toInt(cmdvec[2]);
+			if(exp == getNumberOfSO())
+			{
+				MGFLOG_INFO("MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")");
+			}
+			else
+			{
+				MGFLOG_ERROR("MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfSO() << ")");
 			}
 			return true;
 		}
@@ -1534,6 +1671,10 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofmo")
 		{
 			return MGComponent_EXPECT_GETNUMBEROFMO_INT;
+		}
+		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofso")
+		{
+			return MGComponent_EXPECT_GETNUMBEROFSO_INT;
 		}
 		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofpe")
 		{

@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.30.11"
+#define MGFRAMEWORKVERSION "1.0.31.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -46,6 +46,7 @@ enum eMGComponentConsoleCommand{
 	//Expect functions
 	MGComponent_EXPECT_GETNUMBEROFMARKEDMO_INT,
 	MGComponent_EXPECT_GETNUMBEROFMO_INT,
+	MGComponent_EXPECT_GETNUMBEROFSO_INT,
 	MGComponent_EXPECT_GETNUMBEROFPE_INT,
 	MGComponent_EXPECT_GETNUMBEROFUSEDCOMMANDS_PERCENTAGE_INT,
 
