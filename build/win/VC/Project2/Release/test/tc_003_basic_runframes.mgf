@@ -1,7 +1,7 @@
 input off
 create mo 50 -owner 1 -speed 6
-map logging on
-runframes 50
+map logging off
+
 
 
 mo 0 setdestination 0 0
@@ -58,6 +58,8 @@ mo 46 setdestination random_x random_y
 mo 47 setdestination random_x random_y
 mo 48 setdestination random_x random_y
 mo 49 setdestination random_x random_y
+
+runframes 50
 
 runoneframe
 runoneframe

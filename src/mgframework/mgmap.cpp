@@ -289,6 +289,13 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 
 		while (x!=bx || y!=by)
 		{
+			if(occupant(bx, by) != 0)
+			{
+				// XXX: Here we should try to find a tile close to target instead of giving up.
+				MGFLOG_WARNING("MGMap::calculatePath target tile is occupied");
+				break;
+			}
+
 			MGFLOG_INFO("MGMap::calculatePath has current (x,y) = (" << x << ", " << y << ")");
 			if(x+1<getWidth() && y+1<getHeight() && !occupant(x+1,y+1))
 			{
@@ -496,7 +503,6 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 					else
 					{
 						MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
-
 					}
 					break;
 				}
@@ -509,7 +515,7 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			
 
 			// Some additional checks..
-			if(neighbors.size() > 200)
+			if(neighbors.size() > 100)
 			{
 				// Could be a warning but kind of part of the algorithm so...
 				MGFLOG_INFO("MGMap::calculatePath created a too long neighbor list, purging half...");
@@ -592,10 +598,13 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 	// XXX: Perhaps come up with a better way to print the path?
 	if(!path.empty())
 	{
-		MGFLOG_INFO("Path:");
-		for (std::list<PathItem>::iterator it=path.begin(); it != path.end(); ++it)
+		if(loggingEnabled())
 		{
-			MGFLOG_INFO("(" << (*it).getX() << ", " << (*it).getY() << ")");
+			MGFLOG_INFO("Path:");
+			for (std::list<PathItem>::iterator it=path.begin(); it != path.end(); ++it)
+			{
+				MGFLOG_INFO("(" << (*it).getX() << ", " << (*it).getY() << ")");
+			}
 		}
 	}
 	else

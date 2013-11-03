@@ -31,8 +31,6 @@ MGFramework::MGFramework():
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
 
-	//registerMemoryAllocation(sizeof(MGFramework));
-
 	// Setup the framework for automatic regression testing...
 
 	// At framework creation, no commands have been used..
@@ -42,6 +40,7 @@ MGFramework::MGFramework():
 	}
 	// MGComponent_UNDEFINED does not represent a command or forwarding a command
 	m_UsedCommands[MGComponent_UNDEFINED] = true;
+
 	// MGComponent_EXIT_APPLICATION is impossible to call before evaluating the 
 	// number of used commands as it will terminate execution of the application
 	m_UsedCommands[MGComponent_EXIT_APPLICATION] = true;
@@ -420,6 +419,11 @@ void MGFramework::logEval(const char *logFileName)
 {
 	FILE *lf = NULL;
 	errno_t logError = fopen_s(&lf, logFileName, "rt");
+
+	int nErrors=0;
+	int nWarnings=0;
+	std::string execTimeMS("");
+
 	if(lf == NULL)
 	{
 		MGFLOG_ERROR("MGFramework::logEval failed to open log file " << logFileName << ", error(" << logError << ")");
@@ -432,8 +436,8 @@ void MGFramework::logEval(const char *logFileName)
 		char *neof = NULL;
 		//MGFLOG_INFO(std::cout << "MGFramework::logEval starting to parse log file " << logFileName << std::endl;);
 
-		int nErrors=0;
-		int nWarnings=0;
+
+
 		while(true)
 		{
 			// Read until new line or end of file, whichever happens first..
@@ -446,31 +450,37 @@ void MGFramework::logEval(const char *logFileName)
 			{
 				// An error defined as a log line containing at least one "ERROR".
 				std::string line(logLine);
+
 				std::string errSubstr("ERROR");
 				std::string warnSubstr("WARNING");
 				std::size_t foundErr = line.find(errSubstr);
 				std::size_t foundWarn = line.find(warnSubstr);
-				if (foundErr!=std::string::npos) nErrors++;
-				if (foundWarn!=std::string::npos) nWarnings++;
+				if (foundErr != std::string::npos) nErrors++;
+				if (foundWarn != std::string::npos) nWarnings++;
+
+				std::string exetimeSubstr("Execution time: ");
+				std::size_t foundExecutionTime = line.find(exetimeSubstr);
+				if (foundExecutionTime != std::string::npos)
+				{
+					execTimeMS = line.substr(exetimeSubstr.size(), line.size() - exetimeSubstr.size() -1);
+					//C++11: int execTimeMS = std::stoi(execTime);
+				}
 			}
 		}
 
 		if(nErrors!=0)
 		{
-			std::cout << "FAIL (" << nErrors << " errors, " << nWarnings << " warnings)" << std::endl;
+			std::cout << "FAIL (" << nErrors << " errors, " << nWarnings << " warnings)";
 		}
 		else
 		{
 			std::cout << "PASS";
 			if(nWarnings>0)
 			{
-				std::cout << " (" << nWarnings << " warnings)" << std::endl;
-			}
-			else
-			{
-				std::cout << std::endl;
+				std::cout << " (" << nWarnings << " warnings)";
 			}
 		}
+		std::cout << ", " << execTimeMS.c_str() << " ms" << std::endl;
 
 		if(lf != NULL)
 		{
@@ -2083,6 +2093,7 @@ void MGFramework::quit()
 { 
 	m_Quit = true; 
 	m_Map.printStatisticsCounters();
+	std::cout << "Execution time: " << SDL_GetTicks() << std::endl;
 }
 
 

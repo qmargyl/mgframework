@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.31.0"
+#define MGFRAMEWORKVERSION "1.0.31.1"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -177,7 +177,7 @@ int runMGFrameworkSocketTerminal(void *fm);
 class MGFramework :public MGComponent
 {
 	private:
-		// Test coverage functionality
+		// Test framework functionality
 		bool m_UsedCommands[MGComponent_NUMBEROFCOMMANDIDENTIFIERS];
 		int getNumberOfUsedCommands();
 		int getNumberOfCommands(){ return (int) MGComponent_NUMBEROFCOMMANDIDENTIFIERS; }

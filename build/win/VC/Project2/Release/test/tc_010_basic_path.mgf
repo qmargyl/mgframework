@@ -32,7 +32,7 @@ delete all pe
 expect getnumberofpe 0
 delete all mo
 expect getnumberofmo 0
-map logging on
+map logging off
 map setsize 128 128 32 32
 
 // These MO will be given destinations..
@@ -89,7 +89,7 @@ expect getnumberofpe 0
 delete all mo
 expect getnumberofmo 0
 create mo 50 -owner 1 -speed 8
-map logging on
+map logging off
 map setsize 128 128 32 32
 
 mo 0 setdestination 0 0
