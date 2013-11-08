@@ -26,7 +26,8 @@ MGFramework::MGFramework():
 	m_MarkedMOs(0),
 	m_Quit(false),
 	m_DelayTime(0),
-	m_InputEnabled(true)
+	m_InputEnabled(true),
+	m_Font(0)
 {
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
@@ -46,11 +47,17 @@ MGFramework::MGFramework():
 	m_UsedCommands[MGComponent_EXIT_APPLICATION] = true;
 
 	m_SymbolTable = new MGSymbolTable();
+
+//#ifndef MGF_DEBUGGING_ENABLED
+//	m_Font = TTF_OpenFont("ARIAL.TTF", 16);
+//#endif
 }
 
 MGFramework::~MGFramework()
 {
-	//registerMemoryDeallocation(sizeof(MGFramework));
+//#ifndef MGF_DEBUGGING_ENABLED
+//	TTF_CloseFont(m_Font);
+//#endif
 	delete[] m_MO;
 	delete[] m_PE;
 	delete[] m_SO;
@@ -2130,14 +2137,14 @@ SDL_Surface *MGFramework::loadBMPImage( std::string filename )
 #ifndef MGF_DEBUGGING_ENABLED
 void MGFramework::drawText(SDL_Surface* screen, const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB)
 {
-	TTF_Font* font = TTF_OpenFont("ARIAL.TTF", size);
+	/*TTF_Font* */m_Font = TTF_OpenFont("ARIAL.TTF", size);
 	SDL_Color foregroundColor = { fR, fG, fB };
 	SDL_Color backgroundColor = { bR, bG, bB };
-	SDL_Surface* textSurface = TTF_RenderText_Shaded(font, string, foregroundColor, backgroundColor);
+	SDL_Surface* textSurface = TTF_RenderText_Shaded(m_Font, string, foregroundColor, backgroundColor);
 	SDL_Rect textLocation = { x, y, 0, 0 };
 	SDL_BlitSurface(textSurface, NULL, screen, &textLocation);
 	SDL_FreeSurface(textSurface);
-	TTF_CloseFont(font);
+	TTF_CloseFont(m_Font);
 }
 #endif
 

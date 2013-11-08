@@ -250,6 +250,11 @@ class MGFramework :public MGComponent
 		// Execution, game logics..
 		void handleMGFGameLogics();
 
+		// Font
+#ifndef MGF_DEBUGGING_ENABLED
+		TTF_Font* m_Font;
+#endif
+
 	protected:
 		MGWindow m_Window;				// The framework window
 		MGMovingObject *m_MO;			// Moving Objects
