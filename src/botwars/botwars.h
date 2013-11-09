@@ -3,7 +3,7 @@
 
 #include "../mgframework/mgframework.h"
 
-#define BOTWARSVERSION "0.0.0.1"
+#define BOTWARSVERSION "0.0.0.2"
 
 class BotWars : public MGFramework
 {
@@ -23,7 +23,7 @@ class BotWars : public MGFramework
 		BotWars();
 		virtual bool init(int w, int h, int tw, int th); // Has to be implemented in a class derived from MGFramework
 
-		const char *getBotWarsVersion(){return BOTWARSVERSION;}
+		static const char *getBotWarsVersion(){return BOTWARSVERSION;}
 };
 
 #endif

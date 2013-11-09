@@ -6,7 +6,8 @@ using std::string;
 
 int main(int argc, char **argv)
 {
-	BotWars* bw;
+	BotWars* bw=0;
+	BotWarsServer* bws=0;
 
 	eMGFInstanceType instanceType = MGFSINGLEPLAYERINSTANCE;
 	bool loggingOn = false;
@@ -86,7 +87,7 @@ int main(int argc, char **argv)
 	{
 		bw = new BotWars();
 		bw->setWindowProperties(MGWindow_RES_800_600, 32, false, 
-			string("BotWars ") + string(bw->getBotWarsVersion()) + 
+			string("BotWars ") + string(BotWars::getBotWarsVersion()) + 
 			string(" based on MGF ") + string(bw->getMGFrameworkVersion()));
 	}
 	else if(instanceType==MGFCLIENTINSTANCE)
@@ -94,46 +95,59 @@ int main(int argc, char **argv)
 		// Add separate class later...
 		bw = new BotWars();
 		bw->setWindowProperties(640, 480, 32, false, 
-			string("BotWars Client ") + string(bw->getBotWarsVersion()) + 
+			string("BotWars Client ") + string(BotWars::getBotWarsVersion()) + 
 			string(" based on MGF ") + string(bw->getMGFrameworkVersion()));
 	}
-	/*
 	else if(instanceType==MGFSERVERINSTANCE)
 	{
-		bw = new BotWarsServer();
-		bw->setWindowProperties(800, 600, 32, false, 
-			string("BotWars Server ") + string(bw->getBotWarsVersion()) + 
-			string(" based on MGF ") + string(bw->getMGFrameworkVersion()));
+		bws = new BotWarsServer();
+		bws->setWindowProperties(800, 600, 32, false, 
+			string("BotWars Server ") + string(BotWars::getBotWarsVersion()) + 
+			string(" based on MGF ") + string(bws->getMGFrameworkVersion()));
 	}
-	*/
 
-	if(loggingOn) bw->enableLogging();
 
-	if(logEval)
+	if(instanceType==MGFSERVERINSTANCE)
 	{
-		// In case of using the framework for log evaluation, don't init and run.
-		bw->logEval(logEvalFileName);
-	}
-	else if(bw->windowPropertiesSet())
-	{
-		// If initialization is ok, run the framework...
-		if(bw->init(128, 128, 32, 32))
+		if(loggingOn) bws->enableLogging();
+
+		if(logEval)
 		{
-			bw->run(scriptFileName);
+			// In case of using the framework for log evaluation, don't init and run.
+			bws->logEval(logEvalFileName);
 		}
-		else
+		else if(bw->windowPropertiesSet())
 		{
-
+			// If initialization is ok, run the framework...
+			if(bws->init(128, 128, 32, 32))
+			{
+				bws->run(scriptFileName);
+			}
 		}
 	}
-	else 
+	else
 	{
+		if(loggingOn) bw->enableLogging();
 
+		if(logEval)
+		{
+			// In case of using the framework for log evaluation, don't init and run.
+			bw->logEval(logEvalFileName);
+		}
+		else if(bw->windowPropertiesSet())
+		{
+			// If initialization is ok, run the framework...
+			if(bw->init(128, 128, 32, 32))
+			{
+				bw->run(scriptFileName);
+			}
+		}
 	}
 
 EXIT_MAIN_RIGHT_AWAY:
 
-	delete bw;
+	if(bw) delete bw;
+	if(bws) delete bws;
 		
 	return 0;
 };
