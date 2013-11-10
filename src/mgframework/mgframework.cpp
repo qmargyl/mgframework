@@ -27,7 +27,8 @@ MGFramework::MGFramework():
 	m_Quit(false),
 	m_DelayTime(0),
 	m_InputEnabled(true),
-	m_Font(0)
+	m_Font(0),
+	m_DynamicFPSEnabled(true)
 {
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
@@ -589,13 +590,16 @@ void MGFramework::handleMGFGameLogics()
 	}
 
 	// Example of how FPS can be controlled dynamically
-	if(getLastFrameDelayTime() > 10)
+	if(getDynamicFPSEnabled())
 	{
-		setDesiredFPS(getFPS() + 1);
-	}
-	else if(getLastFrameDelayTime() < 7)
-	{
-		setDesiredFPS(biggest(1, getFPS() - 1));
+		if(getLastFrameDelayTime() > 10)
+		{
+			setDesiredFPS(getFPS() + 1);
+		}
+		else if(getLastFrameDelayTime() < 7)
+		{
+			setDesiredFPS(biggest(1, getFPS() - 1));
+		}
 	}
 }
 

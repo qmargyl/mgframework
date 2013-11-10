@@ -248,10 +248,19 @@ eMGComponentConsoleCommand MGPeriodicEvent::detectMGComponentConsoleCommand(cons
 
 void MGPeriodicEvent::setFileName1(const char *c)
 {
-	MGFLOG_INFO("MGPeriodicEvent::setFileName1: Allocating " << strlen(c)+1 << " bytes for file name 1");
-	delete [] m_FileName1;
-	m_FileName1 = new char[strlen(c)+1];
-	strcpy(m_FileName1,c);
+	if(c)
+	{
+		MGFLOG_INFO("MGPeriodicEvent::setFileName1: Allocating " << strlen(c)+1 << " bytes for file name 1");
+		delete [] m_FileName1;
+		m_FileName1 = new char[strlen(c)+1];
+		strcpy(m_FileName1,c);
+	}
+	else
+	{
+		MGFLOG_INFO("MGPeriodicEvent::setFileName1: Deleting file name 1");
+		delete [] m_FileName1;
+		m_FileName1 = NULL;
+	}
 }
 
 void MGPeriodicEvent::runFile1(MGFramework *w)
@@ -264,11 +273,11 @@ void MGPeriodicEvent::runFile1(MGFramework *w)
 		}
 		else
 		{
-			MGFLOG_ERROR("MGPeriodicEvent::runFile1 was called with no callback framework pointer.");
+		//	MGFLOG_ERROR("MGPeriodicEvent::runFile1 was called with no callback framework pointer.");
 		}
 	}
 	else
 	{
-		MGFLOG_ERROR("MGPeriodicEvent::runFile1 was called with no file name set."); 
+	//	MGFLOG_WARNING("MGPeriodicEvent::runFile1 was called with no file name set."); 
 	}
 }

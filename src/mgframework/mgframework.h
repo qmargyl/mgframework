@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.31.4"
+#define MGFRAMEWORKVERSION "1.0.31.5"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -196,6 +196,7 @@ class MGFramework :public MGComponent
 		Uint32 m_FrameTime;			// Holds current frame time
 		Uint32 m_FPS;				// Holds desired FPS
 		Sint32 m_DelayTime;			// Holds delay in ms for last frame
+		bool m_DynamicFPSEnabled;
 
 		// Countdown feature needs a flag and a counter.
 		bool m_FrameCountdownEnabled;
@@ -242,6 +243,10 @@ class MGFramework :public MGComponent
 		void enableInput(){ m_InputEnabled = true;}
 		void disableInput(){ m_InputEnabled = false;}
 		bool isInputEnabled(){ return m_InputEnabled;}
+
+		// FPS
+		bool getDynamicFPSEnabled(){ return m_DynamicFPSEnabled; }
+		void setDynamicFPSEnabled(bool val){ m_DynamicFPSEnabled = val; }
 
 		// Exit application functionality
 		void quit();
