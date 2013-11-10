@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.31.1"
+#define MGFRAMEWORKVERSION "1.0.31.3"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -179,19 +179,12 @@ class MGFramework :public MGComponent
 	private:
 		// Test framework functionality
 		bool m_UsedCommands[MGComponent_NUMBEROFCOMMANDIDENTIFIERS];
-		int getNumberOfUsedCommands();
-		int getNumberOfCommands(){ return (int) MGComponent_NUMBEROFCOMMANDIDENTIFIERS; }
 
 		// Enable/disable input functionality
 		bool m_InputEnabled;
-		void enableInput(){ m_InputEnabled = true;}
-		void disableInput(){ m_InputEnabled = false;}
-		bool isInputEnabled(){ return m_InputEnabled;}
 
 		// Exit application functionality
 		bool m_Quit;
-		void quit();
-		bool getQuitFlag(){ return m_Quit; }
 
 		bool m_TypingEnabled;		// Setting allows typing commands to console.
 		bool m_WindowPropertiesSet; // Used to determine if all Windows properties have been set.
@@ -207,15 +200,6 @@ class MGFramework :public MGComponent
 		// Countdown feature needs a flag and a counter.
 		bool m_FrameCountdownEnabled;
 		int m_FrameNumber;
-		bool frameCountdownEnabled(){return m_FrameCountdownEnabled;}
-		int getFrameNumber(){return m_FrameNumber;}
-		void setFrameNumber(int f){m_FrameNumber = f;}
-		void enableFrameCountdown(){m_FrameCountdownEnabled = true;}
-		void disableFrameCountdown(){m_FrameCountdownEnabled = false;}
-		void countdownFrame(int howmany){m_FrameNumber -= howmany;}
-
-		//Console activation related
-		void activateConsole();
 
 		//MO related
 		int m_NMO; // Number of Moving Objects
@@ -230,8 +214,6 @@ class MGFramework :public MGComponent
 		//Socket terminal related.
 		SDL_Thread *m_SocketTerminal;
 		bool m_KeepSocketTerminalOpen;
-		void openSocketTerminal(){m_KeepSocketTerminalOpen = true;}
-		void closeSocketTerminal(){m_KeepSocketTerminalOpen = false;}
 
 		// Frame selection related (click drag and release)
 		bool m_FramingOngoing;
@@ -239,16 +221,6 @@ class MGFramework :public MGComponent
 		int m_YFrameStart;
 		int m_XFrameEnd;
 		int m_YFrameEnd;
-		void setFrameStartX(int x){ m_XFrameStart=x;}
-		void setFrameStartY(int y){ m_YFrameStart=y;}
-		void setFrameEndX(int x){ m_XFrameEnd=x;}
-		void setFrameEndY(int y){ m_YFrameEnd=y;}
-		void activateFraming(int x, int y){setFrameStartX(x); setFrameStartY(y); setFrameEndX(x); setFrameEndY(y); m_FramingOngoing=true;}
-		void deactivateFraming(){ m_FramingOngoing = false;}
-		void updateFraming(int x, int y){setFrameEndX(x); setFrameEndY(y);}
-
-		// Execution, game logics..
-		void handleMGFGameLogics();
 
 		// Font
 #ifndef MGF_DEBUGGING_ENABLED
@@ -262,9 +234,49 @@ class MGFramework :public MGComponent
 		MGStationaryObject *m_SO;		// Stationary Objects
 		MGSymbolTable *m_SymbolTable;	// Symbols
 
+		// Test framework functionality
+		int getNumberOfUsedCommands();
+		int getNumberOfCommands(){ return (int) MGComponent_NUMBEROFCOMMANDIDENTIFIERS; }
+
+		// Enable/disable input functionality
+		void enableInput(){ m_InputEnabled = true;}
+		void disableInput(){ m_InputEnabled = false;}
+		bool isInputEnabled(){ return m_InputEnabled;}
+
+		// Exit application functionality
+		void quit();
+		bool getQuitFlag(){ return m_Quit; }
+
+		// Countdown feature needs a flag and a counter.
+		bool frameCountdownEnabled(){return m_FrameCountdownEnabled;}
+		int getFrameNumber(){return m_FrameNumber;}
+		void setFrameNumber(int f){m_FrameNumber = f;}
+		void enableFrameCountdown(){m_FrameCountdownEnabled = true;}
+		void disableFrameCountdown(){m_FrameCountdownEnabled = false;}
+		void countdownFrame(int howmany){m_FrameNumber -= howmany;}
+
+		// Console activation related
+		void activateConsole();
+
+		//Socket terminal related.
+		void openSocketTerminal(){m_KeepSocketTerminalOpen = true;}
+		void closeSocketTerminal(){m_KeepSocketTerminalOpen = false;}
+
+		// Frame selection related (click drag and release)
+		void setFrameStartX(int x){ m_XFrameStart=x;}
+		void setFrameStartY(int y){ m_YFrameStart=y;}
+		void setFrameEndX(int x){ m_XFrameEnd=x;}
+		void setFrameEndY(int y){ m_YFrameEnd=y;}
+		void activateFraming(int x, int y){setFrameStartX(x); setFrameStartY(y); setFrameEndX(x); setFrameEndY(y); m_FramingOngoing=true;}
+		void deactivateFraming(){ m_FramingOngoing = false;}
+		void updateFraming(int x, int y){setFrameEndX(x); setFrameEndY(y);}
+
+		// Execution, game logics..
+		void handleMGFGameLogics();
+
 		// MO related
 		void createMO(int n);
-		void addMO(int n);
+		int addMO(int n); // Returns index of first MO added or -1 if there was an error.
 		int getNumberOfMO(){ return biggest(m_NMO, 0);}
 		void deleteMO(int index);		// Deletes the MO with a specified index
 		bool setupMO(int i, int x, int y, int owner, int speed);		// Setups the MO with a specified index
@@ -302,6 +314,7 @@ class MGFramework :public MGComponent
 		SDL_Surface *getSurface(){return m_Window.m_Screen;}
 		void drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		SDL_Surface *loadBMPImage( std::string filename );
+
 #ifndef MGF_DEBUGGING_ENABLED
 		void drawText(SDL_Surface* screen, const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
 #endif
@@ -376,7 +389,6 @@ class MGFramework :public MGComponent
 		void countMark(){m_MarkedMOs++;}
 		void countUnMark(){m_MarkedMOs--;}
 		int getNumberOfMarkedMO(){ return smallest(m_MarkedMOs, getNumberOfMO());}
-
 
 #ifndef MGF_DEBUGGING_ENABLED
 		static int initializeWinsock(WORD wVersionRequested);

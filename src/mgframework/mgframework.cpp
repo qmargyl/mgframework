@@ -47,17 +47,10 @@ MGFramework::MGFramework():
 	m_UsedCommands[MGComponent_EXIT_APPLICATION] = true;
 
 	m_SymbolTable = new MGSymbolTable();
-
-//#ifndef MGF_DEBUGGING_ENABLED
-//	m_Font = TTF_OpenFont("ARIAL.TTF", 16);
-//#endif
 }
 
 MGFramework::~MGFramework()
 {
-//#ifndef MGF_DEBUGGING_ENABLED
-//	TTF_CloseFont(m_Font);
-//#endif
 	delete[] m_MO;
 	delete[] m_PE;
 	delete[] m_SO;
@@ -1833,14 +1826,14 @@ void MGFramework::createMO(int n)
 	}
 }
 
-void MGFramework::addMO(int n)
+int MGFramework::addMO(int n)
 {
 	int tmpTotal = n + getNumberOfMO();
 	if(tmpTotal > m_Map.getWidth()*m_Map.getHeight())
 	{
 		MGFLOG_ERROR(	"MGFramework::addMO cannot create " << tmpTotal << " MO on a " 
 						<< m_Map.getWidth() << " by " << m_Map.getHeight() << " map")
-		return;
+		return -1;
 	}
 
 	MGMovingObject *oldMO = new MGMovingObject[getNumberOfMO()];
@@ -1860,6 +1853,8 @@ void MGFramework::addMO(int n)
 	{
 		m_MO[i].initialize();
 	}
+
+	return nOld; // Return index of first MO added.
 }
 
 void MGFramework::deleteMO(int index)
