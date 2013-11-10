@@ -6,7 +6,7 @@ using std::string;
 
 int main(int argc, char **argv)
 {
-	MGFramework* p2;
+	MGFramework* p2=0;
 
 	eMGFInstanceType instanceType = MGFSINGLEPLAYERINSTANCE;
 	bool loggingOn = false;
@@ -114,7 +114,14 @@ int main(int argc, char **argv)
 		// If initialization is ok, run the framework...
 		if(p2->init(128, 128, 32, 32))
 		{
-			p2->run(scriptFileName);
+			if(scriptFile)
+			{
+				p2->run(scriptFileName);
+			}
+			else
+			{
+				p2->run(NULL);
+			}
 		}
 		else
 		{
@@ -128,7 +135,14 @@ int main(int argc, char **argv)
 
 EXIT_MAIN_RIGHT_AWAY:
 
-	delete p2;
+	if(p2)
+	{
+		delete p2;
+	}
+	else
+	{
+		return 1;
+	}
 		
 	return 0;
 };

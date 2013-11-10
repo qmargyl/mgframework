@@ -1894,7 +1894,7 @@ void MGFramework::deleteMO(int index)
 
 
 
-bool MGFramework::setupMO(int i, int x, int y, int owner, int speed)
+bool MGFramework::setupMO(int i, int x, int y, unsigned int owner, int speed)
 {
 	if(i < 0 || i >= getNumberOfMO())
 	{

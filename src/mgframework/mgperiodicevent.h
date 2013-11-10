@@ -13,8 +13,6 @@ private:
 	bool m_isActive;
 	char *m_FileName1;
 
-	void setFileName1(const char *c);
-
 public:
 	MGPeriodicEvent();
 	~MGPeriodicEvent();
@@ -30,6 +28,8 @@ public:
 	bool runConsoleCommand(const char *c, MGFramework *w);
 	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
+	// Script related
+	void setFileName1(const char *c);
 	void runFile1(MGFramework *w);
 
 };

@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.31.3"
+#define MGFRAMEWORKVERSION "1.0.31.4"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -279,7 +279,7 @@ class MGFramework :public MGComponent
 		int addMO(int n); // Returns index of first MO added or -1 if there was an error.
 		int getNumberOfMO(){ return biggest(m_NMO, 0);}
 		void deleteMO(int index);		// Deletes the MO with a specified index
-		bool setupMO(int i, int x, int y, int owner, int speed);		// Setups the MO with a specified index
+		bool setupMO(int i, int x, int y, unsigned int owner, int speed);		// Setups the MO with a specified index
 
 		// PE related
 		void createPE(int n);
