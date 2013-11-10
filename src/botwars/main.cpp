@@ -106,7 +106,8 @@ int main(int argc, char **argv)
 			string(" based on MGF ") + string(bws->getMGFrameworkVersion()));
 	}
 
-
+	// The server might be a completely different application later but for now
+	// it can be included in same executable
 	if(instanceType==MGFSERVERINSTANCE)
 	{
 		if(loggingOn) bws->enableLogging();
@@ -119,9 +120,16 @@ int main(int argc, char **argv)
 		else if(bw->windowPropertiesSet())
 		{
 			// If initialization is ok, run the framework...
-			if(bws->init(128, 128, 32, 32))
+			if(bws->init(64, 64, 32, 32))
 			{
-				bws->run(scriptFileName);
+				if(scriptFile)
+				{
+					bws->run(scriptFileName);
+				}
+				else
+				{
+					bws->run(NULL);
+				}
 			}
 		}
 	}
@@ -137,9 +145,16 @@ int main(int argc, char **argv)
 		else if(bw->windowPropertiesSet())
 		{
 			// If initialization is ok, run the framework...
-			if(bw->init(128, 128, 32, 32))
+			if(bw->init(64, 64, 32, 32))
 			{
-				bw->run(scriptFileName);
+				if(scriptFile)
+				{
+					bw->run(scriptFileName);
+				}
+				else
+				{
+					bw->run(NULL);
+				}
 			}
 		}
 	}

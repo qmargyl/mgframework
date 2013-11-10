@@ -273,11 +273,11 @@ void MGPeriodicEvent::runFile1(MGFramework *w)
 		}
 		else
 		{
-		//	MGFLOG_ERROR("MGPeriodicEvent::runFile1 was called with no callback framework pointer.");
+			MGFLOG_ERROR("MGPeriodicEvent::runFile1 was called with no callback framework pointer.");
 		}
 	}
 	else
 	{
-	//	MGFLOG_WARNING("MGPeriodicEvent::runFile1 was called with no file name set."); 
+		MGFLOG_INFO("MGPeriodicEvent::runFile1 was called with no file name set."); 
 	}
 }

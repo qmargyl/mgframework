@@ -4,12 +4,75 @@
 #include "../mgframework/mgmovingobject.h"
 
 BotWars::BotWars()
+: m_NBots(0)
 {
 	// Default parameters for demo application Project2...
 	unsetWindowProperties(); // Force setWindowProperties to be called before init.
 	disableTyping();
 	setInstanceType(MGFSINGLEPLAYERINSTANCE);
 	disableLogging();
+}
+
+
+bool BotWars::processEvents()
+{
+	// Quit if it has been decided to do so.. also for server instances
+	if(getQuitFlag()) return false;
+
+	// No events for a server instance..
+	if(getInstanceType() == MGFSERVERINSTANCE) return true;
+
+	// Don't handle input if input is disabled..
+	if(!isInputEnabled()) return true;
+
+	// Event processing loop is started after all special cases.
+	SDL_Event event;
+	while (SDL_PollEvent(&event))//get all events
+	{
+		switch (event.type)
+		{
+			// Quit event
+			case SDL_QUIT:
+			{
+				MGFLOG_INFO("SDL_QUIT")
+				// Return false because we are quitting.
+				return false;
+			}
+
+			case SDL_KEYDOWN:
+			{
+				if(!typingEnabled())
+				{
+					SDLKey sym = event.key.keysym.sym;
+					if(sym == SDLK_ESCAPE) //Enable typing in the console if ESC is pressed..
+					{
+						activateConsole();
+					}
+					m_Keys[sym] = 1;
+				}
+				break;
+			}
+
+			case SDL_KEYUP:
+			{
+				if(!typingEnabled())
+				{
+					SDLKey sym = event.key.keysym.sym;
+					MGFLOG_INFO("SDL_KEYUP" << std::endl << "  " << SDL_GetKeyName(sym))
+					m_Keys[sym] = 0;
+				}
+				break;
+			}
+
+			// Default case for unknown events
+			default:
+			{
+				break;
+			}
+		}
+	}
+
+	return true;
 }
 
 bool BotWars::init(int w, int h, int tw, int th)
@@ -36,17 +99,29 @@ bool BotWars::init(int w, int h, int tw, int th)
 		m_Map.init(w, h, tw, th, m_Window.getWidth(), m_Window.getHeight()); // width (in number of tiles), height, tile width (in pixels), tile height, resolution x and y.
 
 		// Setup the edge around the screen to allow scrolling to see the entire map.
-		m_Map.setTopEdge(8);
-		m_Map.setBottomEdge(64);
-		m_Map.setLeftEdge(8);
-		m_Map.setRightEdge(64);
+		m_Map.setTopEdge(0);
+		m_Map.setBottomEdge(0);
+		m_Map.setLeftEdge(0);
+		m_Map.setRightEdge(0);
 
 		// Setup application specific game logics..
 
 		runConsoleCommand("logging on", this); // Turn on logging for the MGFramework class
 		runConsoleCommand("map logging on", this); // Turn on logging for the MGMap class
+
+		setDynamicFPSEnabled(false);
+		runConsoleCommand("setfps 60", this);
 		runConsoleCommand("open terminalserver", this);
 		runConsoleCommand("minimap on", this);
+
+		runConsoleCommand("create so 1000", this);
+
+		addBots(10, 1, NULL);
+		addBots(10, 2, NULL);
+		addBots(10, 3, NULL);
+
+		runConsoleCommand("logging off", this); // Turn on logging for the MGFramework class
+		runConsoleCommand("map logging off", this); // Turn on logging for the MGMap class
 
 		return true;
 	}
@@ -122,13 +197,6 @@ void BotWars::draw()
 		}
 	}
 
-	// Draw a frame around the edge of the map
-	vLine32(getSurface(), m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight()-m_Map.getBottomEdge()-m_Map.getTopEdge(), 0x000000FF);
-	vLine32(getSurface(), m_Map.getWindowWidth()-m_Map.getRightEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight()-m_Map.getBottomEdge()-m_Map.getTopEdge(), 0x000000FF);
-	hLine32(getSurface(), m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowWidth()-m_Map.getLeftEdge()-m_Map.getRightEdge(), 0x000000FF);
-	hLine32(getSurface(), m_Map.getLeftEdge(), m_Map.getWindowHeight()-m_Map.getBottomEdge(), m_Map.getWindowWidth()-m_Map.getLeftEdge()-m_Map.getRightEdge(), 0x000000FF);
-
-
 	// Draw the mini map if enabled. Also draw all objects on it...
 	if(miniMapEnabled())
 	{
@@ -187,5 +255,28 @@ void BotWars::draw()
 		vLine32(getSurface(), uLX+xL, uLY, yL, 0x00FF0000);
 	}
 
+
+}
+
+
+void BotWars::addBots(int n, unsigned int team, const char* script)
+{	
+	if(getNumberOfMO()==getNumberOfPE())
+	{
+		int first = addMO(n);
+		addPE(n);
+		for(int i=first; i<first+n; ++i)
+		{
+			setupMO(i, -1, -1, team, 3);
+			m_PE[i].setOwner(team);
+			m_PE[i].setFileName1(script);
+			m_PE[i].setupTimer(3000);
+			m_PE[i].activate();
+		}
+	}
+	else
+	{
+		MGFLOG_ERROR("Number of MO and PE do not match! MO:" << getNumberOfMO() << ", PE:" << getNumberOfPE());
+	}
 
 }
