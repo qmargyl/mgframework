@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.31.5"
+#define MGFRAMEWORKVERSION "1.0.31.6"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -215,6 +215,7 @@ class MGFramework :public MGComponent
 		//Socket terminal related.
 		SDL_Thread *m_SocketTerminal;
 		bool m_KeepSocketTerminalOpen;
+		int m_Port;
 
 		// Frame selection related (click drag and release)
 		bool m_FramingOngoing;
@@ -361,7 +362,8 @@ class MGFramework :public MGComponent
 		// Console command handling
 		bool runConsoleCommand(const char *c, MGFramework *w);
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
-		bool isNumericalInt(const string &s); // returns true if the argument contains only numbers.
+		static bool isNumericalInt(const string &s); // returns true if the argument contains only numbers.
+		static int staticToInt(const string &s); // returns an int converted from either a constant or a symbol.
 		int toInt(const string &s); // returns an int converted from either a constant or a symbol.
 		bool okMGFrameworkSyntax(/*const char *c*/const std::vector<std::string> &v_s);
 
@@ -369,6 +371,8 @@ class MGFramework :public MGComponent
 		bool socketTerminalOpen(){return m_KeepSocketTerminalOpen;}
 		void logIfEnabled(const char *log){MGFLOG_INFO("" << log)}
 		void addConsoleCommandToQueue(const char *c);
+		int getPort(){ return m_Port; }
+		void setPort(int p){ m_Port = p; }
 
 		// Program version
 		const char *getMGFrameworkVersion(){return MGFRAMEWORKVERSION;}

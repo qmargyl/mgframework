@@ -28,7 +28,8 @@ MGFramework::MGFramework():
 	m_DelayTime(0),
 	m_InputEnabled(true),
 	m_Font(0),
-	m_DynamicFPSEnabled(true)
+	m_DynamicFPSEnabled(true),
+	m_Port(0)
 {
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
@@ -2280,9 +2281,22 @@ bool MGFramework::isNumericalInt(const string &s)
 		}
 		return true;
 	}
-	MGFLOG_ERROR("MGFramework::isNumericalInt failed to parse string");
+	MGFLOG_STATIC_ERROR("MGFramework::isNumericalInt failed to parse string");
 }
 
+
+int MGFramework::staticToInt(const string &s)
+{
+	if(isNumericalInt(s))
+	{
+		std::istringstream buffer(s);
+		int value;
+		buffer >> value;
+		return value;
+	}
+	MGFLOG_STATIC_ERROR("MGFramework::toInt failed to convert string to integer: " << s);
+	return 0;
+}
 
 int MGFramework::toInt(const string &s)
 {
@@ -2433,8 +2447,10 @@ void MGFramework::deleteSO(int index)
 int runMGFrameworkSocketTerminal(void *fm)
 {
 	MGFramework *mgf = (MGFramework *)fm;
-	mgf->logIfEnabled("Opening socket terminal...");
-	#define PORTNR 666
+	int PORTNR = mgf->getPort();
+	mgf->logIfEnabled((std::string("Opening socket terminal... port ") + MGFramework::toString(mgf->getPort())).c_str());
+	//mgf->logIfEnabled((MGFramework::toString(mgf->getPort())).c_str());
+	
 	bool connectionOpen=true;
 	int nZerosInARow=0;
 
