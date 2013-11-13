@@ -3,7 +3,7 @@
 
 #include "../mgframework/mgframework.h"
 
-#define BOTWARSVERSION "0.0.0.3"
+#define BOTWARSVERSION "0.0.0.4"
 
 class BotWars : public MGFramework
 {

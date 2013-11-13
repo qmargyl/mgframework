@@ -1,0 +1,1 @@
+botwars.exe -client -port 668

@@ -15,6 +15,7 @@ int main(int argc, char **argv)
 	bool logEval = false;
 	char scriptFileName[128] = "";
 	char logEvalFileName[128] = "";
+	int portN = 0;
 
 	if(argc==1)
 	{
@@ -73,6 +74,24 @@ int main(int argc, char **argv)
 					instanceType = MGFSERVERINSTANCE;
 				}
 			}
+			else if(strcmp(argv[i], "-port")==0)
+			{
+				if(i+1 == argc)
+				{
+					//No parameter after -port
+					goto EXIT_MAIN_RIGHT_AWAY;
+				}
+				else
+				{
+					//Store argv[++i] as port number..
+					char port[8];
+					if(strlen(argv[++i])<8)
+					{
+						strcpy(port, argv[i]);
+						portN = MGFramework::staticToInt(std::string(port));
+					}
+				}
+			}
 			else
 			{
 				// Unknown parameter.
@@ -80,71 +99,23 @@ int main(int argc, char **argv)
 		}
 	}
 
-
 	// Create and initialize the framework...
+	// Divide into separate executables later if needed.
 
 	if(instanceType==MGFSINGLEPLAYERINSTANCE)
 	{
 		bw = new BotWars();
+		bw->setPort(portN);
+		if(loggingOn) bw->enableLogging();
 		bw->setWindowProperties(MGWindow_RES_800_600, 32, false, 
 			string("BotWars ") + string(BotWars::getBotWarsVersion()) + 
 			string(" based on MGF ") + string(bw->getMGFrameworkVersion()));
-	}
-	else if(instanceType==MGFCLIENTINSTANCE)
-	{
-		// Add separate class later...
-		bw = new BotWars();
-		bw->setWindowProperties(640, 480, 32, false, 
-			string("BotWars Client ") + string(BotWars::getBotWarsVersion()) + 
-			string(" based on MGF ") + string(bw->getMGFrameworkVersion()));
-	}
-	else if(instanceType==MGFSERVERINSTANCE)
-	{
-		bws = new BotWarsServer();
-		bws->setWindowProperties(800, 600, 32, false, 
-			string("BotWars Server ") + string(BotWars::getBotWarsVersion()) + 
-			string(" based on MGF ") + string(bws->getMGFrameworkVersion()));
-	}
-
-	// The server might be a completely different application later but for now
-	// it can be included in same executable
-	if(instanceType==MGFSERVERINSTANCE)
-	{
-		if(loggingOn) bws->enableLogging();
-
 		if(logEval)
 		{
-			// In case of using the framework for log evaluation, don't init and run.
-			bws->logEval(logEvalFileName);
-		}
-		else if(bw->windowPropertiesSet())
-		{
-			// If initialization is ok, run the framework...
-			if(bws->init(64, 64, 32, 32))
-			{
-				if(scriptFile)
-				{
-					bws->run(scriptFileName);
-				}
-				else
-				{
-					bws->run(NULL);
-				}
-			}
-		}
-	}
-	else
-	{
-		if(loggingOn) bw->enableLogging();
-
-		if(logEval)
-		{
-			// In case of using the framework for log evaluation, don't init and run.
 			bw->logEval(logEvalFileName);
 		}
 		else if(bw->windowPropertiesSet())
 		{
-			// If initialization is ok, run the framework...
 			if(bw->init(64, 64, 32, 32))
 			{
 				if(scriptFile)
@@ -154,6 +125,60 @@ int main(int argc, char **argv)
 				else
 				{
 					bw->run(NULL);
+				}
+			}
+		}
+	}
+	else if(instanceType==MGFCLIENTINSTANCE)
+	{
+		bw = new BotWars();
+		bw->setPort(portN);
+		if(loggingOn) bw->enableLogging();
+		bw->setWindowProperties(640, 480, 32, false, 
+			string("BotWars Client ") + string(BotWars::getBotWarsVersion()) + 
+			string(" based on MGF ") + string(bw->getMGFrameworkVersion()));
+		if(logEval)
+		{
+			bw->logEval(logEvalFileName);
+		}
+		else if(bw->windowPropertiesSet())
+		{
+			if(bw->init(64, 64, 32, 32))
+			{
+				if(scriptFile)
+				{
+					bw->run(scriptFileName);
+				}
+				else
+				{
+					bw->run(NULL);
+				}
+			}
+		}
+	}
+	else if(instanceType==MGFSERVERINSTANCE)
+	{
+		bws = new BotWarsServer();
+		bws->setPort(portN);
+		if(loggingOn) bws->enableLogging();
+		bws->setWindowProperties(800, 600, 32, false, 
+			string("BotWars Server ") + string(BotWars::getBotWarsVersion()) + 
+			string(" based on MGF ") + string(bws->getMGFrameworkVersion()));
+		if(logEval)
+		{
+			bws->logEval(logEvalFileName);
+		}
+		else if(bws->windowPropertiesSet())
+		{
+			if(bws->init(64, 64, 32, 32))
+			{
+				if(scriptFile)
+				{
+					bws->run(scriptFileName);
+				}
+				else
+				{
+					bws->run(NULL);
 				}
 			}
 		}
