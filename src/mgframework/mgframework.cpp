@@ -1432,47 +1432,18 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
-		case MGComponent_EXPECT_GETNUMBEROFMARKEDMO_INT:
+		case MGComponent_EXPECT_INT_INT:
 		{
-			registerUsedCommand(MGComponent_EXPECT_GETNUMBEROFMARKEDMO_INT);
+			registerUsedCommand(MGComponent_EXPECT_INT_INT);
 			int exp = toInt(cmdvec[2]);
-			if(exp == getNumberOfMarkedMO())
+			int act = toInt(cmdvec[1]);
+			if(act == exp)
 			{
 				MGFLOG_INFO("MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")");
 			}
 			else
 			{
-				MGFLOG_ERROR("MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfMarkedMO() << ")");
-			}
-			return true;
-		}
-
-		case MGComponent_EXPECT_GETNUMBEROFMO_INT:
-		{
-			registerUsedCommand(MGComponent_EXPECT_GETNUMBEROFMO_INT);
-			int exp = toInt(cmdvec[2]);
-			if(exp == getNumberOfMO())
-			{
-				MGFLOG_INFO("MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")");
-			}
-			else
-			{
-				MGFLOG_ERROR("MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfMO() << ")");
-			}
-			return true;
-		}
-
-		case MGComponent_EXPECT_GETNUMBEROFSO_INT:
-		{
-			registerUsedCommand(MGComponent_EXPECT_GETNUMBEROFSO_INT);
-			int exp = toInt(cmdvec[2]);
-			if(exp == getNumberOfSO())
-			{
-				MGFLOG_INFO("MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")");
-			}
-			else
-			{
-				MGFLOG_ERROR("MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfSO() << ")");
+				MGFLOG_ERROR("MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << act << ")");
 			}
 			return true;
 		}
@@ -1488,21 +1459,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			registerUsedCommand(MGComponent_GETNUMBEROFCOMMANDS);
 			MGFLOG_INFO("" << getNumberOfCommands());
-			return true;
-		}
-
-		case MGComponent_EXPECT_GETNUMBEROFPE_INT:
-		{
-			registerUsedCommand(MGComponent_EXPECT_GETNUMBEROFPE_INT);
-			int exp = toInt(cmdvec[2]);
-			if(exp == getNumberOfPE())
-			{
-				MGFLOG_INFO("MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")");
-			}
-			else
-			{
-				MGFLOG_ERROR("MGFramework::detectComponentConsoleCommand did not find the expected value (" << exp << " != " << getNumberOfPE() << ")");
-			}
 			return true;
 		}
 
@@ -1679,25 +1635,13 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		{
 			return MGComponent_DELETE_ALL_PE_PARAMLIST; // Zero or more parameters..
 		}
-		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofmarkedmo")
-		{
-			return MGComponent_EXPECT_GETNUMBEROFMARKEDMO_INT;
-		}
-		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofmo")
-		{
-			return MGComponent_EXPECT_GETNUMBEROFMO_INT;
-		}
-		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofso")
-		{
-			return MGComponent_EXPECT_GETNUMBEROFSO_INT;
-		}
-		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofpe")
-		{
-			return MGComponent_EXPECT_GETNUMBEROFPE_INT;
-		}
 		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofusedcommands" && cmdvec[2]=="percentage")
 		{
 			return MGComponent_EXPECT_GETNUMBEROFUSEDCOMMANDS_PERCENTAGE_INT;
+		}
+		else if(cmdvec[0]=="expect")
+		{
+			return MGComponent_EXPECT_INT_INT;
 		}
 		else if(cmdvec[0]=="delete" && cmdvec[1]=="mo")
 		{
@@ -2338,6 +2282,22 @@ int MGFramework::toInt(const string &s)
 		else if(s == string("random_y"))
 		{
 			return randomN(m_Map.getHeight());
+		}
+		else if(s == string("getnumberofmarkedmo"))
+		{
+			return getNumberOfMarkedMO();
+		}
+		else if(s == string("getnumberofmo"))
+		{
+			return getNumberOfMO();
+		}
+		else if(s == string("getnumberofso"))
+		{
+			return getNumberOfSO();
+		}
+		else if(s == string("getnumberofpe"))
+		{
+			return getNumberOfPE();
 		}
 	}
 	MGFLOG_ERROR("MGFramework::toInt failed to convert string to integer: " << s);
