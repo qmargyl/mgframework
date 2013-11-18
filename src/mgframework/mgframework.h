@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.31.7"
+#define MGFRAMEWORKVERSION "1.0.31.8"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -35,13 +35,9 @@ enum eMGComponentConsoleCommand{
 	MGComponent_HELP,										//help (Prints help information to console)
 	MGComponent_EXIT,										//exit (Exits console, resumes graphics execution) 
 	MGComponent_EXIT_APPLICATION,							//exit application (Terminates application)
-	MGComponent_GETNUMBEROFUSEDCOMMANDS,
-	MGComponent_GETNUMBEROFCOMMANDS,
 
-	//Getters
-	MGComponent_GETFPS,
-	MGComponent_GETNUMBEROFMARKEDMO,
-	MGComponent_GETNUMBEROFMO,
+	//Getter
+	MGComponent_INT,
 
 	//Expect functions
 	// XXX: Try to make this one generic as well..
@@ -66,7 +62,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_LOGGING_OFF,
 	MGComponent_INPUT_OFF,
 	MGComponent_INPUT_ON,
-	//MGComponent_SYMBOL_EQUALS_INT,						//var1 = 32, var2 = getnumberofmo, etc
+	//MGComponent_SYMBOL_ASSIGNTO_INT,						//var1 = 32, var2 = getnumberofmo, etc
 
 	//MGPeriodicEvent commands
 	MGComponent_PE_INT_X,

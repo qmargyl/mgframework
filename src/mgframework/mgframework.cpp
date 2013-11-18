@@ -1397,27 +1397,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
-		case MGComponent_GETFPS:
-		{
-			registerUsedCommand(MGComponent_GETFPS);
-			MGFLOG_INFO("" << getFPS());
-			return true;
-		}
-
-		case MGComponent_GETNUMBEROFMARKEDMO:
-		{
-			registerUsedCommand(MGComponent_GETNUMBEROFMARKEDMO);
-			MGFLOG_INFO("" << getNumberOfMarkedMO());
-			return true;
-		}
-
-		case MGComponent_GETNUMBEROFMO:
-		{
-			registerUsedCommand(MGComponent_GETNUMBEROFMO);
-			MGFLOG_INFO("" << getNumberOfMO());
-			return true;
-		}
-
 		case MGComponent_INPUT_ON:
 		{
 			registerUsedCommand(MGComponent_INPUT_ON);
@@ -1448,17 +1427,10 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
-		case MGComponent_GETNUMBEROFUSEDCOMMANDS:
+		case MGComponent_INT:
 		{
-			registerUsedCommand(MGComponent_GETNUMBEROFUSEDCOMMANDS);
-			MGFLOG_INFO("" << getNumberOfUsedCommands());
-			return true;
-		}
-
-		case MGComponent_GETNUMBEROFCOMMANDS:
-		{
-			registerUsedCommand(MGComponent_GETNUMBEROFCOMMANDS);
-			MGFLOG_INFO("" << getNumberOfCommands());
+			registerUsedCommand(MGComponent_INT);
+			MGFLOG_INFO("" << toInt(cmdvec[0]));
 			return true;
 		}
 
@@ -1504,29 +1476,13 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		{
 			return MGComponent_HELP;
 		}
-		else if(cmdvec[0]=="getfps")
-		{
-			return MGComponent_GETFPS;
-		}
-		else if(cmdvec[0]=="getnumberofmarkedmo")
-		{
-			return MGComponent_GETNUMBEROFMARKEDMO;
-		}
-		else if(cmdvec[0]=="getnumberofmo")
-		{
-			return MGComponent_GETNUMBEROFMO;
-		}
-		else if(cmdvec[0]=="getnumberofcommands")
-		{
-			return MGComponent_GETNUMBEROFCOMMANDS;
-		}
-		else if(cmdvec[0]=="getnumberofusedcommands")
-		{
-			return MGComponent_GETNUMBEROFUSEDCOMMANDS;
-		}
 		else if(cmdvec[0]=="runoneframe")
 		{
 			return MGComponent_RUNONEFRAME;
+		}
+		else
+		{
+			return MGComponent_INT;
 		}
 
 	}
@@ -2298,6 +2254,18 @@ int MGFramework::toInt(const string &s)
 		else if(s == string("getnumberofpe"))
 		{
 			return getNumberOfPE();
+		}
+		else if(s == string("getnumberofcommands"))
+		{
+			return getNumberOfCommands();
+		}
+		else if(s == string("getnumberofusedcommands"))
+		{
+			return getNumberOfUsedCommands();
+		}
+		else if(s == string("getfps"))
+		{
+			return getFPS();
 		}
 	}
 	MGFLOG_ERROR("MGFramework::toInt failed to convert string to integer: " << s);
