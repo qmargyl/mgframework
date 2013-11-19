@@ -12,11 +12,16 @@ private:
 	class MGSymbolTablePair
 	{
 	public:
-		std::string *symbol;
+		MGSymbolTablePair(const std::string &s, int v)
+		{
+			symbol=s;
+			value=v;
+		}
+		std::string symbol;
 		int value;
 	};
 
-	std::deque<MGSymbolTablePair> *table;
+	std::deque<MGSymbolTablePair> table;
 
 
 protected:
@@ -27,7 +32,9 @@ public:
 	MGSymbolTable();
 	~MGSymbolTable();
 	void addSymbol(const std::string &s, int v);
-	int lookup(const std::string &s);
+	bool hasValue(const std::string &s);
+	void setValue(const std::string &s, int v);
+	int getValue(const std::string &s);
 	void delSymbol(const std::string &s);
 	void printTable();
 

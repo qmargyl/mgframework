@@ -6,6 +6,7 @@ call testcoverage_window
 call testcoverage_map
 call testcoverage_pe
 call testcoverage_so
+call testcoverage_sym
 call testcoverage_evalandexit
 
 exit application
@@ -150,6 +151,16 @@ window fullscreen off
 window logging off
 end function
 
+
+
+
+
+
+// SymbolTable
+function testcoverage_sym
+sym1 = 666
+sym2 assignto 667
+end function
 
 
 

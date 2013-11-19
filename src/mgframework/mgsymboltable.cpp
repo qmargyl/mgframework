@@ -14,11 +14,43 @@ MGSymbolTable::~MGSymbolTable()
 
 void MGSymbolTable::addSymbol(const std::string &s, int v)
 {
-
+	table.push_back(MGSymbolTablePair(s, v));
 }
 
-int MGSymbolTable::lookup(const std::string &s)
+bool MGSymbolTable::hasValue(const std::string &s)
 {
+	for (std::deque<MGSymbolTablePair>::iterator it=table.begin(); it != table.end(); ++it)
+	{
+		if((*it).symbol == s)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+void MGSymbolTable::setValue(const std::string &s, int v)
+{
+	for (std::deque<MGSymbolTablePair>::iterator it=table.begin(); it != table.end(); ++it)
+	{
+		if((*it).symbol == s)
+		{
+			(*it).value = v;
+		}
+	}
+	MGFLOG_ERROR("Cannot find symbol '" << s.c_str() << "'");
+}
+
+int MGSymbolTable::getValue(const std::string &s)
+{
+	for (std::deque<MGSymbolTablePair>::iterator it=table.begin(); it != table.end(); ++it)
+	{
+		if((*it).symbol == s)
+		{
+			return (*it).value;
+		}
+	}
+	MGFLOG_ERROR("Cannot find symbol '" << s.c_str() << "'");
 	return 0;
 }
 
@@ -29,7 +61,10 @@ void MGSymbolTable::delSymbol(const std::string &s)
 
 void MGSymbolTable::printTable()
 {
-
+	for (std::deque<MGSymbolTablePair>::iterator it=table.begin(); it != table.end(); ++it)
+	{
+		std::cout << "'" << ((*it).symbol).c_str() << "' : " << (*it).value << std::endl;
+	}
 }
 
 eMGComponentConsoleCommand MGSymbolTable::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)

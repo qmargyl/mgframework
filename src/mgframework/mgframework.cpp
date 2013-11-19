@@ -56,7 +56,7 @@ MGFramework::~MGFramework()
 	delete[] m_MO;
 	delete[] m_PE;
 	delete[] m_SO;
-	delete[] m_SymbolTable;
+	delete m_SymbolTable;
 }
 
 
@@ -424,6 +424,7 @@ void MGFramework::logEval(const char *logFileName)
 
 	int nErrors=0;
 	int nWarnings=0;
+	int nExitApp=0;
 	std::string execTimeMS("");
 
 	if(lf == NULL)
@@ -455,10 +456,14 @@ void MGFramework::logEval(const char *logFileName)
 
 				std::string errSubstr("ERROR");
 				std::string warnSubstr("WARNING");
+				std::string exitSubstr("Exiting application...");
 				std::size_t foundErr = line.find(errSubstr);
 				std::size_t foundWarn = line.find(warnSubstr);
+				std::size_t foundExit = line.find(exitSubstr);
 				if (foundErr != std::string::npos) nErrors++;
 				if (foundWarn != std::string::npos) nWarnings++;
+				if (foundExit != std::string::npos) nExitApp++;
+
 
 				std::string exetimeSubstr("Execution time: ");
 				std::size_t foundExecutionTime = line.find(exetimeSubstr);
@@ -470,9 +475,13 @@ void MGFramework::logEval(const char *logFileName)
 			}
 		}
 
-		if(nErrors!=0)
+		if(nErrors != 0)
 		{
 			std::cout << "FAIL (" << nErrors << " errors, " << nWarnings << " warnings)";
+		}
+		else if(nExitApp == 0)
+		{
+			std::cout << "FAIL (did not finish)";
 		}
 		else
 		{
@@ -1312,35 +1321,37 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
-		case MGComponent_LOGGING_ON:
+		case MGComponent_LOGGING_BOOL:
 		{
-			registerUsedCommand(MGComponent_LOGGING_ON);
-			enableLogging();
-			MGFLOG_INFO("Logging enabled.");
+			registerUsedCommand(MGComponent_LOGGING_BOOL);
+			int logOn = toInt(cmdvec[1]);
+			if(logOn == MGF_TRUE)
+			{
+				enableLogging();
+				MGFLOG_INFO("Logging enabled.");
+			}
+			else
+			{
+				MGFLOG_INFO("Logging disabled.");
+				disableLogging();
+			}
 			return true;
 		}
 
-		case MGComponent_LOGGING_OFF:
+		case MGComponent_MINIMAP_BOOL:
 		{
-			registerUsedCommand(MGComponent_LOGGING_OFF);
-			MGFLOG_INFO("Logging disabled.");
-			disableLogging();
-			return true;
-		}
-
-		case MGComponent_MINIMAP_ON:
-		{
-			registerUsedCommand(MGComponent_MINIMAP_ON);
-			enableMiniMap();
-			MGFLOG_INFO("Mini map enabled.");
-			return true;
-		}
-
-		case MGComponent_MINIMAP_OFF:
-		{
-			registerUsedCommand(MGComponent_MINIMAP_OFF);
-			disableMiniMap();
-			MGFLOG_INFO("Mini map disabled.");
+			registerUsedCommand(MGComponent_MINIMAP_BOOL);
+			int miniOn = toInt(cmdvec[1]);
+			if(miniOn == MGF_TRUE)
+			{
+				enableMiniMap();
+				MGFLOG_INFO("Mini map enabled.");
+			}
+			else
+			{
+				disableMiniMap();
+				MGFLOG_INFO("Mini map disabled.");
+			}
 			return true;
 		}
 
@@ -1397,17 +1408,18 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 			return true;
 		}
 
-		case MGComponent_INPUT_ON:
+		case MGComponent_INPUT_BOOL:
 		{
-			registerUsedCommand(MGComponent_INPUT_ON);
-			enableInput();
-			return true;
-		}
-
-		case MGComponent_INPUT_OFF:
-		{
-			registerUsedCommand(MGComponent_INPUT_OFF);
-			disableInput();
+			registerUsedCommand(MGComponent_INPUT_BOOL);
+			int inputOn = toInt(cmdvec[1]);
+			if(inputOn == MGF_TRUE)
+			{
+				enableInput();
+			}
+			else
+			{
+				disableInput();
+			}
 			return true;
 		}
 
@@ -1431,6 +1443,21 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		{
 			registerUsedCommand(MGComponent_INT);
 			MGFLOG_INFO("" << toInt(cmdvec[0]));
+			return true;
+		}
+
+		case MGComponent_SYMBOL_ASSIGNTO_INT:
+		{
+			registerUsedCommand(MGComponent_SYMBOL_ASSIGNTO_INT);
+			if(m_SymbolTable->hasValue(cmdvec[0]))
+			{
+				m_SymbolTable->setValue(cmdvec[0], toInt(cmdvec[2]));
+			}
+			else
+			{
+				m_SymbolTable->addSymbol(cmdvec[0], toInt(cmdvec[2]));
+			}
+			m_SymbolTable->printTable();
 			return true;
 		}
 
@@ -1500,21 +1527,13 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		{
 			return MGComponent_CLOSE_TERMINALSERVER;
 		}
-		else if(cmdvec[0]=="logging" && cmdvec[1]=="on")
+		else if(cmdvec[0]=="logging")
 		{
-			return MGComponent_LOGGING_ON;
+			return MGComponent_LOGGING_BOOL;
 		}
-		else if(cmdvec[0]=="logging" && cmdvec[1]=="off")
+		else if(cmdvec[0]=="minimap")
 		{
-			return MGComponent_LOGGING_OFF;
-		}
-		else if(cmdvec[0]=="minimap" && cmdvec[1]=="on")
-		{
-			return MGComponent_MINIMAP_ON;
-		}
-		else if(cmdvec[0]=="minimap" && cmdvec[1]=="off")
-		{
-			return MGComponent_MINIMAP_OFF;
+			return MGComponent_MINIMAP_BOOL;
 		}
 		else if(cmdvec[0]=="runframes")
 		{
@@ -1524,13 +1543,9 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		{
 			return MGComponent_EXIT_APPLICATION;
 		}
-		else if(cmdvec[0]=="input" && cmdvec[1]=="on")
+		else if(cmdvec[0]=="input")
 		{
-			return MGComponent_INPUT_ON;
-		}
-		else if(cmdvec[0]=="input" && cmdvec[1]=="off")
-		{
-			return MGComponent_INPUT_OFF;
+			return MGComponent_INPUT_BOOL;
 		}
 	}
 	else if(cmdvec.size() > 2)
@@ -1614,6 +1629,10 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		else if(cmdvec[0]=="so")
 		{
 			return MGComponent_SO_INT_X;
+		}
+		else if(cmdvec[1]=="=" || cmdvec[1]=="assignto")
+		{
+			return MGComponent_SYMBOL_ASSIGNTO_INT;
 		}
 	}
 
@@ -2209,7 +2228,15 @@ int MGFramework::toInt(const string &s)
 	}
 	else
 	{
-		if(s == string("random_mo"))
+		if(s == string("on"))
+		{
+			return MGF_TRUE;
+		}
+		else if(s == string("off"))
+		{
+			return MGF_FALSE;
+		}
+		else if(s == string("random_mo"))
 		{
 			if(getNumberOfMO()==0)
 			{

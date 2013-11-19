@@ -9,6 +9,8 @@
 
 
 // Macros...
+#define MGF_TRUE 1
+#define MGF_FALSE 0
 #define MGFTIMESTAMP(x) std::setfill('0') << std::setw(2) << (x/3600000) << ":" << std::setfill('0') << std::setw(2) << (x%3600000)/60000 << ":" << std::setfill('0') << std::setw(2) << (x%60000)/1000 << ":" << std::setfill('0') << std::setw(3) << (x%1000) 
 
 #define MGFLOG_WARNING(x)						{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: "	<< x << std::endl; }

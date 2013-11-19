@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.31.8"
+#define MGFRAMEWORKVERSION "1.0.31.9"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -56,13 +56,13 @@ enum eMGComponentConsoleCommand{
 	MGComponent_SETFPS_INT,
 	MGComponent_OPEN_TERMINALSERVER,
 	MGComponent_CLOSE_TERMINALSERVER,
-	MGComponent_MINIMAP_ON,									//minimap on (Activates mini map in graphics window)
-	MGComponent_MINIMAP_OFF,								//minimap off (Deactivates mini map in graphics window)
-	MGComponent_LOGGING_ON,
-	MGComponent_LOGGING_OFF,
-	MGComponent_INPUT_OFF,
-	MGComponent_INPUT_ON,
-	//MGComponent_SYMBOL_ASSIGNTO_INT,						//var1 = 32, var2 = getnumberofmo, etc
+
+	//Settings
+	MGComponent_LOGGING_BOOL,
+	MGComponent_MINIMAP_BOOL,
+	MGComponent_INPUT_BOOL,
+
+	MGComponent_SYMBOL_ASSIGNTO_INT,						//var1 = 32, var2 = getnumberofmo, etc
 
 	//MGPeriodicEvent commands
 	MGComponent_PE_INT_X,

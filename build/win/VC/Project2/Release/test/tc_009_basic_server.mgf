@@ -20,6 +20,8 @@ call .\\test\\tc_999_basic_testcoverage.mgf:testcoverage_window
 
 call .\\test\\tc_999_basic_testcoverage.mgf:testcoverage_so
 
+call .\\test\\tc_999_basic_testcoverage.mgf:testcoverage_sym
+
 call .\\test\\tc_999_basic_testcoverage.mgf:testcoverage_evalandexit
 
 
