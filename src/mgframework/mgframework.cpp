@@ -2294,6 +2294,16 @@ int MGFramework::toInt(const string &s)
 		{
 			return getFPS();
 		}
+		else
+		{
+			for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it=m_SymbolTable->table.begin(); it != m_SymbolTable->table.end(); ++it)
+			{
+				if((*it).symbol == s)
+				{
+					return (*it).value;
+				}
+			}
+		}
 	}
 	MGFLOG_ERROR("MGFramework::toInt failed to convert string to integer: " << s);
 	return 0;

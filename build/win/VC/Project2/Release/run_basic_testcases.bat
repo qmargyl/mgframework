@@ -23,28 +23,8 @@ project2.exe -logging -script .\test\tc_002_basic_mo.mgf		>	.\test\result\tc_002
 project2.exe -log_eval .\test\result\tc_002_basic_mo.log
 
 echo Running test case .\test\tc_003_basic_runframes.mgf
-project2.exe -logging -script .\test\tc_003_basic_runframes.mgf		>	.\test\result\tc_003_basic_runframes1.log
-project2.exe -log_eval .\test\result\tc_003_basic_runframes1.log
-
-echo Running test case .\test\tc_003_basic_runframes.mgf
-project2.exe -logging -script .\test\tc_003_basic_runframes.mgf		>	.\test\result\tc_003_basic_runframes2.log
-project2.exe -log_eval .\test\result\tc_003_basic_runframes2.log
-
-echo Running test case .\test\tc_003_basic_runframes.mgf
-project2.exe -logging -script .\test\tc_003_basic_runframes.mgf		>	.\test\result\tc_003_basic_runframes3.log
-project2.exe -log_eval .\test\result\tc_003_basic_runframes3.log
-
-echo Running test case .\test\tc_003_basic_runframes.mgf
-project2.exe -logging -script .\test\tc_003_basic_runframes.mgf		>	.\test\result\tc_003_basic_runframes4.log
-project2.exe -log_eval .\test\result\tc_003_basic_runframes4.log
-
-echo Running test case .\test\tc_003_basic_runframes.mgf
-project2.exe -logging -script .\test\tc_003_basic_runframes.mgf		>	.\test\result\tc_003_basic_runframes5.log
-project2.exe -log_eval .\test\result\tc_003_basic_runframes5.log
-
-echo Running test case .\test\tc_003_basic_runframes.mgf
-project2.exe -logging -script .\test\tc_003_basic_runframes.mgf		>	.\test\result\tc_003_basic_runframes6.log
-project2.exe -log_eval .\test\result\tc_003_basic_runframes6.log
+project2.exe -logging -script .\test\tc_003_basic_runframes.mgf		>	.\test\result\tc_003_basic_runframes.log
+project2.exe -log_eval .\test\result\tc_003_basic_runframes.log
 
 echo Running test case .\test\tc_004_basic_misc.mgf
 project2.exe -logging -script .\test\tc_004_basic_misc.mgf		>	.\test\result\tc_004_basic_misc.log
@@ -63,28 +43,8 @@ project2.exe -logging -script .\test\tc_007_basic_map.mgf		>	.\test\result\tc_00
 project2.exe -log_eval .\test\result\tc_007_basic_map.log
 
 echo Running test case .\test\tc_008_basic_script.mgf
-project2.exe -logging -script .\test\tc_008_basic_script.mgf		>	.\test\result\tc_008_basic_script1.log
-project2.exe -log_eval .\test\result\tc_008_basic_script1.log
-
-echo Running test case .\test\tc_008_basic_script.mgf
-project2.exe -logging -script .\test\tc_008_basic_script.mgf		>	.\test\result\tc_008_basic_script2.log
-project2.exe -log_eval .\test\result\tc_008_basic_script2.log
-
-echo Running test case .\test\tc_008_basic_script.mgf
-project2.exe -logging -script .\test\tc_008_basic_script.mgf		>	.\test\result\tc_008_basic_script3.log
-project2.exe -log_eval .\test\result\tc_008_basic_script3.log
-
-echo Running test case .\test\tc_008_basic_script.mgf
-project2.exe -logging -script .\test\tc_008_basic_script.mgf		>	.\test\result\tc_008_basic_script4.log
-project2.exe -log_eval .\test\result\tc_008_basic_script4.log
-
-echo Running test case .\test\tc_008_basic_script.mgf
-project2.exe -logging -script .\test\tc_008_basic_script.mgf		>	.\test\result\tc_008_basic_script5.log
-project2.exe -log_eval .\test\result\tc_008_basic_script5.log
-
-echo Running test case .\test\tc_008_basic_script.mgf
-project2.exe -logging -script .\test\tc_008_basic_script.mgf		>	.\test\result\tc_008_basic_script6.log
-project2.exe -log_eval .\test\result\tc_008_basic_script6.log
+project2.exe -logging -script .\test\tc_008_basic_script.mgf		>	.\test\result\tc_008_basic_script.log
+project2.exe -log_eval .\test\result\tc_008_basic_script.log
 
 echo Running server instance with test case .\test\tc_009_basic_server.mgf
 project2.exe -server -logging -script .\test\tc_009_basic_server.mgf	>	.\test\result\tc_009_basic_server.log
@@ -95,26 +55,16 @@ project2.exe -logging -script .\test\tc_010_basic_path.mgf		>	.\test\result\tc_0
 project2.exe -log_eval .\test\result\tc_010_basic_path.log
 
 echo Running test case .\test\tc_010_basic_path.mgf:testcase_2
-project2.exe -logging -script .\test\tc_010_basic_path.mgf:testcase_2	>	.\test\result\tc_010_basic_path_tescase_2_1.log
-project2.exe -log_eval .\test\result\tc_010_basic_path_tescase_2_1.log
-
-echo Running test case .\test\tc_010_basic_path.mgf:testcase_2
-project2.exe -logging -script .\test\tc_010_basic_path.mgf:testcase_2	>	.\test\result\tc_010_basic_path_tescase_2_2.log
-project2.exe -log_eval .\test\result\tc_010_basic_path_tescase_2_2.log
-
-echo Running test case .\test\tc_010_basic_path.mgf:testcase_2
-project2.exe -logging -script .\test\tc_010_basic_path.mgf:testcase_2	>	.\test\result\tc_010_basic_path_tescase_2_3.log
-project2.exe -log_eval .\test\result\tc_010_basic_path_tescase_2_3.log
-
-echo Running test case .\test\tc_010_basic_path.mgf:testcase_2
-project2.exe -logging -script .\test\tc_010_basic_path.mgf:testcase_2	>	.\test\result\tc_010_basic_path_tescase_2_4.log
-project2.exe -log_eval .\test\result\tc_010_basic_path_tescase_2_4.log
+project2.exe -logging -script .\test\tc_010_basic_path.mgf:testcase_2	>	.\test\result\tc_010_basic_path_tescase_2.log
+project2.exe -log_eval .\test\result\tc_010_basic_path_tescase_2.log
 
 echo Running test case .\test\tc_011_basic_so.mgf
 project2.exe -logging -script .\test\tc_011_basic_so.mgf		>	.\test\result\tc_011_basic_so.log
 project2.exe -log_eval .\test\result\tc_011_basic_so.log
 
-
+echo Running test case .\test\tc_012_basic_symbol.mgf
+project2.exe -logging -script .\test\tc_012_basic_symbol.mgf		>	.\test\result\tc_012_basic_symbol.log
+project2.exe -log_eval .\test\result\tc_012_basic_symbol.log
 
 echo Running test case .\test\tc_999_basic_testcoverage.mgf
 project2.exe -logging -script .\test\tc_999_basic_testcoverage.mgf	>	.\test\result\tc_999_basic_testcoverage.log

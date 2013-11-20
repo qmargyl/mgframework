@@ -8,7 +8,12 @@
 
 class MGSymbolTable :public MGComponent
 {
-private:
+
+protected:
+	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
+
+public:
+
 	class MGSymbolTablePair
 	{
 	public:
@@ -21,14 +26,6 @@ private:
 		int value;
 	};
 
-	std::deque<MGSymbolTablePair> table;
-
-
-protected:
-	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
-
-
-public:
 	MGSymbolTable();
 	~MGSymbolTable();
 	void addSymbol(const std::string &s, int v);
@@ -39,6 +36,8 @@ public:
 	void printTable();
 
 	bool runConsoleCommand(const char *c, MGFramework *w);
+
+	std::deque<MGSymbolTablePair> table;
 };
 
 #endif

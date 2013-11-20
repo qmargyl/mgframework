@@ -1,0 +1,32 @@
+
+logging on
+
+// Assignment
+var1 = 17
+var2 = var1
+expect var2 17
+
+// Assignment with assignto
+var3 assignto 27
+var4 assignto var3
+expect var4 27
+
+// Re-assignment
+a = 3
+b = 4
+expect a 3
+expect b 4
+a = 5
+b = a
+expect a 5
+expect b 5
+
+
+
+
+
+
+
+
+// Exiting application when all tests have run
+exit application

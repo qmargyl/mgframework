@@ -160,6 +160,7 @@ end function
 function testcoverage_sym
 sym1 = 666
 sym2 assignto 667
+sym3 = getnumberofmo
 end function
 
 

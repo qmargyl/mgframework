@@ -36,6 +36,7 @@ void MGSymbolTable::setValue(const std::string &s, int v)
 		if((*it).symbol == s)
 		{
 			(*it).value = v;
+			return;
 		}
 	}
 	MGFLOG_ERROR("Cannot find symbol '" << s.c_str() << "'");
