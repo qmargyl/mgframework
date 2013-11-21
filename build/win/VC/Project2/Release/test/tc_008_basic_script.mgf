@@ -5,6 +5,7 @@ call main_tc
 create mo 1 -owner 1
 expect getnumberofmo 0
 
+
 function and_then_exit
 exit application
 // Generate error if ever ending up here..
@@ -12,18 +13,26 @@ create mo 1 -owner 1
 expect getnumberofmo 0
 end function
 
+
 // Generate error if ever ending up here..
 create mo 1 -owner 1
 expect getnumberofmo 0
 
-function main_tc
-create mo 1
-call create_an_mo
-call create_another_mo
-expect getnumberofmo 3
-call and_then_exit
-end function
 
+function main_tc
+  // Call some sub routines...
+  create mo 1
+  call create_an_mo
+  call create_another_mo
+  expect getnumberofmo 3
+  delete all mo
+
+  // Other testcases
+  call test_symbols_1
+
+  // Exit when done...
+  call and_then_exit
+end function
 delete all mo
 
 
@@ -32,7 +41,6 @@ function create_an_mo
 	// Add an mo..
 	add mo 1
 end function	  
-
 delete all mo
 
 
@@ -41,6 +49,21 @@ function create_another_mo
   add mo 1  	
 end function  
 
+
+
+function test_symbols_1
+  s1 = 13
+  s2 = 14
+  s3 = s1
+  s1 = s2
+  expect s1 14
+  expect s2 14
+  expect s3 13
+  create mo 666
+  nmo = getnumberofmo
+  expect nmo 666
+  delete all mo
+end function
 
 
 // Generate error if ever ending up here..

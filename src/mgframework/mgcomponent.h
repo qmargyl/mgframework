@@ -92,7 +92,7 @@ public:
 	static int randomN(int upperLimit){return std::rand()%upperLimit;}
 	static double distance(int x1, int y1, int x2, int y2){ return sqrt((double)(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))); }
 	static std::string toString(int number);
-	static std::vector<std::string> split(std::string str, char c);
+	static std::vector<std::string> split(char *str, const char *c);
 	static bool oneOf(int x, int a1, int a2){ if(x==a1) return true;  if(x==a2) return true; return false;}
 	static int smallest(int a, int b){ if(a<b) return a; return b;}
 	static int smallest(int a, int b, int c){ return smallest(a, smallest(b, c)); }

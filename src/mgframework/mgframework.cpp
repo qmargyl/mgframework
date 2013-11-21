@@ -310,6 +310,10 @@ void MGFramework::parse(const char *sFileName)
 					}
 				}
 
+				// XXX: Need to remove spaces in the beginning of the string.
+
+				// XXX: Need to change double spaces to single ones.
+
 				// Remove the newline and any tailing "special" characters before sending command to runConsoleCommand
 				for(int i=(int)strlen(scriptLine); i>=0 ; --i)
 				{
@@ -332,6 +336,7 @@ void MGFramework::parse(const char *sFileName)
 				int l=(int)strlen(scriptLine);
 				for(int i=0; i<l; ++i)
 				{
+					// XXX: This should be done differently: "//...", not "/..."
 					if(scriptLine[i] == '/') // Remove comments
 					{
 						scriptLine[i] = '\0';
@@ -340,7 +345,7 @@ void MGFramework::parse(const char *sFileName)
 
 				// Create vector of strings representing the current line
 				std::string s_scriptLine(scriptLine);
-				std::vector<std::string> v_scriptLine = split(s_scriptLine, ' ');
+				std::vector<std::string> v_scriptLine = split(scriptLine, " ");
 
 				if(foundFunction)
 				{
@@ -359,6 +364,8 @@ void MGFramework::parse(const char *sFileName)
 					else if(okMGFrameworkSyntax(v_scriptLine))
 					{
 						// function call..
+						MGFLOG_INFO("Tokens: " << v_scriptLine.size());
+
 						if(v_scriptLine.size()==2 && v_scriptLine[0]=="call")
 						{
 							std::size_t fColon = v_scriptLine[1].find(string(":"));
@@ -630,8 +637,9 @@ void MGFramework::activateConsole()
 
 bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 {
-	std::string cmd(c);
-	std::vector<std::string> cmdvec = split(cmd, ' ');
+	char cmd[256]; // XXX: Not so nice to hard code the size...
+	strcpy(cmd, c);
+	std::vector<std::string> cmdvec = MGFramework::split(cmd, " ");
 
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{

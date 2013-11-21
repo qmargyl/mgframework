@@ -78,8 +78,9 @@ void MGPeriodicEvent::copy(const MGPeriodicEvent *src)
 
 bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 {
-	std::string cmd(c);
-	std::vector<std::string> cmdvec = MGFramework::split(cmd, ' ');
+	char cmd[256]; // XXX: Not so nice to hard code the size...
+	strcpy(cmd, c);
+	std::vector<std::string> cmdvec = MGFramework::split(cmd, " ");
 
 	switch(detectMGComponentConsoleCommand(cmdvec))
 	{
