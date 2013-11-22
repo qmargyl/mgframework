@@ -18,54 +18,54 @@ exit application
 
 
 function ext_testcase_001
-call testcase_001
-exit application
-end function
+  call testcase_001
+  exit application
+end
 
 function ext_testcase_002
-call testcase_002
-exit application
-end function
+  call testcase_002
+  exit application
+end
 
 function ext_testcase_003
-call testcase_003
-exit application
-end function
+  call testcase_003
+  exit application
+end
 
 function ext_testcase_004
-call testcase_004
-exit application
-end function
+  call testcase_004
+  exit application
+end
 
 function ext_testcase_005
-call testcase_005
-exit application
-end function
+  call testcase_005
+  exit application
+end
 
 
 
 // Two MO passing eachother
 function testcase_001
-logging on
-map logging on
-map setsize 128 128 32 32
-create mo 1 -x 5 -y 5 -speed 3
-add mo 1 -x 10 -y 10 -speed 3
-mo 0 logging on
-mo 1 logging on
-mo 0 setdestination 11 11
-mo 1 setdestination 4 4
-expect getnumberofmo 2
-mo 0 expect getlocation 5 5
-mo 1 expect getlocation 10 10
-call runframes_100
-call runframes_100
-mo 0 expect getlocation 11 11
-mo 1 expect getlocation 4 4
-delete all mo
-expect getnumberofmo 0
-map logging off
-end function
+  logging on
+  map logging on
+  map setsize 128 128 32 32
+  create mo 1 -x 5 -y 5 -speed 3
+  add mo 1 -x 10 -y 10 -speed 3
+  mo 0 logging on
+  mo 1 logging on
+  mo 0 setdestination 11 11
+  mo 1 setdestination 4 4
+  expect getnumberofmo 2
+  mo 0 expect getlocation 5 5
+  mo 1 expect getlocation 10 10
+  call runframes_100
+  call runframes_100
+  mo 0 expect getlocation 11 11
+  mo 1 expect getlocation 4 4
+  delete all mo
+  expect getnumberofmo 0
+  map logging off
+end
 
 
 
@@ -101,7 +101,7 @@ mo 3 expect getlocation 11 4
 delete all mo
 expect getnumberofmo 0
 map logging off
-end function
+end
 
 
 
@@ -132,7 +132,7 @@ mo 5 expect getlocation 4 7
 delete all mo
 expect getnumberofmo 0
 map logging off
-end function
+end
 
 
 
@@ -167,7 +167,7 @@ mo 7 expect getlocation 4 7
 delete all mo
 expect getnumberofmo 0
 map logging off
-end function
+end
 
 
 
@@ -206,42 +206,42 @@ mo 7 expect getlocation 4 7
 delete all mo
 expect getnumberofmo 0
 map logging off
-end function
+end
 
 
 
 // Utility functions
 
 function runframes_100
-call runframes_20
-call runframes_20
-call runframes_20
-call runframes_20
-call runframes_20
-end function
+  call runframes_20
+  call runframes_20
+  call runframes_20
+  call runframes_20
+  call runframes_20
+end
 
 
 function runframes_20
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-end function
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+end
 
 

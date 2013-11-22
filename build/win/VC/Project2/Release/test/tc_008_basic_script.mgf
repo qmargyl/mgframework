@@ -11,7 +11,7 @@ function and_then_exit
   // Generate error if ever ending up here..
   create mo 1 -owner 1
   expect getnumberofmo 0
-end function
+end
 
 
 // Generate error if ever ending up here..
@@ -30,10 +30,11 @@ function main_tc
   // Other testcases
   call test_symbols_1
   call test_calldepth_1
+  call test_comments_1
 
   // Exit when done...
   call and_then_exit
-end function
+end
 delete all mo
 
 
@@ -43,14 +44,14 @@ delete all mo
 function create_an_mo 
 	// Add an mo..
 	add mo 1
-end function	  
+end	  
 delete all mo
 
 
 
 function create_another_mo
   add mo 1  	
-end function  
+end 
 
 
 //
@@ -68,7 +69,7 @@ function test_symbols_1
   nmo = getnumberofmo
   expect nmo 666
   delete all mo
-end function
+end
 
 
 
@@ -79,15 +80,15 @@ function test_calldepth_1
   cdv = 5
   call test_calldepth_2
   expect cdv 17
-end function
+end
 
 function test_calldepth_2
   call test_calldepth_3
-end function
+end
 
 function test_calldepth_3
   cdv = 17
-end function
+end
 
 
 //
@@ -104,9 +105,36 @@ function test_if_1
     v_1 = 1
   expect v_0 1
   expect v_1 0  
-end function
+end
 
 
+
+//
+// Test function with parameters
+//
+function test_func_param_1
+  var1 = 4
+  var2 = 9
+  call test_func_param_2 var1 var2
+end
+
+function test_func_param_2 $1 $2
+  expect $1 4
+  expect $2 9
+end
+
+
+//
+// Test comments
+//
+function test_comments_1
+  // first comment
+  	var1 = 43 // comment after statement
+		//var1 = 44  		                    //
+		//		
+  	expect var1 43            		     // comment far away
+  expect var1 43//	
+end
 
 
 

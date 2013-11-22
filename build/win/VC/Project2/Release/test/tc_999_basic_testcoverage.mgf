@@ -99,7 +99,7 @@ mo 0 expect getlocation 4 3
 delete all mo
 expect getnumberofmo 0
 
-end function
+end
 
 
 
@@ -135,7 +135,7 @@ minimap on
 minimap off
 minimap on
 runoneframe
-end function
+end
 
 
 
@@ -144,12 +144,12 @@ end function
 
 // Window
 function testcoverage_window
-window logging on
-window fullscreen on
-window help
-window fullscreen off
-window logging off
-end function
+  window logging on
+  window fullscreen on
+  window help
+  window fullscreen off
+  window logging off
+end
 
 
 
@@ -158,10 +158,10 @@ end function
 
 // SymbolTable
 function testcoverage_sym
-sym1 = 666
-sym2 assignto 667
-sym3 = getnumberofmo
-end function
+  sym1 = 666
+  sym2 assignto 667
+  sym3 = getnumberofmo
+end
 
 
 
@@ -189,7 +189,7 @@ runoneframe
 runoneframe
 runoneframe
 delete all mo
-end function
+end
 
 
 
@@ -231,7 +231,7 @@ delete all pe -owner 1
 expect getnumberofpe 1
 delete all pe -owner 2
 expect getnumberofpe 0
-end function
+end
 
 
 
@@ -239,22 +239,22 @@ end function
 
 
 function testcoverage_so
-create so 2
-expect getnumberofso 2
-so 0 logging on
-so 0 logging off
-so all logging on
-so all logging off
-so 1 getlocation
-so 1 help
-delete so 0
-expect getnumberofso 1
-delete all so
-add so 10
-expect getnumberofso 10
-delete all so
-expect getnumberofso 0
-end function
+  create so 2
+  expect getnumberofso 2
+  so 0 logging on
+  so 0 logging off
+  so all logging on
+  so all logging off
+  so 1 getlocation
+  so 1 help
+  delete so 0
+  expect getnumberofso 1
+  delete all so
+  add so 10
+  expect getnumberofso 10
+  delete all so
+  expect getnumberofso 0
+end
 
 
 
@@ -262,13 +262,13 @@ end function
 
 
 function testcoverage_evalandexit
-exit
-getnumberofcommands
-getnumberofusedcommands
-getnumberofmo
-getnumberofmarkedmo
-expect getnumberofusedcommands percentage 100
+  exit
+  getnumberofcommands
+  getnumberofusedcommands
+  getnumberofmo
+  getnumberofmarkedmo
+  expect getnumberofusedcommands percentage 100
 
-// Exit application last
-exit application
-end function
+  // Exit application last
+  exit application
+end

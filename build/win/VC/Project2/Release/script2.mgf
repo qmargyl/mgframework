@@ -6,6 +6,6 @@ delete all mo
 
 function create_five_mo
 add mo 5 -owner 2
-end function
+end
 
 delete all mo

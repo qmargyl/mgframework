@@ -18,80 +18,80 @@ exit application
 
 
 function ext_testcase_001
-call testcase_001
-exit application
-end function
+  call testcase_001
+  exit application
+end
 
 function ext_testcase_002
-call testcase_002
-exit application
-end function
+  call testcase_002
+  exit application
+end
 
 function ext_testcase_003
-call testcase_003
-exit application
-end function
+  call testcase_003
+  exit application
+end
 
 function ext_testcase_004
-call testcase_004
-exit application
-end function
+  call testcase_004
+  exit application
+end
 
 function ext_testcase_005
-call testcase_005
-exit application
-end function
+  call testcase_005
+  exit application
+end
 
 
 
 // Simple assignment
 function testcase_001
-a = 1
-b = 2
-c = 3
-expect a 1
-expect b 2
-expect c 3
-a assignto 4
-b assignto 5
-c assignto 6
-expect a 4
-expect b 5
-expect c 6
-end function
+  a = 1
+  b = 2
+  c = 3
+  expect a 1
+  expect b 2
+  expect c 3
+  a assignto 4
+  b assignto 5
+  c assignto 6
+  expect a 4
+  expect b 5
+  expect c 6
+end
 
 
 
 // Assignment
 function testcase_002
-sym_1 = 5
-sym_2 = 37
-expect sym_2 37
-sym_2 = sym_1
-expect sym_1 5
-expect sym_2 5
-end function
+  sym_1 = 5
+  sym_2 = 37
+  expect sym_2 37
+  sym_2 = sym_1
+  expect sym_1 5
+  expect sym_2 5
+end
 
 
 
 
 function testcase_003
 
-end function
+end
 
 
 
 
 function testcase_004
 
-end function
+end
 
 
 
 
 function testcase_005
 
-end function
+end
 
 
 

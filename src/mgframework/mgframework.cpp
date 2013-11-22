@@ -297,7 +297,7 @@ void MGFramework::parse(const char *sFileName)
 			{
 				if((int)strlen(scriptLine) > MGF_SCRIPTLINE_MAXLENGTH)
 				{
-					// XXX: Perhaps a warning would be nice here...
+					MGFLOG_ERROR("MGFramework::parse skipped script line exceeding the max line length");
 					continue;
 				}
 
@@ -309,10 +309,6 @@ void MGFramework::parse(const char *sFileName)
 						scriptLine[i] = 32;
 					}
 				}
-
-				// XXX: Need to remove spaces in the beginning of the string.
-
-				// XXX: Need to change double spaces to single ones.
 
 				// Remove the newline and any tailing "special" characters before sending command to runConsoleCommand
 				for(int i=(int)strlen(scriptLine); i>=0 ; --i)
@@ -343,22 +339,22 @@ void MGFramework::parse(const char *sFileName)
 					}
 				}
 
-				// Create vector of strings representing the current line
+				// Create vector of strings (tokens) representing the current script line
 				std::string s_scriptLine(scriptLine);
 				std::vector<std::string> v_scriptLine = split(scriptLine, " ");
 
 				if(foundFunction)
 				{
-					if(v_scriptLine.size()==2 && v_scriptLine[0]=="end" && v_scriptLine[1]=="function")
+					if(v_scriptLine.size()==1 && v_scriptLine[0]=="end")
 					{
 						if(functionName!=NULL)
 						{
-							MGFLOG_INFO("MGFramework::parse ending function");
+							MGFLOG_INFO("MGFramework::parse found end of function");
 							break;
 						}
 						else
 						{
-							MGFLOG_ERROR("MGFramework::parse found 'end function' outside a function");
+							MGFLOG_ERROR("MGFramework::parse found 'end' outside a function");
 						}
 					}
 					else if(okMGFrameworkSyntax(v_scriptLine))
@@ -383,6 +379,7 @@ void MGFramework::parse(const char *sFileName)
 						// other statement..
 						else
 						{
+							// Create a string of all tokens in the command
 							string cmd=string("");
 							for(unsigned int i=0; i<v_scriptLine.size(); ++i)
 							{

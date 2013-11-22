@@ -116,7 +116,7 @@ exit application
 
 function pe_delete_all_mo
 delete all mo
-end function
+end
 
 
 

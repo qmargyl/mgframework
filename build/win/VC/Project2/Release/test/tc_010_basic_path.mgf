@@ -72,7 +72,7 @@ delete all mo
 delete all pe
 input on
 exit application
-end function
+end
 
 
 // *******************************************************************
@@ -157,7 +157,7 @@ call runframes_400
 call runframes_400
 call runframes_400
 
-end function
+end
 
 
 // We should never reach this point, generate error
@@ -587,7 +587,7 @@ runoneframe
 // Plus one to get out runframes statistics..
 //runoneframe
 
-end function
+end
 
 
 
