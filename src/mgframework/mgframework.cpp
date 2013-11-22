@@ -245,9 +245,10 @@ void MGFramework::parse(const char *sFileName)
 
 	MGFLOG_INFO("MGFramework::parse was called with argument " << sFileName);
 	FILE *sf = NULL;
-	char *functionName=NULL;
+	char *functionName = NULL;
 	char scriptFileName[128];
-	bool foundFunction=false;
+	bool foundFunction = false;
+	MGSymbolTable *symbols = new MGSymbolTable();
 
 
 	strcpy(scriptFileName,sFileName);
@@ -257,7 +258,7 @@ void MGFramework::parse(const char *sFileName)
 	{
 		functionName = scriptFileName + foundColon + 1;
 		scriptFileName[foundColon]='\0';
-		MGFLOG_INFO("MGFramework::parse will parse file " << scriptFileName << " and function " << functionName);
+		MGFLOG_INFO("MGFramework::parse will parse file " << scriptFileName << ", function " << functionName);
 
 	}
 
@@ -393,7 +394,7 @@ void MGFramework::parse(const char *sFileName)
 								}
 							}
 							MGFLOG_INFO("MGFramework::parse calls runConsoleCommand(" << cmd.c_str() << ")");
-							runConsoleCommand(cmd.c_str(), this);
+							runConsoleCommand(cmd.c_str(), this/*, symbols*/);
 							if(getQuitFlag())
 							{
 								MGFLOG_INFO("MGFramework::parse stops parsing");
@@ -419,6 +420,7 @@ void MGFramework::parse(const char *sFileName)
 
 		MGFLOG_INFO("MGFramework::parse finished parsing script file " << scriptFileName);
 	}
+	delete symbols;
 }
 
 void MGFramework::logEval(const char *logFileName)
@@ -632,7 +634,7 @@ void MGFramework::activateConsole()
 
 
 
-bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
+bool MGFramework::runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTable *s*/)
 {
 	char cmd[MGF_SCRIPTLINE_MAXLENGTH];
 	strcpy(cmd, c);
@@ -675,10 +677,10 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_PE_INT_STOREFILENAME_FILENAME:
 		{
 			registerUsedCommand(MGComponent_PE_INT_X);
-			int peIndex=toInt(cmdvec[1]);
+			int peIndex=toInt(cmdvec[1]/*, s*/);
 			if(peIndex >= 0 && peIndex < getNumberOfPE())
 			{
-				return m_PE[toInt(cmdvec[1])].runConsoleCommand(c, this);
+				return m_PE[toInt(cmdvec[1]/*, s*/)].runConsoleCommand(c, this);
 			}
 			MGFLOG_WARNING("Console command was not forwarded to PE " << peIndex); 
 			return true;
@@ -1454,6 +1456,34 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 		case MGComponent_SYMBOL_ASSIGNTO_INT:
 		{
 			registerUsedCommand(MGComponent_SYMBOL_ASSIGNTO_INT);
+			// First check symbol table of local variables..
+			/*
+				if(s && s->hasValue(cmdvec[0]))
+				{
+					s->setValue(cmdvec[0], toInt(cmdvec[2], s));
+				}
+				else if(m_SymbolTable->hasValue(cmdvec[0]))
+				{
+					m_SymbolTable->setValue(cmdvec[0], toInt(cmdvec[2], s));
+				}
+				else if(s)
+				{
+					s->addSymbol(cmdvec[0], toInt(cmdvec[2], s));
+				}
+				else
+				{
+					m_SymbolTable->addSymbol(cmdvec[0], toInt(cmdvec[2], s));
+				}
+
+				if(s)
+				{
+					s->printTable();
+				}
+				m_SymbolTable->printTable();
+				return true;
+			}
+			*/
+			// Then the one of global..
 			if(m_SymbolTable->hasValue(cmdvec[0]))
 			{
 				m_SymbolTable->setValue(cmdvec[0], toInt(cmdvec[2]));
@@ -2222,7 +2252,7 @@ int MGFramework::staticToInt(const string &s)
 	return 0;
 }
 
-int MGFramework::toInt(const string &s)
+int MGFramework::toInt(const string &s/*, MGSymbolTable *sym*/)
 {
 	if(isNumericalInt(s))
 	{
@@ -2301,6 +2331,20 @@ int MGFramework::toInt(const string &s)
 		}
 		else
 		{
+			// First look in the symbol table of local variables..
+			/*
+			if(sym)
+			{
+				for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it=sym->table.begin(); it != sym->table.end(); ++it)
+				{
+					if((*it).symbol == s)
+					{
+						return (*it).value;
+					}
+				}				
+			}
+			*/
+			// Then the one of global..
 			for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it=m_SymbolTable->table.begin(); it != m_SymbolTable->table.end(); ++it)
 			{
 				if((*it).symbol == s)

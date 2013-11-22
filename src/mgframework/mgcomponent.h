@@ -47,6 +47,7 @@ enum eMGFInstanceType{
 #define MGF_PLAYER2		2
 
 class MGFramework;
+class MGSymbolTable;
 
 class MGComponent
 {
@@ -83,7 +84,7 @@ public:
 		setID();
 	}
 
-	virtual bool runConsoleCommand(const char *c, MGFramework *w) = 0;
+	virtual bool runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTable *s*/) = 0;
 
 	int getID(){ return m_ID;}
 
