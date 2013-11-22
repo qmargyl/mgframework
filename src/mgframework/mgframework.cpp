@@ -517,15 +517,15 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 	Uint32 frameStartTime = 0; 
 	if(!runOneFrame) m_DelayTime = 0;
 	// Assume an initial value of m_FrameTime of 1000/getDesiredFPS().
-	Uint32 lastFrameTime = SDL_GetTicks()-(1000/getDesiredFPS()); // SDL_GetTicks() - lastFrameTime cannot be zero.
+	Uint32 lastFrameTime = MGF_GetExecTimeMS()-(1000/getDesiredFPS()); // MGF_GetExecTimeMS() - lastFrameTime cannot be zero.
 
 	// Frame loop (processEvents, handleGameLogics, draw)
 	while(processEvents())
 	{
 		// Calculate the current frame time (and implicitly FPS)..
-		m_FrameTime = SDL_GetTicks() - lastFrameTime; //number of milli seconds from last frame was handled
-		lastFrameTime = SDL_GetTicks();
-		frameStartTime = SDL_GetTicks();
+		m_FrameTime = MGF_GetExecTimeMS() - lastFrameTime; //number of milli seconds from last frame was handled
+		lastFrameTime = MGF_GetExecTimeMS();
+		frameStartTime = MGF_GetExecTimeMS();
 
 		// Handle all calculations and draw current frame..
 
@@ -573,7 +573,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 		}
 
 		// Sleep if there is time to spare..
-		m_DelayTime = (1000/getDesiredFPS()) - (SDL_GetTicks() - frameStartTime);
+		m_DelayTime = (1000/getDesiredFPS()) - (MGF_GetExecTimeMS() - frameStartTime);
 
 		if(m_DelayTime > 0)
 		{
@@ -637,7 +637,7 @@ void MGFramework::activateConsole()
 
 bool MGFramework::runConsoleCommand(const char *c, MGFramework *w)
 {
-	char cmd[256]; // XXX: Not so nice to hard code the size...
+	char cmd[MGF_SCRIPTLINE_MAXLENGTH];
 	strcpy(cmd, c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, " ");
 
@@ -2027,7 +2027,7 @@ void MGFramework::quit()
 { 
 	m_Quit = true; 
 	m_Map.printStatisticsCounters();
-	std::cout << "Execution time: " << SDL_GetTicks() << std::endl;
+	std::cout << "Execution time: " << MGF_GetExecTimeMS() << std::endl;
 }
 
 

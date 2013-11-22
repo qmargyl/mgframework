@@ -6,7 +6,7 @@ int MGMovingObject::m_TileSize = 0;
 
 MGMovingObject::MGMovingObject()
 {
-	setTimeOfLastUpdate(SDL_GetTicks());
+	setTimeOfLastUpdate(MGF_GetExecTimeMS());
 	m_FinishingLastMove=false;
 	m_Marked=false;
 	m_TileX=0;
@@ -24,7 +24,7 @@ MGMovingObject::~MGMovingObject()
 
 void MGMovingObject::initialize()
 {
-	setTimeOfLastUpdate(SDL_GetTicks());
+	setTimeOfLastUpdate(MGF_GetExecTimeMS());
 	m_FinishingLastMove=false;
 	m_Marked=false;
 	m_TileX=0;
@@ -121,7 +121,7 @@ void MGMovingObject::update(MGFramework *w)
 	}
 	else
 	{
-		int timeSinceLastUpdate = SDL_GetTicks() - getTimeOfLastUpdate();
+		int timeSinceLastUpdate = MGF_GetExecTimeMS() - getTimeOfLastUpdate();
 		double d = m_Speed * (timeSinceLastUpdate / 1000.0);
 
 		PathItem pathI = m_Path.front();
@@ -136,7 +136,7 @@ void MGMovingObject::update(MGFramework *w)
 			{
 				//MGFLOG_WARNING("MGMovingObject::update concluded that the path is blocked. Will try to find a new Path...");
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
-				setTimeOfLastUpdate(SDL_GetTicks());
+				setTimeOfLastUpdate(MGF_GetExecTimeMS());
 				changeState(MOStateStuck);
 				return;
 			}
@@ -144,7 +144,7 @@ void MGMovingObject::update(MGFramework *w)
 		else
 		{
 			setDestTileXY(x, y);
-			setTimeOfLastUpdate(SDL_GetTicks());
+			setTimeOfLastUpdate(MGF_GetExecTimeMS());
 			if(isStuck())
 			{
 				changeState(MOStateMoving);
@@ -263,7 +263,7 @@ void MGMovingObject::update(MGFramework *w)
 				setTileXY(getTileX(), getTileY()-1, w);
 			}
 
-			setTimeOfLastUpdate(SDL_GetTicks());
+			setTimeOfLastUpdate(MGF_GetExecTimeMS());
 		}
 		else
 		{
@@ -303,7 +303,7 @@ void MGMovingObject::copy(MGMovingObject *src)
 
 bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
 {
-	char cmd[256]; // XXX: Not so nice to hard code the size...
+	char cmd[MGF_SCRIPTLINE_MAXLENGTH];
 	strcpy(cmd, c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, " ");
 

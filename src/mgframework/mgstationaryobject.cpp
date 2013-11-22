@@ -50,7 +50,7 @@ void MGStationaryObject::copy(MGStationaryObject *src)
 
 bool MGStationaryObject::runConsoleCommand(const char *c, MGFramework *w)
 {
-	char cmd[256]; // XXX: Not so nice to hard code the size...
+	char cmd[MGF_SCRIPTLINE_MAXLENGTH];
 	strcpy(cmd, c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, " ");
 

@@ -33,7 +33,7 @@ bool MGPeriodicEvent::update()
 	}
 	if (timeLeft()<=0)
 	{
-		m_StartTime = SDL_GetTicks();
+		m_StartTime = MGF_GetExecTimeMS();
 		return true;
 	}
 	else
@@ -45,7 +45,7 @@ bool MGPeriodicEvent::update()
 void MGPeriodicEvent::activate()
 {
 	m_isActive = true;
-	m_StartTime = SDL_GetTicks();
+	m_StartTime = MGF_GetExecTimeMS();
 }
 
 void MGPeriodicEvent::deactivate()
@@ -60,7 +60,7 @@ bool MGPeriodicEvent::isActive()
 
 int MGPeriodicEvent::timeLeft()
 {
-	return m_Period - (SDL_GetTicks() - m_StartTime);
+	return m_Period - (MGF_GetExecTimeMS() - m_StartTime);
 }
 
 
@@ -78,7 +78,7 @@ void MGPeriodicEvent::copy(const MGPeriodicEvent *src)
 
 bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
 {
-	char cmd[256]; // XXX: Not so nice to hard code the size...
+	char cmd[MGF_SCRIPTLINE_MAXLENGTH];
 	strcpy(cmd, c);
 	std::vector<std::string> cmdvec = MGFramework::split(cmd, " ");
 

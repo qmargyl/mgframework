@@ -7,10 +7,10 @@ expect getnumberofmo 0
 
 
 function and_then_exit
-exit application
-// Generate error if ever ending up here..
-create mo 1 -owner 1
-expect getnumberofmo 0
+  exit application
+  // Generate error if ever ending up here..
+  create mo 1 -owner 1
+  expect getnumberofmo 0
 end function
 
 
@@ -29,6 +29,7 @@ function main_tc
 
   // Other testcases
   call test_symbols_1
+  call test_calldepth_1
 
   // Exit when done...
   call and_then_exit
@@ -36,7 +37,9 @@ end function
 delete all mo
 
 
-
+//
+// Test to call sub routines
+//
 function create_an_mo 
 	// Add an mo..
 	add mo 1
@@ -50,7 +53,9 @@ function create_another_mo
 end function  
 
 
-
+//
+// Test symbol handling inside a function
+//
 function test_symbols_1
   s1 = 13
   s2 = 14
@@ -66,8 +71,46 @@ function test_symbols_1
 end function
 
 
+
+//
+// Test function calls from within functions
+//
+function test_calldepth_1
+  cdv = 5
+  call test_calldepth_2
+  expect cdv 17
+end function
+
+function test_calldepth_2
+  call test_calldepth_3
+end function
+
+function test_calldepth_3
+  cdv = 17
+end function
+
+
+//
+// Test if statements
+//
+function test_if_1
+  delete all mo
+  v_if = 0
+  v_0 = 0
+  v_1 = 0
+  if v_if == 0
+    v_0 = 1
+  if v_if == 1
+    v_1 = 1
+  expect v_0 1
+  expect v_1 0  
+end function
+
+
+
+
+
 // Generate error if ever ending up here..
 create mo 1 -owner 1
 expect getnumberofmo 0
-
 exit application

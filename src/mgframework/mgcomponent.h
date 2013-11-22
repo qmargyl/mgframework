@@ -1,6 +1,7 @@
 #ifndef _MG_COMPONENT_H
 #define _MG_COMPONENT_H
 
+#include <time.h>
 #include <vector>
 #include <string>
 #include <cmath>
@@ -11,15 +12,25 @@
 // Macros...
 #define MGF_TRUE 1
 #define MGF_FALSE 0
-#define MGFTIMESTAMP(x) std::setfill('0') << std::setw(2) << (x/3600000) << ":" << std::setfill('0') << std::setw(2) << (x%3600000)/60000 << ":" << std::setfill('0') << std::setw(2) << (x%60000)/1000 << ":" << std::setfill('0') << std::setw(3) << (x%1000) 
 
-#define MGFLOG_WARNING(x)						{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: "	<< x << std::endl; }
-#define MGFLOG_INFO(x)		if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: "		<< x << std::endl; }
-#define MGFLOG_ERROR(x)							{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") ERROR: "	<< x << std::endl; }
+//#define MGFTIMESTAMP(x) std::setfill('0') << std::setw(2) << (x/3600000) << ":" << std::setfill('0') << std::setw(2) << (x%3600000)/60000 << ":" << std::setfill('0') << std::setw(2) << (x%60000)/1000 << ":" << std::setfill('0') << std::setw(3) << (x%1000) 
 
-#define MGFLOG_STATIC_WARNING(x)						{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " WARNING: "	<< x << std::endl; }
-#define MGFLOG_STATIC_INFO(x)		if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " INFO: "		<< x << std::endl; }
-#define MGFLOG_STATIC_ERROR(x)							{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " ERROR: "	<< x << std::endl; }
+#define MGFLOG_WARNING(x)						{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: "	<< x << std::endl; }
+#define MGFLOG_INFO(x)		if(loggingEnabled()){ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: "		<< x << std::endl; }
+#define MGFLOG_ERROR(x)							{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") ERROR: "	<< x << std::endl; }
+
+//#define MGFLOG_WARNING(x)						{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: "	<< x << std::endl; }
+//#define MGFLOG_INFO(x)		if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: "		<< x << std::endl; }
+//#define MGFLOG_ERROR(x)							{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") ERROR: "	<< x << std::endl; }
+
+#define MGFLOG_STATIC_WARNING(x)						{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " WARNING: "	<< x << std::endl; }
+#define MGFLOG_STATIC_INFO(x)		if(loggingEnabled()){ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " INFO: "		<< x << std::endl; }
+#define MGFLOG_STATIC_ERROR(x)							{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " ERROR: "	<< x << std::endl; }
+
+//#define MGFLOG_STATIC_WARNING(x)						{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " WARNING: "	<< x << std::endl; }
+//#define MGFLOG_STATIC_INFO(x)		if(loggingEnabled()){ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " INFO: "		<< x << std::endl; }
+//#define MGFLOG_STATIC_ERROR(x)							{ Uint32 t = SDL_GetTicks(); std::cout << "[" << MGFTIMESTAMP(t) << "] " << __FILE__ << ":" << __LINE__ << " ERROR: "	<< x << std::endl; }
+
 
 typedef unsigned short      WORD;
 
@@ -104,6 +115,8 @@ public:
 	static int biggest(int a, int b){ if(a>b) return a; return b;}
 	static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
 	static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);
+	static float MGF_GetExecTimeS(){ return ((float)clock())/CLOCKS_PER_SEC; }
+	static Uint32 MGF_GetExecTimeMS(){ return (Uint32)(1000.0 * MGF_GetExecTimeS()); }
 
 };
 
