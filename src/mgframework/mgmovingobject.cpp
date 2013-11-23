@@ -301,7 +301,7 @@ void MGMovingObject::copy(MGMovingObject *src)
 	m_Path = src->m_Path;
 }
 
-bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w)
+bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {
 	char cmd[MGF_SCRIPTLINE_MAXLENGTH];
 	strcpy(cmd, c);

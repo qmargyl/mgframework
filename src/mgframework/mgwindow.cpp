@@ -106,7 +106,7 @@ bool MGWindow::setProperties(eMGWindowScreenResolution screenResolution, int bpp
 	return true;
 }
 
-bool MGWindow::runConsoleCommand(const char *c, MGFramework *w)
+bool MGWindow::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {
 	char cmd[MGF_SCRIPTLINE_MAXLENGTH];
 	strcpy(cmd, c);

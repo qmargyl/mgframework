@@ -35,7 +35,7 @@ public:
 	void delSymbol(const std::string &s);
 	void printTable();
 
-	bool runConsoleCommand(const char *c, MGFramework *w);
+	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 
 	std::deque<MGSymbolTablePair> table;
 };

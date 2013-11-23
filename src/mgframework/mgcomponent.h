@@ -84,7 +84,7 @@ public:
 		setID();
 	}
 
-	virtual bool runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTable *s*/) = 0;
+	virtual bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s) = 0;
 
 	int getID(){ return m_ID;}
 

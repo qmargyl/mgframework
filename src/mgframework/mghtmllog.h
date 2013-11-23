@@ -13,7 +13,7 @@ class MGHTMLLog :public MGComponent
 		MGHTMLLog();
 		~MGHTMLLog();
 
-		bool runConsoleCommand(const char *c, MGFramework *w){ return true; }
+		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s){ return true; }
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec){ return MGComponent_UNDEFINED; }
 
 };

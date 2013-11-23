@@ -76,7 +76,7 @@ void MGPeriodicEvent::copy(const MGPeriodicEvent *src)
 	m_ID = src->m_ID;
 }
 
-bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w)
+bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {
 	char cmd[MGF_SCRIPTLINE_MAXLENGTH];
 	strcpy(cmd, c);

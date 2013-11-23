@@ -48,7 +48,7 @@ void MGStationaryObject::copy(MGStationaryObject *src)
 	m_LoggingEnabled = src->m_LoggingEnabled;
 }
 
-bool MGStationaryObject::runConsoleCommand(const char *c, MGFramework *w)
+bool MGStationaryObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {
 	char cmd[MGF_SCRIPTLINE_MAXLENGTH];
 	strcpy(cmd, c);

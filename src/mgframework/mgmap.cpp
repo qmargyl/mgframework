@@ -158,7 +158,7 @@ void MGMap::mouseScrollingUpdate(int x, int y)
 	}
 }
 
-bool MGMap::runConsoleCommand(const char *c, MGFramework *w)
+bool MGMap::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {
 	char cmd[MGF_SCRIPTLINE_MAXLENGTH];
 	strcpy(cmd, c);

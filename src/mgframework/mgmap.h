@@ -108,7 +108,7 @@ public:
 	// Path related
 	std::list<PathItem> calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by); // Calculates the path from A to B
 
-	bool runConsoleCommand(const char *c, MGFramework *w);
+	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
 	// Statistics counters

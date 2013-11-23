@@ -43,10 +43,10 @@ bool Project2::init(int w, int h, int tw, int th)
 
 		// Setup application specific game logics..
 
-		runConsoleCommand("logging on", this); // Turn on logging for the MGFramework class
-		runConsoleCommand("map logging on", this); // Turn on logging for the MGMap class
-		runConsoleCommand("open terminalserver", this);
-		runConsoleCommand("minimap on", this);
+		runConsoleCommand("logging on", this, NULL); // Turn on logging for the MGFramework class
+		runConsoleCommand("map logging on", this, NULL); // Turn on logging for the MGMap class
+		runConsoleCommand("open terminalserver", this, NULL);
+		runConsoleCommand("minimap on", this, NULL);
 
 		return true;
 	}

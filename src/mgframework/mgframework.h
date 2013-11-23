@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.32.3"
+#define MGFRAMEWORKVERSION "1.0.32.4"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -354,7 +354,7 @@ class MGFramework :public MGComponent
 		eMGFInstanceType getInstanceType(){return m_MGFInstanceType;}
 
 		// Console command handling
-		bool runConsoleCommand(const char *c, MGFramework *w);
+		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 		static bool isNumericalInt(const string &s); // returns true if the argument contains only numbers.
 		static int staticToInt(const string &s); // returns an int converted from either a constant or a symbol.

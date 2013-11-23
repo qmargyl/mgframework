@@ -208,7 +208,7 @@ bool MGFramework::processEvents()
 							int yClick = m_Map.getTileY(iClick);
 							char c[64];
 							sprintf(c, "mo marked setdestination %d %d", xClick, yClick);
-							runConsoleCommand(c, this);
+							runConsoleCommand(c, this, NULL);
 						}
 					}
 
@@ -394,7 +394,7 @@ void MGFramework::parse(const char *sFileName)
 								}
 							}
 							MGFLOG_INFO("MGFramework::parse calls runConsoleCommand(" << cmd.c_str() << ")");
-							runConsoleCommand(cmd.c_str(), this/*, symbols*/);
+							runConsoleCommand(cmd.c_str(), this, symbols);
 							if(getQuitFlag())
 							{
 								MGFLOG_INFO("MGFramework::parse stops parsing");
@@ -628,13 +628,13 @@ void MGFramework::activateConsole()
 	do{
 		std::cout << "mg> ";
 		std::getline(std::cin, cLine);
-	}while(runConsoleCommand(cLine.c_str(), this));
+	}while(runConsoleCommand(cLine.c_str(), this, NULL));
 	disableTyping();
 }
 
 
 
-bool MGFramework::runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTable *s*/)
+bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {
 	char cmd[MGF_SCRIPTLINE_MAXLENGTH];
 	strcpy(cmd, c);
@@ -658,13 +658,13 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTab
 		case MGComponent_MAP_X:
 		{
 			registerUsedCommand(MGComponent_MAP_X);
-			return m_Map.runConsoleCommand(c, this);
+			return m_Map.runConsoleCommand(c, this, s);
 		}
 
 		case MGComponent_WINDOW_X:
 		{
 			registerUsedCommand(MGComponent_WINDOW_X);
-			return m_Window.runConsoleCommand(c, this);
+			return m_Window.runConsoleCommand(c, this, s);
 		}
 
 		case MGComponent_PE_INT_X:
@@ -680,7 +680,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTab
 			int peIndex=toInt(cmdvec[1]/*, s*/);
 			if(peIndex >= 0 && peIndex < getNumberOfPE())
 			{
-				return m_PE[toInt(cmdvec[1]/*, s*/)].runConsoleCommand(c, this);
+				return m_PE[toInt(cmdvec[1]/*, s*/)].runConsoleCommand(c, this, s);
 			}
 			MGFLOG_WARNING("Console command was not forwarded to PE " << peIndex); 
 			return true;
@@ -691,7 +691,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTab
 			registerUsedCommand(MGComponent_PE_ALL_X);
 			for(int i=0; i<getNumberOfPE(); i++)
 			{
-				m_PE[i].runConsoleCommand(c, this);
+				m_PE[i].runConsoleCommand(c, this, s);
 			}
 			return true;
 		}
@@ -702,7 +702,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTab
 			int soIndex=toInt(cmdvec[1]);
 			if(soIndex >= 0 && soIndex < getNumberOfSO())
 			{
-				return m_SO[toInt(cmdvec[1])].runConsoleCommand(c, this);
+				return m_SO[toInt(cmdvec[1])].runConsoleCommand(c, this, s);
 			}
 			MGFLOG_WARNING("Console command was not forwarded to SO " << soIndex); 
 			return true;
@@ -713,7 +713,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTab
 			registerUsedCommand(MGComponent_SO_ALL_X);
 			for(int i=0; i<getNumberOfSO(); i++)
 			{
-				m_SO[i].runConsoleCommand(c, this);
+				m_SO[i].runConsoleCommand(c, this, s);
 			}
 			return true;
 		}
@@ -1254,7 +1254,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTab
 			int moIndex=toInt(cmdvec[1]);
 			if(m_MO != NULL && moIndex >= 0 && moIndex < getNumberOfMO())
 			{
-				return m_MO[toInt(cmdvec[1])].runConsoleCommand(c, this);
+				return m_MO[toInt(cmdvec[1])].runConsoleCommand(c, this, s);
 			}
 			if(m_MO == NULL)
 			{
@@ -1271,7 +1271,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTab
 			{
 				if(m_MO != NULL && m_MO[i].isMarked())
 				{
-					m_MO[i].runConsoleCommand(c, this);
+					m_MO[i].runConsoleCommand(c, this, s);
 				}
 				else if(m_MO == NULL)
 				{
@@ -1288,7 +1288,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTab
 			{
 				if(m_MO != NULL)
 				{
-					m_MO[i].runConsoleCommand(c, this);
+					m_MO[i].runConsoleCommand(c, this, s);
 				}
 				else
 				{
@@ -1408,9 +1408,9 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w/*, MGSymbolTab
 			std::cout << "close <terminalserver> - Closes the terminal server for framework commands " << std::endl;
 			std::cout << "          over TCP/IP." << std::endl;
 
-			(void)m_Map.runConsoleCommand("map help", this);
-			(void)m_Window.runConsoleCommand("window help", this);
-			if(m_MO != NULL && getNumberOfMO() > 0)(void)m_MO[0].runConsoleCommand("mo 0 help", this);
+			(void)m_Map.runConsoleCommand("map help", this, NULL);
+			(void)m_Window.runConsoleCommand("window help", this, NULL);
+			if(m_MO != NULL && getNumberOfMO() > 0)(void)m_MO[0].runConsoleCommand("mo 0 help", this, NULL);
 
 			return true;
 		}
@@ -2533,7 +2533,7 @@ int runMGFrameworkSocketTerminal(void *fm)
 			else
 			{
 				nZerosInARow=0;
-				mgf->runConsoleCommand(buf, mgf);
+				mgf->runConsoleCommand(buf, mgf, NULL);
 				if(send(fd_new, "ok\n\r", 4, 0) == SOCKET_ERROR)
 				{
 					mgf->logIfEnabled("Server: Failed sending an answer to client request");

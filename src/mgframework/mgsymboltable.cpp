@@ -73,7 +73,7 @@ eMGComponentConsoleCommand MGSymbolTable::detectMGComponentConsoleCommand(const 
 	return MGComponent_UNDEFINED;
 }
 
-bool MGSymbolTable::runConsoleCommand(const char *c, MGFramework *w)
+bool MGSymbolTable::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {
 	return true;
 }

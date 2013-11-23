@@ -25,7 +25,7 @@ public:
 
     void copy(const MGPeriodicEvent *src);
 
-	bool runConsoleCommand(const char *c, MGFramework *w);
+	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
 	// Script related

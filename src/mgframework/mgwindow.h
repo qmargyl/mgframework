@@ -46,7 +46,7 @@ class MGWindow :public MGComponent
 		int getHeight(){ return m_Height; }
 		int getWidth(){ return m_Width; }
 
-		bool runConsoleCommand(const char *c, MGFramework *w);
+		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
 };
