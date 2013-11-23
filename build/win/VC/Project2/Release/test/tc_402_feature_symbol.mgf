@@ -1,7 +1,4 @@
 
-
-
-
 // Run the whole suite..
 call testcase_001
 call testcase_002
@@ -74,10 +71,23 @@ end
 
 
 
-
+// Function local variables
 function testcase_003
-
+  v1 = 3
+  expect v1 3
+  call testcase_003_h1
+  expect v1 3
 end
+
+function testcase_003_h1
+  v1 = 4
+end
+
+
+
+
+
+
 
 
 

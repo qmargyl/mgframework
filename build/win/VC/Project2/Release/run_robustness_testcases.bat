@@ -22,12 +22,3 @@ echo Running test case .\test\tc_202_robustness_path.mgf
 project2.exe -logging -script .\test\tc_202_robustness_path.mgf		>	.\test\result\tc_202_robustness_path.log
 project2.exe -log_eval .\test\result\tc_202_robustness_path.log
 
-pause
-
-
-
-
-
-
-
-

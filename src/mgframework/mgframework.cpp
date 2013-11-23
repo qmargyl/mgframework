@@ -381,6 +381,11 @@ void MGFramework::parse(const char *sFileName)
 								MGFLOG_INFO("MGFramework::parse calling " << (string(scriptFileName)+string(":")+v_scriptLine[1]).c_str());
 								parse((string(scriptFileName)+string(":")+v_scriptLine[1]).c_str());
 							}
+							if(getQuitFlag())
+							{
+								MGFLOG_INFO("MGFramework::parse quitting after function return");
+								break;
+							}
 						}
 						// other statement..
 						else
@@ -409,7 +414,7 @@ void MGFramework::parse(const char *sFileName)
 							}
 							if(getQuitFlag())
 							{
-								MGFLOG_INFO("MGFramework::parse stops parsing");
+								MGFLOG_INFO("MGFramework::parse quitting after running console command");
 								break;
 							}
 						}

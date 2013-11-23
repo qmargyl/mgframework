@@ -71,14 +71,3 @@ project2.exe -logging -script .\test\tc_999_basic_testcoverage.mgf	>	.\test\resu
 project2.exe -log_eval .\test\result\tc_999_basic_testcoverage.log
 
 
-
-
-pause
-
-
-
-
-
-
-
-
