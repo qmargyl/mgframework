@@ -1,7 +1,9 @@
 
-
+// Global variables
 global_var1 = 32
 global_var2 = 33
+deep = 0 // Used in test case deepcalldepth_1
+
 call main_tc
 
 
@@ -38,6 +40,12 @@ function main_tc
   call test_symbols_1
   call test_calldepth_1  // function local variables
   call test_comments_1
+  call deepcalldepth_1
+  call test_if_1
+  call test_if_2
+  call test_if_3
+  call test_if_4
+
 
   // Exit when done...
   call and_then_exit
@@ -98,22 +106,111 @@ function test_calldepth_3
 end
 
 
-//
+//*****************************
 // Test if statements
-//
+//*****************************
 function test_if_1
-  delete all mo
-  v_if = 0
-  v_0 = 0
-  v_1 = 0
-  if v_if == 0
-    v_0 = 1
-  if v_if == 1
-    v_1 = 1
-  expect v_0 1
-  expect v_1 0  
+  p1 = 1
+  if p1 == 1
+    p1 = 0
+  endif
+  expect p1 0
+
+  p2 = 1
+  if p2 == 0
+    p2 = 0
+  endif
+  expect p2 1
+
+  p3 = 1
+  if p3 != 1
+    p3 = 0
+  endif
+  expect p3 1
+
+  p4 = 1
+  if p4 != 0
+    p4 = 0
+  endif
+  expect p4 0
 end
 
+function test_if_2
+  p1 = 1
+  p2 = 2
+  p3 = 3
+  if p1 == 1
+    if p2 == 2
+      p3 = 17
+    endif
+  endif
+  expect p3 17
+end
+
+function test_if_3
+  p1 = 1
+  p2 = 2
+  p3 = 3
+  if p1 == 1
+    if p2 == 2
+      p3 = 17
+    endif
+    if p1 != 2
+      p3 = 18
+    endif
+  endif
+  expect p3 18
+  p1 = 1
+  p2 = 2
+  p3 = 3
+  if p1 < 10
+    if p2 >= 2
+      p3 = 17
+    endif
+    if p1 > 2
+      p3 = 18
+    endif
+  endif
+  expect p3 17
+end
+
+function test_if_4
+  p1 = 1
+  p2 = 2
+  if p1 >= 0
+    if p1 == 1
+      if p1 > 0
+        if p1 < 7
+          p2 = 32
+          if p2 == 32
+            expect p2 32
+            p2 = 81
+          endif
+          expect p2 81
+          if p1 < 6
+            if p1 < 5
+              if p1 < 4
+                if p1 < 3
+                  if p1 == 1
+                    if p1 == 1
+                      if p1 > 0
+                        if p1 > 0
+                          expect p2 81
+                          p2 = 77
+                        endif
+                      endif
+                    endif
+                  endif
+                endif
+              endif
+            endif
+          endif
+        endif
+      endif
+    endif
+  endif
+  expect p2 77
+end
 
 
 //
@@ -131,6 +228,7 @@ function test_func_param_2 $1 $2
 end
 
 
+
 //*****************************
 // Test comments
 //*****************************
@@ -142,6 +240,56 @@ function test_comments_1
   	expect var1 43            		     // comment far away
   expect var1 43//	
 end
+
+
+
+//*****************************
+// Test deep call depth
+//*****************************
+function deepcalldepth_1
+  call deepcalldepth_2
+  // Test if deepcalldepth_9 was ever called
+  expect deep 9
+end
+
+function deepcalldepth_2
+  call deepcalldepth_3
+end
+
+function deepcalldepth_3
+  call deepcalldepth_4
+end
+
+function deepcalldepth_4
+  call deepcalldepth_5
+end
+
+function deepcalldepth_5
+  call deepcalldepth_6
+end
+
+function deepcalldepth_6
+  call deepcalldepth_7
+end
+
+function deepcalldepth_7
+  call deepcalldepth_8
+end
+
+function deepcalldepth_8
+  call deepcalldepth_9
+end
+
+function deepcalldepth_9
+  // Set global variable to signal that this function was called
+  deep = 9
+end
+
+
+
+
+
+
 
 
 

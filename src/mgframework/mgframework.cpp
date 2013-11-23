@@ -249,6 +249,9 @@ void MGFramework::parse(const char *sFileName)
 	char scriptFileName[128];
 	bool foundFunction = false;
 	bool globalScope = false;
+	int lineNumber = 0;
+	int skipToEndIf = 0;
+	int insideIf = 0;
 	MGSymbolTable *symbols = new MGSymbolTable();
 
 
@@ -301,6 +304,7 @@ void MGFramework::parse(const char *sFileName)
 			}
 			else
 			{
+				lineNumber++;
 				if((int)strlen(scriptLine) > MGF_SCRIPTLINE_MAXLENGTH)
 				{
 					MGFLOG_ERROR("MGFramework::parse skipped script line exceeding the max line length");
@@ -351,7 +355,7 @@ void MGFramework::parse(const char *sFileName)
 
 				if(foundFunction)
 				{
-					if(v_scriptLine.size()==1 && v_scriptLine[0]=="end")
+					if(v_scriptLine.size() == 1 && v_scriptLine[0] == "end")
 					{
 						if(functionName!=NULL)
 						{
@@ -363,7 +367,95 @@ void MGFramework::parse(const char *sFileName)
 							MGFLOG_ERROR("MGFramework::parse found 'end' outside a function");
 						}
 					}
-					else if(okMGFrameworkSyntax(v_scriptLine))
+					else if(v_scriptLine.size()==4 && v_scriptLine[0] == "if")
+					{
+						if(v_scriptLine[2] == "==")
+						{
+							if(toInt(v_scriptLine[1], symbols) == toInt(v_scriptLine[3], symbols))
+							{
+								insideIf++;
+							}
+							else
+							{
+								skipToEndIf++;
+							}
+						}
+						else if(v_scriptLine[2] == "!=")
+						{
+							if(toInt(v_scriptLine[1], symbols) != toInt(v_scriptLine[3], symbols))
+							{
+								insideIf++;
+							}
+							else
+							{
+								skipToEndIf++;
+							}
+						}
+						else if(v_scriptLine[2] == ">")
+						{
+							if(toInt(v_scriptLine[1], symbols) > toInt(v_scriptLine[3], symbols))
+							{
+								insideIf++;
+							}
+							else
+							{
+								skipToEndIf++;
+							}
+						}
+						else if(v_scriptLine[2] == "<")
+						{
+							if(toInt(v_scriptLine[1], symbols) < toInt(v_scriptLine[3], symbols))
+							{
+								insideIf++;
+							}
+							else
+							{
+								skipToEndIf++;
+							}
+						}
+						else if(v_scriptLine[2] == ">=")
+						{
+							if(toInt(v_scriptLine[1], symbols) >= toInt(v_scriptLine[3], symbols))
+							{
+								insideIf++;
+							}
+							else
+							{
+								skipToEndIf++;
+							}
+						}
+						else if(v_scriptLine[2] == "<=")
+						{
+							if(toInt(v_scriptLine[1], symbols) <= toInt(v_scriptLine[3], symbols))
+							{
+								insideIf++;
+							}
+							else
+							{
+								skipToEndIf++;
+							}
+						}
+						else
+						{
+							MGFLOG_ERROR("Unsupported operator");
+						}
+					}
+					else if(v_scriptLine.size() == 1 && v_scriptLine[0] == "endif")
+					{
+						if(skipToEndIf == 0 && insideIf == 0)
+						{
+							MGFLOG_ERROR("Unexpected endif");
+						}
+						else if(skipToEndIf > 0)
+						{
+							skipToEndIf--;
+						}
+						else if(insideIf > 0)
+						{
+							insideIf--;
+						}
+					}
+					else if(skipToEndIf == 0 && okMGFrameworkSyntax(v_scriptLine))
 					{
 						// function call..
 						MGFLOG_INFO("Tokens: " << v_scriptLine.size());
