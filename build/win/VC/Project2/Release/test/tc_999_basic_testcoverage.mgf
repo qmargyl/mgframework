@@ -267,8 +267,7 @@ function testcoverage_evalandexit
   getnumberofusedcommands
   getnumberofmo
   getnumberofmarkedmo
-  expect getnumberofusedcommands percentage 100
-
+  expect getnumberofusedcommands getnumberofcommands
   // Exit application last
   exit application
 end

@@ -1498,40 +1498,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			}
 			m_SymbolTable->printTable();
 			return true;
-			
-			// Then the one of global..
-			/*
-			if(m_SymbolTable->hasValue(cmdvec[0]))
-			{
-				m_SymbolTable->setValue(cmdvec[0], toInt(cmdvec[2]));
-			}
-			else
-			{
-				m_SymbolTable->addSymbol(cmdvec[0], toInt(cmdvec[2]));
-			}
-			m_SymbolTable->printTable();
-			*/
-			return true;
-		}
-
-		case MGComponent_EXPECT_GETNUMBEROFUSEDCOMMANDS_PERCENTAGE_INT:
-		{
-			registerUsedCommand(MGComponent_EXPECT_GETNUMBEROFUSEDCOMMANDS_PERCENTAGE_INT);
-			int exp = toInt(cmdvec[3], s);
-			int actual = (100 * getNumberOfUsedCommands())/MGComponent_NUMBEROFCOMMANDIDENTIFIERS;
-			if(actual >= exp)
-			{
-				MGFLOG_INFO("Number of executed commands is more than expected (" << actual << " >= " << exp << ")");
-			}
-			else
-			{
-				MGFLOG_ERROR("Number of executed commands is less than expected (" << actual << " < " << exp << ")");
-			}
-			for(int i=MGComponent_UNDEFINED; i<MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
-			{
-				MGFLOG_INFO("" << i << ": " << toString(m_UsedCommands[i]).c_str());
-			}
-			return true;
 		}
 
 		default:
@@ -1658,10 +1624,6 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		else if(cmdvec[0]=="delete" && cmdvec[1]=="all" && cmdvec[2]=="pe" )
 		{
 			return MGComponent_DELETE_ALL_PE_PARAMLIST; // Zero or more parameters..
-		}
-		else if(cmdvec[0]=="expect" && cmdvec[1]=="getnumberofusedcommands" && cmdvec[2]=="percentage")
-		{
-			return MGComponent_EXPECT_GETNUMBEROFUSEDCOMMANDS_PERCENTAGE_INT;
 		}
 		else if(cmdvec[0]=="expect")
 		{
@@ -2059,9 +2021,13 @@ void MGFramework::deletePE(int index)
 int MGFramework::getNumberOfUsedCommands()
 {
 	int n=0;
-	for(int i=0; i<MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
+	for(int i=MGComponent_UNDEFINED; i<MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
 	{
-		if(m_UsedCommands[i]) n++;
+		if(m_UsedCommands[i])
+		{
+			n++;
+		}
+		MGFLOG_INFO("" << i << ": " << toString(m_UsedCommands[i]).c_str());
 	}
 	return n;
 }
