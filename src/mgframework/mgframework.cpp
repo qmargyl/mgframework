@@ -248,6 +248,7 @@ void MGFramework::parse(const char *sFileName)
 	char *functionName = NULL;
 	char scriptFileName[128];
 	bool foundFunction = false;
+	bool globalScope = false;
 	MGSymbolTable *symbols = new MGSymbolTable();
 
 
@@ -259,7 +260,11 @@ void MGFramework::parse(const char *sFileName)
 		functionName = scriptFileName + foundColon + 1;
 		scriptFileName[foundColon]='\0';
 		MGFLOG_INFO("MGFramework::parse will parse file " << scriptFileName << ", function " << functionName);
-
+		globalScope = false;
+	}
+	else
+	{
+		globalScope = true;
 	}
 
 	errno_t scriptError = fopen_s(&sf, scriptFileName, "rt");
@@ -394,7 +399,14 @@ void MGFramework::parse(const char *sFileName)
 								}
 							}
 							MGFLOG_INFO("MGFramework::parse calls runConsoleCommand(" << cmd.c_str() << ")");
-							runConsoleCommand(cmd.c_str(), this, symbols);
+							if(globalScope)
+							{
+								runConsoleCommand(cmd.c_str(), this, NULL);
+							}
+							else
+							{
+								runConsoleCommand(cmd.c_str(), this, symbols);
+							}
 							if(getQuitFlag())
 							{
 								MGFLOG_INFO("MGFramework::parse stops parsing");
@@ -677,10 +689,10 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_PE_INT_STOREFILENAME_FILENAME:
 		{
 			registerUsedCommand(MGComponent_PE_INT_X);
-			int peIndex=toInt(cmdvec[1]/*, s*/);
+			int peIndex=toInt(cmdvec[1], s);
 			if(peIndex >= 0 && peIndex < getNumberOfPE())
 			{
-				return m_PE[toInt(cmdvec[1]/*, s*/)].runConsoleCommand(c, this, s);
+				return m_PE[toInt(cmdvec[1], s)].runConsoleCommand(c, this, s);
 			}
 			MGFLOG_WARNING("Console command was not forwarded to PE " << peIndex); 
 			return true;
@@ -699,10 +711,10 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_SO_INT_X:
 		{
 			registerUsedCommand(MGComponent_SO_INT_X);
-			int soIndex=toInt(cmdvec[1]);
+			int soIndex=toInt(cmdvec[1], s);
 			if(soIndex >= 0 && soIndex < getNumberOfSO())
 			{
-				return m_SO[toInt(cmdvec[1])].runConsoleCommand(c, this, s);
+				return m_SO[toInt(cmdvec[1], s)].runConsoleCommand(c, this, s);
 			}
 			MGFLOG_WARNING("Console command was not forwarded to SO " << soIndex); 
 			return true;
@@ -721,7 +733,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_SETFPS_INT:
 		{
 			registerUsedCommand(MGComponent_SETFPS_INT);
-			setDesiredFPS(toInt(cmdvec[1]));
+			setDesiredFPS(toInt(cmdvec[1], s));
 			return true;
 		}
 
@@ -729,7 +741,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_CREATE_MO_INT_PARAMLIST:
 		{
 			registerUsedCommand(MGComponent_CREATE_MO_INT_PARAMLIST);
-			int n = toInt(cmdvec[2]);
+			int n = toInt(cmdvec[2], s);
 			int owner = 0;
 			int x = -1; // Invalid default value
 			int y = -1; // Invalid default value
@@ -738,12 +750,12 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = toInt(cmdvec[i+1]);
+					owner = toInt(cmdvec[i+1], s);
 					++i;
 				}
 				else if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
 				{
-					x = toInt(cmdvec[i+1]);
+					x = toInt(cmdvec[i+1], s);
 					++i;
 					if(n!=1)
 					{
@@ -754,7 +766,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				}
 				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
 				{
-					y = toInt(cmdvec[i+1]);
+					y = toInt(cmdvec[i+1], s);
 					++i;
 					if(n!=1)
 					{
@@ -765,7 +777,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				}
 				else if(cmdvec[i]=="-speed" && cmdvec.size() > (i + 1))
 				{
-					speed = toInt(cmdvec[i+1]);
+					speed = toInt(cmdvec[i+1], s);
 					++i;
 				}
 				else
@@ -811,7 +823,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = toInt(cmdvec[i+1]);
+					owner = toInt(cmdvec[i+1], s);
 					ownerParamSet=true;
 					++i;
 				}
@@ -854,7 +866,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = toInt(cmdvec[i+1]);
+					owner = toInt(cmdvec[i+1], s);
 					ownerParamSet=true;
 					++i;
 				}
@@ -897,7 +909,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = toInt(cmdvec[i+1]);
+					owner = toInt(cmdvec[i+1], s);
 					ownerParamSet=true;
 					++i;
 				}
@@ -934,7 +946,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		{
 			registerUsedCommand(MGComponent_ADD_MO_INT_PARAMLIST);
 			int nBefore=getNumberOfMO();
-			int n = toInt(cmdvec[2]);
+			int n = toInt(cmdvec[2], s);
 			int owner = 0;
 			int x = -1; // Invalid default value
 			int y = -1; // Invalid default value
@@ -943,12 +955,12 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = toInt(cmdvec[i+1]);
+					owner = toInt(cmdvec[i+1], s);
 					++i;
 				}
 				else if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
 				{
-					x = toInt(cmdvec[i+1]);
+					x = toInt(cmdvec[i+1], s);
 					++i;
 					if(n!=1)
 					{
@@ -959,7 +971,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				}
 				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
 				{
-					y = toInt(cmdvec[i+1]);
+					y = toInt(cmdvec[i+1], s);
 					++i;
 					if(n!=1)
 					{
@@ -970,7 +982,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				}
 				else if(cmdvec[i]=="-speed" && cmdvec.size() > (i + 1))
 				{
-					speed = toInt(cmdvec[i+1]);
+					speed = toInt(cmdvec[i+1], s);
 					++i;
 				}
 				else
@@ -1011,14 +1023,14 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		{
 			registerUsedCommand(MGComponent_ADD_SO_INT_PARAMLIST);
 			int nBefore=getNumberOfSO();
-			int n = toInt(cmdvec[2]);
+			int n = toInt(cmdvec[2], s);
 			int x = -1; // Invalid default value
 			int y = -1; // Invalid default value
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
 				{
-					x = toInt(cmdvec[i+1]);
+					x = toInt(cmdvec[i+1], s);
 					++i;
 					if(n!=1)
 					{
@@ -1029,7 +1041,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				}
 				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
 				{
-					y = toInt(cmdvec[i+1]);
+					y = toInt(cmdvec[i+1], s);
 					++i;
 					if(n!=1)
 					{
@@ -1076,13 +1088,13 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_CREATE_PE_INT_PARAMLIST:
 		{
 			registerUsedCommand(MGComponent_CREATE_PE_INT_PARAMLIST);
-			int n = toInt(cmdvec[2]);
+			int n = toInt(cmdvec[2], s);
 			int owner = 0;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = toInt(cmdvec[i+1]);
+					owner = toInt(cmdvec[i+1], s);
 					++i;
 				}
 				else
@@ -1120,13 +1132,13 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		{
 			registerUsedCommand(MGComponent_ADD_PE_INT_PARAMLIST);
 			int nBefore=getNumberOfPE();
-			int n = toInt(cmdvec[2]);
+			int n = toInt(cmdvec[2], s);
 			int owner = 0;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = toInt(cmdvec[i+1]);
+					owner = toInt(cmdvec[i+1], s);
 					++i;
 				}
 				else
@@ -1162,14 +1174,14 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_CREATE_SO_INT_PARAMLIST:
 		{
 			registerUsedCommand(MGComponent_CREATE_SO_INT_PARAMLIST);
-			int n = toInt(cmdvec[2]);
+			int n = toInt(cmdvec[2], s);
 			int x = -1; // Invalid default value
 			int y = -1; // Invalid default value
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
 				{
-					x = toInt(cmdvec[i+1]);
+					x = toInt(cmdvec[i+1], s);
 					++i;
 					if(n!=1)
 					{
@@ -1180,7 +1192,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				}
 				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
 				{
-					y = toInt(cmdvec[i+1]);
+					y = toInt(cmdvec[i+1], s);
 					++i;
 					if(n!=1)
 					{
@@ -1251,10 +1263,10 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_MO_INT_MARK:
 		{
 			registerUsedCommand(MGComponent_MO_INT_X);
-			int moIndex=toInt(cmdvec[1]);
+			int moIndex=toInt(cmdvec[1], s);
 			if(m_MO != NULL && moIndex >= 0 && moIndex < getNumberOfMO())
 			{
-				return m_MO[toInt(cmdvec[1])].runConsoleCommand(c, this, s);
+				return m_MO[toInt(cmdvec[1], s)].runConsoleCommand(c, this, s);
 			}
 			if(m_MO == NULL)
 			{
@@ -1301,7 +1313,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_DELETE_MO_INT:
 		{
 			registerUsedCommand(MGComponent_DELETE_MO_INT);
-			int moIndex=toInt(cmdvec[2]);
+			int moIndex=toInt(cmdvec[2], s);
 			if(m_MO != NULL && moIndex >= 0 && moIndex < getNumberOfMO())
 			{
 				deleteMO(moIndex);
@@ -1316,7 +1328,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_DELETE_SO_INT:
 		{
 			registerUsedCommand(MGComponent_DELETE_SO_INT);
-			int soIndex=toInt(cmdvec[2]);
+			int soIndex=toInt(cmdvec[2], s);
 			if(m_SO != NULL && soIndex >= 0 && soIndex < getNumberOfSO())
 			{
 				deleteSO(soIndex);
@@ -1331,7 +1343,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_LOGGING_BOOL:
 		{
 			registerUsedCommand(MGComponent_LOGGING_BOOL);
-			int logOn = toInt(cmdvec[1]);
+			int logOn = toInt(cmdvec[1], s);
 			if(logOn == MGF_TRUE)
 			{
 				enableLogging();
@@ -1348,7 +1360,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_MINIMAP_BOOL:
 		{
 			registerUsedCommand(MGComponent_MINIMAP_BOOL);
-			int miniOn = toInt(cmdvec[1]);
+			int miniOn = toInt(cmdvec[1], s);
 			if(miniOn == MGF_TRUE)
 			{
 				enableMiniMap();
@@ -1366,7 +1378,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		{
 			registerUsedCommand(MGComponent_RUNFRAMES_INT);
 			enableFrameCountdown();
-			setFrameNumber(toInt(cmdvec[1]));
+			setFrameNumber(toInt(cmdvec[1], s));
 			return false;
 		}
 
@@ -1418,7 +1430,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_INPUT_BOOL:
 		{
 			registerUsedCommand(MGComponent_INPUT_BOOL);
-			int inputOn = toInt(cmdvec[1]);
+			int inputOn = toInt(cmdvec[1], s);
 			if(inputOn == MGF_TRUE)
 			{
 				enableInput();
@@ -1433,8 +1445,8 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_EXPECT_INT_INT:
 		{
 			registerUsedCommand(MGComponent_EXPECT_INT_INT);
-			int exp = toInt(cmdvec[2]);
-			int act = toInt(cmdvec[1]);
+			int exp = toInt(cmdvec[2], s);
+			int act = toInt(cmdvec[1], s);
 			if(act == exp)
 			{
 				MGFLOG_INFO("MGFramework::detectComponentConsoleCommand found the expected value (" << exp << ")");
@@ -1449,7 +1461,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_INT:
 		{
 			registerUsedCommand(MGComponent_INT);
-			MGFLOG_INFO("" << toInt(cmdvec[0]));
+			MGFLOG_INFO("" << toInt(cmdvec[0], s));
 			return true;
 		}
 
@@ -1457,33 +1469,33 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		{
 			registerUsedCommand(MGComponent_SYMBOL_ASSIGNTO_INT);
 			// First check symbol table of local variables..
-			/*
-				if(s && s->hasValue(cmdvec[0]))
-				{
-					s->setValue(cmdvec[0], toInt(cmdvec[2], s));
-				}
-				else if(m_SymbolTable->hasValue(cmdvec[0]))
-				{
-					m_SymbolTable->setValue(cmdvec[0], toInt(cmdvec[2], s));
-				}
-				else if(s)
-				{
-					s->addSymbol(cmdvec[0], toInt(cmdvec[2], s));
-				}
-				else
-				{
-					m_SymbolTable->addSymbol(cmdvec[0], toInt(cmdvec[2], s));
-				}
-
-				if(s)
-				{
-					s->printTable();
-				}
-				m_SymbolTable->printTable();
-				return true;
+			
+			if(s && s->hasValue(cmdvec[0]))
+			{
+				s->setValue(cmdvec[0], toInt(cmdvec[2], s));
 			}
-			*/
+			else if(m_SymbolTable->hasValue(cmdvec[0]))
+			{
+				m_SymbolTable->setValue(cmdvec[0], toInt(cmdvec[2], s));
+			}
+			else if(s)
+			{
+				s->addSymbol(cmdvec[0], toInt(cmdvec[2], s));
+			}
+			else
+			{
+				m_SymbolTable->addSymbol(cmdvec[0], toInt(cmdvec[2], s));
+			}
+
+			if(s)
+			{
+				s->printTable();
+			}
+			m_SymbolTable->printTable();
+			return true;
+			
 			// Then the one of global..
+			/*
 			if(m_SymbolTable->hasValue(cmdvec[0]))
 			{
 				m_SymbolTable->setValue(cmdvec[0], toInt(cmdvec[2]));
@@ -1493,13 +1505,14 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				m_SymbolTable->addSymbol(cmdvec[0], toInt(cmdvec[2]));
 			}
 			m_SymbolTable->printTable();
+			*/
 			return true;
 		}
 
 		case MGComponent_EXPECT_GETNUMBEROFUSEDCOMMANDS_PERCENTAGE_INT:
 		{
 			registerUsedCommand(MGComponent_EXPECT_GETNUMBEROFUSEDCOMMANDS_PERCENTAGE_INT);
-			int exp = toInt(cmdvec[3]);
+			int exp = toInt(cmdvec[3], s);
 			int actual = (100 * getNumberOfUsedCommands())/MGComponent_NUMBEROFCOMMANDIDENTIFIERS;
 			if(actual >= exp)
 			{
@@ -2252,7 +2265,7 @@ int MGFramework::staticToInt(const string &s)
 	return 0;
 }
 
-int MGFramework::toInt(const string &s/*, MGSymbolTable *sym*/)
+int MGFramework::toInt(const string &s, MGSymbolTable *sym)
 {
 	if(isNumericalInt(s))
 	{
@@ -2332,7 +2345,6 @@ int MGFramework::toInt(const string &s/*, MGSymbolTable *sym*/)
 		else
 		{
 			// First look in the symbol table of local variables..
-			/*
 			if(sym)
 			{
 				for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it=sym->table.begin(); it != sym->table.end(); ++it)
@@ -2343,7 +2355,6 @@ int MGFramework::toInt(const string &s/*, MGSymbolTable *sym*/)
 					}
 				}				
 			}
-			*/
 			// Then the one of global..
 			for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it=m_SymbolTable->table.begin(); it != m_SymbolTable->table.end(); ++it)
 			{

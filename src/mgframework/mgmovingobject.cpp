@@ -386,8 +386,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 		case MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT:
 		{
 			w->registerUsedCommand(MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT);
-			int lx=w->toInt(cmdvec[4]);
-			int ly=w->toInt(cmdvec[5]);
+			int lx=w->toInt(cmdvec[4], s);
+			int ly=w->toInt(cmdvec[5], s);
 			if(lx == getTileX() && ly == getTileY())
 			{
 				MGFLOG_INFO("Expected location confirmed: (" << lx << ", " << ly << ")");
@@ -430,8 +430,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 		case MGComponent_MO_INT_SETDESTINATION_INT_INT:
 		{
 			w->registerUsedCommand(MGComponent_MO_INT_SETDESTINATION_INT_INT);
-			int dx=w->toInt(cmdvec[3]);
-			int dy=w->toInt(cmdvec[4]);
+			int dx=w->toInt(cmdvec[3], s);
+			int dy=w->toInt(cmdvec[4], s);
 			if(!w->m_Map.occupant(dx, dy) && (getTileX() != dx || getTileY() != dy))
 			{
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
@@ -443,8 +443,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 		case MGComponent_MO_ALL_SETDESTINATION_INT_INT:
 		{
 			w->registerUsedCommand(MGComponent_MO_ALL_SETDESTINATION_INT_INT);
-			int dx=w->toInt(cmdvec[3]);
-			int dy=w->toInt(cmdvec[4]);
+			int dx=w->toInt(cmdvec[3], s);
+			int dy=w->toInt(cmdvec[4], s);
 			if(!w->m_Map.occupant(dx, dy) && (getTileX() != dx || getTileY() != dy))
 			{
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
@@ -456,8 +456,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 		case MGComponent_MO_MARKED_SETDESTINATION_INT_INT:
 		{
 			w->registerUsedCommand(MGComponent_MO_MARKED_SETDESTINATION_INT_INT);
-			int dx=w->toInt(cmdvec[3]);
-			int dy=w->toInt(cmdvec[4]);
+			int dx=w->toInt(cmdvec[3], s);
+			int dy=w->toInt(cmdvec[4], s);
 			if(!w->m_Map.occupant(dx, dy) && (getTileX() != dx || getTileY() != dy))
 			{
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));

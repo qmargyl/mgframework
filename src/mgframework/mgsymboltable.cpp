@@ -62,6 +62,7 @@ void MGSymbolTable::delSymbol(const std::string &s)
 
 void MGSymbolTable::printTable()
 {
+	std::cout << "Symbol Table" << std::endl;
 	for (std::deque<MGSymbolTablePair>::iterator it=table.begin(); it != table.end(); ++it)
 	{
 		std::cout << "'" << ((*it).symbol).c_str() << "' : " << (*it).value << std::endl;

@@ -182,10 +182,10 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 		case MGComponent_MAP_PATH_INT_INT_INT_INT:
 		{
 			w->registerUsedCommand(MGComponent_MAP_PATH_INT_INT_INT_INT);
-			int x1 = w->toInt(cmdvec[2]);
-			int y1 = w->toInt(cmdvec[3]);
-			int x2 = w->toInt(cmdvec[4]);
-			int y2 = w->toInt(cmdvec[5]);
+			int x1 = w->toInt(cmdvec[2], s);
+			int y1 = w->toInt(cmdvec[3], s);
+			int x2 = w->toInt(cmdvec[4], s);
+			int y2 = w->toInt(cmdvec[5], s);
 
 			MGFLOG_INFO("Calculating closest path from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ").");
 			calculatePath(MGFBASICPATH1, x1, y1, x2, y2);
@@ -195,10 +195,10 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 		case MGComponent_MAP_SETSIZE_INT_INT_INT_INT:
 		{
 			w->registerUsedCommand(MGComponent_MAP_SETSIZE_INT_INT_INT_INT);
-			int x = w->toInt(cmdvec[2]);
-			int y = w->toInt(cmdvec[3]);
-			int tx = w->toInt(cmdvec[4]);
-			int ty = w->toInt(cmdvec[5]);
+			int x = w->toInt(cmdvec[2], s);
+			int y = w->toInt(cmdvec[3], s);
+			int tx = w->toInt(cmdvec[4], s);
+			int ty = w->toInt(cmdvec[5], s);
 			reInit(x,y,tx,ty);
 			return true;
 		}

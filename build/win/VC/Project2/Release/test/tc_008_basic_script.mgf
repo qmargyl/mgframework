@@ -1,5 +1,9 @@
 
+
+global_var1 = 32
+global_var2 = 33
 call main_tc
+
 
 // Generate error if ever ending up here..
 create mo 1 -owner 1
@@ -74,12 +78,12 @@ end
 
 
 //
-// Test function calls from within functions
+// Test function local variables, and script global variables
 //
 function test_calldepth_1
-  cdv = 5
+  cdv = global_var1
   call test_calldepth_2
-  expect cdv 17
+  expect cdv 32
 end
 
 function test_calldepth_2
