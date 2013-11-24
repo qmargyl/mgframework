@@ -293,7 +293,7 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			if(occupant(bx, by) != 0)
 			{
 				// XXX: Here we should try to find a tile close to target instead of giving up.
-				MGFLOG_WARNING("MGMap::calculatePath target tile is occupied");
+				MGFLOG_INFO("MGMap::calculatePath target tile is occupied");
 				break;
 			}
 
@@ -503,14 +503,43 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 					}
 					else
 					{
-						MGFLOG_WARNING("MGMap::calculatePath was not able to find a path");
+						MGFLOG_INFO("MGMap::calculatePath was not able to find a path");
 					}
 					break;
 				}
 			}
 			else
 			{
-				MGFLOG_WARNING("MGMap::calculatePath was not able to find a path as there are no available neighbor tiles to evaluate");
+				//MGFLOG_WARNING("MGMap::calculatePath was not able to find a path as there are no available neighbor tiles to evaluate");
+				if( (x+1<getWidth() && y+1<getHeight() && !occupant(x+1,y+1)) ||
+					(x-1>=0 && y-1>=0 && !occupant(x-1,y-1)) ||
+					(x+1<getWidth() && y-1>=0 && !occupant(x+1,y-1)) ||
+					(x-1>=0 && y+1<getHeight() && !occupant(x-1,y+1)) ||
+					(y+1<getHeight() && !occupant(x,y+1)) ||
+					(y-1>=0 && !occupant(x,y-1)) ||
+					(x+1<getWidth() && !occupant(x+1,y)) ||
+					(x-1>=0 && !occupant(x-1,y)) )
+				{
+					MGFLOG_ERROR("MGMap::calculatePath stopped calculation without valid reason");
+				}
+				else
+				{
+					if(loggingEnabled())
+					{
+						int occupiedTiles = 0;
+						for (int a=0; a<getWidth(); ++a)
+						{
+							for (int b=0; b<getHeight(); ++b)
+							{
+								if(occupant(a, b))
+								{
+									occupiedTiles++;
+								}
+							}
+						}
+						MGFLOG_INFO("MGMap::calculatePath found no available neighbor tiles to evaluate, total number of occupied tiles: " << occupiedTiles);
+					}
+				}
 				break;
 			}
 			

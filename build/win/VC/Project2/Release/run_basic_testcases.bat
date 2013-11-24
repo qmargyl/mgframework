@@ -66,6 +66,10 @@ echo Running test case .\test\tc_012_basic_symbol.mgf
 project2.exe -logging -script .\test\tc_012_basic_symbol.mgf		>	.\test\result\tc_012_basic_symbol.log
 project2.exe -log_eval .\test\result\tc_012_basic_symbol.log
 
+echo Running test case .\test\tc_013_basic_performance.mgf
+project2.exe -logging -script .\test\tc_013_basic_performance.mgf	>	.\test\result\tc_013_basic_performance.log
+project2.exe -log_eval .\test\result\tc_013_basic_performance.log
+
 echo Running test case .\test\tc_999_basic_testcoverage.mgf
 project2.exe -logging -script .\test\tc_999_basic_testcoverage.mgf	>	.\test\result\tc_999_basic_testcoverage.log
 project2.exe -log_eval .\test\result\tc_999_basic_testcoverage.log

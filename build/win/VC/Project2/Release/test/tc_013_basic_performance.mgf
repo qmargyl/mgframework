@@ -1,0 +1,81 @@
+
+
+
+map setsize 128 128 32 32
+
+// Unlimited FPS
+dynamicfps off
+setfps 500
+runoneframe
+
+// No unnecessary logging
+logging off
+map logging off
+
+// Test case
+create mo 400
+
+call setdest_plus_10_frames_times_10
+
+expect getnumberofmo 400
+
+// Then exit
+exit application
+
+
+
+
+
+
+
+
+
+
+// **********************
+// Utility functions
+// **********************
+
+
+function setdest_plus_10_frames_times_10
+  call setdest_plus_10_frames
+  call setdest_plus_10_frames
+  call setdest_plus_10_frames
+  call setdest_plus_10_frames
+  call setdest_plus_10_frames
+  call setdest_plus_10_frames
+  call setdest_plus_10_frames
+  call setdest_plus_10_frames
+  call setdest_plus_10_frames
+  call setdest_plus_10_frames
+end
+
+function setdest_plus_10_frames
+  mo all setdestination random_x random_y
+  call run_10_frames
+end
+
+function run_10_frames
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+end
+
+function run_100_frames
+  call run_10_frames
+  call run_10_frames
+  call run_10_frames
+  call run_10_frames
+  call run_10_frames
+  call run_10_frames
+  call run_10_frames
+  call run_10_frames
+  call run_10_frames
+  call run_10_frames
+end

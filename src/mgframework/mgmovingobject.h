@@ -24,7 +24,7 @@ private:
 
 	int m_NextTileX;
 	int m_NextTileY;
-	void setNextXY(int x, int y, MGFramework *world);
+	
 
 	double getDistance(int wx, int wy);
 	int getTileSize(){ return m_TileSize;}
@@ -56,6 +56,7 @@ public:
 	void initialize();
 
 	void setTileXY(int x, int y, MGFramework *world);
+	void setNextXY(int x, int y, MGFramework *world);
 
 	void setDestTileXY(int x, int y);
 	void setPath(std::list<PathItem> p);

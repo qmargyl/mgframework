@@ -65,6 +65,15 @@ void MGMovingObject::setNextXY(int x, int y, MGFramework *world)
 	}
 	else if(world->m_Map.occupant(x, y) == 0)
 	{
+		if(	world->m_Map.occupant(m_NextTileX, m_NextTileY) == getID() ||
+			world->m_Map.occupant(m_NextTileX, m_NextTileY) == 0)
+		{
+			world->m_Map.unOccupy(m_NextTileX, m_NextTileY);
+		}
+		else
+		{
+			MGFLOG_WARNING("MGMovingObject::setNextXY tried to leave a tile not occupied by MO");
+		}
 		world->m_Map.occupy(x, y, getID());
 		m_NextTileX = x; 
 		m_NextTileY = y;

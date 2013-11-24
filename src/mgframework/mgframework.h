@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.34.0"
+#define MGFRAMEWORKVERSION "1.0.34.1"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -59,6 +59,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_LOGGING_BOOL,
 	MGComponent_MINIMAP_BOOL,
 	MGComponent_INPUT_BOOL,
+	MGComponent_DYNAMICFPS_BOOL,
 
 	MGComponent_SYMBOL_ASSIGNTO_INT,						//var1 = 32, var2 = getnumberofmo, etc
 

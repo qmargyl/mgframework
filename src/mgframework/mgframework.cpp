@@ -1471,6 +1471,23 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			return true;
 		}
 
+		case MGComponent_DYNAMICFPS_BOOL:
+		{
+			registerUsedCommand(MGComponent_DYNAMICFPS_BOOL);
+			int dynOn = toInt(cmdvec[1], s);
+			if(dynOn == MGF_TRUE)
+			{
+				setDynamicFPSEnabled(true);
+				MGFLOG_INFO("Dynamic FPS enabled.");
+			}
+			else
+			{
+				setDynamicFPSEnabled(false);
+				MGFLOG_INFO("Dynamic FPS disabled.");
+			}
+			return true;
+		}
+
 		case MGComponent_RUNFRAMES_INT:
 		{
 			registerUsedCommand(MGComponent_RUNFRAMES_INT);
@@ -1645,6 +1662,10 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		else if(cmdvec[0]=="minimap")
 		{
 			return MGComponent_MINIMAP_BOOL;
+		}
+		else if(cmdvec[0]=="dynamicfps")
+		{
+			return MGComponent_DYNAMICFPS_BOOL;
 		}
 		else if(cmdvec[0]=="runframes")
 		{
@@ -1968,6 +1989,7 @@ bool MGFramework::setupMO(int i, int x, int y, unsigned int owner, int speed)
 		if(successful)
 		{
 			m_MO[i].setTileXY(x, y, this);
+			//m_MO[i].setNextXY(x, y, this);
 			m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
 			m_MO[i].setSpeed(1.0/(double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
 			m_MO[i].setOwner(owner);
