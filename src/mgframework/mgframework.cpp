@@ -15,6 +15,7 @@ MGFramework::MGFramework():
 	m_NPE(0),
 	m_NSO(0),
 	m_FrameTime(16),
+	m_ActualFrameTime(16),
 	m_FrameCountdownEnabled(false),
 	m_FrameNumber(0),
 	m_KeepSocketTerminalOpen(false),
@@ -688,6 +689,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 			Sleep((DWORD)m_DelayTime);
 		}
 
+		m_ActualFrameTime = MGF_GetExecTimeMS() - frameStartTime;
 		if(runOneFrame) break;
 	}
 }
@@ -1784,6 +1786,12 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 
 Uint32 MGFramework::getFPS()
 {
+	/*
+	// XXX: Will this give more accurate timing?
+	if(m_ActualFrameTime>0) return (Uint32)(1000/m_ActualFrameTime);
+	return getDesiredFPS();
+	*/
+
 	if(m_FrameTime > 0)
 	{
 		Uint32 result = (Uint32)(1000/m_FrameTime);

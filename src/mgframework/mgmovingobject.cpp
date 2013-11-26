@@ -6,6 +6,7 @@ int MGMovingObject::m_TileSize = 0;
 
 MGMovingObject::MGMovingObject()
 {
+	m_History = NULL;
 	setTimeOfLastUpdate(MGF_GetExecTimeMS());
 	m_FinishingLastMove=false;
 	m_Marked=false;
@@ -20,6 +21,7 @@ MGMovingObject::MGMovingObject()
 MGMovingObject::~MGMovingObject()
 {
 	m_Path.clear();
+	if(m_History) delete m_History;
 }
 
 void MGMovingObject::initialize()
@@ -441,6 +443,10 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			w->registerUsedCommand(MGComponent_MO_INT_SETDESTINATION_INT_INT);
 			int dx=w->toInt(cmdvec[3], s);
 			int dy=w->toInt(cmdvec[4], s);
+			addToHistory(	(std::string("CalculatePath: ") + MGComponent::toString(getTileX()) + 
+							 std::string(",") + MGComponent::toString(getTileY()) + std::string(" -> ") +
+							 MGComponent::toString(dx) + std::string(",") + MGComponent::toString(dy)).c_str());
+
 			if(!w->m_Map.occupant(dx, dy) && (getTileX() != dx || getTileY() != dy))
 			{
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
@@ -480,6 +486,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			w->registerUsedCommand(MGComponent_MO_INT_LOGGING_ON);
 			enableLogging();
 			MGFLOG_INFO("Logging enabled.");
+			addToHistory("Logging enabled.");
 			return true;
 		}
 
@@ -487,6 +494,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 		{
 			w->registerUsedCommand(MGComponent_MO_INT_LOGGING_OFF);
 			MGFLOG_INFO("Logging disabled.");
+			addToHistory("Logging disabled.");
 			disableLogging();
 			return true;
 		}
@@ -507,6 +515,21 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			return true;
 		}
 
+		case MGComponent_MO_INT_HISTORY_BOOL:
+		{
+			w->registerUsedCommand(MGComponent_MO_INT_HISTORY_BOOL);
+			int inputOn = w->toInt(cmdvec[3], s);
+			if(inputOn == MGF_TRUE)
+			{
+				enableHistory();
+			}
+			else
+			{
+				printHistory();
+				disableHistory();
+			}
+			return true;
+		}
 
 		default:
 			MGFLOG_ERROR("MGMovingObject::detectComponentConsoleCommand returned a bad value"); 
@@ -580,6 +603,10 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 		{
 			return MGComponent_MO_INT_LOGGING_OFF;
 		}
+		else if(cmdvec[0]=="mo" && cmdvec[2]=="history")
+		{
+			return MGComponent_MO_INT_HISTORY_BOOL;
+		}
 	}
 	else if(cmdvec.size() == 5)
 	{
@@ -622,6 +649,7 @@ void MGMovingObject::changeState(MOState toState)
 	else if(getCurrentState() != toState)
 	{
 		MGFLOG_INFO("MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState));
+		addToHistory( (string("ChangeState: ") + toString(getCurrentState()) + string(" -> ") + toString(toState)).c_str());
 		m_CurrentState = toState;
 	}
 	else
@@ -654,5 +682,25 @@ const char* MGMovingObject::toString(MOState s)
 		{
 			return "ERROR";
 		}
+	}
+}
+
+void MGMovingObject::printHistory()
+{
+	if(m_History)
+	{
+		std::cout << "MGMovingObject ID " << getID() << " History" << std::endl;
+		for(unsigned int i=0; i<m_History->size(); ++i)
+		{
+			std::cout << i << "\t" << m_History->at(i).c_str() << std::endl;
+		}
+	}
+}
+
+void MGMovingObject::addToHistory(const char *str)
+{
+	if(m_History)
+	{
+		m_History->push_back(MGComponent::toString((int)MGF_GetExecTimeMS()) + string(": ") + string(str));
 	}
 }

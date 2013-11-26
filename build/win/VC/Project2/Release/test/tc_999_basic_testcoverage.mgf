@@ -99,6 +99,26 @@ mo 0 expect getlocation 4 3
 delete all mo
 expect getnumberofmo 0
 
+// History
+create mo 1 -x 0 -y 0
+mo 0 history on
+mo 0 setdestination random_x random_y
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+mo 0 history off
+delete mo 0
+expect getnumberofmo 0
+
 end
 
 

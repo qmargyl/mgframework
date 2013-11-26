@@ -1,5 +1,36 @@
 
 
+call testcase_mo
+dynamicfps off
+setfps 500
+call testcase_mo
+exit application
+
+
+
+// ************************
+// External interfaces
+// ************************
+
+function ext_testcase_mo_normal
+  call testcase_mo
+  exit application
+end
+
+function ext_testcase_mo_nofps
+  dynamicfps off
+  setfps 500
+  call testcase_mo
+  exit application
+end
+
+
+
+// ************************
+// Main testcase
+// ************************
+
+function testcase_mo
 
 // Large number of mos
 map setsize 450 450 32 32
@@ -56,9 +87,6 @@ getfps
 expect getnumberofmo 199990
 delete all mo
 expect getnumberofmo 0
-
-
-
 
 // Stressing
 map setsize 256 256 32 32
@@ -120,7 +148,7 @@ delete all mo -owner 1
 delete all mo -owner 3
 expect getnumberofmo 0
 
-
+end
 
 
 

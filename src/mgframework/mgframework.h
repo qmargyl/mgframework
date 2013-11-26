@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.34.1"
+#define MGFRAMEWORKVERSION "1.0.35.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -97,6 +97,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_MO_INT_LOGGING_ON,
 	MGComponent_MO_ALL_LOGGING_OFF,
 	MGComponent_MO_ALL_LOGGING_ON,
+	MGComponent_MO_INT_HISTORY_BOOL,
 
 	// TODO: Implement these..
 	//MGComponent_MO_INT_SETSPEED_INT,
@@ -187,6 +188,7 @@ class MGFramework :public MGComponent
 
 		// FPS related
 		Uint32 m_FrameTime;			// Holds current frame time
+		Uint32 m_ActualFrameTime;	// Calculated for each frame
 		Uint32 m_FPS;				// Holds desired FPS
 		Sint32 m_DelayTime;			// Holds delay in ms for last frame
 		bool m_DynamicFPSEnabled;

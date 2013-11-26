@@ -47,6 +47,7 @@ private:
 	const char* toString(MOState s);
 
 	std::list<PathItem> m_Path;
+	std::vector<std::string> *m_History;
 
 public:
 
@@ -90,6 +91,13 @@ public:
 	bool isIdle(){ return m_CurrentState == MOStateIdle; }
 	bool isMoving(){ return m_CurrentState == MOStateMoving; }
 	bool isStuck(){ return m_CurrentState == MOStateStuck; }
+
+	// History related
+	void enableHistory(){ if(!m_History) m_History = new std::vector<std::string>; }
+	void disableHistory(){ if(m_History) delete m_History; }
+	void printHistory();
+	void addToHistory(const char *str);
+
 
 
 };
