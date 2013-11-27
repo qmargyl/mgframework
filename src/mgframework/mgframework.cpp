@@ -459,7 +459,7 @@ void MGFramework::parse(const char *sFileName)
 					else if(skipToEndIf == 0 && okMGFrameworkSyntax(v_scriptLine))
 					{
 						// function call..
-						MGFLOG_INFO("Tokens: " << v_scriptLine.size());
+						//MGFLOG_INFO("Tokens: " << v_scriptLine.size());
 
 						if(v_scriptLine.size()==2 && v_scriptLine[0]=="call")
 						{

@@ -8,9 +8,29 @@ input off
 logging off
 map logging off
 map setsize 128 128 32 32
-create mo 1000 -owner 1 -speed 3
-add mo 1000 -owner 2 -speed 3
+create mo 1000 -owner 1 -speed 6
+add mo 1000 -owner 2 -speed 6
 expect getnumberofmo 2000
+mo 0 history on
+mo 1 history on
+mo 2 history on
+mo 3 history on
+mo 4 history on
+mo 5 history on
+mo 6 history on
+mo 7 history on
+mo 8 history on
+mo 9 history on
+mo 10 history on
+mo 11 history on
+mo 12 history on
+mo 13 history on
+mo 14 history on
+mo 15 history on
+mo 16 history on
+mo 17 history on
+mo 18 history on
+mo 19 history on
 runoneframe
 runoneframe
 runoneframe
@@ -43,14 +63,14 @@ runoneframe
 runoneframe
 runoneframe
 runoneframe
-delete mo 5
+delete mo 255
 delete mo 133
-delete mo 1
+delete mo 467
 delete mo 765
 delete mo 666
-delete mo 77
+delete mo 771
 delete mo 192
-delete mo 0
+delete mo 1245
 delete mo 342
 delete mo 342
 expect getnumberofmo 1990
@@ -1232,6 +1252,26 @@ runoneframe
 runoneframe
 getfps
 expect getnumberofmo 1990
+mo 0 history off
+mo 1 history off
+mo 2 history off
+mo 3 history off
+mo 4 history off
+mo 5 history off
+mo 6 history off
+mo 7 history off
+mo 8 history off
+mo 9 history off
+mo 10 history off
+mo 11 history off
+mo 12 history off
+mo 13 history off
+mo 14 history off
+mo 15 history off
+mo 16 history off
+mo 17 history off
+mo 18 history off
+mo 19 history off
 delete all mo
 expect getnumberofmo 0
 

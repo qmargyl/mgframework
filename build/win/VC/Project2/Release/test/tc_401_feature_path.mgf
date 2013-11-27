@@ -157,6 +157,7 @@ mo 5 logging on
 mo 6 logging on
 add mo 1 -x 9 -y 7 -speed 3
 mo 7 logging on
+mo 7 history on
 expect getnumberofmo 8
 mo 7 setdestination 4 7
 mo 7 expect getlocation 9 7
@@ -164,6 +165,7 @@ call runframes_100
 call runframes_100
 call runframes_100
 mo 7 expect getlocation 4 7
+mo 7 history off
 delete all mo
 expect getnumberofmo 0
 map logging off

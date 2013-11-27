@@ -49,8 +49,11 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 	m_X=0.0;
 	m_Y=0.0;
 	m_FinishingLastMove=false;
-	if(getDestTileX()==getTileX() && getDestTileY()==getTileY() && isMoving())
+	if(getDestTileX()==getTileX() && getDestTileY()==getTileY() && isMoving() && m_Path.size()==1)
 	{
+		// Final destination reached
+		addToHistory(	(std::string("FinalDestination: ") + MGComponent::toString(getTileX()) + 
+						 std::string(",") + MGComponent::toString(getTileY()) ).c_str());
 		changeState(MOStateIdle);
 	}
 }
@@ -143,7 +146,7 @@ void MGMovingObject::update(MGFramework *w)
 		if(w->m_Map.occupant(x, y) != getID() && w->m_Map.occupant(x, y) != 0)
 		{
 			// Try to find a new path to the last element in the path.
-			if(!isStuck() || (isStuck() && timeSinceLastUpdate > 5000))
+			if(!isStuck()/* || (isStuck() && timeSinceLastUpdate > 5000)*/)
 			{
 				//MGFLOG_WARNING("MGMovingObject::update concluded that the path is blocked. Will try to find a new Path...");
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
@@ -151,6 +154,14 @@ void MGMovingObject::update(MGFramework *w)
 				changeState(MOStateStuck);
 				return;
 			}
+			else if(isStuck() && timeSinceLastUpdate > 5000)
+			{
+				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
+				setTimeOfLastUpdate(MGF_GetExecTimeMS());
+				addToHistory("Stuck for 5 seconds");
+				return;
+			}
+
 		}
 		else
 		{
@@ -165,7 +176,10 @@ void MGMovingObject::update(MGFramework *w)
 		// Not stuck and not at destination tile
 		if(!isStuck() && (getDestTileX() != getTileX() || getDestTileY() != getTileY()))
 		{
-			changeState(MOStateMoving);
+			if(!isMoving())
+			{
+				changeState(MOStateMoving);
+			}
 
 			if(getDestTileX()>getTileX() && getDestTileY()>getTileY())
 			{
@@ -460,6 +474,9 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			w->registerUsedCommand(MGComponent_MO_ALL_SETDESTINATION_INT_INT);
 			int dx=w->toInt(cmdvec[3], s);
 			int dy=w->toInt(cmdvec[4], s);
+			addToHistory(	(std::string("CalculatePath: ") + MGComponent::toString(getTileX()) + 
+							 std::string(",") + MGComponent::toString(getTileY()) + std::string(" -> ") +
+							 MGComponent::toString(dx) + std::string(",") + MGComponent::toString(dy)).c_str());
 			if(!w->m_Map.occupant(dx, dy) && (getTileX() != dx || getTileY() != dy))
 			{
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
@@ -473,6 +490,9 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			w->registerUsedCommand(MGComponent_MO_MARKED_SETDESTINATION_INT_INT);
 			int dx=w->toInt(cmdvec[3], s);
 			int dy=w->toInt(cmdvec[4], s);
+			addToHistory(	(std::string("CalculatePath: ") + MGComponent::toString(getTileX()) + 
+							 std::string(",") + MGComponent::toString(getTileY()) + std::string(" -> ") +
+							 MGComponent::toString(dx) + std::string(",") + MGComponent::toString(dy)).c_str());
 			if(!w->m_Map.occupant(dx, dy) && (getTileX() != dx || getTileY() != dy))
 			{
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));

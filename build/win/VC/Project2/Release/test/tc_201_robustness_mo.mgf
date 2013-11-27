@@ -39,6 +39,26 @@ map logging off
 create mo 100000 -owner 1
 add mo 100000 -owner 2
 expect getnumberofmo 200000
+mo 0 history on
+mo 1 history on
+mo 2 history on
+mo 3 history on
+mo 4 history on
+mo 5 history on
+mo 6 history on
+mo 7 history on
+mo 8 history on
+mo 9 history on
+mo 10 history on
+mo 11 history on
+mo 12 history on
+mo 13 history on
+mo 14 history on
+mo 15 history on
+mo 16 history on
+mo 17 history on
+mo 18 history on
+mo 19 history on
 runoneframe
 runoneframe
 runoneframe
@@ -58,14 +78,14 @@ runoneframe
 runoneframe
 runoneframe
 runoneframe
-delete mo 5
+delete mo 53
 delete mo 133
-delete mo 1
+delete mo 122
 delete mo 76571
 delete mo 66661
-delete mo 77
+delete mo 7722
 delete mo 192002
-delete mo 0
+delete mo 2222
 delete mo 3422
 delete mo 34231
 runoneframe
@@ -83,8 +103,73 @@ runoneframe
 runoneframe
 runoneframe
 runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
+runoneframe
 getfps
 expect getnumberofmo 199990
+mo 0 history off
+mo 1 history off
+mo 2 history off
+mo 3 history off
+mo 4 history off
+mo 5 history off
+mo 6 history off
+mo 7 history off
+mo 8 history off
+mo 9 history off
+mo 10 history off
+mo 11 history off
+mo 12 history off
+mo 13 history off
+mo 14 history off
+mo 15 history off
+mo 16 history off
+mo 17 history off
+mo 18 history off
+mo 19 history off
 delete all mo
 expect getnumberofmo 0
 
