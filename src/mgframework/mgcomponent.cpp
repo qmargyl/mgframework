@@ -55,6 +55,10 @@ std::string MGComponent::toString(int number)
 
 std::vector<std::string> MGComponent::split(char *str, const char *c)
 {
+	// XXX: Add support for new data type, string
+	//      loop through '"' characters
+	//      between ith and (i+1)th, copy out the string and remove it from str (replace it with some marker?)
+	//      merge strings with rest of the result somehow?
 	std::vector<std::string> splitLine;
 	char * pch;
 	pch = strtok (str, c);

@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.35.1"
+#define MGFRAMEWORKVERSION "1.0.35.2"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -218,6 +218,9 @@ class MGFramework :public MGComponent
 		int m_YFrameStart;
 		int m_XFrameEnd;
 		int m_YFrameEnd;
+
+		// Symbol related
+		void symbolAssignTo(string sym, string val, MGSymbolTable *s);
 
 		// Font
 #ifndef MGF_DEBUGGING_ENABLED

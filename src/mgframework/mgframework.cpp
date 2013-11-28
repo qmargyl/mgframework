@@ -467,11 +467,13 @@ void MGFramework::parse(const char *sFileName)
 							if (fColon!=std::string::npos)
 							{
 								MGFLOG_INFO("MGFramework::parse calling " << v_scriptLine[1].c_str());
+								//symbolAssignTo(v_scriptLine[1], string("0"), symbols);
 								parse(v_scriptLine[1].c_str());
 							}
 							else
 							{
 								MGFLOG_INFO("MGFramework::parse calling " << (string(scriptFileName)+string(":")+v_scriptLine[1]).c_str());
+								//symbolAssignTo(v_scriptLine[1], string("0"), symbols);
 								parse((string(scriptFileName)+string(":")+v_scriptLine[1]).c_str());
 							}
 							if(getQuitFlag())
@@ -1585,7 +1587,8 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		{
 			registerUsedCommand(MGComponent_SYMBOL_ASSIGNTO_INT);
 			// First check symbol table of local variables..
-			
+			symbolAssignTo(cmdvec[0], cmdvec[2], s);
+			/*
 			if(s && s->hasValue(cmdvec[0]))
 			{
 				s->setValue(cmdvec[0], toInt(cmdvec[2], s));
@@ -1608,6 +1611,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				s->printTable();
 			}
 			m_SymbolTable->printTable();
+			*/
 			return true;
 		}
 
@@ -1620,6 +1624,31 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 	return true;
 }
 
+void MGFramework::symbolAssignTo(string sym, string val, MGSymbolTable *s)
+{
+	if(s && s->hasValue(sym))
+	{
+		s->setValue(sym, toInt(val, s));
+	}
+	else if(m_SymbolTable->hasValue(sym))
+	{
+		m_SymbolTable->setValue(sym, toInt(val, s));
+	}
+	else if(s)
+	{
+		s->addSymbol(sym, toInt(val, s));
+	}
+	else
+	{
+		m_SymbolTable->addSymbol(sym, toInt(val, s));
+	}
+
+	if(s)
+	{
+		s->printTable();
+	}
+	m_SymbolTable->printTable();
+}
 
 eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
 {

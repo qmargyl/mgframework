@@ -118,7 +118,7 @@ void MGMovingObject::setPath(std::list<PathItem> p)
 
 double MGMovingObject::getDistance(int wx, int wy)
 { 
-	return MGFramework::distance(getTileX(), getTileY(), wx, wy);
+	return MGComponent::distance(getTileX(), getTileY(), wx, wy);
 }
 
 void MGMovingObject::setSpeed(double s, int tileSize)
@@ -154,11 +154,12 @@ void MGMovingObject::update(MGFramework *w)
 				changeState(MOStateStuck);
 				return;
 			}
-			else if(isStuck() && timeSinceLastUpdate > 5000)
+			else if(isStuck() && timeSinceLastUpdate > 1000)
 			{
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
 				setTimeOfLastUpdate(MGF_GetExecTimeMS());
-				addToHistory("Stuck for 5 seconds");
+				addToHistory("Stuck for a second");
+				MGFLOG_WARNING("MGMovingObject::update: MO stuck for one second");
 				return;
 			}
 
@@ -290,13 +291,17 @@ void MGMovingObject::update(MGFramework *w)
 
 			setTimeOfLastUpdate(MGF_GetExecTimeMS());
 		}
-		else
+		else if(!isStuck())
 		{
 			// Arrived at destination tile, set a new one from the path
 			if(!m_Path.empty())
 			{
 				m_Path.pop_front();
 			}
+		}
+		else
+		{
+			// Do nothing?
 		}
 	}
 }
@@ -657,7 +662,7 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 
 void MGMovingObject::changeState(MOState toState)
 {
-	// XXX: This function should also update statistics counters.
+	// XXX: This function should also update statistics counters?
 	if(toState==MOStateCreated)
 	{
 		MGFLOG_ERROR("MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", MOStateCreated should not be re-entered");
