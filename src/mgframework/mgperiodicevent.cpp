@@ -266,11 +266,12 @@ void MGPeriodicEvent::setFileName1(const char *c)
 
 void MGPeriodicEvent::runFile1(MGFramework *w)
 {
+	int result = 0;
 	if(m_FileName1 != NULL)
 	{
 		if(w != NULL)
 		{
-			w->parse(m_FileName1);
+			result = w->parse(m_FileName1);
 		}
 		else
 		{

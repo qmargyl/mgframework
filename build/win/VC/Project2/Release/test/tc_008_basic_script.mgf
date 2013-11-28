@@ -45,6 +45,7 @@ function main_tc
   call test_if_2
   call test_if_3
   call test_if_4
+  call test_return_1
 
 
   // Exit when done...
@@ -283,6 +284,29 @@ end
 function deepcalldepth_9
   // Set global variable to signal that this function was called
   deep = 9
+end
+
+
+
+//*****************************
+// Test function return values
+//*****************************
+function test_return_1
+  a = 17
+  call foo
+  a = foo
+  expect foo 39
+  expect a 39
+end
+
+function foo
+  call bar
+  return bar
+end
+
+function bar
+  b = 39
+  return b
 end
 
 

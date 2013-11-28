@@ -236,12 +236,13 @@ bool MGFramework::processEvents()
 	return true;
 }
 
-void MGFramework::parse(const char *sFileName)
+int MGFramework::parse(const char *sFileName)
 {
+	int returnValue = 0;
 	if(sFileName==NULL)
 	{
 		MGFLOG_INFO("MGFramework::parse was called with argument NULL, exiting function...");
-		return;
+		return returnValue;
 	}
 
 	MGFLOG_INFO("MGFramework::parse was called with argument " << sFileName);
@@ -368,6 +369,19 @@ void MGFramework::parse(const char *sFileName)
 							MGFLOG_ERROR("MGFramework::parse found 'end' outside a function");
 						}
 					}
+					else if(v_scriptLine.size() == 2 && v_scriptLine[0] == "return")
+					{
+						if(functionName!=NULL)
+						{
+							MGFLOG_INFO("MGFramework::parse found return from function");
+							returnValue = toInt(v_scriptLine[1], symbols);
+							break;
+						}
+						else
+						{
+							MGFLOG_ERROR("MGFramework::parse found 'return' outside a function");
+						}						
+					}
 					else if(v_scriptLine.size()==4 && v_scriptLine[0] == "if")
 					{
 						if(v_scriptLine[2] == "==")
@@ -445,7 +459,7 @@ void MGFramework::parse(const char *sFileName)
 					{
 						if(skipToEndIf == 0 && insideIf == 0)
 						{
-							MGFLOG_ERROR("Unexpected endif");
+							MGFLOG_ERROR("Unexpected 'endif'");
 						}
 						else if(skipToEndIf > 0)
 						{
@@ -467,14 +481,16 @@ void MGFramework::parse(const char *sFileName)
 							if (fColon!=std::string::npos)
 							{
 								MGFLOG_INFO("MGFramework::parse calling " << v_scriptLine[1].c_str());
-								//symbolAssignTo(v_scriptLine[1], string("0"), symbols);
-								parse(v_scriptLine[1].c_str());
+								symbolAssignTo(	v_scriptLine[1], 
+												MGComponent::toString(parse(v_scriptLine[1].c_str())), 
+												symbols);
 							}
 							else
 							{
 								MGFLOG_INFO("MGFramework::parse calling " << (string(scriptFileName)+string(":")+v_scriptLine[1]).c_str());
-								//symbolAssignTo(v_scriptLine[1], string("0"), symbols);
-								parse((string(scriptFileName)+string(":")+v_scriptLine[1]).c_str());
+								symbolAssignTo(	v_scriptLine[1], 
+												MGComponent::toString(parse((string(scriptFileName)+string(":")+v_scriptLine[1]).c_str())), 
+												symbols);
 							}
 							if(getQuitFlag())
 							{
@@ -533,6 +549,7 @@ void MGFramework::parse(const char *sFileName)
 		MGFLOG_INFO("MGFramework::parse finished parsing script file " << scriptFileName);
 	}
 	delete symbols;
+	return returnValue;
 }
 
 void MGFramework::logEval(const char *logFileName)
@@ -623,7 +640,7 @@ void MGFramework::logEval(const char *logFileName)
 
 void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 {
-	parse(scriptFileName);
+	int result = parse(scriptFileName);
 
 	Uint32 frameStartTime = 0; 
 	if(!runOneFrame) m_DelayTime = 0;

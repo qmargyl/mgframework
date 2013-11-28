@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.35.2"
+#define MGFRAMEWORKVERSION "1.0.35.3"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -379,7 +379,7 @@ class MGFramework :public MGComponent
 		void run(const char *scriptFileName, bool runOneFrame = false);
 
 		// Parsing script files containing mgf commands
-		void parse(const char *sFileName);
+		int parse(const char *sFileName);
 
 		// Evaluating log files to PASS/FAIL
 		void logEval(const char *logFileName);
