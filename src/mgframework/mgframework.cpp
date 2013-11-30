@@ -313,47 +313,9 @@ int MGFramework::parse(const char *sFileName)
 					continue;
 				}
 
-				// Change all special characters to spaces
-				for(int i=0; i<(int)strlen(scriptLine); ++i)
-				{
-					if(scriptLine[i] <= 32) 
-					{
-						scriptLine[i] = 32;
-					}
-				}
-
-				// Remove the newline and any tailing "special" characters before sending command to runConsoleCommand
-				for(int i=(int)strlen(scriptLine); i>=0 ; --i)
-				{
-					if(i<0 || i>MGF_SCRIPTLINE_MAXLENGTH)
-					{
-						MGFLOG_ERROR("MGFramework::parse found inconsistent indexing: " << i << " s='" << scriptLine << "'");
-						break;
-					}
-					else if(scriptLine[i] <= 32) // Remove characters from 0 to space in the ASCII table
-					{
-						scriptLine[i] = '\0';
-					}
-					else
-					{
-						break;
-					}
-				}
-
-				// Also remove comments..
-				int l=(int)strlen(scriptLine);
-				for(int i=0; i<l; ++i)
-				{
-					// XXX: This should be done differently: "//...", not "/..."
-					if(scriptLine[i] == '/') // Remove comments
-					{
-						scriptLine[i] = '\0';
-					}
-				}
-
 				// Create vector of strings (tokens) representing the current script line
 				std::string s_scriptLine(scriptLine);
-				std::vector<std::string> v_scriptLine = split(scriptLine, " ");
+				std::vector<std::string> v_scriptLine = MGComponent::symbols(scriptLine);
 
 				if(foundFunction)
 				{
@@ -762,6 +724,33 @@ void MGFramework::activateConsole()
 	disableTyping();
 }
 
+
+
+void MGFramework::symbolAssignTo(string sym, string val, MGSymbolTable *s)
+{
+	if(s && s->hasValue(sym))
+	{
+		s->setValue(sym, toInt(val, s));
+	}
+	else if(m_SymbolTable->hasValue(sym))
+	{
+		m_SymbolTable->setValue(sym, toInt(val, s));
+	}
+	else if(s)
+	{
+		s->addSymbol(sym, toInt(val, s));
+	}
+	else
+	{
+		m_SymbolTable->addSymbol(sym, toInt(val, s));
+	}
+
+	if(s)
+	{
+		s->printTable();
+	}
+	m_SymbolTable->printTable();
+}
 
 
 bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
@@ -1304,7 +1293,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					if(n!=1)
 					{
 						MGFLOG_ERROR("Parameter -x can only be set when creating one SO");
-						n = 0; // Abort MO creation..
+						n = 0; // Abort SO creation..
 					}
 					
 				}
@@ -1315,14 +1304,14 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					if(n!=1)
 					{
 						MGFLOG_ERROR("Parameter -y can only be set when creating one SO");
-						n = 0; // Abort MO creation..
+						n = 0; // Abort SO creation..
 					}
 					
 				}
 				else
 				{
 					MGFLOG_ERROR("Error in command (create so <n>), bad parameter list");
-					n = 0; // Abort MO creation..
+					n = 0; // Abort SO creation..
 				}
 			}
 			if(n > 0)
@@ -1603,32 +1592,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_SYMBOL_ASSIGNTO_INT:
 		{
 			registerUsedCommand(MGComponent_SYMBOL_ASSIGNTO_INT);
-			// First check symbol table of local variables..
 			symbolAssignTo(cmdvec[0], cmdvec[2], s);
-			/*
-			if(s && s->hasValue(cmdvec[0]))
-			{
-				s->setValue(cmdvec[0], toInt(cmdvec[2], s));
-			}
-			else if(m_SymbolTable->hasValue(cmdvec[0]))
-			{
-				m_SymbolTable->setValue(cmdvec[0], toInt(cmdvec[2], s));
-			}
-			else if(s)
-			{
-				s->addSymbol(cmdvec[0], toInt(cmdvec[2], s));
-			}
-			else
-			{
-				m_SymbolTable->addSymbol(cmdvec[0], toInt(cmdvec[2], s));
-			}
-
-			if(s)
-			{
-				s->printTable();
-			}
-			m_SymbolTable->printTable();
-			*/
 			return true;
 		}
 
@@ -1641,31 +1605,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 	return true;
 }
 
-void MGFramework::symbolAssignTo(string sym, string val, MGSymbolTable *s)
-{
-	if(s && s->hasValue(sym))
-	{
-		s->setValue(sym, toInt(val, s));
-	}
-	else if(m_SymbolTable->hasValue(sym))
-	{
-		m_SymbolTable->setValue(sym, toInt(val, s));
-	}
-	else if(s)
-	{
-		s->addSymbol(sym, toInt(val, s));
-	}
-	else
-	{
-		m_SymbolTable->addSymbol(sym, toInt(val, s));
-	}
 
-	if(s)
-	{
-		s->printTable();
-	}
-	m_SymbolTable->printTable();
-}
 
 eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
 {

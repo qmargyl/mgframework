@@ -69,3 +69,83 @@ std::vector<std::string> MGComponent::split(char *str, const char *c)
 	}
 	return splitLine;
 }
+
+std::vector<std::string> MGComponent::symbols(char *str)
+{
+	// Not implemented yet
+	std::vector<std::string> splitLine;
+	std::string sym("");
+	char c[2] = {0, 0};
+	char s[3] = {0, 0, 0};
+
+	for(unsigned int i = 0; i < strlen(str); ++i)
+	{
+		if(i < strlen(str)-1)
+		{
+			s[0] = str[i];
+			s[1] = str[i+1];
+		}
+		else
+		{
+			s[0] = 0;
+			s[1] = 0;
+		}
+
+		if(std::string(s)=="//")
+		{
+			if(sym!=std::string(""))
+			{
+				splitLine.push_back(sym);
+				sym=std::string("");
+			}
+			break;
+		}
+		else if(str[i]==' ')
+		{
+			if(sym!=std::string(""))
+			{
+				splitLine.push_back(sym);
+				sym=std::string("");
+			}
+		}
+		else if(std::string(s)=="==" || std::string(s)=="<=" || std::string(s)==">=" || 
+				std::string(s)=="++" || std::string(s)=="--" || std::string(s)=="!=" || 
+				std::string(s)==">>" || std::string(s)=="<<")
+		{
+			if(sym!=std::string(""))
+			{
+				splitLine.push_back(sym);
+				sym=std::string("");
+			}
+			splitLine.push_back(std::string(s));
+			i++;
+		}
+		else if(str[i]=='=' || str[i]=='(' || str[i]==')' || str[i]=='+' || /*str[i]=='-' ||*/ 
+				str[i]=='*' || str[i]=='/' || str[i]=='|' || str[i]=='&' || str[i]=='<' || 
+				str[i]=='>')
+		{
+			if(sym!=std::string(""))
+			{
+				splitLine.push_back(sym);
+				sym=std::string("");
+			}
+			c[0]=str[i];
+			splitLine.push_back(std::string(c));
+		}
+		else if(str[i] < 32)
+		{
+			// Ignore "special" characters..
+		}
+		else
+		{
+			c[0]=str[i];
+			sym += std::string(c);
+		}
+	}
+	if(sym!=std::string(""))
+	{
+		splitLine.push_back(sym);
+	}
+
+	return splitLine;
+}
