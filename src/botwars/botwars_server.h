@@ -3,9 +3,18 @@
 
 #include "../mgframework/mgframework.h"
 
+#define MAXNUMBEROFCLIENTS	8
+
+struct BotWarsClientHandle{
+	bool active;
+	char ip[16];
+	int port;
+};
+
 class BotWarsServer : public MGFramework
 {
 	private:
+		BotWarsClientHandle clients[MAXNUMBEROFCLIENTS];
 
 		virtual void handleGameLogics();
 		virtual void draw();

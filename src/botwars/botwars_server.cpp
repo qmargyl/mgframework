@@ -11,6 +11,13 @@ BotWarsServer::BotWarsServer()
 	setInstanceType(MGFSERVERINSTANCE);
 	disableMiniMap();
 	enableLogging();
+
+	for(int i = 0; i < MAXNUMBEROFCLIENTS; ++i)
+	{
+		clients[i].active=false;
+		sprintf(clients[i].ip, "");
+		clients[i].port=0;
+	}
 }
 
 bool BotWarsServer::init(int w, int h, int tw, int th)
@@ -27,13 +34,6 @@ bool BotWarsServer::init(int w, int h, int tw, int th)
 		runConsoleCommand("setfps 30", this); // Framework default is 20 FPS
 		runConsoleCommand("create mo 5", this);
 		runConsoleCommand("open terminalserver", this);
-		runConsoleCommand("create pe 1", this);
-
-		if(getNumberOfPE()>0)
-		{
-			m_PE[0].setupTimer(4000);
-			m_PE[0].activate();
-		}
 
 		return true;
 	}
@@ -45,21 +45,25 @@ bool BotWarsServer::init(int w, int h, int tw, int th)
 
 void BotWarsServer::handleGameLogics()
 {
+	for(int i=0; i<MAXNUMBEROFCLIENTS; ++i)
+	{
+		if(clients[i].active)
+		{
+			
+		}
+	}
+
 	// Update periodic event to trigger rare events
 	if(getNumberOfPE()>0)
 	{
 		if(m_PE[0].update())
 		{
-			// Set all moving objects destination coordinate.
-			for(int i=0;i<getNumberOfMO();i++)
-			{
-				m_MO[i].setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
-			}
+
 		}
 	}
 
 	// Update all moving objects
-	for(int i=0;i<getNumberOfMO();i++)
+	for(int i=0; i<getNumberOfMO(); ++i)
 	{
 		m_MO[i].update(this);
 	}
