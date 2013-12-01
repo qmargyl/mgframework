@@ -100,7 +100,7 @@ std::vector<std::string> MGComponent::symbols(char *str)
 			}
 			break;
 		}
-		else if(str[i]==' ')
+		else if(str[i]==' ' || str[i]=='\t')
 		{
 			if(sym!=std::string(""))
 			{

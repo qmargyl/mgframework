@@ -38,6 +38,7 @@ function main_tc
 
   // Other testcases
   call test_symbols_1
+  call test_symbols_2	 // tabs and spaces between symbols
   call test_calldepth_1  // function local variables
   call test_comments_1
   call deepcalldepth_1
@@ -85,6 +86,29 @@ function test_symbols_1
   nmo = getnumberofmo
   expect nmo 666
   delete all mo
+end
+
+
+
+
+//*****************************
+// Test symbol handling with more tab/space combinations
+//*****************************
+function test_symbols_2
+  s1= 13//space after equals
+  s2 =14//space before equals
+  s3=s1//no spaces
+  s1	=	s2//tabs
+  expect s1	14
+  expect s2					14
+  expect	s3 13
+  create	mo 666//tab
+  nmo = getnumberofmo
+  expect	nmo 666
+  delete all mo
+  expect s1 14
+  expect s2 14
+  expect s3 13
 end
 
 

@@ -763,7 +763,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 	{
 		case MGComponent_UNDEFINED:
 		{
-			MGFLOG_ERROR("MGFramework::runConsoleCommand received MGComponent_UNDEFINED from MGFramework::detectMGComponentConsoleCommand"); 
+			MGFLOG_ERROR("MGFramework::runConsoleCommand received MGComponent_UNDEFINED"); 
 			break;
 		}
 

@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.35.4"
+#define MGFRAMEWORKVERSION "1.0.35.5"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -135,7 +135,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_DELETE_ALL_SO_PARAMLIST,
 	MGComponent_DELETE_SO_INT,
 
-	//This is a counter for number of command identifiers and not an actual command.
+	//Counter for number of command identifiers, not an actual command.
 	MGComponent_NUMBEROFCOMMANDIDENTIFIERS
 
 };
