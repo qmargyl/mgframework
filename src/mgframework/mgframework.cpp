@@ -432,6 +432,10 @@ int MGFramework::parse(const char *sFileName)
 							insideIf--;
 						}
 					}
+					else if(skipToEndIf == 0 && v_scriptLine.size() == 2 && v_scriptLine[0] == "print")
+					{
+						std::cout << v_scriptLine[1].c_str() << std::endl;
+					}
 					else if(skipToEndIf == 0 && okMGFrameworkSyntax(v_scriptLine))
 					{
 						// function call..
@@ -2329,7 +2333,6 @@ bool MGFramework::isNumericalInt(const string &s)
 	}
 	MGFLOG_STATIC_ERROR("MGFramework::isNumericalInt failed to parse string");
 }
-
 
 int MGFramework::staticToInt(const string &s)
 {

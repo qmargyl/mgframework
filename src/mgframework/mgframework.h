@@ -16,7 +16,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.35.5"
+#define MGFRAMEWORKVERSION "1.0.35.6"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -333,7 +333,7 @@ class MGFramework :public MGComponent
 		Uint32 getFPS();
 		void setDesiredFPS(Uint32 f);
 		Uint32 getDesiredFPS();
-		Sint32 getLastFrameDelayTime(){return m_DelayTime;}	// A kind of measurement for how much time is left for additional calculations between frames.
+		Sint32 getLastFrameDelayTime(){return m_DelayTime;}	// How much time was left for additional calculations last frame.
 
 		// Console activation related
 		void enableTyping(){m_TypingEnabled = true;}

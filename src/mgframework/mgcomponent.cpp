@@ -77,6 +77,7 @@ std::vector<std::string> MGComponent::symbols(char *str)
 	std::string sym("");
 	char c[2] = {0, 0};
 	char s[3] = {0, 0, 0};
+	bool insideString = false;
 
 	for(unsigned int i = 0; i < strlen(str); ++i)
 	{
@@ -91,7 +92,11 @@ std::vector<std::string> MGComponent::symbols(char *str)
 			s[1] = 0;
 		}
 
-		if(std::string(s)=="//")
+		if(str[i]=='"')
+		{
+			insideString = !insideString;
+		}
+		else if(!insideString && std::string(s)=="//")
 		{
 			if(sym!=std::string(""))
 			{
@@ -100,7 +105,7 @@ std::vector<std::string> MGComponent::symbols(char *str)
 			}
 			break;
 		}
-		else if(str[i]==' ' || str[i]=='\t')
+		else if(!insideString && (str[i]==' ' || str[i]=='\t'))
 		{
 			if(sym!=std::string(""))
 			{
@@ -108,9 +113,9 @@ std::vector<std::string> MGComponent::symbols(char *str)
 				sym=std::string("");
 			}
 		}
-		else if(std::string(s)=="==" || std::string(s)=="<=" || std::string(s)==">=" || 
+		else if(!insideString && (std::string(s)=="==" || std::string(s)=="<=" || std::string(s)==">=" || 
 				std::string(s)=="++" || std::string(s)=="--" || std::string(s)=="!=" || 
-				std::string(s)==">>" || std::string(s)=="<<")
+				std::string(s)==">>" || std::string(s)=="<<"))
 		{
 			if(sym!=std::string(""))
 			{
@@ -120,9 +125,9 @@ std::vector<std::string> MGComponent::symbols(char *str)
 			splitLine.push_back(std::string(s));
 			i++;
 		}
-		else if(str[i]=='=' || str[i]=='(' || str[i]==')' || str[i]=='+' || /*str[i]=='-' ||*/ 
+		else if(!insideString && (str[i]=='=' || str[i]=='(' || str[i]==')' || str[i]=='+' || /*str[i]=='-' ||*/ 
 				str[i]=='*' || str[i]=='/' || str[i]=='|' || str[i]=='&' || str[i]=='<' || 
-				str[i]=='>')
+				str[i]=='>'))
 		{
 			if(sym!=std::string(""))
 			{

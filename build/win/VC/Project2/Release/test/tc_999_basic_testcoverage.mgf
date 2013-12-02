@@ -127,39 +127,40 @@ end
 
 // Framework
 function testcoverage_fw
-input off
-runframes 100
-delete all mo
-input on
-open terminalserver
-close terminalserver
-logging on
-logging off
-logging on
-dynamicfps on
-dynamicfps off
-runoneframe
-runoneframe
-dynamicfps on
-help
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-getfps
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-setfps 60
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-minimap on
-minimap off
-minimap on
-runoneframe
+  input off
+  runframes 100
+  delete all mo
+  input on
+  open terminalserver
+  close terminalserver
+  logging on
+  logging off
+  logging on
+  dynamicfps on
+  dynamicfps off
+  runoneframe
+  runoneframe
+  dynamicfps on
+  help
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  getfps
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  setfps 60
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  minimap on
+  minimap off
+  minimap on
+  runoneframe
+  print "Testing print function"
 end
 
 

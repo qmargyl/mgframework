@@ -47,6 +47,7 @@ function main_tc
   call test_if_3
   call test_if_4
   call test_return_1
+  call test_print_1
 
 
   // Exit when done...
@@ -334,9 +335,20 @@ function bar
 end
 
 
-
-
-
+//*****************************
+// Test print function
+//*****************************
+function test_print_1
+  print "Testing printing function"
+  v1 = 0
+  if v1 != 0
+    print "ERROR"
+  endif
+  // print "ERROR"
+  print "Print line 2"//"ERROR"
+  print "Print line 3"//ERROR"
+  print "Print line 4//"
+end
 
 
 
