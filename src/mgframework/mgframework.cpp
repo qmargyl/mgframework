@@ -14,6 +14,10 @@ MGFramework::MGFramework():
 	m_NMO(0),
 	m_NPE(0),
 	m_NSO(0),
+	m_MO(NULL),
+	m_PE(NULL),
+	m_SO(NULL),
+	m_SymbolTable(NULL),
 	m_FrameTime(16),
 	m_ActualFrameTime(16),
 	m_FrameCountdownEnabled(false),
@@ -28,7 +32,9 @@ MGFramework::MGFramework():
 	m_Quit(false),
 	m_DelayTime(0),
 	m_InputEnabled(true),
+#ifndef MGF_DEBUGGING_ENABLED
 	m_Font(0),
+#endif
 	m_DynamicFPSEnabled(true),
 	m_Port(0)
 {
@@ -54,10 +60,14 @@ MGFramework::MGFramework():
 
 MGFramework::~MGFramework()
 {
-	delete[] m_MO;
-	delete[] m_PE;
-	delete[] m_SO;
-	delete m_SymbolTable;
+	if(m_MO) delete[] m_MO;
+	m_MO = NULL;
+	if(m_PE) delete[] m_PE;
+	m_PE = NULL;
+	if(m_SO) delete[] m_SO;
+	m_SO = NULL;
+	if(m_SymbolTable) delete m_SymbolTable;
+	m_SymbolTable = NULL;
 }
 
 
@@ -1859,7 +1869,8 @@ void MGFramework::createMO(int n)
 		m_Map.unOccupy(m_MO[i].getTileX(), m_MO[i].getTileY());
 	}
 
-	delete[] m_MO;
+	if(m_MO) delete[] m_MO;
+	m_MO = NULL;
 	m_NMO=n;
 	if(getNumberOfMO() > 0)
 	{
@@ -1892,7 +1903,8 @@ int MGFramework::addMO(int n)
 	{
 		oldMO[i].copy(&m_MO[i]);
 	}
-	delete[] m_MO;
+	if(m_MO) delete[] m_MO;
+	m_MO = NULL;
 	m_NMO=nOld+n;
 	m_MO = new MGMovingObject[getNumberOfMO()];
 	for(int i=0; i<nOld; i++)
@@ -2066,7 +2078,8 @@ bool MGFramework::setupSO(int i, int x, int y)
 
 void MGFramework::createPE(int n)
 {
-	delete[] m_PE;
+	if(m_PE) delete[] m_PE;
+	m_PE = NULL;
 	m_NPE=n;
 	if(getNumberOfPE() > 0)
 	{
@@ -2086,7 +2099,8 @@ void MGFramework::addPE(int n)
 	{
 		oldPE[i].copy(&m_PE[i]);
 	}
-	delete[] m_PE;
+	if(m_PE) delete[] m_PE;
+	m_PE = NULL;
 	m_NPE=nOld+n;
 	m_PE = new MGPeriodicEvent[getNumberOfPE()];
 	for(int i=0; i<nOld; i++)
@@ -2486,7 +2500,8 @@ void MGFramework::addConsoleCommandToQueue(const char *c)
 
 void MGFramework::createSO(int n)
 {
-	delete[] m_SO;
+	if(m_SO) delete[] m_SO;
+	m_SO = NULL;
 	m_NSO=n;
 	if(getNumberOfSO() > 0)
 	{
@@ -2506,7 +2521,8 @@ void MGFramework::addSO(int n)
 	{
 		oldSO[i].copy(&m_SO[i]);
 	}
-	delete[] m_SO;
+	if(m_SO) delete[] m_SO;
+	m_SO = NULL;
 	m_NSO=nOld+n;
 	m_SO = new MGStationaryObject[getNumberOfSO()];
 	for(int i=0; i<nOld; i++)

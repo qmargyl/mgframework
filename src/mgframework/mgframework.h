@@ -1,14 +1,21 @@
 #ifndef _MG_FRAMEWORK_H
 #define _MG_FRAMEWORK_H
 
+//#define MGF_DEBUGGING_ENABLED		// This flag disables the socket terminal and TTF as these are not possible to compile for Debug.
+
+
 // SDL
 #include <SDL/SDL.h>
 #include <SDL/SDL_thread.h>
-#include "SDL_ttf.h"
-// MGF
+
+#ifndef MGF_DEBUGGING_ENABLED
+  #include "SDL_ttf.h"
+#endif
+
+// MGF header files
+#include "mgcomponent.h"
 #include "mgwindow.h"
 #include "mgmap.h"
-#include "mgcomponent.h"
 #include "mgmovingobject.h"
 #include "mgperiodicevent.h"
 #include "mgsymboltable.h"
@@ -16,14 +23,13 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.35.6"
+#define MGFRAMEWORKVERSION "1.0.35.7"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
 #define MGF_LOGLINE_MAXLENGTH		1024
 #define MGF_MOPOSITIONINGATTEMPTS	100
 #define MGF_SOPOSITIONINGATTEMPTS	100
-//#define MGF_DEBUGGING_ENABLED		// This flag disables the socket terminal and TTF as these are not possible to compile for Debug.
 
 
 

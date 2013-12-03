@@ -18,6 +18,7 @@ MGMap::MGMap()
 	m_LeftEdge(0),
 	m_RightEdge(0),
 	m_TileProperty(NULL),
+	m_Occupied(NULL),
 	m_MouseScrollingOngoing(false),
 	m_MouseScrollingXClick(0),
 	m_MouseScrollingYClick(0)
@@ -41,8 +42,9 @@ void MGMap::setScrollOffset(int px, int py)
 
 void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight)
 {
-	delete[] m_TileProperty;
-	delete[] m_Occupied;
+	if(m_TileProperty) delete[] m_TileProperty;
+	if(m_Occupied) delete[] m_Occupied;
+
 	m_TileProperty = new Uint32[w*h];
 	m_Occupied = new int[w*h];
 	m_Width = w;
