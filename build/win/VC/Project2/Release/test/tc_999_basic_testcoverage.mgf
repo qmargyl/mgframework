@@ -59,7 +59,6 @@ expect getnumberofmo 0
 // MO getters, setters
 create mo 1 -owner 1
 expect getnumberofmo 1
-mo 0 getdistance
 mo 0 getlocation
 mo 0 getdestination
 mo 0 getspeed
@@ -70,12 +69,10 @@ delete all mo -owner 1
 expect getnumberofmo 0
 create mo 1 -owner 1
 add mo 1 -owner 2
-mo all getdistance
 mo all getdestination
 mo all getspeed
 mo all setdestination 0 0
 mo 0 mark
-mo marked getdistance
 mo marked getdestination
 mo marked getspeed
 mo marked setdestination 0 0

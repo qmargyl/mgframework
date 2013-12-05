@@ -36,7 +36,8 @@ MGFramework::MGFramework():
 	m_Font(0),
 #endif
 	m_DynamicFPSEnabled(true),
-	m_Port(0)
+	m_Port(0),
+	m_CommandReturnVal(0)
 {
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
@@ -2372,7 +2373,11 @@ int MGFramework::toInt(const string &s, MGSymbolTable *sym)
 	}
 	else
 	{
-		if(s == string("on"))
+		if(s == string("$cmd"))
+		{
+			return m_CommandReturnVal;
+		}
+		else if(s == string("on"))
 		{
 			return MGF_TRUE;
 		}

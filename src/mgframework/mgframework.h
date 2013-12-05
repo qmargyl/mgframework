@@ -23,7 +23,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.35.7"
+#define MGFRAMEWORKVERSION "1.0.35.8"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -82,27 +82,20 @@ enum eMGComponentConsoleCommand{
 	MGComponent_PE_INT_LOGGING_OFF,
 	MGComponent_PE_INT_STOREFILENAME_FILENAME,				//pe <int> << | storefilename <file> (Stores the file name of the script file to be executed periodically)
 
-	//MGMovingObject commands
+	//MGMovingObject forward flags
 	MGComponent_MO_INT_X,									//mo <int> ... (Forwards any MO command to an MO)
+	MGComponent_MO_MARKED_X,								//mo marked ... (Forwards any MO command to all marked MOs)
+	MGComponent_MO_ALL_X,									//mo all ... (Forwards any MO command to all MOs)
+	//MGMovingObject commands
 	MGComponent_MO_INT_MARK,
-	MGComponent_MO_ALL_MARK,
 	MGComponent_MO_INT_UNMARK,
-	MGComponent_MO_ALL_UNMARK,
-	MGComponent_MO_MARKED_UNMARK,
-	MGComponent_MO_INT_GETDISTANCE,
 	MGComponent_MO_INT_GETLOCATION,
 	MGComponent_MO_INT_GETDESTINATION,
 	MGComponent_MO_INT_GETSPEED,
 	MGComponent_MO_INT_HELP,
-	MGComponent_MO_MARKED_X,
-	MGComponent_MO_ALL_X,									//mo all ... (Forwards any MO command to all MOs)
 	MGComponent_MO_INT_SETDESTINATION_INT_INT,
-	MGComponent_MO_ALL_SETDESTINATION_INT_INT,
-	MGComponent_MO_MARKED_SETDESTINATION_INT_INT,
 	MGComponent_MO_INT_LOGGING_OFF,
 	MGComponent_MO_INT_LOGGING_ON,
-	MGComponent_MO_ALL_LOGGING_OFF,
-	MGComponent_MO_ALL_LOGGING_ON,
 	MGComponent_MO_INT_HISTORY_BOOL,
 
 	// TODO: Implement these..
@@ -226,6 +219,7 @@ class MGFramework :public MGComponent
 		int m_YFrameEnd;
 
 		// Symbol related
+		int m_CommandReturnVal;
 		void symbolAssignTo(string sym, string val, MGSymbolTable *s);
 
 		// Font
@@ -391,7 +385,11 @@ class MGFramework :public MGComponent
 		void logEval(const char *logFileName);
 
 		// Test coverage related
-		void registerUsedCommand(eMGComponentConsoleCommand c){ m_UsedCommands[(int)c]=true; }
+		void registerUsedCommand(eMGComponentConsoleCommand c, int returnValue = 0)
+		{
+			m_CommandReturnVal = returnValue;
+			m_UsedCommands[(int)c]=true; 
+		}
 
 		// Mini map
 		void enableMiniMap(){m_MiniMapEnabled = true;}

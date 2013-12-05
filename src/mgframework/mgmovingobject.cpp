@@ -354,28 +354,6 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			return true;
 		}
 
-		case MGComponent_MO_ALL_MARK:
-		{
-			w->registerUsedCommand(MGComponent_MO_ALL_MARK);
-			if(!isMarked())
-			{
-				mark();
-				w->countMark();
-			}
-			return true;
-		}
-
-		case MGComponent_MO_MARKED_UNMARK:
-		{
-			w->registerUsedCommand(MGComponent_MO_MARKED_UNMARK);
-			if(isMarked())
-			{
-				unMark();
-				w->countUnMark();
-			}
-			return true;
-		}
-
 		case MGComponent_MO_INT_UNMARK:
 		{
 			w->registerUsedCommand(MGComponent_MO_INT_UNMARK);
@@ -384,25 +362,6 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 				unMark();
 				w->countUnMark();
 			}
-			return true;
-		}
-
-		case MGComponent_MO_ALL_UNMARK:
-		{
-			w->registerUsedCommand(MGComponent_MO_ALL_UNMARK);
-			if(isMarked())
-			{
-				unMark();
-				w->countUnMark();
-			}
-			return true;
-		}
-
-		case MGComponent_MO_INT_GETDISTANCE:
-		{
-			// XXX: This is not really relevant anymore since paths are used now instead..
-			w->registerUsedCommand(MGComponent_MO_INT_GETDISTANCE);
-			std::cout << getDistance(getDestTileX(), getDestTileY()) << std::endl;
 			return true;
 		}
 
@@ -474,38 +433,6 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			return true;
 		}
 
-		case MGComponent_MO_ALL_SETDESTINATION_INT_INT:
-		{
-			w->registerUsedCommand(MGComponent_MO_ALL_SETDESTINATION_INT_INT);
-			int dx=w->toInt(cmdvec[3], s);
-			int dy=w->toInt(cmdvec[4], s);
-			addToHistory(	(std::string("CalculatePath: ") + MGComponent::toString(getTileX()) + 
-							 std::string(",") + MGComponent::toString(getTileY()) + std::string(" -> ") +
-							 MGComponent::toString(dx) + std::string(",") + MGComponent::toString(dy)).c_str());
-			if(!w->m_Map.occupant(dx, dy) && (getTileX() != dx || getTileY() != dy))
-			{
-				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
-				MGFLOG_INFO("Path length: " << m_Path.size());
-			}
-			return true;
-		}
-
-		case MGComponent_MO_MARKED_SETDESTINATION_INT_INT:
-		{
-			w->registerUsedCommand(MGComponent_MO_MARKED_SETDESTINATION_INT_INT);
-			int dx=w->toInt(cmdvec[3], s);
-			int dy=w->toInt(cmdvec[4], s);
-			addToHistory(	(std::string("CalculatePath: ") + MGComponent::toString(getTileX()) + 
-							 std::string(",") + MGComponent::toString(getTileY()) + std::string(" -> ") +
-							 MGComponent::toString(dx) + std::string(",") + MGComponent::toString(dy)).c_str());
-			if(!w->m_Map.occupant(dx, dy) && (getTileX() != dx || getTileY() != dy))
-			{
-				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
-				MGFLOG_INFO("Path length: " << m_Path.size());
-			}
-			return true;
-		}
-
 		case MGComponent_MO_INT_LOGGING_ON:
 		{
 			w->registerUsedCommand(MGComponent_MO_INT_LOGGING_ON);
@@ -520,22 +447,6 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			w->registerUsedCommand(MGComponent_MO_INT_LOGGING_OFF);
 			MGFLOG_INFO("Logging disabled.");
 			addToHistory("Logging disabled.");
-			disableLogging();
-			return true;
-		}
-
-		case MGComponent_MO_ALL_LOGGING_ON:
-		{
-			w->registerUsedCommand(MGComponent_MO_ALL_LOGGING_ON);
-			enableLogging();
-			MGFLOG_INFO("Logging enabled.");
-			return true;
-		}
-
-		case MGComponent_MO_ALL_LOGGING_OFF:
-		{
-			w->registerUsedCommand(MGComponent_MO_ALL_LOGGING_OFF);
-			MGFLOG_INFO("Logging disabled.");
 			disableLogging();
 			return true;
 		}
@@ -585,25 +496,9 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 		{
 			return MGComponent_MO_INT_GETLOCATION;
 		}
-		else if(cmdvec[2]=="getdistance")
-		{
-			return MGComponent_MO_INT_GETDISTANCE;
-		}
-		else if(cmdvec[1]=="all" && cmdvec[2]=="mark")
-		{
-			return MGComponent_MO_ALL_MARK;
-		}
 		else if(cmdvec[2]=="mark")
 		{
 			return MGComponent_MO_INT_MARK;
-		}
-		else if(cmdvec[1]=="all" && cmdvec[2]=="unmark")
-		{
-			return MGComponent_MO_ALL_UNMARK;
-		}
-		else if(cmdvec[1]=="marked" && cmdvec[2]=="unmark")
-		{
-			return MGComponent_MO_MARKED_UNMARK;
 		}
 		else if(cmdvec[2]=="unmark")
 		{
@@ -612,14 +507,6 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 	}
 	else if(cmdvec.size() == 4)
 	{
-		if(cmdvec[0]=="mo" && cmdvec[1]=="all" &&cmdvec[2]=="logging" && cmdvec[3]=="on")
-		{
-			return MGComponent_MO_ALL_LOGGING_ON;
-		}
-		else if(cmdvec[0]=="mo" && cmdvec[1]=="all" &&cmdvec[2]=="logging" && cmdvec[3]=="off")
-		{
-			return MGComponent_MO_ALL_LOGGING_OFF;
-		}
 		if(cmdvec[0]=="mo" && cmdvec[2]=="logging" && cmdvec[3]=="on")
 		{
 			return MGComponent_MO_INT_LOGGING_ON;
@@ -635,15 +522,7 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 	}
 	else if(cmdvec.size() == 5)
 	{
-		if(cmdvec[1]=="all" && cmdvec[2]=="setdestination")
-		{
-			return MGComponent_MO_ALL_SETDESTINATION_INT_INT;
-		}
-		else if(cmdvec[1]=="marked" && cmdvec[2]=="setdestination")
-		{
-			return MGComponent_MO_MARKED_SETDESTINATION_INT_INT;
-		}
-		else if(cmdvec[2]=="setdestination")
+		if(cmdvec[2]=="setdestination")
 		{
 			return MGComponent_MO_INT_SETDESTINATION_INT_INT;
 		}
