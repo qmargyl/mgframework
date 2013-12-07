@@ -397,8 +397,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 
 		case MGComponent_MO_INT_GETSPEED:
 		{
-			w->registerUsedCommand(MGComponent_MO_INT_GETSPEED);
-			std::cout << "" << getSpeed() << std::endl;
+			w->registerUsedCommand(MGComponent_MO_INT_GETSPEED, (int)getSpeed());
+			std::cout << "" << (int)getSpeed() << std::endl;
 			return true;
 		}
 

@@ -265,6 +265,7 @@ int MGFramework::parse(const char *sFileName)
 	int lineNumber = 0;
 	int skipToEndIf = 0;
 	int insideIf = 0;
+	int insideElse = 0;
 	MGSymbolTable *symbols = new MGSymbolTable();
 
 
@@ -430,7 +431,7 @@ int MGFramework::parse(const char *sFileName)
 					}
 					else if(v_scriptLine.size() == 1 && v_scriptLine[0] == "endif")
 					{
-						if(skipToEndIf == 0 && insideIf == 0)
+						if(skipToEndIf == 0 && insideIf == 0 && insideElse == 0)
 						{
 							MGFLOG_ERROR("Unexpected 'endif'");
 						}
@@ -1583,7 +1584,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_EXPECT_INT_INT:
 		{
-			registerUsedCommand(MGComponent_EXPECT_INT_INT);
+			registerUsedCommand(MGComponent_EXPECT_INT_INT, m_CommandReturnVal);
 			int exp = toInt(cmdvec[2], s);
 			int act = toInt(cmdvec[1], s);
 			if(act == exp)
@@ -1606,7 +1607,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_SYMBOL_ASSIGNTO_INT:
 		{
-			registerUsedCommand(MGComponent_SYMBOL_ASSIGNTO_INT);
+			registerUsedCommand(MGComponent_SYMBOL_ASSIGNTO_INT, toInt(cmdvec[2], s));
 			symbolAssignTo(cmdvec[0], cmdvec[2], s);
 			return true;
 		}

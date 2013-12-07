@@ -46,7 +46,8 @@ function main_tc
   call test_if_2
   call test_if_3
   call test_if_4
-  call test_return_1
+  call test_return_1	// script function return value
+  call test_return_2	// console command return value
   call test_print_1
 
 
@@ -333,6 +334,31 @@ function bar
   b = 39
   return b
 end
+
+
+function test_return_2
+  map setsize 128 128 32 32
+  expect $cmd 0
+  create mo 1 -speed 4
+  expect $cmd 0
+  mo 0 getspeed
+  expect $cmd 128	// 4 x 32 = 128
+  delete all mo
+  expect getnumberofmo 0
+
+  var1=21
+  create mo 1
+  mo 0 getspeed
+  var1=$cmd
+  expect var1 64
+  if var1!=64
+    print "ERROR"
+  endif
+  expect var1 64
+  delete all mo
+  expect getnumberofmo 0
+end
+
 
 
 //*****************************
