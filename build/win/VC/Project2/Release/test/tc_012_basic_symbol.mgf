@@ -22,7 +22,20 @@ expect a 5
 expect b 5
 
 
+// Assignment, no spaces, comments
+var1=17
+var2=var1
+expect var2 17
 
+// Re-assignment, no spaces, comments
+a=3//4
+b=4//3
+expect a 3
+expect b 4
+a=5//a=7
+b=a//if a==1
+expect a 5	//still 5
+expect b 5	//still 5
 
 
 

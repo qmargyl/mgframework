@@ -46,6 +46,7 @@ function main_tc
   call test_if_2
   call test_if_3
   call test_if_4
+  call test_if_5
   call test_return_1	// script function return value
   call test_return_2	// console command return value
   call test_print_1
@@ -237,6 +238,35 @@ function test_if_4
     endif
   endif
   expect p2 77
+end
+
+
+function test_if_5
+  // Same as test_if_3 but with no spaces and some added comments...
+  p1=1
+  p2=2
+  p3=3
+  if p1==1
+    if p2==2
+      p3=17
+    endif//end if here
+    if p1!=2
+      p3=18
+    endif
+  endif
+  expect p3 18
+  p1=1//set to 1
+  p2=2//p2 = 1
+  p3=3
+  if p1<10
+    if p2>=2//another if
+      p3=17
+    endif
+    if p1>2
+      p3=18
+    endif
+  endif
+  expect p3 17
 end
 
 

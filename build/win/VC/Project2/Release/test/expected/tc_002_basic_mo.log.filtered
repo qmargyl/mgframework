@@ -1,0 +1,17 @@
+{15,18}
+{4,3}
+{4,3}
+{62,8}
+64
+
+mo <i> help - Displays help information for console commands implemented
+          in MGMovingObject. <i> is the ID of the MO.
+mo <i> getspeed - Returns the speed of the MO with ID <i>, in pixels per
+          second.
+mo <i> getdestination - Returns the destination of the MO with ID <i>.
+mo <i> getlocation - Returns the location of the MO with ID <i>.
+mo <i> getdistance - Returns the distance to the destination of the MO with ID <i>.
+{14,19}
+64
+Exiting application...
+Execution time: XXXXX

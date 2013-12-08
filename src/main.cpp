@@ -12,8 +12,10 @@ int main(int argc, char **argv)
 	bool loggingOn = false;
 	bool scriptFile = false;
 	bool logEval = false;
+	bool logCompare = false;
 	char scriptFileName[128] = "";
 	char logEvalFileName[128] = "";
+	char logCompareFileName[128] = "";
 
 	if(argc==1)
 	{
@@ -72,6 +74,21 @@ int main(int argc, char **argv)
 					instanceType = MGFSERVERINSTANCE;
 				}
 			}
+			else if(strcmp(argv[i], "-log_compare")==0)
+			{
+				if(i+1 == argc)
+				{
+					//No parameter after -log_eval
+					goto EXIT_MAIN_RIGHT_AWAY;
+				}
+				else
+				{
+					//Store argv[++i] as script file name..
+					strcpy(logCompareFileName, argv[++i]);
+					logCompare = true;
+					instanceType = MGFSERVERINSTANCE;
+				}
+			}
 			else
 			{
 				// Unknown parameter.
@@ -107,7 +124,14 @@ int main(int argc, char **argv)
 	if(logEval)
 	{
 		// In case of using the framework for log evaluation, don't init and run.
+		// Create filtered logs first, then run evaluation..
+		p2->logFilter(logEvalFileName);
 		p2->logEval(logEvalFileName);
+		if(logCompare)
+		{
+			// Compares logEvalFileName.filtered to logCompareFileName 
+			p2->logCompare(logEvalFileName, logCompareFileName);
+		}
 	}
 	else if(p2->windowPropertiesSet())
 	{

@@ -16,11 +16,9 @@ mkdir .\test\result
 echo Running test case .\test\tc_008_basic_script.mgf
 project2.exe -logging -script .\test\tc_008_basic_script.mgf	>	.\test\result\tc_008_basic_script.log
 
+:: Evaluate log files and save filtered log..
 
+project2.exe -log_eval .\test\result\tc_008_basic_script.log -log_compare .\test\expected\tc_008_basic_script.log.filtered
 
-
-:: Evaluate all log files..
-
-project2.exe -log_eval .\test\result\tc_008_basic_script.log
 
 pause

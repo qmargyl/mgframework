@@ -1,0 +1,145 @@
+
+mo <i> help - Displays help information for console commands implemented
+          in MGMovingObject. <i> is the ID of the MO.
+mo <i> getspeed - Returns the speed of the MO with ID <i>, in pixels per
+          second.
+mo <i> getdestination - Returns the destination of the MO with ID <i>.
+mo <i> getlocation - Returns the location of the MO with ID <i>.
+mo <i> getdistance - Returns the distance to the destination of the MO with ID <i>.
+
+mo <i> help - Displays help information for console commands implemented
+          in MGMovingObject. <i> is the ID of the MO.
+mo <i> getspeed - Returns the speed of the MO with ID <i>, in pixels per
+          second.
+mo <i> getdestination - Returns the destination of the MO with ID <i>.
+mo <i> getlocation - Returns the location of the MO with ID <i>.
+mo <i> getdistance - Returns the distance to the destination of the MO with ID <i>.
+
+mo <i> help - Displays help information for console commands implemented
+          in MGMovingObject. <i> is the ID of the MO.
+mo <i> getspeed - Returns the speed of the MO with ID <i>, in pixels per
+          second.
+mo <i> getdestination - Returns the destination of the MO with ID <i>.
+mo <i> getlocation - Returns the location of the MO with ID <i>.
+mo <i> getdistance - Returns the distance to the destination of the MO with ID <i>.
+
+mo <i> help - Displays help information for console commands implemented
+          in MGMovingObject. <i> is the ID of the MO.
+mo <i> getspeed - Returns the speed of the MO with ID <i>, in pixels per
+          second.
+mo <i> getdestination - Returns the destination of the MO with ID <i>.
+mo <i> getlocation - Returns the location of the MO with ID <i>.
+mo <i> getdistance - Returns the distance to the destination of the MO with ID <i>.
+{86,80}
+{86,80}
+64
+{35,24}
+{92,87}
+64
+64
+{35,24}
+64
+{15,18}
+{4,3}
+{4,3}
+MGMovingObject ID 29 History
+0	324: CalculatePath: 0,0 -> 0,107
+1	333: ChangeState: MOStateIdle -> MOStateMoving
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+Symbol Table
+-----------------------------------------------------------------------------
+
+map help - Displays help information for console commands implemented in the
+           map object.
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
+Symbol Table
+Help for PE console commands: 
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
+Symbol Table
+Command help
+[<object> [<object identifier>]] <command> [<parameter 1> ... <parameter n>]
+-----------------------------------------------------------------------------
+
+help -    Displays this command help information.
+exit -    Exists shell and resumes framework execution.
+minimap <on|off> - Turns mini map on/off.
+logging <on|off> - Turns logging on/off.
+setfps <f> - Sets desired FPS (frames per second) to integer value <f>.
+runframes <f> - Runs <f> game loops (frames) and presents some recorded data.
+          <f> is an integer.
+create <mo|pe> <n> - Creates <n> objects (and deletes any previously
+          existing ones). <n> is an integer. Only MGMovingObject (mo)
+          and MGPeriodicEvent are (pe) supported at this point.
+add <mo|pe> <n> - Adds <n> objects. <n> is an integer. Only MGMovingObject
+          (mo) and MGPeriodicEvent (pe) are supported at this point.
+open <terminalserver> - Opens the terminal server for framework commands 
+          over TCP/IP.
+close <terminalserver> - Closes the terminal server for framework commands 
+          over TCP/IP.
+-----------------------------------------------------------------------------
+
+map help - Displays help information for console commands implemented in the
+           map object.
+Testing print function
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_fw' : 0
+Symbol Table
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_fw' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_window' : 0
+Symbol Table
+{51,18}
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_fw' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_window' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_so' : 0
+Symbol Table
+Symbol Table
+'sym1' : 666
+Symbol Table
+Symbol Table
+'sym1' : 666
+'sym2' : 667
+Symbol Table
+Symbol Table
+'sym1' : 666
+'sym2' : 667
+'sym3' : 0
+Symbol Table
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_fw' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_window' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_so' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_sym' : 0
+Symbol Table
+Exiting console...
+Exiting application...
+Execution time: XXXX
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_fw' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_window' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_so' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_sym' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_evalandexit' : 0
+Symbol Table

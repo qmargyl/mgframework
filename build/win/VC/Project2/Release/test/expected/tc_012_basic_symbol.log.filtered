@@ -1,0 +1,85 @@
+Symbol Table
+'var1' : 17
+Symbol Table
+'var1' : 17
+'var2' : 17
+Symbol Table
+'var1' : 17
+'var2' : 17
+'var3' : 27
+Symbol Table
+'var1' : 17
+'var2' : 17
+'var3' : 27
+'var4' : 27
+Symbol Table
+'var1' : 17
+'var2' : 17
+'var3' : 27
+'var4' : 27
+'a' : 3
+Symbol Table
+'var1' : 17
+'var2' : 17
+'var3' : 27
+'var4' : 27
+'a' : 3
+'b' : 4
+Symbol Table
+'var1' : 17
+'var2' : 17
+'var3' : 27
+'var4' : 27
+'a' : 5
+'b' : 4
+Symbol Table
+'var1' : 17
+'var2' : 17
+'var3' : 27
+'var4' : 27
+'a' : 5
+'b' : 5
+Symbol Table
+'var1' : 17
+'var2' : 17
+'var3' : 27
+'var4' : 27
+'a' : 5
+'b' : 5
+Symbol Table
+'var1' : 17
+'var2' : 17
+'var3' : 27
+'var4' : 27
+'a' : 5
+'b' : 5
+Symbol Table
+'var1' : 17
+'var2' : 17
+'var3' : 27
+'var4' : 27
+'a' : 3
+'b' : 5
+Symbol Table
+'var1' : 17
+'var2' : 17
+'var3' : 27
+'var4' : 27
+'a' : 3
+'b' : 4
+Symbol Table
+'var1' : 17
+'var2' : 17
+'var3' : 27
+'var4' : 27
+'a' : 5
+'b' : 4
+Symbol Table
+'var1' : 17
+'var2' : 17
+'var3' : 27
+'var4' : 27
+'a' : 5
+'b' : 5
+Exiting application...
+Execution time: XXX

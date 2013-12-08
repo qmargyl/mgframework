@@ -547,12 +547,9 @@ void MGFramework::logEval(const char *logFileName)
 	else
 	{
 		std::cout << "Evaluating file: " << logFileName << " ... ";
-
 		char logLine[MGF_LOGLINE_MAXLENGTH] = "";
 		char *neof = NULL;
 		//MGFLOG_INFO(std::cout << "MGFramework::logEval starting to parse log file " << logFileName << std::endl;);
-
-
 
 		while(true)
 		{
@@ -612,6 +609,180 @@ void MGFramework::logEval(const char *logFileName)
 		}
 
 		//MGFLOG_INFO(std::cout << "MGFramework::logEval finished parsing log file " << logFileName << std::endl;);
+	}
+}
+
+
+void MGFramework::logFilter(const char *logFileName)
+{
+	FILE *logf = NULL;
+	FILE *filteredlf = NULL;
+	std::string filteredFN = std::string(logFileName) + std::string(".filtered");
+	
+	errno_t logError = fopen_s(&logf, logFileName, "rt");
+	if(logf == NULL)
+	{
+		MGFLOG_ERROR("MGFramework::logFilter failed to open log file " << logFileName << ", error(" << logError << ")");
+		return;
+	}
+	logError = fopen_s(&filteredlf, filteredFN.c_str(), "w");
+	if(filteredlf == NULL)
+	{
+		MGFLOG_ERROR("MGFramework::logFilter failed to open log file " << filteredFN.c_str() << ", error(" << logError << ")");
+		return;
+	}
+
+	std::cout << "Filtering file: " << logFileName << " ... ";
+	char logLine[MGF_LOGLINE_MAXLENGTH] = "";
+	char *neof = NULL;
+	//MGFLOG_INFO(std::cout << "MGFramework::logFilter starting to parse log file " << logFileName << std::endl;);
+
+	while(true)
+	{
+		// Read until new line or end of file, whichever happens first..
+		neof = fgets(logLine, MGF_LOGLINE_MAXLENGTH, logf);
+		if(neof == NULL)
+		{
+			break;
+		}
+		else
+		{
+			std::string line(logLine);
+			std::string infoSubstr(" INFO: ");
+			std::string warningSubstr(" WARNING: ");
+			std::string errorSubstr(" ERROR: ");
+			std::string execSubstr("Execution time");
+			std::string framesleepSubstr("sleep time");
+
+			std::size_t foundInfo = line.find(infoSubstr);
+			std::size_t foundWarning = line.find(warningSubstr);
+			std::size_t foundError = line.find(errorSubstr);
+			std::size_t foundExec = line.find(execSubstr);
+			std::size_t foundSleep = line.find(framesleepSubstr);
+
+			if (foundInfo != std::string::npos)
+			{
+				// Ignore all info logs?
+			}
+			else if (	foundWarning != std::string::npos ||
+						foundError != std::string::npos)
+			{
+				// filter away only some digits before writing to filtered log?
+				for(int i=0; i<strlen(logLine); ++i)
+				{
+					if(logLine[i]>='0' && logLine[i]<='9')
+					{
+						logLine[i] = 'X';
+					}
+				}
+				fputs(logLine, filteredlf);
+			}
+			else if (	foundExec != std::string::npos ||
+						foundSleep != std::string::npos)
+			{
+				// Filter out all digits for certain log lines..
+				for(int i=0; i<strlen(logLine); ++i)
+				{
+					if(logLine[i]>='0' && logLine[i]<='9')
+					{
+						logLine[i] = 'X';
+					}
+				}
+				fputs(logLine, filteredlf);
+			}
+			else
+			{
+				fputs(logLine, filteredlf);
+			}
+		}
+	}
+
+
+	if(logf != NULL)
+	{
+		fclose(logf);
+	}
+
+	if(filteredlf != NULL)
+	{
+		fclose(filteredlf);
+	}
+
+	std::cout << "DONE" << std::endl;
+}
+
+
+void MGFramework::logCompare(const char *logFileName1, const char *logFileName2)
+{
+	std::string filteredFN = std::string(logFileName1) + std::string(".filtered");
+	std::cout << "Comparing file: " << filteredFN.c_str() << " to " << logFileName2 << " ... ";
+
+	FILE *logf1 = NULL;
+	FILE *logf2 = NULL;
+	
+	errno_t logError = fopen_s(&logf1, filteredFN.c_str(), "rt");
+	if(logf1 == NULL)
+	{
+		MGFLOG_ERROR("MGFramework::logCompare failed to open log file " << filteredFN.c_str() << ", error(" << logError << ")");
+		return;
+	}
+	logError = fopen_s(&logf2, logFileName2, "rt");
+	if(logf2 == NULL)
+	{
+		MGFLOG_ERROR("MGFramework::logCompare failed to open log file " << logFileName2 << ", error(" << logError << ")");
+		return;
+	}
+
+	// ...
+
+	char logLine1[MGF_LOGLINE_MAXLENGTH] = "";
+	char logLine2[MGF_LOGLINE_MAXLENGTH] = "";
+	char *neof1 = NULL;
+	char *neof2 = NULL;
+	bool resultOk = true;
+	//MGFLOG_INFO(std::cout << "MGFramework::logFilter starting to parse log file " << logFileName << std::endl;);
+
+	while(true)
+	{
+		// Read until new line or end of file, whichever happens first..
+		neof1 = fgets(logLine1, MGF_LOGLINE_MAXLENGTH, logf1);
+		neof2 = fgets(logLine2, MGF_LOGLINE_MAXLENGTH, logf2);
+		if(neof1 == NULL && neof2 == NULL)
+		{
+			break;
+		}
+		else if(neof1 == NULL || neof2 == NULL)
+		{
+			resultOk = false;
+			break;
+		}
+		else
+		{
+			if(std::string(logLine1) != std::string(logLine2))
+			{
+				resultOk = false;
+				std::cout << "DIFF: " << logLine1 << " - " << logLine2 << std::endl;
+				break;
+			}
+		}
+	}
+
+	if(logf1 != NULL)
+	{
+		fclose(logf1);
+	}
+
+	if(logf2 != NULL)
+	{
+		fclose(logf2);
+	}
+	if(resultOk)
+	{
+		std::cout << "PASS" << std::endl;
+	}
+	else
+	{
+		std::cout << "FAIL" << std::endl;
 	}
 }
 

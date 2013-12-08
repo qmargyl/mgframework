@@ -1,0 +1,695 @@
+Symbol Table
+'global_var1' : 32
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'create_an_mo' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'s1' : 13
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'s1' : 13
+'s2' : 14
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'s1' : 13
+'s2' : 14
+'s3' : 13
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'s1' : 14
+'s2' : 14
+'s3' : 13
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'s1' : 14
+'s2' : 14
+'s3' : 13
+'nmo' : 666
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'s1' : 13
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'s1' : 13
+'s2' : 14
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'s1' : 13
+'s2' : 14
+'s3' : 13
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'s1' : 14
+'s2' : 14
+'s3' : 13
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'s1' : 14
+'s2' : 14
+'s3' : 13
+'nmo' : 666
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'cdv' : 32
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'cdv' : 17
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'test_calldepth_3' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'cdv' : 32
+'test_calldepth_2' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'var1' : 43
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 0
+Symbol Table
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'deepcalldepth_9' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'deepcalldepth_8' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'deepcalldepth_7' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'deepcalldepth_6' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'deepcalldepth_5' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'deepcalldepth_4' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'deepcalldepth_3' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'deepcalldepth_2' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 0
+'p2' : 1
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 0
+'p2' : 1
+'p3' : 1
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 0
+'p2' : 1
+'p3' : 1
+'p4' : 1
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 0
+'p2' : 1
+'p3' : 1
+'p4' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 3
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 17
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 3
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 17
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 18
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 18
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 18
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 3
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 17
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 32
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 81
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 77
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 3
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 17
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 18
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 18
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 18
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 3
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'p1' : 1
+'p2' : 2
+'p3' : 17
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'a' : 17
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'b' : 39
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'bar' : 39
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'a' : 17
+'foo' : 39
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'a' : 39
+'foo' : 39
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+'test_return_1' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+128
+Symbol Table
+'var1' : 21
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+64
+Symbol Table
+'var1' : 64
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+'test_return_1' : 0
+'test_return_2' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Testing printing function
+Symbol Table
+'v1' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Print line 2
+Print line 3
+Print line 4//
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+'test_return_1' : 0
+'test_return_2' : 0
+'test_print_1' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Exiting application...
+Execution time: XXX
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+'test_return_1' : 0
+'test_return_2' : 0
+'test_print_1' : 0
+'and_then_exit' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'main_tc' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9

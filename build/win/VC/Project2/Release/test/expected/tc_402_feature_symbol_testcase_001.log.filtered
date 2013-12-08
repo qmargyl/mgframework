@@ -1,0 +1,32 @@
+Symbol Table
+'a' : 1
+Symbol Table
+Symbol Table
+'a' : 1
+'b' : 2
+Symbol Table
+Symbol Table
+'a' : 1
+'b' : 2
+'c' : 3
+Symbol Table
+Symbol Table
+'a' : 4
+'b' : 2
+'c' : 3
+Symbol Table
+Symbol Table
+'a' : 4
+'b' : 5
+'c' : 3
+Symbol Table
+Symbol Table
+'a' : 4
+'b' : 5
+'c' : 6
+Symbol Table
+Symbol Table
+'testcase_001' : 0
+Symbol Table
+Exiting application...
+Execution time: XXX
