@@ -368,7 +368,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 		case MGComponent_MO_INT_GETLOCATION:
 		{
 			w->registerUsedCommand(MGComponent_MO_INT_GETLOCATION);
-			std::cout << "{" << getTileX() << "," << getTileY() << "}" << std::endl;
+			MGFLOG_INFO("{" << getTileX() << "," << getTileY() << "}");
 			return true;
 		}
 
@@ -391,7 +391,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 		{
 			// XXX: This is not really relevant anymore since paths are used now instead..
 			w->registerUsedCommand(MGComponent_MO_INT_GETDESTINATION);
-			std::cout << "{" << getDestTileX() << "," << getDestTileY() << "}" << std::endl;
+			MGFLOG_INFO("{" << getDestTileX() << "," << getDestTileY() << "}");
 			return true;
 		}
 

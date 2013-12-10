@@ -660,12 +660,13 @@ void MGFramework::logFilter(const char *logFileName)
 			std::size_t foundExec = line.find(execSubstr);
 			std::size_t foundSleep = line.find(framesleepSubstr);
 
-			if (foundInfo != std::string::npos)
+			if (foundInfo != std::string::npos ||
+				foundWarning != std::string::npos )
 			{
-				// Ignore all info logs?
+				// Ignore all info prints - result should not depend on logging settings
+				// Ignore all warnings - warnings are not errors and can be unpredictable
 			}
-			else if (	foundWarning != std::string::npos ||
-						foundError != std::string::npos)
+			else if (foundError != std::string::npos)
 			{
 				// filter away only some digits before writing to filtered log?
 				for(int i=0; i<strlen(logLine); ++i)
@@ -2749,7 +2750,6 @@ int runMGFrameworkSocketTerminal(void *fm)
 	MGFramework *mgf = (MGFramework *)fm;
 	int PORTNR = mgf->getPort();
 	mgf->logIfEnabled((std::string("Opening socket terminal... port ") + MGFramework::toString(mgf->getPort())).c_str());
-	//mgf->logIfEnabled((MGFramework::toString(mgf->getPort())).c_str());
 	
 	bool connectionOpen=true;
 	int nZerosInARow=0;
@@ -2788,7 +2788,7 @@ int runMGFrameworkSocketTerminal(void *fm)
 		}
 
 		// the server is now started and ready to accept a command..
-		mgf->logIfEnabled("Waiting for terminal command...");
+		//mgf->logIfEnabled("Waiting for terminal command...");
 
 		if ( (fd_new=accept(fd, NULL, NULL)) == INVALID_SOCKET)
 		{

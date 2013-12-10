@@ -16,7 +16,6 @@ Symbol Table
 Symbol Table
 'setdest_plus_10_frames' : 0
 Symbol Table
-[0004.766] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
 Symbol Table
 'run_10_frames' : 0
 Symbol Table
@@ -35,7 +34,6 @@ Symbol Table
 Symbol Table
 'setdest_plus_10_frames' : 0
 Symbol Table
-[0009.769] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:75) WARNING: MGMovingObject::update: MO stuck for one second
 Symbol Table
 'run_10_frames' : 0
 Symbol Table
