@@ -35,8 +35,8 @@ mo <i> getdistance - Returns the distance to the destination of the MO with ID <
 64
 64
 MGMovingObject ID 29 History
-0	317: CalculatePath: 0,0 -> 65,99
-1	333: ChangeState: MOStateIdle -> MOStateMoving
+0	0: CalculatePath: 0,0 -> 112,62
+1	0: ChangeState: MOStateIdle -> MOStateMoving
 Symbol Table
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
 Symbol Table
@@ -92,7 +92,7 @@ Symbol Table
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_fw' : 0
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_window' : 0
 Symbol Table
-{38,30}
+{27,56}
 Symbol Table
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0

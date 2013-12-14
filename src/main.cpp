@@ -13,6 +13,7 @@ int main(int argc, char **argv)
 	bool scriptFile = false;
 	bool logEval = false;
 	bool logCompare = false;
+	bool noRandom = false;
 	char scriptFileName[128] = "";
 	char logEvalFileName[128] = "";
 	char logCompareFileName[128] = "";
@@ -89,6 +90,10 @@ int main(int argc, char **argv)
 					instanceType = MGFSERVERINSTANCE;
 				}
 			}
+			else if(strcmp(argv[i], "-no_random")==0)
+			{
+				noRandom = true;
+			}
 			else
 			{
 				// Unknown parameter.
@@ -126,6 +131,7 @@ int main(int argc, char **argv)
 		// In case of using the framework for log evaluation, don't init and run.
 		// Create filtered logs first, then run evaluation..
 		p2->logFilter(logEvalFileName);
+		// XXX: Should only eval for positive tests..
 		p2->logEval(logEvalFileName);
 		if(logCompare)
 		{
@@ -140,6 +146,10 @@ int main(int argc, char **argv)
 		{
 			if(scriptFile)
 			{
+				if(noRandom)
+				{
+					p2->randomize(666);
+				}
 				p2->run(scriptFileName);
 			}
 			else
@@ -169,4 +179,4 @@ EXIT_MAIN_RIGHT_AWAY:
 	}
 		
 	return 0;
-};
+}

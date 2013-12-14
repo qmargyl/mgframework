@@ -605,6 +605,6 @@ void MGMovingObject::addToHistory(const char *str)
 {
 	if(m_History)
 	{
-		m_History->push_back(MGComponent::toString((int)MGF_GetExecTimeMS()) + string(": ") + string(str));
+		m_History->push_back(MGComponent::toString(0/*(int)MGF_GetExecTimeMS()*/) + string(": ") + string(str));
 	}
 }

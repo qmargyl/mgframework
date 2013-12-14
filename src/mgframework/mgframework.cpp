@@ -669,7 +669,7 @@ void MGFramework::logFilter(const char *logFileName)
 			else if (foundError != std::string::npos)
 			{
 				// filter away only some digits before writing to filtered log?
-				for(int i=0; i<strlen(logLine); ++i)
+				for(unsigned int i=0; i<strlen(logLine); ++i)
 				{
 					if(logLine[i]>='0' && logLine[i]<='9')
 					{
@@ -682,7 +682,7 @@ void MGFramework::logFilter(const char *logFileName)
 						foundSleep != std::string::npos)
 			{
 				// Filter out all digits for certain log lines..
-				for(int i=0; i<strlen(logLine); ++i)
+				for(unsigned int i=0; i<strlen(logLine); ++i)
 				{
 					if(logLine[i]>='0' && logLine[i]<='9')
 					{

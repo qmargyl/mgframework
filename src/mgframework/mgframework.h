@@ -23,7 +23,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.37.1"
+#define MGFRAMEWORKVERSION "1.0.37.2"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -371,6 +371,9 @@ class MGFramework :public MGComponent
 		void addConsoleCommandToQueue(const char *c);
 		int getPort(){ return m_Port; }
 		void setPort(int p){ m_Port = p; }
+
+		//
+		void randomize(int seed){ std::srand(seed); }
 
 		// Program version
 		const char *getMGFrameworkVersion(){return MGFRAMEWORKVERSION;}

@@ -30,21 +30,13 @@ mo <i> getspeed - Returns the speed of the MO with ID <i>, in pixels per
 mo <i> getdestination - Returns the destination of the MO with ID <i>.
 mo <i> getlocation - Returns the location of the MO with ID <i>.
 mo <i> getdistance - Returns the distance to the destination of the MO with ID <i>.
-{123,70}
-{123,70}
-64
-{85,8}
-{63,87}
 64
 64
-{85,8}
 64
-{15,18}
-{4,3}
-{4,3}
+64
 MGMovingObject ID 23 History
-0	713: CalculatePath: 0,0 -> 68,16
-1	773: ChangeState: MOStateIdle -> MOStateMoving
+0	0: CalculatePath: 0,0 -> 112,62
+1	0: ChangeState: MOStateIdle -> MOStateMoving
 Symbol Table
 'testcoverage_mo' : 0
 Symbol Table
@@ -100,7 +92,7 @@ Symbol Table
 'testcoverage_map' : 0
 'testcoverage_pe' : 0
 Symbol Table
-{18,5}
+{27,56}
 Symbol Table
 'testcoverage_mo' : 0
 'testcoverage_fw' : 0
