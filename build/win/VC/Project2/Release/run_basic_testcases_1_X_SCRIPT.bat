@@ -13,7 +13,7 @@ mkdir .\test\result
 
 :: Run all test cases and save log files..
 
-echo Running test case .\test\tc_008_basic_script.mgf
+echo Test case .\test\tc_008_basic_script.mgf
 project2.exe -logging -script .\test\tc_008_basic_script.mgf	>	.\test\result\tc_008_basic_script.log
 
 :: Evaluate log files and save filtered log..

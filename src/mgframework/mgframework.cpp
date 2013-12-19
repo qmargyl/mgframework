@@ -546,7 +546,7 @@ void MGFramework::logEval(const char *logFileName)
 	}
 	else
 	{
-		std::cout << "Evaluating file: " << logFileName << " ... ";
+		std::cout << "Evaluating " << logFileName << " ... <b>";
 		char logLine[MGF_LOGLINE_MAXLENGTH] = "";
 		char *neof = NULL;
 		//MGFLOG_INFO(std::cout << "MGFramework::logEval starting to parse log file " << logFileName << std::endl;);
@@ -587,28 +587,26 @@ void MGFramework::logEval(const char *logFileName)
 
 		if(nErrors != 0)
 		{
-			std::cout << "FAIL (" << nErrors << " errors, " << nWarnings << " warnings)";
+			std::cout << "FAIL</b> (" << nErrors << " errors, " << nWarnings << " warnings)";
 		}
 		else if(nExitApp == 0)
 		{
-			std::cout << "FAIL (did not finish)";
+			std::cout << "FAIL</b> (did not finish)";
 		}
 		else
 		{
-			std::cout << "PASS";
+			std::cout << "PASS</b>";
 			if(nWarnings>0)
 			{
 				std::cout << " (" << nWarnings << " warnings)";
 			}
 		}
-		std::cout << ", " << execTimeMS.c_str() << " ms" << std::endl;
+		std::cout << ", " << execTimeMS.c_str() << " ms<br>" << std::endl;
 
 		if(lf != NULL)
 		{
 			fclose(lf);
 		}
-
-		//MGFLOG_INFO(std::cout << "MGFramework::logEval finished parsing log file " << logFileName << std::endl;);
 	}
 }
 
@@ -632,10 +630,9 @@ void MGFramework::logFilter(const char *logFileName)
 		return;
 	}
 
-	std::cout << "Filtering file: " << logFileName << " ... ";
+	std::cout << "Filtering " << logFileName << " ... <b>";
 	char logLine[MGF_LOGLINE_MAXLENGTH] = "";
 	char *neof = NULL;
-	//MGFLOG_INFO(std::cout << "MGFramework::logFilter starting to parse log file " << logFileName << std::endl;);
 
 	while(true)
 	{
@@ -709,14 +706,15 @@ void MGFramework::logFilter(const char *logFileName)
 		fclose(filteredlf);
 	}
 
-	std::cout << "DONE" << std::endl;
+	std::cout << "DONE</b><br>" << std::endl;
 }
 
 
 void MGFramework::logCompare(const char *logFileName1, const char *logFileName2)
 {
 	std::string filteredFN = std::string(logFileName1) + std::string(".filtered");
-	std::cout << "Comparing file: " << filteredFN.c_str() << " to " << logFileName2 << " ... ";
+	//std::cout << "Comparing file: " << filteredFN.c_str() << " to " << logFileName2 << " ... ";
+	std::cout << "Expected " << filteredFN.c_str() << " ... <b>";
 
 	FILE *logf1 = NULL;
 	FILE *logf2 = NULL;
@@ -741,7 +739,6 @@ void MGFramework::logCompare(const char *logFileName1, const char *logFileName2)
 	char *neof1 = NULL;
 	char *neof2 = NULL;
 	bool resultOk = true;
-	//MGFLOG_INFO(std::cout << "MGFramework::logFilter starting to parse log file " << logFileName << std::endl;);
 
 	while(true)
 	{
@@ -779,11 +776,11 @@ void MGFramework::logCompare(const char *logFileName1, const char *logFileName2)
 	}
 	if(resultOk)
 	{
-		std::cout << "PASS" << std::endl;
+		std::cout << "PASS</b><br>" << std::endl;
 	}
 	else
 	{
-		std::cout << "FAIL" << std::endl;
+		std::cout << "FAIL</b><br>" << std::endl;
 	}
 }
 
