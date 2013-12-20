@@ -451,10 +451,11 @@ int MGFramework::parse(const char *sFileName)
 					else if(skipToEndIf == 0 && okMGFrameworkSyntax(v_scriptLine))
 					{
 						// function call..
-						//MGFLOG_INFO("Tokens: " << v_scriptLine.size());
+						MGFLOG_INFO("Tokens: " << v_scriptLine.size());
 
-						if(v_scriptLine.size()==2 && v_scriptLine[0]=="call")
+						if(v_scriptLine.size() > 1 && v_scriptLine[0]=="call")
 						{
+							// call filename:func -param paramvalue ... 
 							std::size_t fColon = v_scriptLine[1].find(string(":"));
 							if (fColon!=std::string::npos)
 							{

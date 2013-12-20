@@ -78,6 +78,7 @@ std::vector<std::string> MGComponent::symbols(char *str)
 	char c[2] = {0, 0};
 	char s[3] = {0, 0, 0};
 	bool insideString = false;
+	bool lineSupportingParameters = false;
 
 	for(unsigned int i = 0; i < strlen(str); ++i)
 	{
@@ -100,6 +101,15 @@ std::vector<std::string> MGComponent::symbols(char *str)
 		{
 			if(sym!=std::string(""))
 			{
+				if( splitLine.empty() && 
+					( sym == std::string("call") || 
+					  sym == std::string("create") || 
+					  sym == std::string("add") || 
+					  sym == std::string("pe") || 
+					  sym == std::string("delete")))
+				{
+					lineSupportingParameters = true;
+				}
 				splitLine.push_back(sym);
 				sym=std::string("");
 			}
@@ -109,6 +119,15 @@ std::vector<std::string> MGComponent::symbols(char *str)
 		{
 			if(sym!=std::string(""))
 			{
+				if( splitLine.empty() && 
+					( sym == std::string("call") || 
+					  sym == std::string("create") || 
+					  sym == std::string("add") || 
+					  sym == std::string("pe") || 
+					  sym == std::string("delete")))
+				{
+					lineSupportingParameters = true;
+				}
 				splitLine.push_back(sym);
 				sym=std::string("");
 			}
@@ -125,9 +144,11 @@ std::vector<std::string> MGComponent::symbols(char *str)
 			splitLine.push_back(std::string(s));
 			i++;
 		}
-		else if(!insideString && (str[i]=='=' || str[i]=='(' || str[i]==')' || str[i]=='+' || /*str[i]=='-' ||*/ 
-				str[i]=='*' || str[i]=='/' || str[i]=='|' || str[i]=='&' || str[i]=='<' || 
-				str[i]=='>'))
+		else if(!insideString && 
+				!lineSupportingParameters &&
+				(str[i]=='=' || str[i]=='(' || str[i]==')' || str[i]=='+' || str[i]=='-' || 
+				 str[i]=='*' || str[i]=='/' || str[i]=='|' || str[i]=='&' || str[i]=='<' || 
+				 str[i]=='>'))
 		{
 			if(sym!=std::string(""))
 			{
@@ -149,6 +170,15 @@ std::vector<std::string> MGComponent::symbols(char *str)
 	}
 	if(sym!=std::string(""))
 	{
+		if( splitLine.empty() && 
+			( sym == std::string("call") || 
+			  sym == std::string("create") || 
+			  sym == std::string("add") || 
+			  sym == std::string("pe") || 
+			  sym == std::string("delete")))
+		{
+			lineSupportingParameters = true;
+		}
 		splitLine.push_back(sym);
 	}
 

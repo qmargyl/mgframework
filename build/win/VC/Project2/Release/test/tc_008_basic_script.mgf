@@ -50,6 +50,7 @@ function main_tc
   call test_return_1	// script function return value
   call test_return_2	// console command return value
   call test_print_1
+  // !Not yet supported functionality! // call test_funcparam_1 // function parameters
 
 
   // Exit when done...
@@ -405,6 +406,27 @@ function test_print_1
   print "Print line 3"//ERROR"
   print "Print line 4//"
 end
+
+
+
+
+//*****************************
+// Test function parameters
+//*****************************
+function test_funcparam_1
+  fp1=12
+  fp2=13
+  call funcpar1 -fp1 45 -fp2 46
+  expect fp1 12
+  expect fp2 13
+end
+
+function funcpar1
+  expect fp1 45
+  expect fp2 46
+end
+
+
 
 
 
