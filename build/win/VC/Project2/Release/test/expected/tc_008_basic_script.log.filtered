@@ -8,11 +8,15 @@ Symbol Table
 'global_var2' : 33
 'deep' : 0
 Symbol Table
+Symbol Table
+Symbol Table
 'create_an_mo' : 0
 Symbol Table
 'global_var1' : 32
 'global_var2' : 33
 'deep' : 0
+Symbol Table
+'create_an_mo' : 0
 Symbol Table
 'create_an_mo' : 0
 'create_another_mo' : 0
@@ -20,6 +24,9 @@ Symbol Table
 'global_var1' : 32
 'global_var2' : 33
 'deep' : 0
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
 Symbol Table
 's1' : 13
 Symbol Table
@@ -66,6 +73,10 @@ Symbol Table
 'global_var1' : 32
 'global_var2' : 33
 'deep' : 0
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
 Symbol Table
 's1' : 13
 Symbol Table
@@ -114,11 +125,19 @@ Symbol Table
 'global_var2' : 33
 'deep' : 0
 Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+Symbol Table
 'cdv' : 32
 Symbol Table
 'global_var1' : 32
 'global_var2' : 33
 'deep' : 0
+Symbol Table
+'cdv' : 32
+Symbol Table
 Symbol Table
 'cdv' : 17
 Symbol Table
@@ -149,6 +168,12 @@ Symbol Table
 'global_var2' : 33
 'deep' : 0
 Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+Symbol Table
 'var1' : 43
 Symbol Table
 'global_var1' : 32
@@ -165,6 +190,21 @@ Symbol Table
 'global_var1' : 32
 'global_var2' : 33
 'deep' : 0
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+Symbol Table
+Symbol Table
+Symbol Table
+Symbol Table
+Symbol Table
+Symbol Table
+Symbol Table
+Symbol Table
 Symbol Table
 Symbol Table
 'global_var1' : 32
@@ -231,6 +271,14 @@ Symbol Table
 'global_var2' : 33
 'deep' : 9
 Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+Symbol Table
 'p1' : 1
 Symbol Table
 'global_var1' : 32
@@ -289,6 +337,15 @@ Symbol Table
 'global_var2' : 33
 'deep' : 9
 Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+Symbol Table
 'p1' : 1
 Symbol Table
 'global_var1' : 32
@@ -331,6 +388,16 @@ Symbol Table
 'global_var1' : 32
 'global_var2' : 33
 'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
 Symbol Table
 'p1' : 1
 Symbol Table
@@ -415,6 +482,17 @@ Symbol Table
 'global_var1' : 32
 'global_var2' : 33
 'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
 Symbol Table
 'p1' : 1
 Symbol Table
@@ -466,6 +544,18 @@ Symbol Table
 'global_var2' : 33
 'deep' : 9
 Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+Symbol Table
 'p1' : 1
 Symbol Table
 'global_var1' : 32
@@ -552,11 +642,27 @@ Symbol Table
 'global_var2' : 33
 'deep' : 9
 Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+Symbol Table
 'a' : 17
 Symbol Table
 'global_var1' : 32
 'global_var2' : 33
 'deep' : 9
+Symbol Table
+'a' : 17
+Symbol Table
 Symbol Table
 'b' : 39
 Symbol Table
@@ -601,6 +707,20 @@ Symbol Table
 'global_var1' : 32
 'global_var2' : 33
 'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+'test_return_1' : 0
 128
 Symbol Table
 'var1' : 21
@@ -634,6 +754,21 @@ Symbol Table
 'global_var1' : 32
 'global_var2' : 33
 'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+'test_return_1' : 0
+'test_return_2' : 0
 Testing printing function
 Symbol Table
 'v1' : 0
@@ -664,6 +799,159 @@ Symbol Table
 'global_var1' : 32
 'global_var2' : 33
 'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+'test_return_1' : 0
+'test_return_2' : 0
+'test_print_1' : 0
+Symbol Table
+'fp1' : 12
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'fp1' : 12
+'fp2' : 13
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'fp1' : 12
+'fp2' : 13
+Symbol Table
+'fp1' : 12
+'fp2' : 13
+'funcpar1' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+'test_return_1' : 0
+'test_return_2' : 0
+'test_print_1' : 0
+'test_funcparam_1' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+'test_return_1' : 0
+'test_return_2' : 0
+'test_print_1' : 0
+'test_funcparam_1' : 0
+Symbol Table
+'fp1' : 17
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'fp1' : 17
+'fp2' : 18
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'fp1' : 17
+'fp2' : 18
+Symbol Table
+'fp1' : 88
+'fp2' : 99
+Symbol Table
+'fp1' : 88
+'fp2' : 99
+'funcpar3' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'fp1' : 17
+'fp2' : 18
+'funcpar2' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+'test_return_1' : 0
+'test_return_2' : 0
+'test_print_1' : 0
+'test_funcparam_1' : 0
+'test_funcparam_2' : 0
+Symbol Table
+'global_var1' : 32
+'global_var2' : 33
+'deep' : 9
+Symbol Table
+'create_an_mo' : 0
+'create_another_mo' : 0
+'test_symbols_1' : 0
+'test_symbols_2' : 0
+'test_calldepth_1' : 0
+'test_comments_1' : 0
+'deepcalldepth_1' : 0
+'test_if_1' : 0
+'test_if_2' : 0
+'test_if_3' : 0
+'test_if_4' : 0
+'test_if_5' : 0
+'test_return_1' : 0
+'test_return_2' : 0
+'test_print_1' : 0
+'test_funcparam_1' : 0
+'test_funcparam_2' : 0
 Exiting application...
 Execution time: XXX
 Symbol Table
@@ -682,6 +970,8 @@ Symbol Table
 'test_return_1' : 0
 'test_return_2' : 0
 'test_print_1' : 0
+'test_funcparam_1' : 0
+'test_funcparam_2' : 0
 'and_then_exit' : 0
 Symbol Table
 'global_var1' : 32

@@ -1,43 +1,44 @@
-MGMovingObject ID 6 History
-0	1422: CalculatePath: 61,73 -> 281,442
+Symbol Table
 MGMovingObject ID 7 History
-0	1422: CalculatePath: 448,194 -> 230,113
+0	0: CalculatePath: 413,234 -> 157,179
 MGMovingObject ID 8 History
-0	1422: CalculatePath: 223,6 -> 363,333
+0	0: CalculatePath: 142,102 -> 292,56
 MGMovingObject ID 9 History
-0	1422: CalculatePath: 370,359 -> 340,218
+0	0: CalculatePath: 149,159 -> 159,122
 MGMovingObject ID 10 History
-0	1422: CalculatePath: 445,317 -> 284,307
+0	0: CalculatePath: 223,282 -> 230,134
 MGMovingObject ID 11 History
-0	1422: CalculatePath: 396,220 -> 273,203
+0	0: CalculatePath: 189,49 -> 72,138
 MGMovingObject ID 12 History
-0	1422: CalculatePath: 331,26 -> 390,408
+0	0: CalculatePath: 252,368 -> 123,323
 MGMovingObject ID 13 History
-0	1422: CalculatePath: 170,39 -> 364,143
+0	0: CalculatePath: 34,186 -> 27,261
 MGMovingObject ID 14 History
-0	1422: CalculatePath: 395,170 -> 283,62
+0	0: CalculatePath: 99,403 -> 121,113
 MGMovingObject ID 15 History
-0	1422: CalculatePath: 388,421 -> 80,439
+0	0: CalculatePath: 368,34 -> 271,12
 MGMovingObject ID 16 History
-0	1422: CalculatePath: 414,307 -> 108,266
+0	0: CalculatePath: 390,106 -> 198,373
 MGMovingObject ID 17 History
-0	1422: CalculatePath: 178,103 -> 394,424
+0	0: CalculatePath: 376,26 -> 195,3
 MGMovingObject ID 18 History
-0	1422: CalculatePath: 53,16 -> 62,242
+0	0: CalculatePath: 290,104 -> 391,106
 MGMovingObject ID 19 History
-0	1422: CalculatePath: 399,435 -> 430,333
+0	0: CalculatePath: 242,339 -> 212,198
 MGMovingObject ID 20 History
-0	1422: CalculatePath: 436,95 -> 394,353
+0	0: CalculatePath: 330,384 -> 288,325
 MGMovingObject ID 21 History
-0	1422: CalculatePath: 181,282 -> 319,356
+0	0: CalculatePath: 84,112 -> 201,157
 MGMovingObject ID 22 History
-0	1422: CalculatePath: 134,445 -> 181,369
+0	0: CalculatePath: 427,389 -> 22,297
 MGMovingObject ID 23 History
-0	1422: CalculatePath: 96,291 -> 131,320
+0	0: CalculatePath: 164,396 -> 350,261
 MGMovingObject ID 24 History
-0	1422: CalculatePath: 19,197 -> 318,328
+0	0: CalculatePath: 310,65 -> 442,92
 MGMovingObject ID 25 History
-0	1422: CalculatePath: 379,59 -> 332,378
+0	0: CalculatePath: 284,398 -> 17,316
+MGMovingObject ID 26 History
+0	0: CalculatePath: 256,126 -> 71,83
 Symbol Table
 'testcase_mo' : 0
 Symbol Table

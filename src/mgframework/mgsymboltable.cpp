@@ -60,6 +60,11 @@ void MGSymbolTable::delSymbol(const std::string &s)
 
 }
 
+void MGSymbolTable::clear()
+{
+	table.clear();
+}
+
 void MGSymbolTable::printTable()
 {
 	std::cout << "Symbol Table" << std::endl;

@@ -1,4 +1,5 @@
 Symbol Table
+Symbol Table
 'x1' : 122
 Symbol Table
 Symbol Table
@@ -248,6 +249,72 @@ Symbol Table
 'x10' : 112
 'y10' : 107
 Symbol Table
+Symbol Table
+'x1' : 122
+'y1' : 119
+'x2' : 4
+'y2' : 55
+'x3' : 70
+'y3' : 13
+'x4' : 125
+'y4' : 67
+'x5' : 106
+'y5' : 66
+'x6' : 85
+'y6' : 50
+'x7' : 82
+'y7' : 99
+'x8' : 67
+'y8' : 108
+'x9' : 30
+'y9' : 18
+'x10' : 112
+'y10' : 107
+Symbol Table
+'x1' : 122
+'y1' : 119
+'x2' : 4
+'y2' : 55
+'x3' : 70
+'y3' : 13
+'x4' : 125
+'y4' : 67
+'x5' : 106
+'y5' : 66
+'x6' : 85
+'y6' : 50
+'x7' : 82
+'y7' : 99
+'x8' : 67
+'y8' : 108
+'x9' : 30
+'y9' : 18
+'x10' : 112
+'y10' : 107
+'runframes_400' : 0
+Symbol Table
+Symbol Table
+'x1' : 122
+'y1' : 119
+'x2' : 4
+'y2' : 55
+'x3' : 70
+'y3' : 13
+'x4' : 125
+'y4' : 67
+'x5' : 106
+'y5' : 66
+'x6' : 85
+'y6' : 50
+'x7' : 82
+'y7' : 99
+'x8' : 67
+'y8' : 108
+'x9' : 30
+'y9' : 18
+'x10' : 112
+'y10' : 107
+'runframes_400' : 0
 Symbol Table
 'x1' : 122
 'y1' : 119
@@ -294,7 +361,6 @@ Symbol Table
 'y10' : 107
 'runframes_400' : 0
 Symbol Table
-Symbol Table
 'x1' : 122
 'y1' : 119
 'x2' : 4
@@ -339,6 +405,31 @@ Symbol Table
 'x10' : 112
 'y10' : 107
 'runframes_400' : 0
+Symbol Table
+'x1' : 122
+'y1' : 119
+'x2' : 4
+'y2' : 55
+'x3' : 70
+'y3' : 13
+'x4' : 125
+'y4' : 67
+'x5' : 106
+'y5' : 66
+'x6' : 85
+'y6' : 50
+'x7' : 82
+'y7' : 99
+'x8' : 67
+'y8' : 108
+'x9' : 30
+'y9' : 18
+'x10' : 112
+'y10' : 107
+'runframes_400' : 0
+Symbol Table
+Symbol Table
+'testcase_1' : 0
 Symbol Table
 Symbol Table
 'testcase_1' : 0

@@ -1,3 +1,4 @@
+Symbol Table
 
 mo <i> help - Displays help information for console commands implemented
           in MGMovingObject. <i> is the ID of the MO.
@@ -34,12 +35,14 @@ mo <i> getdistance - Returns the distance to the destination of the MO with ID <
 64
 64
 64
-MGMovingObject ID 29 History
+MGMovingObject ID 30 History
 0	0: CalculatePath: 0,0 -> 112,62
 1	0: ChangeState: MOStateIdle -> MOStateMoving
 Symbol Table
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
 Symbol Table
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
 -----------------------------------------------------------------------------
 
 map help - Displays help information for console commands implemented in the
@@ -48,12 +51,19 @@ Symbol Table
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
 Symbol Table
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
 Help for PE console commands: 
 Symbol Table
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
 Symbol Table
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
 Command help
 [<object> [<object identifier>]] <command> [<parameter 1> ... <parameter n>]
 -----------------------------------------------------------------------------
@@ -90,8 +100,19 @@ Symbol Table
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_fw' : 0
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_fw' : 0
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_window' : 0
 Symbol Table
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_fw' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_window' : 0
 {27,56}
 Symbol Table
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
@@ -101,6 +122,13 @@ Symbol Table
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_window' : 0
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_so' : 0
 Symbol Table
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_fw' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_window' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_so' : 0
 Symbol Table
 'sym1' : 666
 Symbol Table
@@ -122,6 +150,14 @@ Symbol Table
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_so' : 0
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_sym' : 0
 Symbol Table
+Symbol Table
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_fw' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_window' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_so' : 0
+'.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_sym' : 0
 Exiting console...
 Exiting application...
 Execution time: XXXX

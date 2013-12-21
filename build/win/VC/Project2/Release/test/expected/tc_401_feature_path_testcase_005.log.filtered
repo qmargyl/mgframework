@@ -1,8 +1,5 @@
 Symbol Table
-'runframes_20' : 0
 Symbol Table
-Symbol Table
-'runframes_20' : 0
 Symbol Table
 Symbol Table
 'runframes_20' : 0
@@ -10,8 +7,25 @@ Symbol Table
 Symbol Table
 'runframes_20' : 0
 Symbol Table
+'runframes_20' : 0
+Symbol Table
 Symbol Table
 'runframes_20' : 0
+Symbol Table
+'runframes_20' : 0
+Symbol Table
+Symbol Table
+'runframes_20' : 0
+Symbol Table
+'runframes_20' : 0
+Symbol Table
+Symbol Table
+'runframes_20' : 0
+Symbol Table
+'runframes_20' : 0
+Symbol Table
+Symbol Table
+'runframes_100' : 0
 Symbol Table
 Symbol Table
 'runframes_100' : 0
@@ -22,14 +36,25 @@ Symbol Table
 Symbol Table
 'runframes_20' : 0
 Symbol Table
+'runframes_20' : 0
+Symbol Table
+Symbol Table
+'runframes_20' : 0
 Symbol Table
 'runframes_20' : 0
 Symbol Table
 Symbol Table
 'runframes_20' : 0
 Symbol Table
+'runframes_20' : 0
+Symbol Table
 Symbol Table
 'runframes_20' : 0
+Symbol Table
+'runframes_20' : 0
+Symbol Table
+Symbol Table
+'runframes_100' : 0
 Symbol Table
 Symbol Table
 'runframes_100' : 0
@@ -40,19 +65,27 @@ Symbol Table
 Symbol Table
 'runframes_20' : 0
 Symbol Table
+'runframes_20' : 0
+Symbol Table
+Symbol Table
+'runframes_20' : 0
 Symbol Table
 'runframes_20' : 0
 Symbol Table
 Symbol Table
 'runframes_20' : 0
 Symbol Table
+'runframes_20' : 0
+Symbol Table
+Symbol Table
+'runframes_20' : 0
 Symbol Table
 'runframes_20' : 0
 Symbol Table
 Symbol Table
 'runframes_100' : 0
 Symbol Table
-[XXXX.XXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:XXX (ID:XX) ERROR: Expected location not confirmed: (X, X), MO at (X, X)
+[XXXXX.XX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:XXX (ID:XX) ERROR: Expected location not confirmed: (X, X), MO at (X, X)
 Symbol Table
 'testcase_005' : 0
 Symbol Table

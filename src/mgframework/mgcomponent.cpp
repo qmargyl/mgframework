@@ -170,6 +170,7 @@ std::vector<std::string> MGComponent::symbols(char *str)
 	}
 	if(sym!=std::string(""))
 	{
+		// XXX: Is this really necessary?
 		if( splitLine.empty() && 
 			( sym == std::string("call") || 
 			  sym == std::string("create") || 

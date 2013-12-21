@@ -33,6 +33,7 @@ public:
 	void setValue(const std::string &s, int v);
 	int getValue(const std::string &s);
 	void delSymbol(const std::string &s);
+	void clear();
 	void printTable();
 
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);

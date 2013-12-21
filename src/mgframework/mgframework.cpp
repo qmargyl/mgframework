@@ -18,6 +18,7 @@ MGFramework::MGFramework():
 	m_PE(NULL),
 	m_SO(NULL),
 	m_SymbolTable(NULL),
+	m_SymbolTableTransfer(NULL),
 	m_FrameTime(16),
 	m_ActualFrameTime(16),
 	m_FrameCountdownEnabled(false),
@@ -57,6 +58,7 @@ MGFramework::MGFramework():
 	m_UsedCommands[MGComponent_EXIT_APPLICATION] = true;
 
 	m_SymbolTable = new MGSymbolTable();
+	m_SymbolTableTransfer = new MGSymbolTable();
 }
 
 MGFramework::~MGFramework()
@@ -69,6 +71,8 @@ MGFramework::~MGFramework()
 	m_SO = NULL;
 	if(m_SymbolTable) delete m_SymbolTable;
 	m_SymbolTable = NULL;
+	if(m_SymbolTableTransfer) delete m_SymbolTableTransfer;
+	m_SymbolTableTransfer = NULL;
 }
 
 
@@ -268,6 +272,12 @@ int MGFramework::parse(const char *sFileName)
 	int insideElse = 0;
 	MGSymbolTable *symbols = new MGSymbolTable();
 
+	// Copy all symbols in transfer table to local symbol table (symbols), then delete them in the transfer table.
+	for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it=m_SymbolTableTransfer->table.begin(); it != m_SymbolTableTransfer->table.end(); ++it)
+	{
+		symbols->addSymbol((*it).symbol, (*it).value);
+	}
+	m_SymbolTableTransfer->clear();
 
 	strcpy(scriptFileName,sFileName);
 
@@ -451,15 +461,56 @@ int MGFramework::parse(const char *sFileName)
 					else if(skipToEndIf == 0 && okMGFrameworkSyntax(v_scriptLine))
 					{
 						// function call..
-						MGFLOG_INFO("Tokens: " << v_scriptLine.size());
+						//MGFLOG_INFO("Tokens: " << v_scriptLine.size());
 
 						if(v_scriptLine.size() > 1 && v_scriptLine[0]=="call")
 						{
 							// call filename:func -param paramvalue ... 
 							std::size_t fColon = v_scriptLine[1].find(string(":"));
+
+							// Loop through any parameters and save them to symbols?
+
+							for(unsigned int i = 2; i < v_scriptLine.size(); ++i)
+							{
+								if(i+1 >= v_scriptLine.size())
+								{
+									// ERROR
+									MGFLOG_ERROR("MGFramework::parse found no function parameter value");
+								}
+								else
+								{
+									if(v_scriptLine[i][0] != '-')
+									{
+										// ERROR
+										MGFLOG_ERROR("MGFramework::parse found function parameter with no '-'");
+									}
+									else
+									{
+										std::string parameter("");
+										char c[2] = {0, 0};
+										for(unsigned int n = 1; n < strlen(v_scriptLine[i].c_str()); ++n)
+										{
+											c[0]=v_scriptLine[i][n];
+											parameter += std::string(c);
+										}
+										if(parameter.length() < 1)
+										{
+											// ERROR
+											MGFLOG_ERROR("MGFramework::parse found bad function parameter name");
+										}
+										else
+										{
+											m_SymbolTableTransfer->addSymbol(parameter, toInt(v_scriptLine[i+1], symbols));
+											i++;
+										}
+									}
+								}
+							}
+
 							if (fColon!=std::string::npos)
 							{
 								MGFLOG_INFO("MGFramework::parse calling " << v_scriptLine[1].c_str());
+								symbols->printTable();
 								symbolAssignTo(	v_scriptLine[1], 
 												MGComponent::toString(parse(v_scriptLine[1].c_str())), 
 												symbols);
@@ -467,6 +518,7 @@ int MGFramework::parse(const char *sFileName)
 							else
 							{
 								MGFLOG_INFO("MGFramework::parse calling " << (string(scriptFileName)+string(":")+v_scriptLine[1]).c_str());
+								symbols->printTable();
 								symbolAssignTo(	v_scriptLine[1], 
 												MGComponent::toString(parse((string(scriptFileName)+string(":")+v_scriptLine[1]).c_str())), 
 												symbols);
@@ -2638,6 +2690,10 @@ int MGFramework::toInt(const string &s, MGSymbolTable *sym)
 		}
 	}
 	MGFLOG_ERROR("MGFramework::toInt failed to convert string to integer: " << s);
+	if(sym)
+	{
+		sym->printTable();
+	}
 	return 0;
 }
 
