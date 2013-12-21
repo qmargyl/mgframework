@@ -85,7 +85,7 @@ Symbol Table
 Symbol Table
 'runframes_100' : 0
 Symbol Table
-[XXXXX.XX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:XXX (ID:XX) ERROR: Expected location not confirmed: (X, X), MO at (X, X)
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:386 (ID:70) ERROR: Expected location not confirmed: (4, 7), MO at (8, 8)
 Symbol Table
 'testcase_005' : 0
 Symbol Table

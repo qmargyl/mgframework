@@ -1,14 +1,100 @@
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:299) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3049) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:294) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:754) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3867) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:555) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:718) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3358) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3837) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:168) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:273) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3280) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:94) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:497) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3242) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3619) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:232) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3839) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:170) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:898) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3621) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:488) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3433) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3168) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:797) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3862) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3065) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:401) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3405) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:3448) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:507) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:80 (ID:825) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmap.cpp:645 (ID:2) WARNING: MGMap::calculatePath produced an empty path
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
+[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:590) WARNING: MGMovingObject::update: MO stuck for one second
 MGMovingObject ID 6 History
 0	0: CalculatePath: 37,78 -> 30,96
 1	0: ChangeState: MOStateIdle -> MOStateMoving
 2	0: ChangeState: MOStateMoving -> MOStateStuck
 3	0: ChangeState: MOStateStuck -> MOStateMoving
-4	0: ChangeState: MOStateMoving -> MOStateStuck
-5	0: ChangeState: MOStateStuck -> MOStateMoving
-6	0: ChangeState: MOStateMoving -> MOStateStuck
-7	0: ChangeState: MOStateStuck -> MOStateMoving
-8	0: FinalDestination: 30,96
-9	0: ChangeState: MOStateMoving -> MOStateIdle
 MGMovingObject ID 7 History
 0	0: CalculatePath: 56,60 -> 11,37
 1	0: ChangeState: MOStateIdle -> MOStateMoving
@@ -16,13 +102,29 @@ MGMovingObject ID 7 History
 3	0: ChangeState: MOStateStuck -> MOStateMoving
 4	0: ChangeState: MOStateMoving -> MOStateStuck
 5	0: ChangeState: MOStateStuck -> MOStateMoving
+6	0: ChangeState: MOStateMoving -> MOStateStuck
+7	0: ChangeState: MOStateStuck -> MOStateMoving
+8	0: ChangeState: MOStateMoving -> MOStateStuck
+9	0: ChangeState: MOStateStuck -> MOStateMoving
+10	0: ChangeState: MOStateMoving -> MOStateStuck
+11	0: ChangeState: MOStateStuck -> MOStateMoving
+12	0: ChangeState: MOStateMoving -> MOStateStuck
+13	0: ChangeState: MOStateStuck -> MOStateMoving
+14	0: ChangeState: MOStateMoving -> MOStateStuck
+15	0: ChangeState: MOStateStuck -> MOStateMoving
+16	0: FinalDestination: 11,37
+17	0: ChangeState: MOStateMoving -> MOStateIdle
 MGMovingObject ID 8 History
 0	0: CalculatePath: 25,55 -> 56,75
 1	0: ChangeState: MOStateIdle -> MOStateMoving
 2	0: ChangeState: MOStateMoving -> MOStateStuck
 3	0: ChangeState: MOStateStuck -> MOStateMoving
-4	0: FinalDestination: 56,75
-5	0: ChangeState: MOStateMoving -> MOStateIdle
+4	0: ChangeState: MOStateMoving -> MOStateStuck
+5	0: ChangeState: MOStateStuck -> MOStateMoving
+6	0: ChangeState: MOStateMoving -> MOStateStuck
+7	0: ChangeState: MOStateStuck -> MOStateMoving
+8	0: FinalDestination: 56,75
+9	0: ChangeState: MOStateMoving -> MOStateIdle
 MGMovingObject ID 9 History
 0	0: CalculatePath: 105,32 -> 98,25
 1	0: ChangeState: MOStateIdle -> MOStateMoving
@@ -58,13 +160,23 @@ MGMovingObject ID 13 History
 3	0: ChangeState: MOStateStuck -> MOStateMoving
 4	0: ChangeState: MOStateMoving -> MOStateStuck
 5	0: ChangeState: MOStateStuck -> MOStateMoving
-6	0: FinalDestination: 28,84
-7	0: ChangeState: MOStateMoving -> MOStateIdle
+6	0: ChangeState: MOStateMoving -> MOStateStuck
+7	0: ChangeState: MOStateStuck -> MOStateMoving
 MGMovingObject ID 14 History
 0	0: CalculatePath: 32,12 -> 63,50
 1	0: ChangeState: MOStateIdle -> MOStateMoving
 2	0: ChangeState: MOStateMoving -> MOStateStuck
 3	0: ChangeState: MOStateStuck -> MOStateMoving
+4	0: ChangeState: MOStateMoving -> MOStateStuck
+5	0: ChangeState: MOStateStuck -> MOStateMoving
+6	0: ChangeState: MOStateMoving -> MOStateStuck
+7	0: ChangeState: MOStateStuck -> MOStateMoving
+8	0: ChangeState: MOStateMoving -> MOStateStuck
+9	0: ChangeState: MOStateStuck -> MOStateMoving
+10	0: ChangeState: MOStateMoving -> MOStateStuck
+11	0: ChangeState: MOStateStuck -> MOStateMoving
+12	0: FinalDestination: 63,50
+13	0: ChangeState: MOStateMoving -> MOStateIdle
 MGMovingObject ID 15 History
 0	0: CalculatePath: 112,62 -> 111,105
 1	0: ChangeState: MOStateIdle -> MOStateMoving
@@ -74,8 +186,12 @@ MGMovingObject ID 15 History
 5	0: ChangeState: MOStateStuck -> MOStateMoving
 6	0: ChangeState: MOStateMoving -> MOStateStuck
 7	0: ChangeState: MOStateStuck -> MOStateMoving
-8	0: FinalDestination: 111,105
-9	0: ChangeState: MOStateMoving -> MOStateIdle
+8	0: ChangeState: MOStateMoving -> MOStateStuck
+9	0: ChangeState: MOStateStuck -> MOStateMoving
+10	0: ChangeState: MOStateMoving -> MOStateStuck
+11	0: ChangeState: MOStateStuck -> MOStateMoving
+12	0: FinalDestination: 111,105
+13	0: ChangeState: MOStateMoving -> MOStateIdle
 MGMovingObject ID 16 History
 0	0: CalculatePath: 22,52 -> 24,37
 1	0: ChangeState: MOStateIdle -> MOStateMoving
@@ -97,6 +213,10 @@ MGMovingObject ID 18 History
 7	0: ChangeState: MOStateStuck -> MOStateMoving
 8	0: ChangeState: MOStateMoving -> MOStateStuck
 9	0: ChangeState: MOStateStuck -> MOStateMoving
+10	0: ChangeState: MOStateMoving -> MOStateStuck
+11	0: ChangeState: MOStateStuck -> MOStateMoving
+12	0: FinalDestination: 35,91
+13	0: ChangeState: MOStateMoving -> MOStateIdle
 MGMovingObject ID 19 History
 0	0: CalculatePath: 86,70 -> 1,19
 1	0: ChangeState: MOStateIdle -> MOStateMoving
@@ -126,12 +246,8 @@ MGMovingObject ID 19 History
 25	0: ChangeState: MOStateStuck -> MOStateMoving
 26	0: ChangeState: MOStateMoving -> MOStateStuck
 27	0: ChangeState: MOStateStuck -> MOStateMoving
-28	0: ChangeState: MOStateMoving -> MOStateStuck
-29	0: ChangeState: MOStateStuck -> MOStateMoving
-30	0: ChangeState: MOStateMoving -> MOStateStuck
-31	0: ChangeState: MOStateStuck -> MOStateMoving
-32	0: FinalDestination: 1,19
-33	0: ChangeState: MOStateMoving -> MOStateIdle
+28	0: FinalDestination: 1,19
+29	0: ChangeState: MOStateMoving -> MOStateIdle
 MGMovingObject ID 20 History
 0	0: CalculatePath: 78,28 -> 126,71
 1	0: ChangeState: MOStateIdle -> MOStateMoving
@@ -143,6 +259,8 @@ MGMovingObject ID 20 History
 7	0: ChangeState: MOStateStuck -> MOStateMoving
 8	0: ChangeState: MOStateMoving -> MOStateStuck
 9	0: ChangeState: MOStateStuck -> MOStateMoving
+10	0: FinalDestination: 126,71
+11	0: ChangeState: MOStateMoving -> MOStateIdle
 MGMovingObject ID 21 History
 0	0: CalculatePath: 51,93 -> 2,1
 1	0: ChangeState: MOStateIdle -> MOStateMoving
@@ -166,15 +284,23 @@ MGMovingObject ID 21 History
 19	0: ChangeState: MOStateStuck -> MOStateMoving
 20	0: ChangeState: MOStateMoving -> MOStateStuck
 21	0: ChangeState: MOStateStuck -> MOStateMoving
-22	0: FinalDestination: 2,1
-23	0: ChangeState: MOStateMoving -> MOStateIdle
+22	0: ChangeState: MOStateMoving -> MOStateStuck
+23	0: ChangeState: MOStateStuck -> MOStateMoving
+24	0: ChangeState: MOStateMoving -> MOStateStuck
+25	0: ChangeState: MOStateStuck -> MOStateMoving
+26	0: FinalDestination: 2,1
+27	0: ChangeState: MOStateMoving -> MOStateIdle
 MGMovingObject ID 22 History
 0	0: CalculatePath: 60,118 -> 33,84
 1	0: ChangeState: MOStateIdle -> MOStateMoving
 2	0: ChangeState: MOStateMoving -> MOStateStuck
 3	0: ChangeState: MOStateStuck -> MOStateMoving
-4	0: FinalDestination: 33,84
-5	0: ChangeState: MOStateMoving -> MOStateIdle
+4	0: ChangeState: MOStateMoving -> MOStateStuck
+5	0: ChangeState: MOStateStuck -> MOStateMoving
+6	0: ChangeState: MOStateMoving -> MOStateStuck
+7	0: ChangeState: MOStateStuck -> MOStateMoving
+8	0: FinalDestination: 33,84
+9	0: ChangeState: MOStateMoving -> MOStateIdle
 MGMovingObject ID 23 History
 0	0: CalculatePath: 116,107 -> 51,32
 1	0: ChangeState: MOStateIdle -> MOStateMoving
@@ -186,23 +312,17 @@ MGMovingObject ID 23 History
 7	0: ChangeState: MOStateStuck -> MOStateMoving
 8	0: ChangeState: MOStateMoving -> MOStateStuck
 9	0: ChangeState: MOStateStuck -> MOStateMoving
-10	0: ChangeState: MOStateMoving -> MOStateStuck
-11	0: ChangeState: MOStateStuck -> MOStateMoving
-12	0: ChangeState: MOStateMoving -> MOStateStuck
-13	0: ChangeState: MOStateStuck -> MOStateMoving
-14	0: ChangeState: MOStateMoving -> MOStateStuck
-15	0: ChangeState: MOStateStuck -> MOStateMoving
-16	0: ChangeState: MOStateMoving -> MOStateStuck
-17	0: ChangeState: MOStateStuck -> MOStateMoving
-18	0: ChangeState: MOStateMoving -> MOStateStuck
-19	0: ChangeState: MOStateStuck -> MOStateMoving
-20	0: FinalDestination: 51,32
-21	0: ChangeState: MOStateMoving -> MOStateIdle
 MGMovingObject ID 24 History
 0	0: CalculatePath: 100,78 -> 111,42
 1	0: ChangeState: MOStateIdle -> MOStateMoving
 2	0: ChangeState: MOStateMoving -> MOStateStuck
 3	0: ChangeState: MOStateStuck -> MOStateMoving
+4	0: ChangeState: MOStateMoving -> MOStateStuck
+5	0: ChangeState: MOStateStuck -> MOStateMoving
+6	0: ChangeState: MOStateMoving -> MOStateStuck
+7	0: ChangeState: MOStateStuck -> MOStateMoving
+8	0: ChangeState: MOStateMoving -> MOStateStuck
+9	0: ChangeState: MOStateStuck -> MOStateMoving
 MGMovingObject ID 25 History
 0	0: CalculatePath: 64,70 -> 49,105
 1	0: ChangeState: MOStateIdle -> MOStateMoving

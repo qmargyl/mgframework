@@ -599,7 +599,7 @@ void MGFramework::logEval(const char *logFileName)
 	}
 	else
 	{
-		std::cout << "Evaluating " << logFileName << " ... <b>";
+		std::cout << "Evaluating " << logFileName << " ... ";
 		char logLine[MGF_LOGLINE_MAXLENGTH] = "";
 		char *neof = NULL;
 		//MGFLOG_INFO(std::cout << "MGFramework::logEval starting to parse log file " << logFileName << std::endl;);
@@ -640,15 +640,15 @@ void MGFramework::logEval(const char *logFileName)
 
 		if(nErrors != 0)
 		{
-			std::cout << "FAIL</b> (" << nErrors << " errors, " << nWarnings << " warnings)";
+			std::cout << "<b><font color=red>FAIL</font></b> (" << nErrors << " errors, " << nWarnings << " warnings)";
 		}
 		else if(nExitApp == 0)
 		{
-			std::cout << "FAIL</b> (did not finish)";
+			std::cout << "<b><font color=red>FAIL</font></b> (did not finish)";
 		}
 		else
 		{
-			std::cout << "PASS</b>";
+			std::cout << "<b><font color=green>PASS</font></b>";
 			if(nWarnings>0)
 			{
 				std::cout << " (" << nWarnings << " warnings)";
@@ -711,19 +711,30 @@ void MGFramework::logFilter(const char *logFileName)
 			std::size_t foundSleep = line.find(framesleepSubstr);
 
 			if (foundInfo != std::string::npos ||
-				foundWarning != std::string::npos )
+				foundWarning != std::string::npos ||
+				foundError != std::string::npos)
+			{
+				if(strlen(logLine) > 9 && logLine[0]=='[' && logLine[9]==']')
+				{
+					logLine[1] = 'X'; logLine[2] = 'X'; logLine[3] = 'X'; logLine[4] = 'X';
+					logLine[5] = 'X'; logLine[6] = 'X'; logLine[7] = 'X'; logLine[8] = 'X';
+				}
+			}
+
+			if (foundInfo != std::string::npos/* ||
+				foundWarning != std::string::npos*/ )
 			{
 				// Ignore all info prints - result should not depend on logging settings
 				// Ignore all warnings - warnings are not errors and can be unpredictable
 			}
-			else if (foundError != std::string::npos)
+			else if (foundError != std::string::npos || foundWarning != std::string::npos)
 			{
 				// filter away only some digits before writing to filtered log?
 				for(unsigned int i=0; i<strlen(logLine); ++i)
 				{
 					if(logLine[i]>='0' && logLine[i]<='9')
 					{
-						logLine[i] = 'X';
+				//		logLine[i] = 'X';
 					}
 				}
 				fputs(logLine, filteredlf);
@@ -812,7 +823,7 @@ void MGFramework::logCompare(const char *logFileName1, const char *logFileName2)
 			if(std::string(logLine1) != std::string(logLine2))
 			{
 				resultOk = false;
-				std::cout << "DIFF: " << logLine1 << " - " << logLine2 << std::endl;
+				std::cout << "<font color=red>DIFF: " << logLine1 << " - " << logLine2 << "</font>" << std::endl;
 				break;
 			}
 		}
@@ -829,11 +840,11 @@ void MGFramework::logCompare(const char *logFileName1, const char *logFileName2)
 	}
 	if(resultOk)
 	{
-		std::cout << "PASS</b><br>" << std::endl;
+		std::cout << "<font color=green>PASS</font></b><br>" << std::endl;
 	}
 	else
 	{
-		std::cout << "FAIL</b><br>" << std::endl;
+		std::cout << "<font color=red>FAIL</font></b><br>" << std::endl;
 	}
 }
 
