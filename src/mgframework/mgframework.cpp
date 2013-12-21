@@ -593,6 +593,10 @@ void MGFramework::logEval(const char *logFileName)
 	int nExitApp=0;
 	std::string execTimeMS("");
 
+	// Error list for printing
+	std::vector<std::string> errors;
+	errors.clear();
+
 	if(lf == NULL)
 	{
 		MGFLOG_ERROR("MGFramework::logEval failed to open log file " << logFileName << ", error(" << logError << ")");
@@ -623,9 +627,22 @@ void MGFramework::logEval(const char *logFileName)
 				std::size_t foundErr = line.find(errSubstr);
 				std::size_t foundWarn = line.find(warnSubstr);
 				std::size_t foundExit = line.find(exitSubstr);
-				if (foundErr != std::string::npos) nErrors++;
-				if (foundWarn != std::string::npos) nWarnings++;
-				if (foundExit != std::string::npos) nExitApp++;
+
+				if (foundErr != std::string::npos)
+				{
+					nErrors++;
+					errors.push_back(line);
+				}
+
+				if (foundWarn != std::string::npos)
+				{
+					nWarnings++;
+				}
+
+				if (foundExit != std::string::npos)
+				{
+					nExitApp++;
+				}
 
 
 				std::string exetimeSubstr("Execution time: ");
@@ -656,6 +673,14 @@ void MGFramework::logEval(const char *logFileName)
 		}
 		std::cout << ", " << execTimeMS.c_str() << " ms<br>" << std::endl;
 
+		if(nErrors != 0)
+		{
+			for(int i = 0; i < errors.size(); ++i)
+			{
+				std::cout << "<font color=red>" << errors[i] << "</font><br>" << std::endl;
+			}
+		}
+
 		if(lf != NULL)
 		{
 			fclose(lf);
@@ -683,7 +708,7 @@ void MGFramework::logFilter(const char *logFileName)
 		return;
 	}
 
-	std::cout << "Filtering " << logFileName << " ... <b>";
+	std::cout << "Filtering " << logFileName << " ... ";
 	char logLine[MGF_LOGLINE_MAXLENGTH] = "";
 	char *neof = NULL;
 
@@ -770,7 +795,7 @@ void MGFramework::logFilter(const char *logFileName)
 		fclose(filteredlf);
 	}
 
-	std::cout << "DONE</b><br>" << std::endl;
+	std::cout << "<b>DONE</b><br>" << std::endl;
 }
 
 
