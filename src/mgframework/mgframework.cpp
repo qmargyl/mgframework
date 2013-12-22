@@ -695,6 +695,11 @@ std::string MGFramework::filterLine(const char* line)
 	bool insideFilteredInt = false;
 	char c[2] = {0, 0};
 
+//	if(strlen(line)<2)
+//	{
+//		return lineRes;
+//	}
+
 	for(unsigned int i=0; i < strlen(line); ++i)
 	{
 		if(line[i] >= '0' && line[i] <= '9')
@@ -767,67 +772,21 @@ void MGFramework::logFilter(const char *logFileName)
 		{
 			std::string line(logLine);
 			std::string infoSubstr(" INFO: ");
-			std::string warningSubstr(" WARNING: ");
-			std::string errorSubstr(" ERROR: ");
-			std::string execSubstr("Execution time");
-			std::string framesleepSubstr("sleep time");
+			//std::string warningSubstr(" WARNING: ");
+			//std::string errorSubstr(" ERROR: ");
+			//std::string execSubstr("Execution time");
+			//std::string framesleepSubstr("sleep time");
 
 			std::size_t foundInfo = line.find(infoSubstr);
-			std::size_t foundWarning = line.find(warningSubstr);
-			std::size_t foundError = line.find(errorSubstr);
-			std::size_t foundExec = line.find(execSubstr);
-			std::size_t foundSleep = line.find(framesleepSubstr);
+			//std::size_t foundWarning = line.find(warningSubstr);
+			//std::size_t foundError = line.find(errorSubstr);
+			//std::size_t foundExec = line.find(execSubstr);
+			//std::size_t foundSleep = line.find(framesleepSubstr);
 
-			if (foundInfo != std::string::npos ||
-				foundWarning != std::string::npos ||
-				foundError != std::string::npos)
-			{
-				/*
-				if(strlen(logLine) > 9 && logLine[0]=='[' && logLine[9]==']')
-				{
-					logLine[1] = 'X'; logLine[2] = 'X'; logLine[3] = 'X'; logLine[4] = 'X';
-					logLine[5] = 'X'; logLine[6] = 'X'; logLine[7] = 'X'; logLine[8] = 'X';
-				}
-				*/
-			}
-
-			if (foundInfo != std::string::npos/* ||
-				foundWarning != std::string::npos*/ )
+			if (foundInfo != std::string::npos)
 			{
 				// Ignore all info prints - result should not depend on logging settings
-				// Ignore all warnings - warnings are not errors and can be unpredictable
 			}
-			/*
-			else if (foundError != std::string::npos || foundWarning != std::string::npos)
-			{
-				// filter away only some digits before writing to filtered log?
-				
-				for(unsigned int i=0; i<strlen(logLine); ++i)
-				{
-					if(logLine[i]>='0' && logLine[i]<='9')
-					{
-				//		logLine[i] = 'X';
-					}
-				}
-				
-				fputs(filterLine(logLine).c_str(), filteredlf);
-			}
-			*/
-			/*
-			else if (	foundExec != std::string::npos ||
-						foundSleep != std::string::npos)
-			{
-				// Filter out all digits for certain log lines..
-				for(unsigned int i=0; i<strlen(logLine); ++i)
-				{
-					if(logLine[i]>='0' && logLine[i]<='9')
-					{
-						logLine[i] = 'X';
-					}
-				}
-				fputs(filterLine(logLine).c_str(), filteredlf);
-			}
-			*/
 			else
 			{
 				fputs(filterLine(logLine).c_str(), filteredlf);

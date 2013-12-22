@@ -23,7 +23,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.38.5"
+#define MGFRAMEWORKVERSION "1.0.38.6"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -368,7 +368,7 @@ class MGFramework :public MGComponent
 
 		//Socket terminal related
 		bool socketTerminalOpen(){return m_KeepSocketTerminalOpen;}
-		void logIfEnabled(const char *log){MGFLOG_INFO("" << log)}
+		void logIfEnabled(const char *log){}//{MGFLOG_INFO("" << log)}
 		void addConsoleCommandToQueue(const char *c);
 		int getPort(){ return m_Port; }
 		void setPort(int p){ m_Port = p; }
