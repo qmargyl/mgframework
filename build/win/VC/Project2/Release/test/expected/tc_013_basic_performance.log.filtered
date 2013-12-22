@@ -2,95 +2,95 @@ Symbol Table
 Symbol Table
 Symbol Table
 Symbol Table
-'run_10_frames' : 0
+'run_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'run_10_frames' : 0
+'run_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'run_10_frames' : 0
+'run_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'run_10_frames' : 0
+'run_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
-[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:162 (ID:247) WARNING: MGMovingObject::update: MO stuck for one second
+[X.X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
 Symbol Table
-'run_10_frames' : 0
-Symbol Table
-Symbol Table
-'setdest_plus_10_frames' : 0
+'run_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'run_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'run_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'run_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'run_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'run_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'run_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'run_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'run_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'run_10_frames' : 0
+'setdest_plus_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames' : 0
+'run_10_frames' : X
 Symbol Table
 Symbol Table
-'setdest_plus_10_frames_times_10' : 0
+'setdest_plus_10_frames' : X
+Symbol Table
+Symbol Table
+'setdest_plus_10_frames_times_10' : X
 Symbol Table
 Exiting application...
-Execution time: XXXXX
+Execution time: X

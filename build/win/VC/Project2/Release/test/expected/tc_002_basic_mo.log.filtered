@@ -9,4 +9,4 @@ mo <i> getlocation - Returns the location of the MO with ID <i>.
 mo <i> getdistance - Returns the distance to the destination of the MO with ID <i>.
 64
 Exiting application...
-Execution time: XXXXX
+Execution time: X

@@ -1,18 +1,18 @@
 Symbol Table
 Symbol Table
-'v1' : 3
+'v1' : X
 Symbol Table
 Symbol Table
-'v1' : 3
+'v1' : X
 Symbol Table
-'v1' : 4
-Symbol Table
-Symbol Table
-'v1' : 3
-'testcase_003_h1' : 0
+'v1' : X
 Symbol Table
 Symbol Table
-'testcase_003' : 0
+'v1' : X
+'testcase_003_h1' : X
+Symbol Table
+Symbol Table
+'testcase_003' : X
 Symbol Table
 Exiting application...
-Execution time: XXX
+Execution time: X

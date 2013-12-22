@@ -2,92 +2,92 @@ Symbol Table
 Symbol Table
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_100' : 0
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_100' : 0
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_100' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_100' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_100' : 0
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_100' : 0
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_100' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_100' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_100' : 0
+'runframes_20' : X
 Symbol Table
-[XXXXXXXX] ..\..\..\..\src\mgframework\mgmovingobject.cpp:386 (ID:70) ERROR: Expected location not confirmed: (4, 7), MO at (8, 8)
+'runframes_20' : X
 Symbol Table
-'testcase_005' : 0
+Symbol Table
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
+Symbol Table
+Symbol Table
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
+Symbol Table
+Symbol Table
+'runframes_100' : X
+Symbol Table
+[X.X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) ERROR: Expected location not confirmed: (4, 7), MO at (8, 8)
+Symbol Table
+'testcase_005' : X
 Symbol Table
 Exiting application...
-Execution time: XXXX
+Execution time: X

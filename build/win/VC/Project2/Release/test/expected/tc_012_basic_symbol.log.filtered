@@ -1,85 +1,85 @@
 Symbol Table
-'var1' : 17
+'var1' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
+'var1' : X
+'var2' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
-'var3' : 27
+'var1' : X
+'var2' : X
+'var3' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
-'var3' : 27
-'var4' : 27
+'var1' : X
+'var2' : X
+'var3' : X
+'var4' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
-'var3' : 27
-'var4' : 27
-'a' : 3
+'var1' : X
+'var2' : X
+'var3' : X
+'var4' : X
+'a' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
-'var3' : 27
-'var4' : 27
-'a' : 3
-'b' : 4
+'var1' : X
+'var2' : X
+'var3' : X
+'var4' : X
+'a' : X
+'b' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
-'var3' : 27
-'var4' : 27
-'a' : 5
-'b' : 4
+'var1' : X
+'var2' : X
+'var3' : X
+'var4' : X
+'a' : X
+'b' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
-'var3' : 27
-'var4' : 27
-'a' : 5
-'b' : 5
+'var1' : X
+'var2' : X
+'var3' : X
+'var4' : X
+'a' : X
+'b' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
-'var3' : 27
-'var4' : 27
-'a' : 5
-'b' : 5
+'var1' : X
+'var2' : X
+'var3' : X
+'var4' : X
+'a' : X
+'b' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
-'var3' : 27
-'var4' : 27
-'a' : 5
-'b' : 5
+'var1' : X
+'var2' : X
+'var3' : X
+'var4' : X
+'a' : X
+'b' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
-'var3' : 27
-'var4' : 27
-'a' : 3
-'b' : 5
+'var1' : X
+'var2' : X
+'var3' : X
+'var4' : X
+'a' : X
+'b' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
-'var3' : 27
-'var4' : 27
-'a' : 3
-'b' : 4
+'var1' : X
+'var2' : X
+'var3' : X
+'var4' : X
+'a' : X
+'b' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
-'var3' : 27
-'var4' : 27
-'a' : 5
-'b' : 4
+'var1' : X
+'var2' : X
+'var3' : X
+'var4' : X
+'a' : X
+'b' : X
 Symbol Table
-'var1' : 17
-'var2' : 17
-'var3' : 27
-'var4' : 27
-'a' : 5
-'b' : 5
+'var1' : X
+'var2' : X
+'var3' : X
+'var4' : X
+'a' : X
+'b' : X
 Exiting application...
-Execution time: XXX
+Execution time: X

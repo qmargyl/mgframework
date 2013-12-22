@@ -36,13 +36,13 @@ mo <i> getdistance - Returns the distance to the destination of the MO with ID <
 64
 64
 MGMovingObject ID 24 History
-0	0: CalculatePath: 0,0 -> 112,62
+0	0: CalculatePath: X,0 -> 112,62
 1	0: ChangeState: MOStateIdle -> MOStateMoving
 Symbol Table
-'testcoverage_mo' : 0
+'testcoverage_mo' : X
 Symbol Table
 Symbol Table
-'testcoverage_mo' : 0
+'testcoverage_mo' : X
 Command help
 [<object> [<object identifier>]] <command> [<parameter 1> ... <parameter n>]
 -----------------------------------------------------------------------------
@@ -69,105 +69,105 @@ map help - Displays help information for console commands implemented in the
            map object.
 Testing print function
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
+'testcoverage_mo' : X
+'testcoverage_fw' : X
 Symbol Table
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
+'testcoverage_mo' : X
+'testcoverage_fw' : X
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
-'testcoverage_window' : 0
+'testcoverage_mo' : X
+'testcoverage_fw' : X
+'testcoverage_window' : X
 Symbol Table
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
-'testcoverage_window' : 0
+'testcoverage_mo' : X
+'testcoverage_fw' : X
+'testcoverage_window' : X
 -----------------------------------------------------------------------------
 
 map help - Displays help information for console commands implemented in the
            map object.
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
-'testcoverage_window' : 0
-'testcoverage_map' : 0
+'testcoverage_mo' : X
+'testcoverage_fw' : X
+'testcoverage_window' : X
+'testcoverage_map' : X
 Symbol Table
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
-'testcoverage_window' : 0
-'testcoverage_map' : 0
+'testcoverage_mo' : X
+'testcoverage_fw' : X
+'testcoverage_window' : X
+'testcoverage_map' : X
 Help for PE console commands: 
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
-'testcoverage_window' : 0
-'testcoverage_map' : 0
-'testcoverage_pe' : 0
+'testcoverage_mo' : X
+'testcoverage_fw' : X
+'testcoverage_window' : X
+'testcoverage_map' : X
+'testcoverage_pe' : X
 Symbol Table
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
-'testcoverage_window' : 0
-'testcoverage_map' : 0
-'testcoverage_pe' : 0
+'testcoverage_mo' : X
+'testcoverage_fw' : X
+'testcoverage_window' : X
+'testcoverage_map' : X
+'testcoverage_pe' : X
 {27,56}
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
-'testcoverage_window' : 0
-'testcoverage_map' : 0
-'testcoverage_pe' : 0
-'testcoverage_so' : 0
+'testcoverage_mo' : X
+'testcoverage_fw' : X
+'testcoverage_window' : X
+'testcoverage_map' : X
+'testcoverage_pe' : X
+'testcoverage_so' : X
 Symbol Table
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
-'testcoverage_window' : 0
-'testcoverage_map' : 0
-'testcoverage_pe' : 0
-'testcoverage_so' : 0
+'testcoverage_mo' : X
+'testcoverage_fw' : X
+'testcoverage_window' : X
+'testcoverage_map' : X
+'testcoverage_pe' : X
+'testcoverage_so' : X
 Symbol Table
-'sym1' : 666
-Symbol Table
-Symbol Table
-'sym1' : 666
-'sym2' : 667
+'sym1' : X
 Symbol Table
 Symbol Table
-'sym1' : 666
-'sym2' : 667
-'sym3' : 0
+'sym1' : X
+'sym2' : X
 Symbol Table
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
-'testcoverage_window' : 0
-'testcoverage_map' : 0
-'testcoverage_pe' : 0
-'testcoverage_so' : 0
-'testcoverage_sym' : 0
+'sym1' : X
+'sym2' : X
+'sym3' : X
 Symbol Table
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
-'testcoverage_window' : 0
-'testcoverage_map' : 0
-'testcoverage_pe' : 0
-'testcoverage_so' : 0
-'testcoverage_sym' : 0
+'testcoverage_mo' : X
+'testcoverage_fw' : X
+'testcoverage_window' : X
+'testcoverage_map' : X
+'testcoverage_pe' : X
+'testcoverage_so' : X
+'testcoverage_sym' : X
+Symbol Table
+Symbol Table
+'testcoverage_mo' : X
+'testcoverage_fw' : X
+'testcoverage_window' : X
+'testcoverage_map' : X
+'testcoverage_pe' : X
+'testcoverage_so' : X
+'testcoverage_sym' : X
 Exiting console...
 Exiting application...
-Execution time: XXXX
+Execution time: X
 Symbol Table
-'testcoverage_mo' : 0
-'testcoverage_fw' : 0
-'testcoverage_window' : 0
-'testcoverage_map' : 0
-'testcoverage_pe' : 0
-'testcoverage_so' : 0
-'testcoverage_sym' : 0
-'testcoverage_evalandexit' : 0
+'testcoverage_mo' : X
+'testcoverage_fw' : X
+'testcoverage_window' : X
+'testcoverage_map' : X
+'testcoverage_pe' : X
+'testcoverage_so' : X
+'testcoverage_sym' : X
+'testcoverage_evalandexit' : X
 Symbol Table

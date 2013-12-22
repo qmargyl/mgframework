@@ -1,202 +1,202 @@
 Symbol Table
-'global_var1' : 32
+'global_var1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
+'global_var1' : X
+'global_var2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
 Symbol Table
 Symbol Table
-'create_an_mo' : 0
+'create_an_mo' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
+'create_an_mo' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
+'create_an_mo' : X
+'create_another_mo' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
+'create_an_mo' : X
+'create_another_mo' : X
 Symbol Table
-'s1' : 13
+'s1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'s1' : 13
-'s2' : 14
+'s1' : X
+'s2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'s1' : 13
-'s2' : 14
-'s3' : 13
+'s1' : X
+'s2' : X
+'s3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'s1' : 14
-'s2' : 14
-'s3' : 13
+'s1' : X
+'s2' : X
+'s3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'s1' : 14
-'s2' : 14
-'s3' : 13
-'nmo' : 666
+'s1' : X
+'s2' : X
+'s3' : X
+'nmo' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
 Symbol Table
-'s1' : 13
+'s1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'s1' : 13
-'s2' : 14
+'s1' : X
+'s2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'s1' : 13
-'s2' : 14
-'s3' : 13
+'s1' : X
+'s2' : X
+'s3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'s1' : 14
-'s2' : 14
-'s3' : 13
+'s1' : X
+'s2' : X
+'s3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'s1' : 14
-'s2' : 14
-'s3' : 13
-'nmo' : 666
+'s1' : X
+'s2' : X
+'s3' : X
+'nmo' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
 Symbol Table
-'cdv' : 32
+'cdv' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'cdv' : 32
+'cdv' : X
 Symbol Table
 Symbol Table
-'cdv' : 17
+'cdv' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'test_calldepth_3' : 0
+'test_calldepth_3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'cdv' : 32
-'test_calldepth_2' : 0
+'cdv' : X
+'test_calldepth_2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
 Symbol Table
-'var1' : 43
+'var1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 0
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
 Symbol Table
 Symbol Table
 Symbol Table
@@ -207,779 +207,779 @@ Symbol Table
 Symbol Table
 Symbol Table
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'deepcalldepth_9' : 0
+'deepcalldepth_9' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'deepcalldepth_8' : 0
+'deepcalldepth_8' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'deepcalldepth_7' : 0
+'deepcalldepth_7' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'deepcalldepth_6' : 0
+'deepcalldepth_6' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'deepcalldepth_5' : 0
+'deepcalldepth_5' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'deepcalldepth_4' : 0
+'deepcalldepth_4' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'deepcalldepth_3' : 0
+'deepcalldepth_3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'deepcalldepth_2' : 0
+'deepcalldepth_2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
 Symbol Table
-'p1' : 1
+'p1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 0
+'p1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 0
-'p2' : 1
+'p1' : X
+'p2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 0
-'p2' : 1
-'p3' : 1
+'p1' : X
+'p2' : X
+'p3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 0
-'p2' : 1
-'p3' : 1
-'p4' : 1
+'p1' : X
+'p2' : X
+'p3' : X
+'p4' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 0
-'p2' : 1
-'p3' : 1
-'p4' : 0
+'p1' : X
+'p2' : X
+'p3' : X
+'p4' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
 Symbol Table
-'p1' : 1
+'p1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 2
+'p1' : X
+'p2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 3
+'p1' : X
+'p2' : X
+'p3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 17
+'p1' : X
+'p2' : X
+'p3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
 Symbol Table
-'p1' : 1
+'p1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 2
+'p1' : X
+'p2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 3
+'p1' : X
+'p2' : X
+'p3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 17
+'p1' : X
+'p2' : X
+'p3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 18
+'p1' : X
+'p2' : X
+'p3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 18
+'p1' : X
+'p2' : X
+'p3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 18
+'p1' : X
+'p2' : X
+'p3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 3
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'p1' : X
+'p2' : X
+'p3' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 17
+'p1' : X
+'p2' : X
+'p3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
 Symbol Table
-'p1' : 1
+'p1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 2
+'p1' : X
+'p2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 32
+'p1' : X
+'p2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'p1' : 1
-'p2' : 81
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'p1' : 1
-'p2' : 77
+'p1' : X
+'p2' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'p1' : X
+'p2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-Symbol Table
-'p1' : 1
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'p1' : 1
-'p2' : 2
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 3
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 17
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 18
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 18
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 18
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 3
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'p1' : 1
-'p2' : 2
-'p3' : 17
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-Symbol Table
-'a' : 17
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'a' : 17
-Symbol Table
-Symbol Table
-'b' : 39
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'bar' : 39
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'a' : 17
-'foo' : 39
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'a' : 39
-'foo' : 39
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-'test_return_1' : 0
-Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
-Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-'test_return_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+Symbol Table
+'p1' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'p1' : X
+'p2' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'p1' : X
+'p2' : X
+'p3' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'p1' : X
+'p2' : X
+'p3' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'p1' : X
+'p2' : X
+'p3' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'p1' : X
+'p2' : X
+'p3' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'p1' : X
+'p2' : X
+'p3' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'p1' : X
+'p2' : X
+'p3' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'p1' : X
+'p2' : X
+'p3' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+Symbol Table
+'a' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'a' : X
+Symbol Table
+Symbol Table
+'b' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'bar' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'a' : X
+'foo' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'a' : X
+'foo' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+'test_return_1' : X
+Symbol Table
+'global_var1' : X
+'global_var2' : X
+'deep' : X
+Symbol Table
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+'test_return_1' : X
 128
 Symbol Table
-'var1' : 21
+'var1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 64
 Symbol Table
-'var1' : 64
+'var1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-'test_return_1' : 0
-'test_return_2' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+'test_return_1' : X
+'test_return_2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-'test_return_1' : 0
-'test_return_2' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+'test_return_1' : X
+'test_return_2' : X
 Testing printing function
 Symbol Table
-'v1' : 0
+'v1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Print line 2
 Print line 3
 Print line 4//
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-'test_return_1' : 0
-'test_return_2' : 0
-'test_print_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+'test_return_1' : X
+'test_return_2' : X
+'test_print_1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-'test_return_1' : 0
-'test_return_2' : 0
-'test_print_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+'test_return_1' : X
+'test_return_2' : X
+'test_print_1' : X
 Symbol Table
-'fp1' : 12
+'fp1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'fp1' : 12
-'fp2' : 13
+'fp1' : X
+'fp2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'fp1' : 12
-'fp2' : 13
+'fp1' : X
+'fp2' : X
 Symbol Table
-'fp1' : 12
-'fp2' : 13
-'funcpar1' : 0
+'fp1' : X
+'fp2' : X
+'funcpar1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-'test_return_1' : 0
-'test_return_2' : 0
-'test_print_1' : 0
-'test_funcparam_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+'test_return_1' : X
+'test_return_2' : X
+'test_print_1' : X
+'test_funcparam_1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-'test_return_1' : 0
-'test_return_2' : 0
-'test_print_1' : 0
-'test_funcparam_1' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+'test_return_1' : X
+'test_return_2' : X
+'test_print_1' : X
+'test_funcparam_1' : X
 Symbol Table
-'fp1' : 17
+'fp1' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'fp1' : 17
-'fp2' : 18
+'fp1' : X
+'fp2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'fp1' : 17
-'fp2' : 18
+'fp1' : X
+'fp2' : X
 Symbol Table
-'fp1' : 88
-'fp2' : 99
+'fp1' : X
+'fp2' : X
 Symbol Table
-'fp1' : 88
-'fp2' : 99
-'funcpar3' : 0
+'fp1' : X
+'fp2' : X
+'funcpar3' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'fp1' : 17
-'fp2' : 18
-'funcpar2' : 0
+'fp1' : X
+'fp2' : X
+'funcpar2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-'test_return_1' : 0
-'test_return_2' : 0
-'test_print_1' : 0
-'test_funcparam_1' : 0
-'test_funcparam_2' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+'test_return_1' : X
+'test_return_2' : X
+'test_print_1' : X
+'test_funcparam_1' : X
+'test_funcparam_2' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-'test_return_1' : 0
-'test_return_2' : 0
-'test_print_1' : 0
-'test_funcparam_1' : 0
-'test_funcparam_2' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+'test_return_1' : X
+'test_return_2' : X
+'test_print_1' : X
+'test_funcparam_1' : X
+'test_funcparam_2' : X
 Exiting application...
-Execution time: XXX
+Execution time: X
 Symbol Table
-'create_an_mo' : 0
-'create_another_mo' : 0
-'test_symbols_1' : 0
-'test_symbols_2' : 0
-'test_calldepth_1' : 0
-'test_comments_1' : 0
-'deepcalldepth_1' : 0
-'test_if_1' : 0
-'test_if_2' : 0
-'test_if_3' : 0
-'test_if_4' : 0
-'test_if_5' : 0
-'test_return_1' : 0
-'test_return_2' : 0
-'test_print_1' : 0
-'test_funcparam_1' : 0
-'test_funcparam_2' : 0
-'and_then_exit' : 0
+'create_an_mo' : X
+'create_another_mo' : X
+'test_symbols_1' : X
+'test_symbols_2' : X
+'test_calldepth_1' : X
+'test_comments_1' : X
+'deepcalldepth_1' : X
+'test_if_1' : X
+'test_if_2' : X
+'test_if_3' : X
+'test_if_4' : X
+'test_if_5' : X
+'test_return_1' : X
+'test_return_2' : X
+'test_print_1' : X
+'test_funcparam_1' : X
+'test_funcparam_2' : X
+'and_then_exit' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X
 Symbol Table
-'main_tc' : 0
+'main_tc' : X
 Symbol Table
-'global_var1' : 32
-'global_var2' : 33
-'deep' : 9
+'global_var1' : X
+'global_var2' : X
+'deep' : X

@@ -1,33 +1,33 @@
 Symbol Table
 Symbol Table
-'a' : 1
+'a' : X
 Symbol Table
 Symbol Table
-'a' : 1
-'b' : 2
+'a' : X
+'b' : X
 Symbol Table
 Symbol Table
-'a' : 1
-'b' : 2
-'c' : 3
+'a' : X
+'b' : X
+'c' : X
 Symbol Table
 Symbol Table
-'a' : 4
-'b' : 2
-'c' : 3
+'a' : X
+'b' : X
+'c' : X
 Symbol Table
 Symbol Table
-'a' : 4
-'b' : 5
-'c' : 3
+'a' : X
+'b' : X
+'c' : X
 Symbol Table
 Symbol Table
-'a' : 4
-'b' : 5
-'c' : 6
+'a' : X
+'b' : X
+'c' : X
 Symbol Table
 Symbol Table
-'testcase_001' : 0
+'testcase_001' : X
 Symbol Table
 Exiting application...
-Execution time: XXX
+Execution time: X

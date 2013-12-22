@@ -689,6 +689,49 @@ void MGFramework::logEval(const char *logFileName)
 }
 
 
+std::string MGFramework::filterLine(const char* line)
+{
+	std::string lineRes("");
+	bool insideFilteredInt = false;
+	char c[2] = {0, 0};
+
+	for(unsigned int i=0; i < strlen(line); ++i)
+	{
+		if(line[i] >= '0' && line[i] <= '9')
+		{
+			if(i>0 && !insideFilteredInt && (line[i-1]=='[' || line[i-1]==':' || line[i-1]=='.'))
+			{
+				c[0]='X';
+				lineRes += std::string(c);
+				insideFilteredInt=true;
+			}
+			if(i>1 && !insideFilteredInt && line[i-1]==' ' && line[i-2]==':')
+			{
+				c[0]='X';
+				lineRes += std::string(c);
+				insideFilteredInt=true;
+			}
+			else if(insideFilteredInt)
+			{
+				// do nothing..
+			}
+			else
+			{
+				c[0]=line[i];
+				lineRes += std::string(c);
+				insideFilteredInt=false;
+			}
+		}
+		else
+		{
+			c[0]=line[i];
+			lineRes += std::string(c);
+			insideFilteredInt=false;
+		}
+	}
+	return lineRes;
+}
+
 void MGFramework::logFilter(const char *logFileName)
 {
 	FILE *logf = NULL;
@@ -739,11 +782,13 @@ void MGFramework::logFilter(const char *logFileName)
 				foundWarning != std::string::npos ||
 				foundError != std::string::npos)
 			{
+				/*
 				if(strlen(logLine) > 9 && logLine[0]=='[' && logLine[9]==']')
 				{
 					logLine[1] = 'X'; logLine[2] = 'X'; logLine[3] = 'X'; logLine[4] = 'X';
 					logLine[5] = 'X'; logLine[6] = 'X'; logLine[7] = 'X'; logLine[8] = 'X';
 				}
+				*/
 			}
 
 			if (foundInfo != std::string::npos/* ||
@@ -752,9 +797,11 @@ void MGFramework::logFilter(const char *logFileName)
 				// Ignore all info prints - result should not depend on logging settings
 				// Ignore all warnings - warnings are not errors and can be unpredictable
 			}
+			/*
 			else if (foundError != std::string::npos || foundWarning != std::string::npos)
 			{
 				// filter away only some digits before writing to filtered log?
+				
 				for(unsigned int i=0; i<strlen(logLine); ++i)
 				{
 					if(logLine[i]>='0' && logLine[i]<='9')
@@ -762,8 +809,11 @@ void MGFramework::logFilter(const char *logFileName)
 				//		logLine[i] = 'X';
 					}
 				}
-				fputs(logLine, filteredlf);
+				
+				fputs(filterLine(logLine).c_str(), filteredlf);
 			}
+			*/
+			/*
 			else if (	foundExec != std::string::npos ||
 						foundSleep != std::string::npos)
 			{
@@ -775,11 +825,12 @@ void MGFramework::logFilter(const char *logFileName)
 						logLine[i] = 'X';
 					}
 				}
-				fputs(logLine, filteredlf);
+				fputs(filterLine(logLine).c_str(), filteredlf);
 			}
+			*/
 			else
 			{
-				fputs(logLine, filteredlf);
+				fputs(filterLine(logLine).c_str(), filteredlf);
 			}
 		}
 	}

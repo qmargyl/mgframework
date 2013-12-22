@@ -2,96 +2,96 @@ Symbol Table
 Symbol Table
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_100' : 0
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_100' : 0
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_100' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_100' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_100' : 0
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_100' : 0
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_100' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_100' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
-Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
-'runframes_20' : 0
+'runframes_20' : X
 Symbol Table
 Symbol Table
-'runframes_100' : 0
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
+Symbol Table
+Symbol Table
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
+Symbol Table
+Symbol Table
+'runframes_20' : X
+Symbol Table
+'runframes_20' : X
+Symbol Table
+Symbol Table
+'runframes_100' : X
 Symbol Table
 MGMovingObject ID 70 History
-0	0: CalculatePath: 9,7 -> 4,7
+0	0: CalculatePath: X,7 -> 4,7
 1	0: ChangeState: MOStateIdle -> MOStateMoving
-2	0: FinalDestination: 4,7
+2	0: FinalDestination: X,7
 3	0: ChangeState: MOStateMoving -> MOStateIdle
 Symbol Table
-'testcase_004' : 0
+'testcase_004' : X
 Symbol Table
 Exiting application...
-Execution time: XXXX
+Execution time: X
