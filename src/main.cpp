@@ -12,6 +12,7 @@ int main(int argc, char **argv)
 	bool loggingOn = false;
 	bool scriptFile = false;
 	bool logEval = false;
+	bool logEvalNegative = false;
 	bool logCompare = false;
 	bool noRandom = false;
 	char scriptFileName[128] = "";
@@ -75,6 +76,22 @@ int main(int argc, char **argv)
 					instanceType = MGFSERVERINSTANCE;
 				}
 			}
+			else if(strcmp(argv[i], "-log_eval_negative")==0)
+			{
+				if(i+1 == argc)
+				{
+					//No parameter after -log_eval_negative
+					goto EXIT_MAIN_RIGHT_AWAY;
+				}
+				else
+				{
+					//Store argv[++i] as script file name..
+					strcpy(logEvalFileName, argv[++i]);
+					logEval = true;
+					logEvalNegative = true;
+					instanceType = MGFSERVERINSTANCE;
+				}
+			}
 			else if(strcmp(argv[i], "-log_compare")==0)
 			{
 				if(i+1 == argc)
@@ -131,8 +148,7 @@ int main(int argc, char **argv)
 		// In case of using the framework for log evaluation, don't init and run.
 		// Create filtered logs first, then run evaluation..
 		p2->logFilter(logEvalFileName);
-		// XXX: Should only eval for positive tests..
-		p2->logEval(logEvalFileName);
+		p2->logEval(logEvalFileName, logEvalNegative);
 		if(logCompare)
 		{
 			// Compares logEvalFileName.filtered to logCompareFileName 

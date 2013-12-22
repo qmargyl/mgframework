@@ -155,6 +155,16 @@ echo|set /p="</td></tr></p>"
 
 
 echo|set /p="<tr><td><p>"
+echo|set /p="Test case .\test\tc_014_basic_negative.mgf<br>"
+echo|set /p="{<br>Running ... "
+project2.exe -logging -no_random -script .\test\tc_014_basic_negative.mgf	>	.\test\result\tc_014_basic_negative.log
+echo|set /p="<b>DONE</b><br>"
+project2.exe -log_eval_negative .\test\result\tc_014_basic_negative.log -log_compare .\test\expected\tc_014_basic_negative.log.filtered
+echo|set /p="}<br>"
+echo|set /p="</td></tr></p>"
+
+
+echo|set /p="<tr><td><p>"
 echo|set /p="Test case .\test\tc_999_basic_testcoverage.mgf<br>"
 echo|set /p="{<br>Running ... "
 project2.exe -logging -no_random -script .\test\tc_999_basic_testcoverage.mgf	>	.\test\result\tc_999_basic_testcoverage.log
@@ -162,3 +172,5 @@ echo|set /p="<b>DONE</b><br>"
 project2.exe -log_eval .\test\result\tc_999_basic_testcoverage.log -log_compare .\test\expected\tc_999_basic_testcoverage.log.filtered
 echo|set /p="}<br>"
 echo|set /p="</td></tr></p>"
+
+

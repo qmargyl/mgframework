@@ -1,0 +1,38 @@
+
+call main_tc
+
+
+
+
+
+
+
+
+function main_tc
+  print "Test case 1"
+  call test_nonexisting_function_1
+
+  exit application
+end
+
+
+
+
+
+
+
+
+
+
+
+
+function test_nonexisting_function_1
+  print "Calling a non-existing function"
+  call this_function_does_not_exist
+end
+
+
+
+
+
+

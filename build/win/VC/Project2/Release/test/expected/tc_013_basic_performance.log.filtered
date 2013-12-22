@@ -37,7 +37,7 @@ Symbol Table
 Symbol Table
 'setdest_plus_10_frames' : X
 Symbol Table
-[X.X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
+[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
 Symbol Table
 'run_10_frames' : X
 Symbol Table

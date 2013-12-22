@@ -1,0 +1,17 @@
+Symbol Table
+Test case 1
+Symbol Table
+Calling a non-existing function
+Symbol Table
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::parse found unexpected end of file
+Symbol Table
+'this_function_does_not_exist' : X
+Symbol Table
+Symbol Table
+'test_nonexisting_function_1' : X
+Symbol Table
+Exiting application...
+Execution time: X
+Symbol Table
+'main_tc' : X
+Symbol Table

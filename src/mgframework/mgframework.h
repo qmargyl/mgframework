@@ -23,7 +23,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.38.6"
+#define MGFRAMEWORKVERSION "1.0.38.7"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -386,7 +386,7 @@ class MGFramework :public MGComponent
 		int parse(const char *sFileName);
 
 		// Evaluating log files to PASS/FAIL
-		void logEval(const char *logFileName);
+		void logEval(const char *logFileName, bool negativeTest=false);
 
 		// Filtering log files
 		std::string filterLine(const char* line);

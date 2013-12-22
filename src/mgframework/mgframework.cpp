@@ -323,7 +323,14 @@ int MGFramework::parse(const char *sFileName)
 			neof = fgets(scriptLine, MGF_SCRIPTLINE_MAXLENGTH, sf);
 			if(neof == NULL)
 			{
-				MGFLOG_INFO("MGFramework::parse detected end of file");
+				if(!foundFunction)
+				{
+					MGFLOG_ERROR("MGFramework::parse found unexpected end of file");
+				}
+				else
+				{
+					MGFLOG_INFO("MGFramework::parse detected end of file");
+				}
 				break;
 			}
 			else
@@ -583,7 +590,7 @@ int MGFramework::parse(const char *sFileName)
 	return returnValue;
 }
 
-void MGFramework::logEval(const char *logFileName)
+void MGFramework::logEval(const char *logFileName, bool negativeTest)
 {
 	FILE *lf = NULL;
 	errno_t logError = fopen_s(&lf, logFileName, "rt");
@@ -655,7 +662,7 @@ void MGFramework::logEval(const char *logFileName)
 			}
 		}
 
-		if(nErrors != 0)
+		if(nErrors != 0 && !negativeTest)
 		{
 			std::cout << "<b><font color=red>FAIL</font></b> (" << nErrors << " errors, " << nWarnings << " warnings)";
 		}
@@ -666,16 +673,22 @@ void MGFramework::logEval(const char *logFileName)
 		else
 		{
 			std::cout << "<b><font color=green>PASS</font></b>";
-			if(nWarnings>0)
+			// Also handle PASS for negative tests - count errors
+			if(nWarnings > 0 || nErrors > 0)
 			{
-				std::cout << " (" << nWarnings << " warnings)";
+				std::cout << " (";
+				if(nErrors != 0 && negativeTest)
+				{
+					std::cout << nErrors << " expected errors, ";
+				}
+				std::cout << nWarnings << " warnings)";
 			}
 		}
 		std::cout << ", " << execTimeMS.c_str() << " ms<br>" << std::endl;
 
 		if(nErrors != 0)
 		{
-			for(int i = 0; i < errors.size(); ++i)
+			for(unsigned int i = 0; i < errors.size(); ++i)
 			{
 				std::cout << "<font color=red>" << errors[i] << "</font><br>" << std::endl;
 			}
@@ -694,11 +707,6 @@ std::string MGFramework::filterLine(const char* line)
 	std::string lineRes("");
 	bool insideFilteredInt = false;
 	char c[2] = {0, 0};
-
-//	if(strlen(line)<2)
-//	{
-//		return lineRes;
-//	}
 
 	for(unsigned int i=0; i < strlen(line); ++i)
 	{
@@ -726,6 +734,10 @@ std::string MGFramework::filterLine(const char* line)
 				lineRes += std::string(c);
 				insideFilteredInt=false;
 			}
+		}
+		else if(line[i] == '.' && insideFilteredInt)
+		{
+			// do nothing..
 		}
 		else
 		{
