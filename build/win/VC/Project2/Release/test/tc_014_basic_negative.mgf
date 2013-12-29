@@ -11,7 +11,16 @@ call main_tc
 function main_tc
   print "Test case 1"
   call test_nonexisting_function_1
+
+  print "Test case 2"
   call test_expect_mo_1
+  call test_expect_so_1
+  call test_expect_pe_1
+
+  print "Test case 3"
+  call test_script_syntax_1
+  call test_script_syntax_2
+
   exit application
 end
 
@@ -33,8 +42,62 @@ end
 
 
 function test_expect_mo_1
-
+  print "Expecting wrong number of MO"
+  delete all mo
+  add mo 1
+  expect getnumberofmo 0
+  delete all mo
 end
+
+
+function test_expect_so_1
+  print "Expecting wrong number of SO"
+  delete all so
+  add so 1
+  expect getnumberofso 0
+  delete all so
+end
+
+
+function test_expect_pe_1
+  print "Expecting wrong number of PE"
+  delete all pe
+  add pe 1
+  expect getnumberofpe 0
+  delete all pe
+end
+
+
+function test_script_syntax_1
+  print "Unexpected end of function"
+  var1 = 4
+  if var1 == 4
+  // Unexpected end of function
+end
+
+
+function test_script_syntax_2
+  print "Unexpected endif"
+  var1 = 4
+  // Unexpected endif
+  endif
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

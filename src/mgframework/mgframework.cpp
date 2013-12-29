@@ -352,7 +352,13 @@ int MGFramework::parse(const char *sFileName)
 				{
 					if(v_scriptLine.size() == 1 && v_scriptLine[0] == "end")
 					{
-						if(functionName!=NULL)
+						if(insideIf || insideElse)
+						{
+							// Print an error and then carry on with ending the function..
+							MGFLOG_ERROR("MGFramework::parse found unexpected 'end'");
+							break;
+						}
+						else if(functionName!=NULL)
 						{
 							MGFLOG_INFO("MGFramework::parse found end of function");
 							break;

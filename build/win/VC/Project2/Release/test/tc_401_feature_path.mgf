@@ -71,143 +71,143 @@ end
 
 // Four MO passing eachother
 function testcase_002
-logging on
-map logging on
-map setsize 128 128 32 32
-create mo 1 -x 5 -y 5 -speed 3
-add mo 1 -x 10 -y 10 -speed 3
-add mo 1 -x 10 -y 5 -speed 3
-add mo 1 -x 5 -y 10 -speed 3
-mo 0 logging on
-mo 1 logging on
-mo 2 logging on
-mo 3 logging on
-mo 0 setdestination 11 11
-mo 1 setdestination 4 4
-mo 2 setdestination 4 11
-mo 3 setdestination 11 4
-expect getnumberofmo 4
-mo 0 expect getlocation 5 5
-mo 1 expect getlocation 10 10
-mo 2 expect getlocation 10 5
-mo 3 expect getlocation 5 10
-call runframes_100
-call runframes_100
-call runframes_100
-mo 0 expect getlocation 11 11
-mo 1 expect getlocation 4 4
-mo 2 expect getlocation 4 11
-mo 3 expect getlocation 11 4
-delete all mo
-expect getnumberofmo 0
-map logging off
+  logging on
+  map logging on
+  map setsize 128 128 32 32
+  create mo 1 -x 5 -y 5 -speed 3
+  add mo 1 -x 10 -y 10 -speed 3
+  add mo 1 -x 10 -y 5 -speed 3
+  add mo 1 -x 5 -y 10 -speed 3
+  mo 0 logging on
+  mo 1 logging on
+  mo 2 logging on
+  mo 3 logging on
+  mo 0 setdestination 11 11
+  mo 1 setdestination 4 4
+  mo 2 setdestination 4 11
+  mo 3 setdestination 11 4
+  expect getnumberofmo 4
+  mo 0 expect getlocation 5 5
+  mo 1 expect getlocation 10 10
+  mo 2 expect getlocation 10 5
+  mo 3 expect getlocation 5 10
+  call runframes_100
+  call runframes_100
+  call runframes_100
+  mo 0 expect getlocation 11 11
+  mo 1 expect getlocation 4 4
+  mo 2 expect getlocation 4 11
+  mo 3 expect getlocation 11 4
+  delete all mo
+  expect getnumberofmo 0
+  map logging off
 end
 
 
 
 // One MO goes around a wall
 function testcase_003
-logging on
-map logging on
-map setsize 128 128 32 32
-create mo 1 -x 5 -y 5 -speed 3
-add mo 1 -x 5 -y 6 -speed 3
-add mo 1 -x 5 -y 7 -speed 3
-add mo 1 -x 5 -y 8 -speed 3
-add mo 1 -x 5 -y 9 -speed 3
-mo 0 logging on
-mo 1 logging on
-mo 2 logging on
-mo 3 logging on
-mo 4 logging on
-add mo 1 -x 9 -y 7 -speed 3
-mo 5 logging on
-expect getnumberofmo 6
-mo 5 setdestination 4 7
-mo 5 expect getlocation 9 7
-call runframes_100
-call runframes_100
-call runframes_100
-mo 5 expect getlocation 4 7
-delete all mo
-expect getnumberofmo 0
-map logging off
+  logging on
+  map logging on
+  map setsize 128 128 32 32
+  create mo 1 -x 5 -y 5 -speed 3
+  add mo 1 -x 5 -y 6 -speed 3
+  add mo 1 -x 5 -y 7 -speed 3
+  add mo 1 -x 5 -y 8 -speed 3
+  add mo 1 -x 5 -y 9 -speed 3
+  mo 0 logging on
+  mo 1 logging on
+  mo 2 logging on
+  mo 3 logging on
+  mo 4 logging on
+  add mo 1 -x 9 -y 7 -speed 3
+  mo 5 logging on
+  expect getnumberofmo 6
+  mo 5 setdestination 4 7
+  mo 5 expect getlocation 9 7
+  call runframes_100
+  call runframes_100
+  call runframes_100
+  mo 5 expect getlocation 4 7
+  delete all mo
+  expect getnumberofmo 0
+  map logging off
 end
 
 
 
 // One MO goes around a wall
 function testcase_004
-logging on
-map logging on
-map setsize 128 128 32 32
-create mo 1 -x 5 -y 5 -speed 3
-add mo 1 -x 5 -y 6 -speed 3
-add mo 1 -x 5 -y 7 -speed 3
-add mo 1 -x 5 -y 8 -speed 3
-add mo 1 -x 5 -y 9 -speed 3
-add mo 1 -x 5 -y 10 -speed 3
-add mo 1 -x 5 -y 11 -speed 3
-mo 0 logging on
-mo 1 logging on
-mo 2 logging on
-mo 3 logging on
-mo 4 logging on
-mo 5 logging on
-mo 6 logging on
-add mo 1 -x 9 -y 7 -speed 3
-mo 7 logging on
-mo 7 history on
-expect getnumberofmo 8
-mo 7 setdestination 4 7
-mo 7 expect getlocation 9 7
-call runframes_100
-call runframes_100
-call runframes_100
-mo 7 expect getlocation 4 7
-mo 7 history off
-delete all mo
-expect getnumberofmo 0
-map logging off
+  logging on
+  map logging on
+  map setsize 128 128 32 32
+  create mo 1 -x 5 -y 5 -speed 3
+  add mo 1 -x 5 -y 6 -speed 3
+  add mo 1 -x 5 -y 7 -speed 3
+  add mo 1 -x 5 -y 8 -speed 3
+  add mo 1 -x 5 -y 9 -speed 3
+  add mo 1 -x 5 -y 10 -speed 3
+  add mo 1 -x 5 -y 11 -speed 3
+  mo 0 logging on
+  mo 1 logging on
+  mo 2 logging on
+  mo 3 logging on
+  mo 4 logging on
+  mo 5 logging on
+  mo 6 logging on
+  add mo 1 -x 9 -y 7 -speed 3
+  mo 7 logging on
+  mo 7 history on
+  expect getnumberofmo 8
+  mo 7 setdestination 4 7
+  mo 7 expect getlocation 9 7
+  call runframes_100
+  call runframes_100
+  call runframes_100
+  mo 7 expect getlocation 4 7
+  mo 7 history off
+  delete all mo
+  expect getnumberofmo 0
+  map logging off
 end
 
 
 
 // One MO goes around a wall
 function testcase_005
-logging on
-map logging on
-map setsize 128 128 32 32
-create mo 1 -x 5 -y 5 -speed 3
-add mo 1 -x 5 -y 6 -speed 3
-add mo 1 -x 5 -y 7 -speed 3
-add mo 1 -x 5 -y 8 -speed 3
-add mo 1 -x 5 -y 9 -speed 3
-add mo 1 -x 5 -y 10 -speed 3
-add mo 1 -x 5 -y 11 -speed 3
-mo 0 logging on
-mo 1 logging on
-mo 2 logging on
-mo 3 logging on
-mo 4 logging on
-mo 5 logging on
-mo 6 logging on
-add mo 1 -x 9 -y 7 -speed 3
-mo 7 logging on
-add mo 1 -x 5 -y 4 -speed 3
-add mo 1 -x 5 -y 3 -speed 3
-mo 8 logging on
-mo 9 logging on
-expect getnumberofmo 10
-mo 7 setdestination 4 7
-mo 7 expect getlocation 9 7
-call runframes_100
-call runframes_100
-call runframes_100
-mo 7 expect getlocation 4 7
-delete all mo
-expect getnumberofmo 0
-map logging off
+  logging on
+  map logging on
+  map setsize 128 128 32 32
+  create mo 1 -x 5 -y 5 -speed 3
+  add mo 1 -x 5 -y 6 -speed 3
+  add mo 1 -x 5 -y 7 -speed 3
+  add mo 1 -x 5 -y 8 -speed 3
+  add mo 1 -x 5 -y 9 -speed 3
+  add mo 1 -x 5 -y 10 -speed 3
+  add mo 1 -x 5 -y 11 -speed 3
+  mo 0 logging on
+  mo 1 logging on
+  mo 2 logging on
+  mo 3 logging on
+  mo 4 logging on
+  mo 5 logging on
+  mo 6 logging on
+  add mo 1 -x 9 -y 7 -speed 3
+  mo 7 logging on
+  add mo 1 -x 5 -y 4 -speed 3
+  add mo 1 -x 5 -y 3 -speed 3
+  mo 8 logging on
+  mo 9 logging on
+  expect getnumberofmo 10
+  mo 7 setdestination 4 7
+  mo 7 expect getlocation 9 7
+  call runframes_100
+  call runframes_100
+  call runframes_100
+  mo 7 expect getlocation 4 7
+  delete all mo
+  expect getnumberofmo 0
+  map logging off
 end
 
 
