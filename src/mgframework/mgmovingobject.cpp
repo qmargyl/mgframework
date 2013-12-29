@@ -21,7 +21,8 @@ MGMovingObject::MGMovingObject()
 MGMovingObject::~MGMovingObject()
 {
 	m_Path.clear();
-	if(m_History) delete m_History;
+	//if(m_History) m_History->clear();
+	disableHistory();
 }
 
 void MGMovingObject::initialize()
@@ -329,6 +330,7 @@ void MGMovingObject::copy(MGMovingObject *src)
 	m_LoggingEnabled = src->m_LoggingEnabled;
 	m_CurrentState = src->m_CurrentState;
 	m_Path = src->m_Path;
+	//m_History = src->m_History;
 }
 
 bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)

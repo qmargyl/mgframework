@@ -11,7 +11,7 @@ call main_tc
 function main_tc
   print "Test case 1"
   call test_nonexisting_function_1
-
+  call test_expect_mo_1
   exit application
 end
 
@@ -32,7 +32,9 @@ function test_nonexisting_function_1
 end
 
 
+function test_expect_mo_1
 
+end
 
 
 

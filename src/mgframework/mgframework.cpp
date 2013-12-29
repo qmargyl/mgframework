@@ -59,6 +59,8 @@ MGFramework::MGFramework():
 
 	m_SymbolTable = new MGSymbolTable();
 	m_SymbolTableTransfer = new MGSymbolTable();
+
+	m_CommandQueue.clear();
 }
 
 MGFramework::~MGFramework()
@@ -256,7 +258,7 @@ int MGFramework::parse(const char *sFileName)
 	int returnValue = 0;
 	if(sFileName==NULL)
 	{
-		MGFLOG_INFO("MGFramework::parse was called with argument NULL, exiting function...");
+		//MGFLOG_INFO("MGFramework::parse was called with argument NULL, exiting function...");
 		return returnValue;
 	}
 
@@ -1005,6 +1007,17 @@ void MGFramework::handleMGFGameLogics()
 			setDesiredFPS(biggest(1, getFPS() - 1));
 		}
 	}
+
+	// XXX: Perhaps the commands are already handled before getLastFrameDelayTime() returns a vaid number?
+	/*
+	int timeLeftEstimate = MGF_GetExecTimeMS();
+	while(!m_CommandQueue.empty() && (MGF_GetExecTimeMS() - timeLeftEstimate) < getLastFrameDelayTime())
+	{
+		std::string cmd = m_CommandQueue.back();
+		m_CommandQueue.pop_back();
+		runConsoleCommand(cmd.c_str(), this, NULL);
+	}
+	*/
 }
 
 
@@ -1687,6 +1700,23 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				if(m_MO != NULL && m_MO[i].isMarked())
 				{
 					m_MO[i].runConsoleCommand(c, this, s);
+
+					/*
+					std::string cmd("");
+					for(int n=0; n<cmdvec.size(); ++n)
+					{
+						if(n==1)
+						{
+							cmd += ( toString(i) + std::string(" "));
+						}
+						else
+						{
+							cmd += ( cmdvec[n] + std::string(" "));
+						}
+					}
+					MGFLOG_INFO("Adding to command queue: " << cmd.c_str())
+					m_CommandQueue.push_back(cmd.c_str());
+					*/
 				}
 				else if(m_MO == NULL)
 				{
@@ -1704,6 +1734,23 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				if(m_MO != NULL)
 				{
 					m_MO[i].runConsoleCommand(c, this, s);
+
+					/*
+					std::string cmd("");
+					for(int n=0; n<cmdvec.size(); ++n)
+					{
+						if(n==1)
+						{
+							cmd += ( toString(i) + std::string(" "));
+						}
+						else
+						{
+							cmd += ( cmdvec[n] + std::string(" "));
+						}
+					}
+					MGFLOG_INFO("Adding to command queue: " << cmd.c_str())
+					m_CommandQueue.push_back(cmd.c_str());
+					*/
 				}
 				else
 				{
@@ -2149,6 +2196,7 @@ void MGFramework::createMO(int n)
 	for(int i = 0; i < getNumberOfMO(); ++i)
 	{
 		m_Map.unOccupy(m_MO[i].getTileX(), m_MO[i].getTileY());
+		m_MO[i].disableHistory();
 	}
 
 	if(m_MO) delete[] m_MO;
@@ -2225,6 +2273,7 @@ void MGFramework::deleteMO(int index)
 			else if(i==getNumberOfMO()-1)
 			{
 				//No need to actually delete the MO since we will not access it if it's outside getNumberOfMO()...
+				m_MO[i].disableHistory();
 			}
 			else
 			{

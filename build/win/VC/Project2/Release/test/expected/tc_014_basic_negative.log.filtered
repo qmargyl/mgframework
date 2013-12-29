@@ -10,6 +10,12 @@ Symbol Table
 Symbol Table
 'test_nonexisting_function_1' : X
 Symbol Table
+Symbol Table
+'test_nonexisting_function_1' : X
+Symbol Table
+'test_nonexisting_function_1' : X
+'test_expect_mo_1' : X
+Symbol Table
 Exiting application...
 Execution time: X
 Symbol Table

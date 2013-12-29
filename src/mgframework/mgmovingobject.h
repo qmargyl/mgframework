@@ -94,7 +94,7 @@ public:
 
 	// History related
 	void enableHistory(){ if(!m_History) m_History = new std::vector<std::string>; }
-	void disableHistory(){ if(m_History) delete m_History; }
+	void disableHistory(){ if(m_History) delete m_History; m_History = NULL; }
 	void printHistory();
 	void addToHistory(const char *str);
 

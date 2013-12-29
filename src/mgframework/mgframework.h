@@ -23,7 +23,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.38.7"
+#define MGFRAMEWORKVERSION "1.0.38.8"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -221,6 +221,9 @@ class MGFramework :public MGComponent
 		// Symbol related
 		int m_CommandReturnVal;
 		void symbolAssignTo(string sym, string val, MGSymbolTable *s);
+
+		// Command queue related
+		std::vector<std::string> m_CommandQueue;
 
 		// Font
 #ifndef MGF_DEBUGGING_ENABLED
