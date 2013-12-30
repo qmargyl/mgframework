@@ -1,1 +1,0 @@
-botwars.exe -server -port 666

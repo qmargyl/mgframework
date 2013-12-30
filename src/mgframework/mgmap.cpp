@@ -71,13 +71,14 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 	}
 
 	// Just an example...
+	/*
 	setTileProperty(3, 3, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
 	setTileProperty(4, 4, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
 	setTileProperty(5, 5, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
 	setTileProperty(6, 4, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
 	setTileProperty(7, 3, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
 	setTileProperty(8, 2, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
-
+	*/
 }
 
 

@@ -452,6 +452,7 @@ int MGFramework::parse(const char *sFileName)
 						else
 						{
 							MGFLOG_ERROR("Unsupported operator");
+							break;
 						}
 					}
 					else if(v_scriptLine.size() == 1 && v_scriptLine[0] == "endif")
@@ -459,6 +460,7 @@ int MGFramework::parse(const char *sFileName)
 						if(skipToEndIf == 0 && insideIf == 0 && insideElse == 0)
 						{
 							MGFLOG_ERROR("Unexpected 'endif'");
+							break;
 						}
 						else if(skipToEndIf > 0)
 						{
