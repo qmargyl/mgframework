@@ -42,10 +42,11 @@ bool Project2::init(int w, int h, int tw, int th)
 		m_Map.setRightEdge(64);
 
 		// Setup application specific game logics..
+		activateSelectiveTileRendering();
 
 		runConsoleCommand("open terminalserver", this, NULL);
-		runConsoleCommand("logging on", this, NULL); // Turn on logging for the MGFramework class
-		runConsoleCommand("map logging on", this, NULL); // Turn on logging for the MGMap class
+		runConsoleCommand("logging off", this, NULL); // Turn on logging for the MGFramework class
+		runConsoleCommand("map logging off", this, NULL); // Turn on logging for the MGMap class
 		runConsoleCommand("minimap on", this, NULL);
 
 		return true;
@@ -64,6 +65,7 @@ void Project2::handleGameLogics()
 void Project2::draw()
 {
 	// Draw all tiles visible in the window...
+	int nTilesDrawn = 0;
 	for (int x=0; x < m_Map.getWidth(); x++)
 	{
 		for ( int y=0; y < m_Map.getHeight(); y++)
@@ -72,16 +74,20 @@ void Project2::draw()
 			if(  ((x * m_Map.getTileWidth() + m_Map.getScrollX()) <= m_Window.getWidth() + m_Map.getTileWidth()) &&
 				 ((x * m_Map.getTileWidth() + m_Map.getScrollX()) >= 0 - m_Map.getTileWidth()) &&
 				 ((y * m_Map.getTileHeight() + m_Map.getScrollY()) <= m_Window.getHeight() + m_Map.getTileHeight()) &&
-				 ((y * m_Map.getTileHeight() + m_Map.getScrollY()) >= 0 - m_Map.getTileHeight())  )
+				 ((y * m_Map.getTileHeight() + m_Map.getScrollY()) >= 0 - m_Map.getTileHeight()) &&
+				 (!isSelectiveTileRenderingActive() || renderAllTiles() || m_Map.isMarkedForRendering(x, y)) )
 			{
 				if(m_Map.getTileProperty(x, y) & MGMAP_TP_PROPERTY_1)
 				{
 					drawSprite(m_Floor, getSurface(), 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
+					nTilesDrawn++;
 				}
 				else if(m_Map.getTileProperty(x, y) & MGMAP_TP_PROPERTY_2)
 				{
 					drawSprite(m_Floor, getSurface(), 32, 64, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
+					nTilesDrawn++;
 				}
+				m_Map.unmarkForRendering(x, y);
 			}
 		}
 	}
@@ -98,9 +104,24 @@ void Project2::draw()
 			if(detectCollisionRectangle(oX, oY, oX+m_Map.getTileWidth(), oY+m_Map.getTileHeight(), 0, 0, m_Window.getWidth(), m_Window.getHeight()))
 			{
 				drawSprite(m_MovingObject, getSurface(), 0, 0, oX, oY, m_Map.getTileWidth(), m_Map.getTileHeight());
+				nTilesDrawn++;
+				if(isSelectiveTileRenderingActive())
+				{
+					m_Map.markForRendering(m_MO[i].getTileX(), m_MO[i].getTileY());
+					m_Map.markForRendering(m_MO[i].getTileX()+1, m_MO[i].getTileY()+1);
+					m_Map.markForRendering(m_MO[i].getTileX()-1, m_MO[i].getTileY()-1);
+					m_Map.markForRendering(m_MO[i].getTileX()+1, m_MO[i].getTileY()-1);
+					m_Map.markForRendering(m_MO[i].getTileX()-1, m_MO[i].getTileY()+1);
+					m_Map.markForRendering(m_MO[i].getTileX()+1, m_MO[i].getTileY());
+					m_Map.markForRendering(m_MO[i].getTileX()-1, m_MO[i].getTileY());
+					m_Map.markForRendering(m_MO[i].getTileX(), m_MO[i].getTileY()+1);
+					m_Map.markForRendering(m_MO[i].getTileX(), m_MO[i].getTileY()-1);
+				}
+
 				if(m_MO[i].isMarked())
 				{
 					drawSprite(m_Mark, getSurface(), 0, 0, oX, oY, m_Map.getTileWidth(), m_Map.getTileHeight());
+					nTilesDrawn++;
 				}
 			}
 		}
@@ -118,6 +139,7 @@ void Project2::draw()
 			if(detectCollisionRectangle(sX, sY, sX+m_Map.getTileWidth(), sY+m_Map.getTileHeight(), 0, 0, m_Window.getWidth(), m_Window.getHeight()))
 			{
 				drawSprite(m_StationaryObject, getSurface(), 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight()+16);
+				nTilesDrawn++;
 			}
 		}
 	}
@@ -168,9 +190,14 @@ void Project2::draw()
 
 	// Example of how text can be printed on the surface.. Here FPS and time left between frames.
 #ifndef MGF_DEBUGGING_ENABLED
-	drawText(getSurface(), (string("MOs: ") + MGFramework::toString((int)getNumberOfMO())).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 30, 0, 0, 0, 0, 255, 0);
-	drawText(getSurface(), (string("FD : ") + MGFramework::toString((int)getLastFrameDelayTime())).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 50, 0, 0, 0, 0, 255, 0);
-	drawText(getSurface(), (string("FPS: ") + MGFramework::toString((int)getFPS())).c_str(), 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 70, 0, 0, 0, 0, 255, 0);
+	drawText(getSurface(), (string("MOs: ") + MGFramework::toString((int)getNumberOfMO()) + string("          ")).c_str(), 
+			 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 30, 0, 0, 0, 0, 255, 0);
+	drawText(getSurface(), (string("FD : ") + MGFramework::toString((int)getLastFrameDelayTime()) + string("          ")).c_str(), 
+			 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 50, 0, 0, 0, 0, 255, 0);
+	drawText(getSurface(), (string("FPS: ") + MGFramework::toString((int)getFPS()) + string("          ")).c_str(), 
+			 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 70, 0, 0, 0, 0, 255, 0);
+	drawText(getSurface(), (string("DT: ") + MGFramework::toString(nTilesDrawn) + string("          ")).c_str(), 
+			 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 90, 0, 0, 0, 0, 255, 0);
 #endif
 
 

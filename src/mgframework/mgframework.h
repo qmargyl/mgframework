@@ -23,7 +23,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.38.10"
+#define MGFRAMEWORKVERSION "1.0.38.11"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -225,6 +225,10 @@ class MGFramework :public MGComponent
 		// Command queue related
 		std::vector<std::string> m_CommandQueue;
 
+		// Selective Tile Rendering
+		bool m_SelectiveTileRendering;
+		bool m_RenderAll;
+
 		// Font
 #ifndef MGF_DEBUGGING_ENABLED
 		TTF_Font* m_Font;
@@ -275,9 +279,28 @@ class MGFramework :public MGComponent
 		void setFrameStartY(int y){ m_YFrameStart=y;}
 		void setFrameEndX(int x){ m_XFrameEnd=x;}
 		void setFrameEndY(int y){ m_YFrameEnd=y;}
-		void activateFraming(int x, int y){setFrameStartX(x); setFrameStartY(y); setFrameEndX(x); setFrameEndY(y); m_FramingOngoing=true;}
-		void deactivateFraming(){ m_FramingOngoing = false;}
-		void updateFraming(int x, int y){setFrameEndX(x); setFrameEndY(y);}
+
+		void activateFraming(int x, int y)
+		{
+			setFrameStartX(x); 
+			setFrameStartY(y); 
+			setFrameEndX(x); 
+			setFrameEndY(y); 
+			m_FramingOngoing=true;
+		}
+
+		void deactivateFraming()
+		{ 
+			m_FramingOngoing = false;
+			setRenderAllTiles();
+		}
+
+		void updateFraming(int x, int y)
+		{
+			setFrameEndX(x); 
+			setFrameEndY(y);
+			setRenderAllTiles();
+		}
 
 		// Execution, game logics..
 		void handleMGFGameLogics();
@@ -376,7 +399,7 @@ class MGFramework :public MGComponent
 		int getPort(){ return m_Port; }
 		void setPort(int p){ m_Port = p; }
 
-		//
+		// Randomization
 		void randomize(int seed){ std::srand(seed); }
 
 		// Program version
@@ -413,7 +436,20 @@ class MGFramework :public MGComponent
 		// MO selection related
 		void countMark(){m_MarkedMOs++;}
 		void countUnMark(){m_MarkedMOs--;}
-		int getNumberOfMarkedMO(){ return smallest(m_MarkedMOs, getNumberOfMO());}
+		
+		int getNumberOfMarkedMO()
+		{ 
+			return smallest(m_MarkedMOs, getNumberOfMO());
+		}
+
+		// Rendering optimizations
+		void activateSelectiveTileRendering(){ m_SelectiveTileRendering = true; }
+		void deactivateSelectiveTileRendering(){ m_SelectiveTileRendering = false; }
+		bool isSelectiveTileRenderingActive(){ return m_SelectiveTileRendering; }
+		void setRenderAllTiles(){ m_RenderAll = true; }
+		void unsetRenderAllTiles(){ m_RenderAll = false; }
+		bool renderAllTiles(){ return m_RenderAll; }
+
 
 #ifndef MGF_DEBUGGING_ENABLED
 		static int initializeWinsock(WORD wVersionRequested);

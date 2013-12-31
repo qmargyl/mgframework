@@ -56,6 +56,9 @@ private:
 	static unsigned long int m_SC_LongestCalculatedPath;
 	static unsigned long int m_SC_FailedPathCalculations;
 
+	// Rendering optimizations
+	bool *m_MarkedForRendering;
+
 
 
 public:
@@ -73,7 +76,7 @@ public:
 	void setScrollOffset(int px, int py);
 	void mouseScrollingRelease(int x, int y);
 	void mouseScrollingClick(int x, int y);
-	void mouseScrollingUpdate(int x, int y);
+	bool mouseScrollingUpdate(int x, int y);
 
 	// A graphics edge around the screen means we have to scroll
 	// a bit more to be able to see the whole map.
@@ -91,9 +94,26 @@ public:
 	void setTileProperty(int x, int y, Uint32 value){ m_TileProperty[y*getWidth()+x]=value;}
 	Uint32 getTileProperty(int x, int y){ return m_TileProperty[y*getWidth()+x];}
 
-	void occupy(int x, int y, int id){ m_Occupied[y*getWidth()+x]=id;}
-	void unOccupy(int x, int y){ m_Occupied[y*getWidth()+x]=0;}
-	int occupant(int x, int y){ if(x<0) return 0; if(y<0) return 0; if(x>=getWidth()) return 0; if(x>=getHeight()) return 0; return m_Occupied[y*getWidth()+x];}
+	void occupy(int x, int y, int id)
+	{ 
+		m_Occupied[y*getWidth()+x]=id;
+		//markForRendering(x, y);
+	}
+
+	void unOccupy(int x, int y)
+	{ 
+		m_Occupied[y*getWidth()+x]=0;
+		//markForRendering(x, y);
+	}
+
+	int occupant(int x, int y)
+	{ 
+		if(x<0) return 0; 
+		if(y<0) return 0; 
+		if(x>=getWidth()) return 0; 
+		if(x>=getHeight()) return 0; 
+		return m_Occupied[y*getWidth()+x];
+	}
 
 
 	int getTileIndex(int clickX, int clickY);
@@ -116,6 +136,41 @@ public:
 	unsigned long int getSCCalculatedPaths(){ return m_SC_CalculatedPaths; }
 	unsigned long int getSCLongestCalculatedPath(){ return m_SC_LongestCalculatedPath; }
 	unsigned long int getSCFailedPathCalculations(){ return m_SC_FailedPathCalculations; }
+
+	// Rendering optimizations
+	void unmarkForRendering(int x, int y)
+	{
+		if(x<0) return; 
+		if(y<0) return; 
+		if(x>=getWidth()) return; 
+		if(x>=getHeight()) return; 
+		m_MarkedForRendering[y*getWidth()+x]=false; 
+	}
+
+	void markForRendering(int x, int y)
+	{ 
+		if(x<0) return; 
+		if(y<0) return; 
+		if(x>=getWidth()) return; 
+		if(x>=getHeight()) return; 
+		m_MarkedForRendering[y*getWidth()+x]=true; 
+	}
+
+	void markForRendering(int i)
+	{ 
+		if(i<0) return; 
+		if(i>=getHeight()*getWidth()) return; 
+		m_MarkedForRendering[i]=true; 
+	}
+
+	bool isMarkedForRendering(int x, int y)
+	{
+		if(x<0) return false; 
+		if(y<0) return false; 
+		if(x>=getWidth()) return false; 
+		if(x>=getHeight()) return false; 
+		return m_MarkedForRendering[y*getWidth()+x]; 
+	}
 
 };
 

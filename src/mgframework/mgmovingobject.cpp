@@ -45,6 +45,7 @@ void MGMovingObject::initialize()
 void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 {
 	world->m_Map.unOccupy(getTileX(), getTileY());
+	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
 	m_TileX=x;
 	m_TileY=y;
 	m_X=0.0;
@@ -75,12 +76,14 @@ void MGMovingObject::setNextXY(int x, int y, MGFramework *world)
 			world->m_Map.occupant(m_NextTileX, m_NextTileY) == 0)
 		{
 			world->m_Map.unOccupy(m_NextTileX, m_NextTileY);
+			if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(m_NextTileX, m_NextTileY);
 		}
 		else
 		{
 			MGFLOG_WARNING("MGMovingObject::setNextXY tried to leave a tile not occupied by MO");
 		}
 		world->m_Map.occupy(x, y, getID());
+		if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(x, y);
 		m_NextTileX = x; 
 		m_NextTileY = y;
 	}

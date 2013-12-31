@@ -26,9 +26,11 @@ void MGStationaryObject::initialize()
 void MGStationaryObject::setTileXY(int x, int y, MGFramework *world)
 {
 	world->m_Map.unOccupy(getTileX(), getTileY());
+	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
 	m_TileX=x;
 	m_TileY=y;
 	world->m_Map.occupy(getTileX(), getTileY(), getID());
+	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
 }
 
 double MGStationaryObject::getDistance(int wx, int wy)

@@ -38,7 +38,9 @@ MGFramework::MGFramework():
 #endif
 	m_DynamicFPSEnabled(true),
 	m_Port(0),
-	m_CommandReturnVal(0)
+	m_CommandReturnVal(0),
+	m_RenderAll(true),
+	m_SelectiveTileRendering(false)
 {
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
@@ -237,7 +239,11 @@ bool MGFramework::processEvents()
 
 			case SDL_MOUSEMOTION:
 			{
-				m_Map.mouseScrollingUpdate(event.motion.x, event.motion.y);
+				if(m_Map.mouseScrollingUpdate(event.motion.x, event.motion.y))
+				{
+					// Set flag to trigger complete re-render
+					setRenderAllTiles();
+				}
 				if(isFramingOngoing()) updateFraming(event.motion.x, event.motion.y);
 				break;
 			}
@@ -970,14 +976,20 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 
 		// Sleep if there is time to spare..
 		m_DelayTime = (1000/getDesiredFPS()) - (MGF_GetExecTimeMS() - frameStartTime);
-
 		if(m_DelayTime > 0)
 		{
 			Sleep((DWORD)m_DelayTime);
 		}
-
 		m_ActualFrameTime = MGF_GetExecTimeMS() - frameStartTime;
-		if(runOneFrame) break;
+
+		// All tiles have been rendered at least once - start selective tile rendering
+		unsetRenderAllTiles();
+
+		// Mainly used for testing, only execute one frame if instructed
+		if(runOneFrame)
+		{
+			break;
+		}
 	}
 }
 
@@ -2204,6 +2216,7 @@ void MGFramework::createMO(int n)
 	for(int i = 0; i < getNumberOfMO(); ++i)
 	{
 		m_Map.unOccupy(m_MO[i].getTileX(), m_MO[i].getTileY());
+		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_MO[i].getTileX(), m_MO[i].getTileY());
 		m_MO[i].disableHistory();
 	}
 
@@ -2266,6 +2279,7 @@ void MGFramework::deleteMO(int index)
 	else
 	{
 		m_Map.unOccupy(m_MO[index].getTileX(), m_MO[index].getTileY());
+		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_MO[index].getTileX(), m_MO[index].getTileY());
 
 		for(int i=0; i<getNumberOfMO(); ++i)
 		{
@@ -2343,6 +2357,7 @@ bool MGFramework::setupMO(int i, int x, int y, unsigned int owner, int speed)
 			m_MO[i].setSpeed(1.0/(double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
 			m_MO[i].setOwner(owner);
 			m_Map.occupy(m_MO[i].getTileX(), m_MO[i].getTileY(), m_MO[i].getID());
+			if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_MO[i].getTileX(), m_MO[i].getTileY());
 		}
 		else
 		{
@@ -2402,6 +2417,7 @@ bool MGFramework::setupSO(int i, int x, int y)
 		{
 			m_SO[i].setTileXY(x, y, this);
 			m_Map.occupy(m_SO[i].getTileX(), m_SO[i].getTileY(), m_SO[i].getID());
+			if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_SO[i].getTileX(), m_SO[i].getTileY());
 		}
 		else
 		{
@@ -2887,6 +2903,7 @@ void MGFramework::deleteSO(int index)
 	else
 	{
 		m_Map.unOccupy(m_SO[index].getTileX(), m_SO[index].getTileY());
+		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_SO[index].getTileX(), m_SO[index].getTileY());
 		for(int i=0; i<getNumberOfSO(); ++i)
 		{
 			if(i<index)

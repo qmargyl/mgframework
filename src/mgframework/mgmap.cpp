@@ -21,7 +21,8 @@ MGMap::MGMap()
 	m_Occupied(NULL),
 	m_MouseScrollingOngoing(false),
 	m_MouseScrollingXClick(0),
-	m_MouseScrollingYClick(0)
+	m_MouseScrollingYClick(0),
+	m_MarkedForRendering(NULL)
 {
 
 }
@@ -30,6 +31,7 @@ MGMap::~MGMap()
 {
 	delete[] m_TileProperty;
 	delete[] m_Occupied;
+	delete[] m_MarkedForRendering;
 }
 
 
@@ -44,9 +46,11 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 {
 	if(m_TileProperty) delete[] m_TileProperty;
 	if(m_Occupied) delete[] m_Occupied;
+	if(m_MarkedForRendering) delete[] m_MarkedForRendering;
 
 	m_TileProperty = new Uint32[w*h];
 	m_Occupied = new int[w*h];
+	m_MarkedForRendering = new bool[w*h];
 	m_Width = w;
 	m_Height = h;
 	m_TileWidth = tw;
@@ -67,6 +71,7 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 		{
 			setTileProperty(x, y, MGMAP_TP_PROPERTY_1 | MGMAP_TP_NOOBSTACLE);
 			unOccupy(x, y);
+			unmarkForRendering(x, y);
 		}
 	}
 
@@ -131,7 +136,7 @@ void MGMap::mouseScrollingClick(int x, int y)
 	m_MouseScrollingYClick=y;
 }
 
-void MGMap::mouseScrollingUpdate(int x, int y)
+bool MGMap::mouseScrollingUpdate(int x, int y)
 {
 	// Possible optimization by re-using x and y variables and making the method inline.
 	if(m_MouseScrollingOngoing)
@@ -159,6 +164,7 @@ void MGMap::mouseScrollingUpdate(int x, int y)
 
 		setScrollOffset(setX, setY);
 	}
+	return m_MouseScrollingOngoing;
 }
 
 bool MGMap::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
