@@ -2061,28 +2061,12 @@ void MGFramework::deleteMO(int index)
 		m_Map.unOccupy(m_MO[index].getTileX(), m_MO[index].getTileY());
 		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_MO[index].getTileX(), m_MO[index].getTileY());
 
-		for(int i=0; i<getNumberOfMO(); ++i)
+		for(int i=index; i<getNumberOfMO()-1; ++i)
 		{
-			if(i<index)
-			{
-				// Do nothing...
-			}
-			else if(i>=index && i<getNumberOfMO()-1)
-			{
-				// Overwrite mo(i) with mo(i+1)
-				m_MO[i].copy(&m_MO[i+1]);
-			}
-			else if(i==getNumberOfMO()-1)
-			{
-				//No need to actually delete the MO since we will not access it if it's outside getNumberOfMO()...
-				m_MO[i].disableHistory();
-			}
-			else
-			{
-				MGFLOG_ERROR("MGFramework::deleteMO was not able to find the given index: " << index)
-				return;
-			}
+			m_MO[i].copy(&m_MO[i+1]);
 		}
+		//No need to actually delete the MO since we will not access it if it's outside getNumberOfMO()...
+		m_MO[getNumberOfMO()-1].disableHistory();
 		m_NMO = getNumberOfMO()-1;
 	}
 }
@@ -2245,26 +2229,10 @@ void MGFramework::deletePE(int index)
 	}
 	else
 	{
-		for(int i=0; i<getNumberOfPE(); ++i)
+		for(int i=index; i<getNumberOfPE()-1; ++i)
 		{
-			if(i<index)
-			{
-				// Do nothing...
-			}
-			else if(i>=index && i<getNumberOfPE()-1)
-			{
-				// Overwrite pe(i) with pe(i+1)
-				m_PE[i].copy(&m_PE[i+1]);
-			}
-			else if(i==getNumberOfPE()-1)
-			{
-				//No need to actually delete the PE since we will not access it if it's outside getNumberOfPE()...
-			}
-			else
-			{
-				MGFLOG_ERROR("MGFramework::deletePE was not able to find the given index: " << index)
-				return;
-			}
+			// Overwrite pe(i) with pe(i+1)
+			m_PE[i].copy(&m_PE[i+1]);
 		}
 		m_NPE = getNumberOfPE()-1;
 	}
@@ -2635,9 +2603,18 @@ void MGFramework::addConsoleCommandToQueue(const char *c)
 
 void MGFramework::deleteAllSO()
 {
-	if(m_SO) delete[] m_SO;
-	m_SO = NULL;
-	m_NSO = 0;
+	if(m_SO) 
+	{
+		for(int i=0; i<getNumberOfSO(); ++i)
+		{
+			m_Map.unOccupy(m_SO[i].getTileX(), m_SO[i].getTileY());
+			if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_SO[i].getTileX(), m_SO[i].getTileY());
+		}
+
+		delete[] m_SO;
+		m_SO = NULL;
+		m_NSO = 0;
+	}
 }
 
 void MGFramework::addSO(int n)
@@ -2668,26 +2645,11 @@ void MGFramework::deleteSO(int index)
 	{
 		m_Map.unOccupy(m_SO[index].getTileX(), m_SO[index].getTileY());
 		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_SO[index].getTileX(), m_SO[index].getTileY());
-		for(int i=0; i<getNumberOfSO(); ++i)
+
+		for(int i=index; i<getNumberOfSO()-1; ++i)
 		{
-			if(i<index)
-			{
-				// Do nothing...
-			}
-			else if(i>=index && i<getNumberOfSO()-1)
-			{
-				// Overwrite so(i) with so(i+1)
-				m_SO[i].copy(&m_SO[i+1]);
-			}
-			else if(i==getNumberOfSO()-1)
-			{
-				//No need to actually delete the SO since we will not access it if it's outside getNumberOfSO()...
-			}
-			else
-			{
-				MGFLOG_ERROR("MGFramework::deleteSO was not able to find the given index: " << index)
-				return;
-			}
+			// Overwrite so(i) with so(i+1)
+			m_SO[i].copy(&m_SO[i+1]);
 		}
 		m_NSO = getNumberOfSO()-1;
 	}
