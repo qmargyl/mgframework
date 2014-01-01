@@ -1173,83 +1173,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			return true;
 		}
 
-
-		case MGComponent_CREATE_MO_INT_PARAMLIST:
-		{
-			registerUsedCommand(MGComponent_CREATE_MO_INT_PARAMLIST);
-			int n = toInt(cmdvec[2], s);
-			int owner = 0;
-			int x = -1; // Invalid default value
-			int y = -1; // Invalid default value
-			int speed = 2; // Tiles per second.
-			for(unsigned int i = 3; i < cmdvec.size(); ++i)
-			{
-				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
-				{
-					owner = toInt(cmdvec[i+1], s);
-					++i;
-				}
-				else if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
-				{
-					x = toInt(cmdvec[i+1], s);
-					++i;
-					if(n!=1)
-					{
-						MGFLOG_ERROR("Parameter -x can only be set when creating one MO");
-						n = 0; // Abort MO creation..
-					}
-					
-				}
-				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
-				{
-					y = toInt(cmdvec[i+1], s);
-					++i;
-					if(n!=1)
-					{
-						MGFLOG_ERROR("Parameter -y can only be set when creating one MO");
-						n = 0; // Abort MO creation..
-					}
-					
-				}
-				else if(cmdvec[i]=="-speed" && cmdvec.size() > (i + 1))
-				{
-					speed = toInt(cmdvec[i+1], s);
-					++i;
-				}
-				else
-				{
-					MGFLOG_ERROR("Error in command (create mo <n>), bad parameter list");
-					n = 0; // Abort MO creation..
-				}
-			}
-			if(n > 0)
-			{
-				createMO(n);
-			}
-			else
-			{
-				MGFLOG_ERROR("Error in command (create mo <n>)");
-				return true;
-			}
-
-			if(m_MO != NULL)
-			{
-				for(int i=0;i<getNumberOfMO();i++)
-				{
-					// If setup fails we must setup the same index again 
-					// since the failing MO has been deleted.
-					if(!setupMO(i, x, y, owner, speed))--i;
-				}
-			}
-			else
-			{
-				MGFLOG_ERROR("MO storage is undefined");
-			}
-			return true;
-		}
-
-
-
 		case MGComponent_DELETE_ALL_MO_PARAMLIST:
 		{
 			registerUsedCommand(MGComponent_DELETE_ALL_MO_PARAMLIST);
@@ -1286,7 +1209,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				//Deleting ALL MOs is faster than deleting them per owner 
 				MGFLOG_INFO("Creating zero MO...");
-				createMO(0);
+				deleteAllMO();
 			}
 			return true;
 		}
@@ -1329,7 +1252,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				// Create zero new PEs.
 				MGFLOG_INFO("Creating zero PE...");
-				createPE(0);
+				deleteAllPE();
 			}
 			return true;
 		}
@@ -1372,7 +1295,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				//Deleting ALL SOs is faster than deleting them per owner 
 				MGFLOG_INFO("Creating zero SO...");
-				createSO(0);
+				deleteAllSO();
 			}
 			return true;
 		}
@@ -1519,51 +1442,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		}
 
 
-
-
-		case MGComponent_CREATE_PE_INT_PARAMLIST:
-		{
-			registerUsedCommand(MGComponent_CREATE_PE_INT_PARAMLIST);
-			int n = toInt(cmdvec[2], s);
-			int owner = 0;
-			for(unsigned int i = 3; i < cmdvec.size(); ++i)
-			{
-				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
-				{
-					owner = toInt(cmdvec[i+1], s);
-					++i;
-				}
-				else
-				{
-					MGFLOG_ERROR("Error in command (create pe <n>), bad parameter list");
-					n = 0; // Abort PE creation..
-				}
-			}
-			if(n > 0)
-			{
-				// Create the new PEs.
-				createPE(n);
-			}
-			else
-			{
-				MGFLOG_ERROR("Error in command (create pe <n>)");
-				return true;
-			}
-			for(int i=0;i<getNumberOfPE();i++)
-			{
-				if(m_PE != NULL)
-				{
-					m_PE[i].setOwner(owner);
-				}
-				if(m_PE == NULL)
-				{
-					MGFLOG_WARNING("m_PE = NULL and getNumberOfPE() = " << getNumberOfPE())
-				}
-			}
-			return true;
-		}
-
-
 		case MGComponent_ADD_PE_INT_PARAMLIST:
 		{
 			registerUsedCommand(MGComponent_ADD_PE_INT_PARAMLIST);
@@ -1602,69 +1480,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				{
 					MGFLOG_WARNING("m_PE = NULL and getNumberOfPE() = " << getNumberOfPE())
 				}
-			}
-			return true;
-		}
-
-
-		case MGComponent_CREATE_SO_INT_PARAMLIST:
-		{
-			registerUsedCommand(MGComponent_CREATE_SO_INT_PARAMLIST);
-			int n = toInt(cmdvec[2], s);
-			int x = -1; // Invalid default value
-			int y = -1; // Invalid default value
-			for(unsigned int i = 3; i < cmdvec.size(); ++i)
-			{
-				if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
-				{
-					x = toInt(cmdvec[i+1], s);
-					++i;
-					if(n!=1)
-					{
-						MGFLOG_ERROR("Parameter -x can only be set when creating one SO");
-						n = 0; // Abort SO creation..
-					}
-					
-				}
-				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
-				{
-					y = toInt(cmdvec[i+1], s);
-					++i;
-					if(n!=1)
-					{
-						MGFLOG_ERROR("Parameter -y can only be set when creating one SO");
-						n = 0; // Abort SO creation..
-					}
-					
-				}
-				else
-				{
-					MGFLOG_ERROR("Error in command (create so <n>), bad parameter list");
-					n = 0; // Abort SO creation..
-				}
-			}
-			if(n > 0)
-			{
-				createSO(n);
-			}
-			else
-			{
-				MGFLOG_ERROR("Error in command (create so <n>)");
-				return true;
-			}
-
-			if(m_SO != NULL)
-			{
-				for(int i=0;i<getNumberOfSO();i++)
-				{
-					// If setup fails we must setup the same index again 
-					// since the failing SO has been deleted.
-					if(!setupSO(i, x, y))--i;
-				}
-			}
-			else
-			{
-				MGFLOG_ERROR("SO storage is undefined");
 			}
 			return true;
 		}
@@ -1897,9 +1712,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			std::cout << "setfps <f> - Sets desired FPS (frames per second) to integer value <f>." << std::endl;
 			std::cout << "runframes <f> - Runs <f> game loops (frames) and presents some recorded data." << std::endl;
 			std::cout << "          <f> is an integer." << std::endl;
-			std::cout << "create <mo|pe> <n> - Creates <n> objects (and deletes any previously" << std::endl;
-			std::cout << "          existing ones). <n> is an integer. Only MGMovingObject (mo)"  << std::endl;
-			std::cout << "          and MGPeriodicEvent are (pe) supported at this point." << std::endl;
 			std::cout << "add <mo|pe> <n> - Adds <n> objects. <n> is an integer. Only MGMovingObject" << std::endl;
 			std::cout << "          (mo) and MGPeriodicEvent (pe) are supported at this point."  << std::endl;
 			std::cout << "open <terminalserver> - Opens the terminal server for framework commands " << std::endl;
@@ -2033,25 +1845,13 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 	}
 	else if(cmdvec.size() > 2)
 	{
-		if(cmdvec[0]=="create" && cmdvec[1]=="mo")
-		{
-			return MGComponent_CREATE_MO_INT_PARAMLIST; // Zero or more parameters..
-		}
-		if(cmdvec[0]=="create" && cmdvec[1]=="so")
-		{
-			return MGComponent_CREATE_SO_INT_PARAMLIST; // Zero or more parameters..
-		}
-		else if(cmdvec[0]=="add" && cmdvec[1]=="mo")
+		if(cmdvec[0]=="add" && cmdvec[1]=="mo")
 		{
 			return MGComponent_ADD_MO_INT_PARAMLIST; // Zero or more parameters..
 		}
 		else if(cmdvec[0]=="add" && cmdvec[1]=="so")
 		{
 			return MGComponent_ADD_SO_INT_PARAMLIST; // Zero or more parameters..
-		}
-		else if(cmdvec[0]=="create" && cmdvec[1]=="pe")
-		{
-			return MGComponent_CREATE_PE_INT_PARAMLIST; // Zero or more parameters..
 		}
 		else if(cmdvec[0]=="add" && cmdvec[1]=="pe")
 		{
@@ -2202,16 +2002,8 @@ bool MGFramework::setWindowProperties(eMGWindowScreenResolution screenResolution
 	return true;
 }
 
-
-void MGFramework::createMO(int n)
+void MGFramework::deleteAllMO()
 {
-	if(n > m_Map.getWidth()*m_Map.getHeight())
-	{
-		MGFLOG_ERROR(	"MGFramework::createMO cannot create " << n << " MO on a " 
-						<< m_Map.getWidth() << " by " << m_Map.getHeight() << " map")
-		return;
-	}
-
 	// Since all MO are deleted we can unoccupy all their tiles..
 	for(int i = 0; i < getNumberOfMO(); ++i)
 	{
@@ -2222,20 +2014,8 @@ void MGFramework::createMO(int n)
 
 	if(m_MO) delete[] m_MO;
 	m_MO = NULL;
-	m_NMO=n;
-	if(getNumberOfMO() > 0)
-	{
-		m_MO = new MGMovingObject[getNumberOfMO()];
-		for(int i=0; i<getNumberOfMO(); ++i)
-		{
-			m_MO[i].initialize();
-		}
-	}
-	else
-	{
-		m_MO = NULL;
-		m_MarkedMOs = 0;
-	}
+	m_NMO = 0;
+	m_MarkedMOs = 0;
 }
 
 int MGFramework::addMO(int n)
@@ -2431,19 +2211,11 @@ bool MGFramework::setupSO(int i, int x, int y)
 }
 
 
-void MGFramework::createPE(int n)
+void MGFramework::deleteAllPE()
 {
 	if(m_PE) delete[] m_PE;
 	m_PE = NULL;
-	m_NPE=n;
-	if(getNumberOfPE() > 0)
-	{
-		m_PE = new MGPeriodicEvent[getNumberOfPE()];
-	}
-	else
-	{
-		m_PE = NULL;
-	}
+	m_NPE = 0;
 }
 
 void MGFramework::addPE(int n)
@@ -2861,19 +2633,11 @@ void MGFramework::addConsoleCommandToQueue(const char *c)
 }
 
 
-void MGFramework::createSO(int n)
+void MGFramework::deleteAllSO()
 {
 	if(m_SO) delete[] m_SO;
 	m_SO = NULL;
-	m_NSO=n;
-	if(getNumberOfSO() > 0)
-	{
-		m_SO = new MGStationaryObject[getNumberOfSO()];
-	}
-	else
-	{
-		m_SO = NULL;
-	}
+	m_NSO = 0;
 }
 
 void MGFramework::addSO(int n)

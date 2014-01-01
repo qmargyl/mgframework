@@ -1,5 +1,6 @@
 exit application
 
 // Generate error in case we have not exited..
-create mo 1
+delete all mo
+add mo 1
 expect getnumberofmo 0

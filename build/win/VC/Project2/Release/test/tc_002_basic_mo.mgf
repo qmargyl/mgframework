@@ -4,12 +4,13 @@ map logging off
 
 
 // Creation and deletion
-create mo 1
+delete all mo
+add mo 1
 mo 0 logging on
 expect getnumberofmo 1
 delete all mo
 expect getnumberofmo 0
-create mo 5
+add mo 5
 expect getnumberofmo 5
 delete mo 2
 delete mo 2
@@ -28,7 +29,8 @@ expect getnumberofmo 0
 
 
 // Creation and deletion with -owner
-create mo 1 -owner 1
+delete all mo
+add mo 1 -owner 1
 expect getnumberofmo 1
 add mo 1 -owner 2
 expect getnumberofmo 2
@@ -36,11 +38,13 @@ delete all mo -owner 1
 expect getnumberofmo 1
 delete all mo -owner 2
 expect getnumberofmo 0
-create mo 5 -owner 1
+add mo 5 -owner 1
 expect getnumberofmo 5
-create mo 5 -owner 2
+delete all mo
+add mo 5 -owner 2
 expect getnumberofmo 5
-create mo 5 -owner 1
+delete all mo
+add mo 5 -owner 1
 expect getnumberofmo 5
 add mo 5 -owner 2
 expect getnumberofmo 10
@@ -89,7 +93,7 @@ expect getnumberofmarkedmo 0
 delete all mo
 expect getnumberofmo 0
 expect getnumberofmarkedmo 0
-create mo 2
+add mo 2
 mo 1 mark
 delete mo 0
 expect getnumberofmarkedmo 1
@@ -100,7 +104,8 @@ expect getnumberofmo 0
 
 
 // Verify location
-create mo 1 -x 15 -y 18
+delete all mo
+add mo 1 -x 15 -y 18
 expect getnumberofmo 1
 mo 0 logging on
 runoneframe
@@ -119,7 +124,8 @@ expect getnumberofmo 0
 
 
 // Ordering
-create mo 1
+delete all mo
+add mo 1
 mo 0 logging on
 mo 0 mark
 expect getnumberofmarkedmo 1
@@ -131,7 +137,7 @@ mo 0 help
 mo 0 setdestination 0 0
 delete all mo
 expect getnumberofmo 0
-create mo 1
+add mo 1
 expect getnumberofmo 1
 mo 0 setdestination random_x random_y
 runoneframe
@@ -188,7 +194,8 @@ expect getnumberofmo 0
 
 
 // Random mo test
-create mo 5
+delete all mo
+add mo 5
 mo random_mo mark
 expect getnumberofmarkedmo 1
 mo random_mo setdestination random_x random_y
@@ -202,7 +209,8 @@ expect getnumberofmo 0
 
 // Stressing
 map setsize 256 256 32 32
-create mo 400 -owner 1
+delete all mo
+add mo 400 -owner 1
 add mo 400 -owner 2
 add mo 400 -owner 3
 mo random_mo setdestination random_x random_y

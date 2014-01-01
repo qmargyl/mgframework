@@ -72,7 +72,6 @@ std::vector<std::string> MGComponent::split(char *str, const char *c)
 
 std::vector<std::string> MGComponent::symbols(char *str)
 {
-	// Not implemented yet
 	std::vector<std::string> splitLine;
 	std::string sym("");
 	char c[2] = {0, 0};
@@ -103,7 +102,6 @@ std::vector<std::string> MGComponent::symbols(char *str)
 			{
 				if( splitLine.empty() && 
 					( sym == std::string("call") || 
-					  sym == std::string("create") || 
 					  sym == std::string("add") || 
 					  sym == std::string("pe") || 
 					  sym == std::string("delete")))
@@ -121,7 +119,6 @@ std::vector<std::string> MGComponent::symbols(char *str)
 			{
 				if( splitLine.empty() && 
 					( sym == std::string("call") || 
-					  sym == std::string("create") || 
 					  sym == std::string("add") || 
 					  sym == std::string("pe") || 
 					  sym == std::string("delete")))
@@ -173,7 +170,6 @@ std::vector<std::string> MGComponent::symbols(char *str)
 		// XXX: Is this really necessary?
 		if( splitLine.empty() && 
 			( sym == std::string("call") || 
-			  sym == std::string("create") || 
 			  sym == std::string("add") || 
 			  sym == std::string("pe") || 
 			  sym == std::string("delete")))

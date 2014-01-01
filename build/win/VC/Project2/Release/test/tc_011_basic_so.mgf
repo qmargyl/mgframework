@@ -15,7 +15,8 @@ exit application
 
 
 // We should never reach this point, generate error
-create mo 1
+delete all mo
+add mo 1
 expect getnumberofmo 0
 
 
@@ -35,11 +36,14 @@ map logging on
 map setsize 128 128 32 32
 
 // create so
-create so 3
+delete all so
+add so 3
 expect getnumberofso 3
-create so 1 -x 5 -y 5
+delete all so
+add so 1 -x 5 -y 5
 expect getnumberofso 1
-create so 500
+delete all so
+add so 500
 expect getnumberofso 500
 
 runoneframe
@@ -159,7 +163,7 @@ function testcase_1
   expect getnumberofpe 0
   delete all mo
   expect getnumberofmo 0
-  create mo 50 -owner 1 -speed 8
+  add mo 50 -owner 1 -speed 8
   map logging on
   map setsize 128 128 32 32
 end
@@ -178,7 +182,7 @@ function testcase_2
   expect getnumberofpe 0
   delete all mo
   expect getnumberofmo 0
-  create mo 50 -owner 1 -speed 8
+  add mo 50 -owner 1 -speed 8
   map logging on
   map setsize 128 128 32 32
 end

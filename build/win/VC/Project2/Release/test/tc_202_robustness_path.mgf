@@ -8,7 +8,8 @@ input off
 logging off
 map logging off
 map setsize 128 128 32 32
-create mo 1000 -owner 1 -speed 6
+delete all mo
+add mo 1000 -owner 1 -speed 6
 add mo 1000 -owner 2 -speed 6
 expect getnumberofmo 2000
 mo 0 history on

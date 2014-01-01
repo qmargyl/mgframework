@@ -6,7 +6,7 @@ delete all mo
 map setsize 64 64 32 32
 map path 3 5 39 60
 map path 5 43 55 2
-create mo 10 -owner 1
+add mo 10 -owner 1
 runoneframe
 runoneframe
 runoneframe
@@ -18,7 +18,7 @@ runoneframe
 
 delete all mo
 map setsize 32 32 32 32
-create mo 10 -owner 1
+add mo 10 -owner 1
 runoneframe
 runoneframe
 runoneframe
@@ -30,7 +30,7 @@ runoneframe
 
 delete all mo
 map setsize 128 32 32 32
-create mo 10 -owner 1
+add mo 10 -owner 1
 runoneframe
 runoneframe
 runoneframe
@@ -42,7 +42,7 @@ runoneframe
 
 delete all mo
 map setsize 512 512 32 32
-create mo 10 -owner 1
+add mo 10 -owner 1
 runoneframe
 runoneframe
 runoneframe
@@ -54,7 +54,7 @@ runoneframe
 
 delete all mo
 map setsize 64 64 32 32
-create mo 10 -owner 1
+add mo 10 -owner 1
 runoneframe
 runoneframe
 runoneframe

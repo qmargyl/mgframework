@@ -26,9 +26,11 @@ bool Project2Server::init(int w, int h, int tw, int th)
 		// Setup game logics..
 
 		runConsoleCommand("setfps 30", this, NULL); // Framework default is 20 FPS
-		runConsoleCommand("create mo 5", this, NULL);
+		runConsoleCommand("delete all mo", this, NULL);
+		runConsoleCommand("add mo 5", this, NULL);
 		runConsoleCommand("open terminalserver", this, NULL);
-		runConsoleCommand("create pe 1", this, NULL);
+		runConsoleCommand("delete all pe", this, NULL);
+		runConsoleCommand("add pe 1", this, NULL);
 
 		if(getNumberOfPE()>0)
 		{

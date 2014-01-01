@@ -13,7 +13,8 @@ exit application
 
 
 // We should never reach this point, generate error
-create mo 1
+delete all mo
+add mo 1
 expect getnumberofmo 0
 
 
@@ -36,7 +37,8 @@ map logging off
 map setsize 128 128 32 32
 
 // These MO will be given destinations..
-create mo 1 -x 127 -y 127 -speed 6
+delete all mo
+add mo 1 -x 127 -y 127 -speed 6
 add mo 1 -x 75 -y 75 -speed 6
 add mo 1 -x 95 -y 127 -speed 6
 add mo 1 -x 127 -y 95 -speed 6
@@ -88,7 +90,8 @@ delete all pe
 expect getnumberofpe 0
 delete all mo
 expect getnumberofmo 0
-create mo 50 -owner 1 -speed 8
+delete all mo
+add mo 50 -owner 1 -speed 8
 map logging off
 map setsize 128 128 32 32
 
@@ -178,7 +181,8 @@ end
 
 
 // We should never reach this point, generate error
-create mo 1
+delete all mo
+add mo 1
 expect getnumberofmo 0
 
 
@@ -607,7 +611,8 @@ end
 
 
 // We should never reach this point, generate error
-create mo 1
+delete all mo
+add mo 1
 expect getnumberofmo 0
 
 delete all mo

@@ -23,7 +23,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.38.11"
+#define MGFRAMEWORKVERSION "1.0.38.12"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -37,41 +37,46 @@
 enum eMGComponentConsoleCommand{
 	MGComponent_UNDEFINED = 0,
 
-	//MGFramework commands
+	//MGFramework basic commands
 	MGComponent_HELP,										//help (Prints help information to console)
 	MGComponent_EXIT,										//exit (Exits console, resumes graphics execution) 
 	MGComponent_EXIT_APPLICATION,							//exit application (Terminates application)
 
-	//Getter
+	//General getter
 	MGComponent_INT,
 
 	//Expect function for testing and generating errors
 	MGComponent_EXPECT_INT_INT,
 
-	MGComponent_CREATE_MO_INT_PARAMLIST,
+	//MGFramework commands
 	MGComponent_ADD_MO_INT_PARAMLIST,
-	MGComponent_CREATE_PE_INT_PARAMLIST,
 	MGComponent_ADD_PE_INT_PARAMLIST,
 	MGComponent_DELETE_ALL_MO_PARAMLIST,
 	MGComponent_DELETE_MO_INT,
 	MGComponent_DELETE_ALL_PE_PARAMLIST,
+	MGComponent_ADD_SO_INT_PARAMLIST,
+	MGComponent_DELETE_ALL_SO_PARAMLIST,
+	MGComponent_DELETE_SO_INT,
 	MGComponent_RUNFRAMES_INT,
 	MGComponent_RUNONEFRAME,
 	MGComponent_SETFPS_INT,
 	MGComponent_OPEN_TERMINALSERVER,
 	MGComponent_CLOSE_TERMINALSERVER,
 
-	//Settings
+	//Settings flags
 	MGComponent_LOGGING_BOOL,
 	MGComponent_MINIMAP_BOOL,
 	MGComponent_INPUT_BOOL,
 	MGComponent_DYNAMICFPS_BOOL,
 
+	//Operators
 	MGComponent_SYMBOL_ASSIGNTO_INT,						//var1 = 32, var2 = getnumberofmo, etc
 
-	//MGPeriodicEvent commands
+	//MGPeriodicEvent forward flags
 	MGComponent_PE_INT_X,
 	MGComponent_PE_ALL_X,
+
+	//MGPeriodicEvent commands
 	MGComponent_PE_INT_HELP,
 	MGComponent_PE_INT_ACTIVATE,
 	MGComponent_PE_ALL_ACTIVATE_PARAMLIST,
@@ -86,6 +91,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_MO_INT_X,									//mo <int> ... (Forwards any MO command to an MO)
 	MGComponent_MO_MARKED_X,								//mo marked ... (Forwards any MO command to all marked MOs)
 	MGComponent_MO_ALL_X,									//mo all ... (Forwards any MO command to all MOs)
+
 	//MGMovingObject commands
 	MGComponent_MO_INT_MARK,
 	MGComponent_MO_INT_UNMARK,
@@ -97,42 +103,43 @@ enum eMGComponentConsoleCommand{
 	MGComponent_MO_INT_LOGGING_OFF,
 	MGComponent_MO_INT_LOGGING_ON,
 	MGComponent_MO_INT_HISTORY_BOOL,
-
-	// TODO: Implement these..
-	//MGComponent_MO_INT_SETSPEED_INT,
-	//MGComponent_MO_INT_EXPECT_GETSPEED_INT,
 	MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT,
+	// TODO: Implement these..
+	// MGComponent_MO_INT_SETSPEED_INT,
+	// MGComponent_MO_INT_EXPECT_GETSPEED_INT,
 
+	//MGMap forward flags
+	MGComponent_MAP_X,
 
 	//MGMap commands
-	MGComponent_MAP_X,
 	MGComponent_MAP_HELP,
 	MGComponent_MAP_PATH_INT_INT_INT_INT,
 	MGComponent_MAP_SETSIZE_INT_INT_INT_INT,				//map setsize <x> <y> <tx> <ty> (Sets the size of the map to x*y tiles, each tx*ty pixels big)
 	MGComponent_MAP_LOGGING_ON,
 	MGComponent_MAP_LOGGING_OFF,
 
-	//MGWindow commands
+	//MGWindow forward flags
 	MGComponent_WINDOW_X,
+
+	//MGWindow commands
 	MGComponent_WINDOW_HELP,
 	MGComponent_WINDOW_FULLSCREEN_ON,
 	MGComponent_WINDOW_FULLSCREEN_OFF,
 	MGComponent_WINDOW_LOGGING_OFF,
 	MGComponent_WINDOW_LOGGING_ON,
 
-	// MGStationaryObject commands
+	// MGStationaryObject forward flags
 	MGComponent_SO_INT_X,
 	MGComponent_SO_ALL_X,
+
+	// MGStationaryObject commands
 	MGComponent_SO_INT_GETLOCATION,
 	MGComponent_SO_INT_HELP,
 	MGComponent_SO_INT_LOGGING_ON,
 	MGComponent_SO_INT_LOGGING_OFF,
 	MGComponent_SO_ALL_LOGGING_ON,
 	MGComponent_SO_ALL_LOGGING_OFF,
-	MGComponent_CREATE_SO_INT_PARAMLIST,
-	MGComponent_ADD_SO_INT_PARAMLIST,
-	MGComponent_DELETE_ALL_SO_PARAMLIST,
-	MGComponent_DELETE_SO_INT,
+
 
 	//Counter for number of command identifiers, not an actual command.
 	MGComponent_NUMBEROFCOMMANDIDENTIFIERS
@@ -306,20 +313,20 @@ class MGFramework :public MGComponent
 		void handleMGFGameLogics();
 
 		// MO related
-		void createMO(int n);
+		void deleteAllMO();
 		int addMO(int n); // Returns index of first MO added or -1 if there was an error.
 		int getNumberOfMO(){ return biggest(m_NMO, 0);}
 		void deleteMO(int index);		// Deletes the MO with a specified index
 		bool setupMO(int i, int x, int y, unsigned int owner, int speed);		// Setups the MO with a specified index
 
 		// PE related
-		void createPE(int n);
+		void deleteAllPE();
 		void addPE(int n);
 		int getNumberOfPE(){ return biggest(m_NPE, 0);}
 		void deletePE(int index);
 
 		// SO related
-		void createSO(int n);
+		void deleteAllSO();
 		void addSO(int n);
 		int getNumberOfSO(){ return biggest(m_NSO, 0);}
 		void deleteSO(int index);

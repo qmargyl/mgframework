@@ -18,103 +18,107 @@ exit application
 
 // MO creation, deletion, marking, unmarking, logging, help
 function testcoverage_mo
-create mo 1 -owner 1
-add mo 1 -owner 2
-mo 0 logging on
-mo 0 logging off
-mo 0 logging on
-mo 0 help
-mo 0 mark
-mo marked logging on
-mo marked logging off
-mo marked logging on
-mo marked help
-expect getnumberofmarkedmo 1
-expect getnumberofmo 2
-mo 0 unmark
-expect getnumberofmarkedmo 0
-mo 0 mark
-expect getnumberofmarkedmo 1
-mo marked unmark
-expect getnumberofmarkedmo 0
-mo all mark
-expect getnumberofmarkedmo 2
-mo all logging on
-mo all logging off
-mo all logging on
-mo all help
-mo all unmark
-expect getnumberofmarkedmo 0
-delete all mo -owner 1
-expect getnumberofmo 1
-delete all mo -owner 2
-expect getnumberofmo 0
-add mo 4 -owner 2
-expect getnumberofmo 4
-delete mo 2
-expect getnumberofmo 3
-delete all mo -owner 2
-expect getnumberofmo 0
+  delete all mo
+  add mo 1 -owner 1
+  add mo 1 -owner 2
+  mo 0 logging on
+  mo 0 logging off
+  mo 0 logging on
+  mo 0 help
+  mo 0 mark
+  mo marked logging on
+  mo marked logging off
+  mo marked logging on
+  mo marked help
+  expect getnumberofmarkedmo 1
+  expect getnumberofmo 2
+  mo 0 unmark
+  expect getnumberofmarkedmo 0
+  mo 0 mark
+  expect getnumberofmarkedmo 1
+  mo marked unmark
+  expect getnumberofmarkedmo 0
+  mo all mark
+  expect getnumberofmarkedmo 2
+  mo all logging on
+  mo all logging off
+  mo all logging on
+  mo all help
+  mo all unmark
+  expect getnumberofmarkedmo 0
+  delete all mo -owner 1
+  expect getnumberofmo 1
+  delete all mo -owner 2
+  expect getnumberofmo 0
+  add mo 4 -owner 2
+  expect getnumberofmo 4
+  delete mo 2
+  expect getnumberofmo 3
+  delete all mo -owner 2
+  expect getnumberofmo 0
 
-// MO getters, setters
-create mo 1 -owner 1
-expect getnumberofmo 1
-mo 0 getlocation
-mo 0 getdestination
-mo 0 getspeed
-mo 0 setdestination 0 0
-delete all mo -owner 2
-expect getnumberofmo 1
-delete all mo -owner 1
-expect getnumberofmo 0
-create mo 1 -owner 1
-add mo 1 -owner 2
-mo all getdestination
-mo all getspeed
-mo all setdestination 0 0
-mo 0 mark
-mo marked getdestination
-mo marked getspeed
-mo marked setdestination 0 0
-delete all mo
-expect getnumberofmo 0
+  // MO getters, setters
+  delete all mo
+  add mo 1 -owner 1
+  expect getnumberofmo 1
+  mo 0 getlocation
+  mo 0 getdestination
+  mo 0 getspeed
+  mo 0 setdestination 0 0
+  delete all mo -owner 2
+  expect getnumberofmo 1
+  delete all mo -owner 1
+  expect getnumberofmo 0
+  add mo 1 -owner 1
+  add mo 1 -owner 2
+  mo all getdestination
+  mo all getspeed
+  mo all setdestination 0 0
+  mo 0 mark
+  mo marked getdestination
+  mo marked getspeed
+  mo marked setdestination 0 0
+  delete all mo
+  expect getnumberofmo 0
 
-// Verify MO location
-create mo 1 -x 15 -y 18
-expect getnumberofmo 1
-mo 0 logging on
-runoneframe
-mo 0 expect getlocation 15 18
-add mo 1 -x 4 -y 3
-expect getnumberofmo 2
-mo 0 logging on
-runoneframe
-mo 1 expect getlocation 4 3
-delete mo 0
-expect getnumberofmo 1
-mo 0 expect getlocation 4 3
-delete all mo
-expect getnumberofmo 0
+  // Verify MO location
+  delete all mo
+  add mo 1 -x 15 -y 18
+  expect getnumberofmo 1
+  mo 0 logging on
+  runoneframe
+  mo 0 expect getlocation 15 18
+  add mo 1 -x 4 -y 3
+  expect getnumberofmo 2
+  mo 0 logging on
+  runoneframe
+  mo 1 expect getlocation 4 3
+  delete mo 0
+  expect getnumberofmo 1
+  mo 0 expect getlocation 4 3
+  delete all mo
+  expect getnumberofmo 0
 
-// History
-create mo 1 -x 0 -y 0
-mo 0 history on
-mo 0 setdestination random_x random_y
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-mo 0 history off
-delete mo 0
-expect getnumberofmo 0
+  // History
+  delete all mo
+  add mo 1 -x 0 -y 0
+  mo 0 history on
+  mo 0 setdestination random_x random_y
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  mo 0 history off
+  delete mo 0
+  expect getnumberofmo 0
 
 end
 
@@ -202,7 +206,8 @@ function testcoverage_map
   map setsize 64 64 32 32
   map path 3 5 39 60
   map path 5 43 55 2
-  create mo 10 -owner 1
+  delete all mo
+  add mo 10 -owner 1
   runoneframe
   runoneframe
   runoneframe
@@ -222,38 +227,39 @@ end
 
 // PE creation, deletion, activating, etc
 function testcoverage_pe
-create pe 1
-pe 0 logging on
-pe 0 logging off
-pe 0 logging on
-pe 0 << script2.mgf
-pe 0 << storefilename script2.mgf
-pe 0 setuptimer 3000
-expect getnumberofpe 1
-delete all pe
-expect getnumberofpe 0
-create pe 1 -owner 1
-expect getnumberofpe 1
-add pe 1 -owner 2
-expect getnumberofpe 2
-pe all activate
-pe all deactivate
-pe all activate -owner 1
-pe all deactivate -owner 1
-delete all pe
-create pe 1 -owner 1
-expect getnumberofpe 1
-add pe 1 -owner 2
-expect getnumberofpe 2
-pe 0 activate
-pe 1 activate
-pe 0 deactivate
-pe 1 deactivate
-pe 0 help
-delete all pe -owner 1
-expect getnumberofpe 1
-delete all pe -owner 2
-expect getnumberofpe 0
+  delete all pe
+  add pe 1
+  pe 0 logging on
+  pe 0 logging off
+  pe 0 logging on
+  pe 0 << script2.mgf
+  pe 0 << storefilename script2.mgf
+  pe 0 setuptimer 3000
+  expect getnumberofpe 1
+  delete all pe
+  expect getnumberofpe 0
+  add pe 1 -owner 1
+  expect getnumberofpe 1
+  add pe 1 -owner 2
+  expect getnumberofpe 2
+  pe all activate
+  pe all deactivate
+  pe all activate -owner 1
+  pe all deactivate -owner 1
+  delete all pe
+  add pe 1 -owner 1
+  expect getnumberofpe 1
+  add pe 1 -owner 2
+  expect getnumberofpe 2
+  pe 0 activate
+  pe 1 activate
+  pe 0 deactivate
+  pe 1 deactivate
+  pe 0 help
+  delete all pe -owner 1
+  expect getnumberofpe 1
+  delete all pe -owner 2
+  expect getnumberofpe 0
 end
 
 
@@ -262,7 +268,8 @@ end
 
 
 function testcoverage_so
-  create so 2
+  delete all so
+  add so 2
   expect getnumberofso 2
   so 0 logging on
   so 0 logging off

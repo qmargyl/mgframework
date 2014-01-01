@@ -1,5 +1,6 @@
 input off
-create mo 50 -owner 1 -speed 6
+delete all mo
+add mo 50 -owner 1 -speed 6
 map logging off
 
 

@@ -54,9 +54,6 @@ logging <on|off> - Turns logging on/off.
 setfps <f> - Sets desired FPS (frames per second) to integer value <f>.
 runframes <f> - Runs <f> game loops (frames) and presents some recorded data.
           <f> is an integer.
-create <mo|pe> <n> - Creates <n> objects (and deletes any previously
-          existing ones). <n> is an integer. Only MGMovingObject (mo)
-          and MGPeriodicEvent are (pe) supported at this point.
 add <mo|pe> <n> - Adds <n> objects. <n> is an integer. Only MGMovingObject
           (mo) and MGPeriodicEvent (pe) are supported at this point.
 open <terminalserver> - Opens the terminal server for framework commands 

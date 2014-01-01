@@ -13,7 +13,8 @@ logging off
 map logging off
 
 // Test case
-create mo 400
+delete all mo
+add mo 400
 
 call setdest_plus_10_frames_times_10
 

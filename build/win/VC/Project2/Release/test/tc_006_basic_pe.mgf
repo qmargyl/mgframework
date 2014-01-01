@@ -2,7 +2,8 @@
 
 
 // Creation and deletion
-create pe 1
+delete all pe
+add pe 1
 pe 0 logging on
 expect getnumberofpe 1
 delete all pe
@@ -11,7 +12,8 @@ expect getnumberofpe 0
 
 
 // Creation and deletion with -owner
-create pe 1 -owner 1
+delete all pe
+add pe 1 -owner 1
 expect getnumberofpe 1
 add pe 1 -owner 2
 expect getnumberofpe 2
@@ -19,11 +21,14 @@ delete all pe -owner 1
 expect getnumberofpe 1
 delete all pe -owner 2
 expect getnumberofpe 0
-create pe 5 -owner 1
+delete all pe
+add pe 5 -owner 1
 expect getnumberofpe 5
-create pe 5 -owner 2
+delete all pe
+add pe 5 -owner 2
 expect getnumberofpe 5
-create pe 5 -owner 1
+delete all pe
+add pe 5 -owner 1
 expect getnumberofpe 5
 add pe 5 -owner 2
 expect getnumberofpe 10
@@ -47,7 +52,8 @@ expect getnumberofpe 0
 
 
 // Large number creation
-create pe 10000 -owner 1
+delete all pe
+add pe 10000 -owner 1
 add pe 10000 -owner 2
 expect getnumberofpe 20000
 delete all pe
@@ -56,7 +62,8 @@ expect getnumberofpe 0
 
 
 // Activating
-create pe 1 -owner 1
+delete all pe
+add pe 1 -owner 1
 expect getnumberofpe 1
 add pe 1 -owner 2
 expect getnumberofpe 2
@@ -66,7 +73,7 @@ pe all deactivate
 pe all activate -owner 1
 pe all deactivate -owner 1
 delete all pe
-create pe 1 -owner 1
+add pe 1 -owner 1
 expect getnumberofpe 1
 add pe 1 -owner 2
 expect getnumberofpe 2
@@ -80,11 +87,12 @@ delete all pe -owner 2
 expect getnumberofpe 0
 
 
-create pe 1 -owner 1
+add pe 1 -owner 1
 expect getnumberofpe 1
 pe 0 setuptimer 1
 pe 0 << .\\test\\tc_006_basic_pe.mgf:pe_delete_all_mo
-create mo 1 -owner 1
+delete all mo
+add mo 1 -owner 1
 pe 0 activate
 setfps 10
 runoneframe
@@ -100,7 +108,8 @@ expect getnumberofmo 0
 
 
 // Random integer test
-create pe 5
+delete all pe
+add pe 5
 pe random_pe activate
 //todo: verification method needed here
 delete all pe
@@ -115,7 +124,7 @@ exit application
 // Functions
 
 function pe_delete_all_mo
-delete all mo
+  delete all mo
 end
 
 

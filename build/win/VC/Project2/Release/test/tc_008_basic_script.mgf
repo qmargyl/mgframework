@@ -8,20 +8,23 @@ call main_tc
 
 
 // Generate error if ever ending up here..
-create mo 1 -owner 1
+delete all mo
+add mo 1 -owner 1
 expect getnumberofmo 0
 
 
 function and_then_exit
   exit application
   // Generate error if ever ending up here..
-  create mo 1 -owner 1
+  delete all mo
+  add mo 1 -owner 1
   expect getnumberofmo 0
 end
 
 
 // Generate error if ever ending up here..
-create mo 1 -owner 1
+delete all mo
+add mo 1 -owner 1
 expect getnumberofmo 0
 
 
@@ -30,7 +33,8 @@ expect getnumberofmo 0
 //*****************************
 function main_tc
   // Call some sub routines...
-  create mo 1
+  delete all mo
+  add mo 1
   call create_an_mo
   call create_another_mo
   expect getnumberofmo 3
@@ -87,7 +91,8 @@ function test_symbols_1
   expect s1 14
   expect s2 14
   expect s3 13
-  create mo 666
+  delete all mo
+  add mo 666
   nmo = getnumberofmo
   expect nmo 666
   delete all mo
@@ -107,7 +112,9 @@ function test_symbols_2
   expect s1	14
   expect s2					14
   expect	s3 13
-  create	mo 666//tab
+  add         mo 1
+  delete     all      mo
+  add	mo 666//tab
   nmo = getnumberofmo
   expect	nmo 666
   delete all mo
@@ -371,7 +378,8 @@ end
 function test_return_2
   map setsize 128 128 32 32
   expect $cmd 0
-  create mo 1 -speed 4
+  delete all mo
+  add mo 1 -speed 4
   expect $cmd 0
   mo 0 getspeed
   expect $cmd 128	// 4 x 32 = 128
@@ -379,7 +387,8 @@ function test_return_2
   expect getnumberofmo 0
 
   var1=21
-  create mo 1
+  delete all mo
+  add mo 1
   mo 0 getspeed
   var1=$cmd
   expect var1 64
@@ -457,6 +466,7 @@ end
 
 
 // Generate error if ever ending up here..
-create mo 1 -owner 1
+delete all mo
+add mo 1 -owner 1
 expect getnumberofmo 0
 exit application
