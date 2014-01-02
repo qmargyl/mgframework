@@ -23,7 +23,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.38.13"
+#define MGFRAMEWORKVERSION "1.0.38.14"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -235,6 +235,9 @@ class MGFramework :public MGComponent
 		// Selective Tile Rendering
 		bool m_SelectiveTileRendering;
 		bool m_RenderAll;
+		int m_NDrawnTiles;
+		void resetDrawnTilesCounter(){ m_NDrawnTiles = 0; }
+		void increaseDrawnTilesCounter(){ ++m_NDrawnTiles; }
 
 		// Font
 #ifndef MGF_DEBUGGING_ENABLED
@@ -374,6 +377,14 @@ class MGFramework :public MGComponent
 		void disableTyping(){m_TypingEnabled = false;}
 		bool typingEnabled(){return m_TypingEnabled;}
 
+		// Rendering optimizations related
+		void activateSelectiveTileRendering(){ m_SelectiveTileRendering = true; }
+		void deactivateSelectiveTileRendering(){ m_SelectiveTileRendering = false; }
+		void setRenderAllTiles(){ m_RenderAll = true; }
+		void unsetRenderAllTiles(){ m_RenderAll = false; }
+		bool renderAllTiles(){ return m_RenderAll; }
+		int getDrawnTilesCounter(){ return m_NDrawnTiles; }
+
 	public:
 		MGFramework();
 		virtual ~MGFramework();
@@ -449,13 +460,8 @@ class MGFramework :public MGComponent
 			return smallest(m_MarkedMOs, getNumberOfMO());
 		}
 
-		// Rendering optimizations
-		void activateSelectiveTileRendering(){ m_SelectiveTileRendering = true; }
-		void deactivateSelectiveTileRendering(){ m_SelectiveTileRendering = false; }
+		// Rendering optimizations related
 		bool isSelectiveTileRenderingActive(){ return m_SelectiveTileRendering; }
-		void setRenderAllTiles(){ m_RenderAll = true; }
-		void unsetRenderAllTiles(){ m_RenderAll = false; }
-		bool renderAllTiles(){ return m_RenderAll; }
 
 
 #ifndef MGF_DEBUGGING_ENABLED

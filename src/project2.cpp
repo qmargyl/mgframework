@@ -65,7 +65,6 @@ void Project2::handleGameLogics()
 void Project2::draw()
 {
 	// Draw all tiles visible in the window...
-	int nTilesDrawn = 0;
 	for (int x=0; x < m_Map.getWidth(); x++)
 	{
 		for ( int y=0; y < m_Map.getHeight(); y++)
@@ -80,12 +79,10 @@ void Project2::draw()
 				if(m_Map.getTileProperty(x, y) & MGMAP_TP_PROPERTY_1)
 				{
 					drawSprite(m_Floor, getSurface(), 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
-					nTilesDrawn++;
 				}
 				else if(m_Map.getTileProperty(x, y) & MGMAP_TP_PROPERTY_2)
 				{
 					drawSprite(m_Floor, getSurface(), 32, 64, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY(), m_Map.getTileWidth(), m_Map.getTileHeight());
-					nTilesDrawn++;
 				}
 				m_Map.unmarkForRendering(x, y);
 			}
@@ -104,7 +101,6 @@ void Project2::draw()
 			if(detectCollisionRectangle(oX, oY, oX+m_Map.getTileWidth(), oY+m_Map.getTileHeight(), 0, 0, m_Window.getWidth(), m_Window.getHeight()))
 			{
 				drawSprite(m_MovingObject, getSurface(), 0, 0, oX, oY, m_Map.getTileWidth(), m_Map.getTileHeight());
-				nTilesDrawn++;
 				if(isSelectiveTileRenderingActive())
 				{
 					m_Map.markForRendering(m_MO[i].getTileX(), m_MO[i].getTileY());
@@ -121,7 +117,6 @@ void Project2::draw()
 				if(m_MO[i].isMarked())
 				{
 					drawSprite(m_Mark, getSurface(), 0, 0, oX, oY, m_Map.getTileWidth(), m_Map.getTileHeight());
-					nTilesDrawn++;
 				}
 			}
 		}
@@ -139,7 +134,6 @@ void Project2::draw()
 			if(detectCollisionRectangle(sX, sY, sX+m_Map.getTileWidth(), sY+m_Map.getTileHeight(), 0, 0, m_Window.getWidth(), m_Window.getHeight()))
 			{
 				drawSprite(m_StationaryObject, getSurface(), 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight()+16);
-				nTilesDrawn++;
 			}
 		}
 	}
@@ -196,7 +190,7 @@ void Project2::draw()
 			 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 50, 0, 0, 0, 0, 255, 0);
 	drawText(getSurface(), (string("FPS: ") + MGFramework::toString((int)getFPS()) + string("          ")).c_str(), 
 			 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 70, 0, 0, 0, 0, 255, 0);
-	drawText(getSurface(), (string("DT: ") + MGFramework::toString(nTilesDrawn) + string("          ")).c_str(), 
+	drawText(getSurface(), (string("DT: ") + MGFramework::toString(getDrawnTilesCounter()) + string("          ")).c_str(), 
 			 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 90, 0, 0, 0, 0, 255, 0);
 #endif
 

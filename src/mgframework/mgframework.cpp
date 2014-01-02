@@ -40,7 +40,8 @@ MGFramework::MGFramework():
 	m_Port(0),
 	m_CommandReturnVal(0),
 	m_RenderAll(true),
-	m_SelectiveTileRendering(false)
+	m_SelectiveTileRendering(false),
+	m_NDrawnTiles(0)
 {
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
@@ -1027,6 +1028,8 @@ void MGFramework::handleMGFGameLogics()
 			setDesiredFPS(biggest(1, getFPS() - 1));
 		}
 	}
+
+	resetDrawnTilesCounter();
 
 	// XXX: Perhaps the commands are already handled before getLastFrameDelayTime() returns a vaid number?
 	/*
@@ -2266,6 +2269,7 @@ void MGFramework::quit()
 
 void MGFramework::drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {
+	increaseDrawnTilesCounter();
 	SDL_Rect srcRect;
 	srcRect.x = srcX;
 	srcRect.y = srcY;
