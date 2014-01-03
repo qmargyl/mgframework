@@ -120,6 +120,12 @@ function testcoverage_mo
   delete mo 0
   expect getnumberofmo 0
 
+  // -area_square
+  add mo 100 -area_square 10 10 40 40
+  expect getnumberofmo 100
+  delete all mo
+  expect getnumberofmo 0  
+
 end
 
 

@@ -110,7 +110,7 @@ Symbol Table
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_pe' : X
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_fw' : X
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_window' : X
-{27,56}
+{35,42}
 Symbol Table
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_mo' : X
 '.\\test\\tc_999_basic_testcoverage.mgf:testcoverage_map' : X

@@ -91,7 +91,8 @@ public:
 
 	// Utility functions
 	static std::string toString(bool b){ if(b) return std::string("true"); return std::string("false"); }
-	static int randomN(int upperLimit){return std::rand()%upperLimit;}
+	static int randomN(int upperLimit){ if(upperLimit == 0) return 0; return std::rand()%upperLimit; }
+	static void randomize(int seed){ std::srand(seed); }
 	static double distance(int x1, int y1, int x2, int y2){ return sqrt((double)(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))); }
 	static std::string toString(int number);
 	static std::vector<std::string> split(char *str, const char *c);

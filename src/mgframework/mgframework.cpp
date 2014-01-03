@@ -1319,6 +1319,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			int x = -1; // Invalid default value
 			int y = -1; // Invalid default value
 			int speed = 2; // Tiles per second.
+			int x1 = 0;
+			int y1 = 0;
+			int x2 = m_Map.getWidth();
+			int y2 = m_Map.getHeight();
+
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
@@ -1353,6 +1358,14 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					speed = toInt(cmdvec[i+1], s);
 					++i;
 				}
+				else if(cmdvec[i]=="-area_square" && cmdvec.size() > (i + 4))
+				{
+					x1 = toInt(cmdvec[i+1], s);
+					y1 = toInt(cmdvec[i+2], s);
+					x2 = toInt(cmdvec[i+3], s);
+					y2 = toInt(cmdvec[i+4], s);
+					i += 4;
+				}
 				else
 				{
 					MGFLOG_ERROR("Error in command (add mo <n>), bad parameter list");
@@ -1375,7 +1388,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				{
 					// If setup fails we must setup the same index again 
 					// since the failing MO has been deleted.
-					if(!setupMO(i, x, y, owner, speed))--i;
+					if(!setupMO(i, x, y, owner, speed, x1, y1, x2, y2))--i;
 				}
 			}
 			else
@@ -2089,7 +2102,7 @@ void MGFramework::deleteMO(int index)
 
 
 
-bool MGFramework::setupMO(int i, int x, int y, unsigned int owner, int speed)
+bool MGFramework::setupMO(int i, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2)
 {
 	if(i < 0 || i >= getNumberOfMO())
 	{
@@ -2097,16 +2110,20 @@ bool MGFramework::setupMO(int i, int x, int y, unsigned int owner, int speed)
 	}
 	else
 	{
-		if(x<0) x = randomN(m_Map.getWidth());
-		if(y<0) y = randomN(m_Map.getHeight());
+		//if(x<0) x = randomN(m_Map.getWidth());
+		//if(y<0) y = randomN(m_Map.getHeight());
+		if(x<0) x = randomN(x2-x1)+x1;
+		if(y<0) y = randomN(y2-y1)+y1;
 		bool successful=false;
 
 		for(int q=0; q<MGF_MOPOSITIONINGATTEMPTS; ++q)
 		{
 			if(m_Map.occupant(x,y) != 0)
 			{
-				x = randomN(m_Map.getWidth());
-				y = randomN(m_Map.getHeight());
+				//x = randomN(m_Map.getWidth());
+				//y = randomN(m_Map.getHeight());
+				x = randomN(x2-x1)+x1;
+				y = randomN(y2-y1)+y1;
 			}
 			else
 			{

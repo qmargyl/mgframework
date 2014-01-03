@@ -67,6 +67,20 @@ expect getnumberofmo 0
 
 
 
+// Creation with -area_square
+add mo 100 -area_square 30 30 100 100
+expect getnumberofmo 100
+delete all mo -owner 0
+expect getnumberofmo 0
+
+// Creation with -area_square in a single location
+add mo 1 -area_square 31 39 31 39
+expect getnumberofmo 1
+mo 0 expect getlocation 31 39
+delete all mo -owner 0
+expect getnumberofmo 0
+
+
 
 // Mark and unmark
 add mo 20 -owner 0

@@ -23,7 +23,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.39.1"
+#define MGFRAMEWORKVERSION "1.0.40.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -236,8 +236,8 @@ class MGFramework :public MGComponent
 		bool m_SelectiveTileRendering;
 		bool m_RenderAll;
 		int m_NDrawnTiles;
-		void resetDrawnTilesCounter(){ m_NDrawnTiles = 0; }
-		void increaseDrawnTilesCounter(){ ++m_NDrawnTiles; }
+		inline void resetDrawnTilesCounter(){ m_NDrawnTiles = 0; }
+		inline void increaseDrawnTilesCounter(){ ++m_NDrawnTiles; }
 
 		// Font
 #ifndef MGF_DEBUGGING_ENABLED
@@ -270,27 +270,27 @@ class MGFramework :public MGComponent
 		bool getQuitFlag(){ return m_Quit; }
 
 		// Countdown feature needs a flag and a counter.
-		bool frameCountdownEnabled(){return m_FrameCountdownEnabled;}
-		int getFrameNumber(){return m_FrameNumber;}
-		void setFrameNumber(int f){m_FrameNumber = f;}
-		void enableFrameCountdown(){m_FrameCountdownEnabled = true;}
-		void disableFrameCountdown(){m_FrameCountdownEnabled = false;}
-		void countdownFrame(int howmany){m_FrameNumber -= howmany;}
+		inline bool frameCountdownEnabled(){return m_FrameCountdownEnabled; }
+		inline int getFrameNumber(){return m_FrameNumber; }
+		inline void setFrameNumber(int f){m_FrameNumber = f; }
+		inline void enableFrameCountdown(){m_FrameCountdownEnabled = true; }
+		inline void disableFrameCountdown(){m_FrameCountdownEnabled = false; }
+		inline void countdownFrame(int howmany){m_FrameNumber -= howmany; }
 
 		// Console activation related
 		void activateConsole();
 
 		//Socket terminal related.
-		void openSocketTerminal(){m_KeepSocketTerminalOpen = true;}
-		void closeSocketTerminal(){m_KeepSocketTerminalOpen = false;}
+		void openSocketTerminal(){m_KeepSocketTerminalOpen = true; }
+		void closeSocketTerminal(){m_KeepSocketTerminalOpen = false; }
 
 		// Frame selection related (click drag and release)
-		void setFrameStartX(int x){ m_XFrameStart=x;}
-		void setFrameStartY(int y){ m_YFrameStart=y;}
-		void setFrameEndX(int x){ m_XFrameEnd=x;}
-		void setFrameEndY(int y){ m_YFrameEnd=y;}
+		inline void setFrameStartX(int x){ m_XFrameStart=x; }
+		inline void setFrameStartY(int y){ m_YFrameStart=y; }
+		inline void setFrameEndX(int x){ m_XFrameEnd=x; }
+		inline void setFrameEndY(int y){ m_YFrameEnd=y; }
 
-		void activateFraming(int x, int y)
+		inline void activateFraming(int x, int y)
 		{
 			setFrameStartX(x); 
 			setFrameStartY(y); 
@@ -299,13 +299,13 @@ class MGFramework :public MGComponent
 			m_FramingOngoing=true;
 		}
 
-		void deactivateFraming()
+		inline void deactivateFraming()
 		{ 
 			m_FramingOngoing = false;
 			setRenderAllTiles();
 		}
 
-		void updateFraming(int x, int y)
+		inline void updateFraming(int x, int y)
 		{
 			setFrameEndX(x); 
 			setFrameEndY(y);
@@ -320,7 +320,7 @@ class MGFramework :public MGComponent
 		int addMO(int n); // Returns index of first MO added or -1 if there was an error.
 		int getNumberOfMO(){ return std::max(m_NMO, 0); }
 		void deleteMO(int index);		// Deletes the MO with a specified index
-		bool setupMO(int i, int x, int y, unsigned int owner, int speed);		// Setups the MO with a specified index
+		bool setupMO(int i, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2);		// Setups the MO with a specified index
 
 		// PE related
 		void deleteAllPE();
@@ -345,13 +345,13 @@ class MGFramework :public MGComponent
 		virtual void handleGameLogics() = 0;
 
 		// Frame selection related (click drag and release)
-		bool isFramingOngoing(){ return m_FramingOngoing;}
-		int getFrameStartX(){ return m_XFrameStart;}
-		int getFrameStartY(){ return m_YFrameStart;}
-		int getFrameEndX(){ return m_XFrameEnd;}
-		int getFrameEndY(){ return m_YFrameEnd;}
+		inline bool isFramingOngoing(){ return m_FramingOngoing; }
+		inline int getFrameStartX(){ return m_XFrameStart; }
+		inline int getFrameStartY(){ return m_YFrameStart; }
+		inline int getFrameEndX(){ return m_XFrameEnd; }
+		inline int getFrameEndY(){ return m_YFrameEnd; }
 
-		// Graphics related, depending on SDL
+		// Graphics related, based on SDL
 		SDL_Surface *getSurface(){return m_Window.m_Screen;}
 		void drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		SDL_Surface *loadBMPImage( std::string filename );
@@ -416,9 +416,6 @@ class MGFramework :public MGComponent
 		void addConsoleCommandToQueue(const char *c);
 		int getPort(){ return m_Port; }
 		void setPort(int p){ m_Port = p; }
-
-		// Randomization
-		void randomize(int seed){ std::srand(seed); }
 
 		// Program version
 		const char *getMGFrameworkVersion(){return MGFRAMEWORKVERSION;}
