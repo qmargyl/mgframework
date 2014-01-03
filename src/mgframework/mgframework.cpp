@@ -1,5 +1,6 @@
 #include "mgframework.h"
 #include <iostream>
+#include <algorithm> 
 #include <cmath>
 #include <sstream>
 #include <string>
@@ -7,7 +8,12 @@
 #include <ctime>
 #include <winsock.h>
 
+
 using namespace std;
+
+//Windows macros overriding std if not undefined
+#undef min(a, b)
+#undef max(a, b)
 
 
 MGFramework::MGFramework():
@@ -194,9 +200,9 @@ bool MGFramework::processEvents()
 					int endClickY = m_Map.getTileY(m_Map.getTileIndex(getFrameEndX(), getFrameEndY()));
 					int startClickX = m_Map.getTileX(m_Map.getTileIndex(getFrameStartX(), getFrameStartY()));
 					int startClickY = m_Map.getTileY(m_Map.getTileIndex(getFrameStartX(), getFrameStartY()));
-					for(int x=smallest(startClickX, endClickX); x<=biggest(startClickX, endClickX); x++)
+					for(int x=std::min(startClickX, endClickX); x<=std::max(startClickX, endClickX); x++)
 					{
-						for(int y=smallest(startClickY, endClickY); y<=biggest(startClickY, endClickY); y++)
+						for(int y=std::min(startClickY, endClickY); y<=std::max(startClickY, endClickY); y++)
 						{
 							for(int i=0; i<getNumberOfMO(); i++)
 							{
@@ -1025,7 +1031,7 @@ void MGFramework::handleMGFGameLogics()
 		}
 		else if(getLastFrameDelayTime() < 7)
 		{
-			setDesiredFPS(biggest(1, getFPS() - 1));
+			setDesiredFPS(std::max(1, (int)(getFPS() - 1)));
 		}
 	}
 

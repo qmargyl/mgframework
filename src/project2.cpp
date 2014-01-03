@@ -1,5 +1,6 @@
 #include "project2.h"
 #include <iostream>
+#include <algorithm> 
 #include "mgframework/mgframework.h"
 #include "mgframework/mgmovingobject.h"
 
@@ -205,8 +206,8 @@ void Project2::draw()
 	{
 		if(isFramingOngoing())
 		{
-			int uLX=smallest(getFrameStartX(), getFrameEndX());
-			int uLY=smallest(getFrameStartY(), getFrameEndY());
+			int uLX=std::min(getFrameStartX(), getFrameEndX());
+			int uLY=std::min(getFrameStartY(), getFrameEndY());
 			int xL=abs(getFrameStartX() - getFrameEndX());
 			int yL=abs(getFrameStartY() - getFrameEndY());
 			hLine32(getSurface(), uLX, uLY, xL, 0x00FF0000);

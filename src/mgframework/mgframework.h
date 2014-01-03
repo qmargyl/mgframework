@@ -23,7 +23,7 @@
 
 
 // Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.39.0"
+#define MGFRAMEWORKVERSION "1.0.39.1"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -318,20 +318,20 @@ class MGFramework :public MGComponent
 		// MO related
 		void deleteAllMO();
 		int addMO(int n); // Returns index of first MO added or -1 if there was an error.
-		int getNumberOfMO(){ return biggest(m_NMO, 0);}
+		int getNumberOfMO(){ return std::max(m_NMO, 0); }
 		void deleteMO(int index);		// Deletes the MO with a specified index
 		bool setupMO(int i, int x, int y, unsigned int owner, int speed);		// Setups the MO with a specified index
 
 		// PE related
 		void deleteAllPE();
 		void addPE(int n);
-		int getNumberOfPE(){ return biggest(m_NPE, 0);}
+		int getNumberOfPE(){ return std::max(m_NPE, 0); }
 		void deletePE(int index);
 
 		// SO related
 		void deleteAllSO();
 		void addSO(int n);
-		int getNumberOfSO(){ return biggest(m_NSO, 0);}
+		int getNumberOfSO(){ return std::max(m_NSO, 0); }
 		void deleteSO(int index);
 		bool setupSO(int i, int x, int y);		// Setups the MO with a specified index
 
@@ -457,7 +457,7 @@ class MGFramework :public MGComponent
 		
 		int getNumberOfMarkedMO()
 		{ 
-			return smallest(m_MarkedMOs, getNumberOfMO());
+			return std::min(m_MarkedMOs, getNumberOfMO());
 		}
 
 		// Rendering optimizations related
