@@ -2019,6 +2019,8 @@ void MGFramework::deleteAllMO()
 	m_MO = NULL;
 	m_NMO = 0;
 	m_MarkedMOs = 0;
+	// Make sure tiles are re-rendered after deleting MOs
+	setRenderAllTiles();
 }
 
 int MGFramework::addMO(int n)
@@ -2050,6 +2052,9 @@ int MGFramework::addMO(int n)
 		m_MO[i].initialize();
 	}
 
+	// Make sure tiles are re-rendered after creating MOs
+	setRenderAllTiles();
+
 	return nOld; // Return index of first MO added.
 }
 
@@ -2072,6 +2077,8 @@ void MGFramework::deleteMO(int index)
 		m_MO[getNumberOfMO()-1].disableHistory();
 		m_NMO = getNumberOfMO()-1;
 	}
+	// Make sure tiles are re-rendered after deleting MOs
+	setRenderAllTiles();
 }
 
 
@@ -2619,6 +2626,8 @@ void MGFramework::deleteAllSO()
 		m_SO = NULL;
 		m_NSO = 0;
 	}
+	// Make sure tiles are re-rendered after deleting SOs
+	setRenderAllTiles();
 }
 
 void MGFramework::addSO(int n)
@@ -2637,6 +2646,8 @@ void MGFramework::addSO(int n)
 	{
 		m_SO[i].copy(&oldSO[i]);
 	}
+	// Make sure tiles are re-rendered after creating SOs
+	setRenderAllTiles();
 }
 
 void MGFramework::deleteSO(int index)
@@ -2657,6 +2668,8 @@ void MGFramework::deleteSO(int index)
 		}
 		m_NSO = getNumberOfSO()-1;
 	}
+	// Make sure tiles are re-rendered after deleting SOs
+	setRenderAllTiles();
 }
 
 

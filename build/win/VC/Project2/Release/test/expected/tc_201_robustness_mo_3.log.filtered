@@ -274,22 +274,6 @@ Symbol Table
 [X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
 [X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
 [X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::update: MO stuck for one second
 MGMovingObject ID 7 History
 0	0: CalculatePath: X,234 -> 157,179
 MGMovingObject ID 8 History

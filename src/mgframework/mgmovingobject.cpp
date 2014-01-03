@@ -3,6 +3,7 @@
 #include <iostream>
 
 int MGMovingObject::m_TileSize = 0;
+int MGMovingObject::m_MovingMOCounter = 0;
 
 MGMovingObject::MGMovingObject()
 {
@@ -135,6 +136,7 @@ void MGMovingObject::update(MGFramework *w)
 {
 	if(m_Path.empty())
 	{
+		changeState(MOStateIdle);
 		return;
 	}
 	else
@@ -158,12 +160,14 @@ void MGMovingObject::update(MGFramework *w)
 				changeState(MOStateStuck);
 				return;
 			}
-			else if(isStuck() && timeSinceLastUpdate > 1000)
+			else if(isStuck() && timeSinceLastUpdate > 10000)
 			{
 				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
 				setTimeOfLastUpdate(MGF_GetExecTimeMS());
-				addToHistory("Stuck for a second");
-				MGFLOG_WARNING("MGMovingObject::update: MO stuck for one second");
+				addToHistory("Stuck for too long");
+				MGFLOG_WARNING("MGMovingObject::update: MO stuck for too long");
+				changeState(MOStateIdle);
+				m_Path.clear();
 				return;
 			}
 
@@ -558,8 +562,19 @@ void MGMovingObject::changeState(MOState toState)
 	else if(getCurrentState() != toState)
 	{
 		MGFLOG_INFO("MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState));
+
+		if(toState == MOStateMoving)
+		{
+			++m_MovingMOCounter;
+		}
+		else if(m_CurrentState == MOStateMoving)
+		{
+			--m_MovingMOCounter;
+		}
+
 		addToHistory( (string("ChangeState: ") + toString(getCurrentState()) + string(" -> ") + toString(toState)).c_str());
 		m_CurrentState = toState;
+
 	}
 	else
 	{

@@ -45,6 +45,7 @@ private:
 	MOState getCurrentState(){ return m_CurrentState; }
 	void changeState(MOState toState);
 	const char* toString(MOState s);
+	static int m_MovingMOCounter;
 
 	std::list<PathItem> m_Path;
 	std::vector<std::string> *m_History;
@@ -91,6 +92,8 @@ public:
 	bool isIdle(){ return m_CurrentState == MOStateIdle; }
 	bool isMoving(){ return m_CurrentState == MOStateMoving; }
 	bool isStuck(){ return m_CurrentState == MOStateStuck; }
+	static bool anyMovingMO(){ return (m_MovingMOCounter > 0); }
+	static int nMovingMO(){ return m_MovingMOCounter; }
 
 	// History related
 	void enableHistory(){ if(!m_History) m_History = new std::vector<std::string>; }
