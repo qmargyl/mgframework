@@ -13,9 +13,9 @@
 #define MGF_TRUE 1
 #define MGF_FALSE 0
 
-#define MGFLOG_WARNING(x)						{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: "	<< x << std::endl; }
-#define MGFLOG_INFO(x)		if(loggingEnabled()){ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: "		<< x << std::endl; }
-#define MGFLOG_ERROR(x)							{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") ERROR: "	<< x << std::endl; }
+#define MGFLOG_WARNING(x)								{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: "	<< x << std::endl; }
+#define MGFLOG_INFO(x)				if(loggingEnabled()){ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: "		<< x << std::endl; }
+#define MGFLOG_ERROR(x)									{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") ERROR: "	<< x << std::endl; }
 
 #define MGFLOG_STATIC_WARNING(x)						{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " WARNING: "	<< x << std::endl; }
 #define MGFLOG_STATIC_INFO(x)		if(loggingEnabled()){ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " INFO: "		<< x << std::endl; }
@@ -35,6 +35,12 @@ enum eMGFInstanceType{
 #define MGF_NOPLAYER	0
 #define MGF_PLAYER1		1
 #define MGF_PLAYER2		2
+#define MGF_PLAYER3		3
+#define MGF_PLAYER4		4
+#define MGF_PLAYER5		5
+#define MGF_PLAYER6		6
+#define MGF_PLAYER7		7
+#define MGF_PLAYER8		8
 
 class MGFramework;
 class MGSymbolTable;
@@ -62,10 +68,6 @@ protected:
 
 	virtual eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) = 0;
 
-
-
-
-
 public:
 	MGComponent()
 		: m_LoggingEnabled (false),
@@ -87,7 +89,6 @@ public:
 	void setOwner(unsigned int owner){m_Owner = owner;}
 	unsigned int getOwner(){return m_Owner;}
 	bool isOwned(){return m_Owner != MGF_NOPLAYER;}
-
 
 	// Utility functions
 	static std::string toString(bool b){ if(b) return std::string("true"); return std::string("false"); }

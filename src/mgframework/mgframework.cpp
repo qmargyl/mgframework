@@ -47,7 +47,9 @@ MGFramework::MGFramework():
 	m_CommandReturnVal(0),
 	m_RenderAll(true),
 	m_SelectiveTileRendering(false),
-	m_NDrawnTiles(0)
+	m_NDrawnTiles(0),
+	m_PlayerNumber(MGF_NOPLAYER),
+	m_OnlySelectOwnedMO(false)
 {
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
@@ -210,8 +212,19 @@ bool MGFramework::processEvents()
 								{
 									if(!m_MO[i].isMarked())
 									{
-										m_MO[i].mark();
-										countMark();
+										if(onlySelectOwnedMO())
+										{
+											if(m_MO[i].getOwner() == getClientPlayer())
+											{
+												m_MO[i].mark();
+												countMark();
+											}
+										}
+										else
+										{
+											m_MO[i].mark();
+											countMark();
+										}
 									}
 								}
 								if(m_MO == NULL)

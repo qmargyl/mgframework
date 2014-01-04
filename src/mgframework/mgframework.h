@@ -188,7 +188,9 @@ class MGFramework :public MGComponent
 		bool m_WindowPropertiesSet; // Used to determine if all Windows properties have been set.
 		bool m_MiniMapEnabled;		// Enables the mini map implementation.
 
+		// Instance related
 		eMGFInstanceType m_MGFInstanceType;
+		int m_PlayerNumber;
 
 		// FPS related
 		Uint32 m_FrameTime;			// Holds current frame time
@@ -222,6 +224,7 @@ class MGFramework :public MGComponent
 		int m_YFrameStart;
 		int m_XFrameEnd;
 		int m_YFrameEnd;
+		bool m_OnlySelectOwnedMO;
 
 		// Symbol related
 		int m_CommandReturnVal;
@@ -348,6 +351,11 @@ class MGFramework :public MGComponent
 		inline int getFrameStartY(){ return m_YFrameStart; }
 		inline int getFrameEndX(){ return m_XFrameEnd; }
 		inline int getFrameEndY(){ return m_YFrameEnd; }
+		inline void activateOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = true; }
+		inline void deactivateOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = false; }
+		inline bool onlySelectOwnedMO(){ return m_OnlySelectOwnedMO; }
+
+
 
 		// Graphics related, based on SDL
 		SDL_Surface *getSurface(){return m_Window.m_Screen;}
@@ -382,6 +390,10 @@ class MGFramework :public MGComponent
 		void unsetRenderAllTiles(){ m_RenderAll = false; }
 		bool renderAllTiles(){ return m_RenderAll; }
 		int getDrawnTilesCounter(){ return m_NDrawnTiles; }
+
+		// Instance related
+		void setClientPlayer(int id){ m_PlayerNumber = id; }
+		int getClientPlayer(){ return m_PlayerNumber; }
 
 	public:
 		MGFramework();
