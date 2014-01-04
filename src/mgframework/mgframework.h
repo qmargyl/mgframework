@@ -20,10 +20,8 @@
 #include "mgperiodicevent.h"
 #include "mgsymboltable.h"
 #include "mgstationaryobject.h"
+#include "mgfversion.h"
 
-
-// Version format is <major release>.<minor release>.<features added>.<bug fixes>
-#define MGFRAMEWORKVERSION "1.0.40.0"
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
@@ -51,10 +49,10 @@ enum eMGComponentConsoleCommand{
 	//MGFramework commands
 	MGComponent_ADD_MO_INT_PARAMLIST,
 	MGComponent_ADD_PE_INT_PARAMLIST,
+	MGComponent_ADD_SO_INT_PARAMLIST,
 	MGComponent_DELETE_ALL_MO_PARAMLIST,
 	MGComponent_DELETE_MO_INT,
 	MGComponent_DELETE_ALL_PE_PARAMLIST,
-	MGComponent_ADD_SO_INT_PARAMLIST,
 	MGComponent_DELETE_ALL_SO_PARAMLIST,
 	MGComponent_DELETE_SO_INT,
 	MGComponent_RUNFRAMES_INT,
@@ -63,7 +61,7 @@ enum eMGComponentConsoleCommand{
 	MGComponent_OPEN_TERMINALSERVER,
 	MGComponent_CLOSE_TERMINALSERVER,
 
-	//Settings flags
+	//Settings
 	MGComponent_LOGGING_BOOL,
 	MGComponent_MINIMAP_BOOL,
 	MGComponent_INPUT_BOOL,

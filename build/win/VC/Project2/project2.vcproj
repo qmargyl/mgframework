@@ -192,10 +192,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\src\mgframework\mghtmllog.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\..\src\mgframework\mgmap.cpp"
 				>
 			</File>
@@ -242,7 +238,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\src\mgframework\mghtmllog.h"
+				RelativePath="..\..\..\..\src\mgframework\mgfversion.h"
 				>
 			</File>
 			<File
