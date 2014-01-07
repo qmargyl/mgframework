@@ -43,7 +43,9 @@ end
 
 
 function test_expect_mo_1
+  print "******************************************************"
   print "Expecting wrong number of MO"
+  print "******************************************************"
   delete all mo
   add mo 1
   expect getnumberofmo 0
@@ -52,7 +54,9 @@ end
 
 
 function test_expect_so_1
+  print "******************************************************"
   print "Expecting wrong number of SO"
+  print "******************************************************"
   delete all so
   add so 1
   expect getnumberofso 0
@@ -61,7 +65,9 @@ end
 
 
 function test_expect_pe_1
+  print "******************************************************"
   print "Expecting wrong number of PE"
+  print "******************************************************"
   delete all pe
   add pe 1
   expect getnumberofpe 0
@@ -70,7 +76,9 @@ end
 
 
 function test_script_syntax_1
+  print "******************************************************"
   print "Unexpected end of function"
+  print "******************************************************"
   var1 = 4
   if var1 == 4
   // Unexpected end of function
@@ -78,7 +86,9 @@ end
 
 
 function test_script_syntax_2
+  print "******************************************************"
   print "Unexpected endif"
+  print "******************************************************"
   var1 = 4
   // Unexpected endif
   endif
@@ -86,7 +96,9 @@ end
 
 
 function test_script_syntax_3
+  print "******************************************************"
   print "Assignment operator in if construction"
+  print "******************************************************"
   var1 = 1
   if var1 = 4
     var1 = 5

@@ -61,9 +61,7 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 
 	// The proper way to populate the tile properties would be to 
 	// for example read in a level file, or set hard coded values.
-	// Here is just an example so we have something before the
-	// framework can load a file.. Obviously the hardcoded tile
-	// properties should not be part of the framework.
+	// Here is just an example.
 
 	for (int x=0; x < getWidth(); x++)
 	{
@@ -80,9 +78,6 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 	setTileProperty(3, 3, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
 	setTileProperty(4, 4, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
 	setTileProperty(5, 5, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
-	setTileProperty(6, 4, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
-	setTileProperty(7, 3, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
-	setTileProperty(8, 2, MGMAP_TP_PROPERTY_2 | MGMAP_TP_NOOBSTACLE);
 	*/
 }
 
@@ -294,7 +289,8 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 		PathItem *n;
 		PathItem *e;
 
-		PathItem *now = new PathItem(ax, ay, MGFramework::distance(ax, ay, bx, by));
+		double distanceToTarget = MGFramework::distance(ax, ay, bx, by);
+		PathItem *now = new PathItem(ax, ay, distanceToTarget);
 		path.push_back(*now);
 
 		while (x!=bx || y!=by)
@@ -302,8 +298,33 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			if(occupant(bx, by) != 0)
 			{
 				// XXX: Here we should try to find a tile close to target instead of giving up.
-				MGFLOG_INFO("MGMap::calculatePath target tile is occupied");
-				break;
+				//      - Set a new bx,by close to tagret and continue instead of breaking?
+				//      - Condition that the distance to target is not short?
+				distanceToTarget = MGFramework::distance(x, y, bx, by);
+				if(distanceToTarget > 3)
+				{
+					// Set new target.
+					bool found=false;
+					for(unsigned int i=0; i<20; ++i)
+					{
+						// Not implemented yet..
+					}
+					if(found)
+					{
+						// Do nothing = continue while loop
+					}
+					else
+					{
+						MGFLOG_INFO("MGMap::calculatePath target tile is occupied");
+						break;
+					}
+
+				}
+				else
+				{
+					MGFLOG_INFO("MGMap::calculatePath target tile is occupied");
+					break;
+				}
 			}
 
 			MGFLOG_INFO("MGMap::calculatePath has current (x,y) = (" << x << ", " << y << ")");

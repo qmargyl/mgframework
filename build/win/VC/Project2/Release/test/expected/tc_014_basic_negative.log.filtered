@@ -10,11 +10,106 @@ Symbol Table
 Symbol Table
 'test_nonexisting_function_1' : X
 Symbol Table
+Test case 2
 Symbol Table
 'test_nonexisting_function_1' : X
+******************************************************
+Expecting wrong number of MO
+******************************************************
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (0 != 1)
 Symbol Table
 'test_nonexisting_function_1' : X
 'test_expect_mo_1' : X
+Symbol Table
+Symbol Table
+'test_nonexisting_function_1' : X
+'test_expect_mo_1' : X
+******************************************************
+Expecting wrong number of SO
+******************************************************
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (0 != 1)
+Symbol Table
+'test_nonexisting_function_1' : X
+'test_expect_mo_1' : X
+'test_expect_so_1' : X
+Symbol Table
+Symbol Table
+'test_nonexisting_function_1' : X
+'test_expect_mo_1' : X
+'test_expect_so_1' : X
+******************************************************
+Expecting wrong number of PE
+******************************************************
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (0 != 1)
+Symbol Table
+'test_nonexisting_function_1' : X
+'test_expect_mo_1' : X
+'test_expect_so_1' : X
+'test_expect_pe_1' : X
+Symbol Table
+Test case 3
+Symbol Table
+'test_nonexisting_function_1' : X
+'test_expect_mo_1' : X
+'test_expect_so_1' : X
+'test_expect_pe_1' : X
+******************************************************
+Unexpected end of function
+******************************************************
+Symbol Table
+'var1' : X
+Symbol Table
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::parse found unexpected 'end'
+Symbol Table
+'test_nonexisting_function_1' : X
+'test_expect_mo_1' : X
+'test_expect_so_1' : X
+'test_expect_pe_1' : X
+'test_script_syntax_1' : X
+Symbol Table
+Symbol Table
+'test_nonexisting_function_1' : X
+'test_expect_mo_1' : X
+'test_expect_so_1' : X
+'test_expect_pe_1' : X
+'test_script_syntax_1' : X
+******************************************************
+Unexpected endif
+******************************************************
+Symbol Table
+'var1' : X
+Symbol Table
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: Unexpected 'endif'
+Symbol Table
+'test_nonexisting_function_1' : X
+'test_expect_mo_1' : X
+'test_expect_so_1' : X
+'test_expect_pe_1' : X
+'test_script_syntax_1' : X
+'test_script_syntax_2' : X
+Symbol Table
+Symbol Table
+'test_nonexisting_function_1' : X
+'test_expect_mo_1' : X
+'test_expect_so_1' : X
+'test_expect_pe_1' : X
+'test_script_syntax_1' : X
+'test_script_syntax_2' : X
+******************************************************
+Assignment operator in if construction
+******************************************************
+Symbol Table
+'var1' : X
+Symbol Table
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: Unsupported operator
+Symbol Table
+'test_nonexisting_function_1' : X
+'test_expect_mo_1' : X
+'test_expect_so_1' : X
+'test_expect_pe_1' : X
+'test_script_syntax_1' : X
+'test_script_syntax_2' : X
+'test_script_syntax_3' : X
 Symbol Table
 Exiting application...
 Execution time: X

@@ -156,8 +156,8 @@ private:
 
 public:
 	PathItem();
-	PathItem(int x, int y){m_X=x; m_Y=y; m_Heuristic=1; };
-	PathItem(int x, int y, double h){m_X=x; m_Y=y; m_Heuristic=h; };
+	PathItem(int x, int y){ m_X=x; m_Y=y; m_Heuristic=1; };
+	PathItem(int x, int y, double h){ m_X=x; m_Y=y; m_Heuristic=h; };
 	~PathItem(){/*std::cout << "PathItem::~PathItem()\n";*/};
 	int getX(){ return m_X;}
 	int getY(){ return m_Y;}
@@ -358,7 +358,7 @@ class MGFramework :public MGComponent
 
 
 		// Graphics related, based on SDL
-		SDL_Surface *getSurface(){return m_Window.m_Screen;}
+		inline SDL_Surface *getSurface(){return m_Window.m_Screen;}
 		void drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		SDL_Surface *loadBMPImage( std::string filename );
 
@@ -373,10 +373,10 @@ class MGFramework :public MGComponent
 		void hLine32(SDL_Surface *surface, int x, int y, int length, Uint32 pixel);
 
 		// Controlling game speed and execution
-		Uint32 getFPS();
-		void setDesiredFPS(Uint32 f);
-		Uint32 getDesiredFPS();
-		Sint32 getLastFrameDelayTime(){return m_DelayTime;}	// How much time was left for additional calculations last frame.
+		inline Uint32 getFPS();
+		inline void setDesiredFPS(Uint32 f);
+		inline Uint32 getDesiredFPS();
+		inline Sint32 getLastFrameDelayTime(){return m_DelayTime;}	// How much time was left for additional calculations last frame.
 
 		// Console activation related
 		void enableTyping(){m_TypingEnabled = true;}
@@ -454,13 +454,13 @@ class MGFramework :public MGComponent
 		}
 
 		// Mini map
-		void enableMiniMap(){m_MiniMapEnabled = true;}
-		void disableMiniMap(){m_MiniMapEnabled = false;}
-		bool miniMapEnabled(){return m_MiniMapEnabled;}
+		void enableMiniMap(){ m_MiniMapEnabled = true; }
+		void disableMiniMap(){ m_MiniMapEnabled = false; }
+		bool miniMapEnabled(){ return m_MiniMapEnabled; }
 
 		// MO selection related
-		void countMark(){m_MarkedMOs++;}
-		void countUnMark(){m_MarkedMOs--;}
+		void countMark(){ m_MarkedMOs++; }
+		void countUnMark(){ m_MarkedMOs--; }
 		
 		int getNumberOfMarkedMO()
 		{ 
