@@ -49,7 +49,8 @@ MGFramework::MGFramework():
 	m_SelectiveTileRendering(false),
 	m_NDrawnTiles(0),
 	m_PlayerNumber(MGF_NOPLAYER),
-	m_OnlySelectOwnedMO(false)
+	m_OnlySelectOwnedMO(false),
+	m_FeatureMouseScrollingEnabled(true)
 {
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
@@ -171,7 +172,10 @@ bool MGFramework::processEvents()
 					else if (((int) event.button.button) == 3)
 					{
 						MGFLOG_INFO("Map (right click): index = " << iClick << ", x = " << xClick << ", y = " << yClick)
-						m_Map.mouseScrollingClick(event.button.x, event.button.y);
+						if(mouseScrollingEnabled())
+						{
+							m_Map.mouseScrollingClick(event.button.x, event.button.y);
+						}
 					}
 
 					// Log debug information to console.
@@ -251,8 +255,10 @@ bool MGFramework::processEvents()
 							runConsoleCommand(c, this, NULL);
 						}
 					}
-
-					m_Map.mouseScrollingRelease(event.button.x, event.button.y);
+					if(mouseScrollingEnabled())
+					{
+						m_Map.mouseScrollingRelease(event.button.x, event.button.y);
+					}
 				}
 				break;
 			}

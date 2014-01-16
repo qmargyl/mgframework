@@ -42,8 +42,11 @@ bool Project2::init(int w, int h, int tw, int th)
 		m_Map.setLeftEdge(8);
 		m_Map.setRightEdge(64);
 
-		// Setup application specific game logics..
+		// Activate/deactivate framework features
 		activateSelectiveTileRendering();
+		enableMouseScrolling();
+
+		// Setup application specific game logics..
 
 		runConsoleCommand("open terminalserver", this, NULL);
 		runConsoleCommand("logging off", this, NULL); // Turn on logging for the MGFramework class

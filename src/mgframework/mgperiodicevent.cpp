@@ -11,12 +11,11 @@ MGPeriodicEvent::MGPeriodicEvent()
 	m_isActive(false), 
 	m_FileName1(NULL)
 {
-	//registerMemoryAllocation(sizeof(MGPeriodicEvent));
+
 }
 
 MGPeriodicEvent::~MGPeriodicEvent()
 {
-	//registerMemoryDeallocation(sizeof(MGPeriodicEvent));
 	delete [] m_FileName1;
 }
 
@@ -71,6 +70,7 @@ void MGPeriodicEvent::copy(const MGPeriodicEvent *src)
 	m_StartTime = src->m_StartTime;
 	m_isActive = src->m_isActive;
 	m_Owner = src->m_Owner;
+	//...including MGComponent ones
 	m_LoggingEnabled = src->m_LoggingEnabled;
 	m_FileName1 = src->m_FileName1;
 	m_ID = src->m_ID;

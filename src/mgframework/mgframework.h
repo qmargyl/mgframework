@@ -159,12 +159,12 @@ public:
 	PathItem(int x, int y){ m_X=x; m_Y=y; m_Heuristic=1; };
 	PathItem(int x, int y, double h){ m_X=x; m_Y=y; m_Heuristic=h; };
 	~PathItem(){/*std::cout << "PathItem::~PathItem()\n";*/};
-	int getX(){ return m_X;}
-	int getY(){ return m_Y;}
-	double getH(){ return m_Heuristic;}
+	int getX(){ return m_X; }
+	int getY(){ return m_Y; }
+	double getH(){ return m_Heuristic; }
 	void setH(double h){ m_Heuristic = h; }
-	void setPI(int x, int y, int h){ m_X=x; m_Y=y; m_Heuristic=h;}
-	bool equalCoordinate(PathItem* pi){ return (getX()==pi->getX()) && (getY()==pi->getY());}
+	void setPI(int x, int y, int h){ m_X=x; m_Y=y; m_Heuristic=h; }
+	bool equalCoordinate(PathItem* pi){ return (getX()==pi->getX()) && (getY()==pi->getY()); }
 };
 
 
@@ -197,7 +197,10 @@ class MGFramework :public MGComponent
 		Uint32 m_ActualFrameTime;	// Calculated for each frame
 		Uint32 m_FPS;				// Holds desired FPS
 		Sint32 m_DelayTime;			// Holds delay in ms for last frame
-		bool m_DynamicFPSEnabled;
+		bool m_DynamicFPSEnabled;	// Feature activation
+
+		// Mouse scrolling
+		bool m_FeatureMouseScrollingEnabled;	// Feature activation
 
 		// Countdown feature needs a flag and a counter.
 		bool m_FrameCountdownEnabled;
@@ -261,6 +264,11 @@ class MGFramework :public MGComponent
 		void enableInput(){ m_InputEnabled = true;}
 		void disableInput(){ m_InputEnabled = false;}
 		bool isInputEnabled(){ return m_InputEnabled;}
+
+		// Mouse scrolling
+		bool mouseScrollingEnabled(){ return m_FeatureMouseScrollingEnabled; }
+		void enableMouseScrolling(){ m_FeatureMouseScrollingEnabled = true; }
+		void disableMouseScrolling(){ m_FeatureMouseScrollingEnabled = false; }
 
 		// FPS
 		bool getDynamicFPSEnabled(){ return m_DynamicFPSEnabled; }
@@ -405,12 +413,12 @@ class MGFramework :public MGComponent
 		virtual bool init(int w, int h, int tw, int th) = 0;	// Force a derived sub-class to implement this as it is not framework related.
 		bool setWindowProperties(int width, int height, int bpp, bool fullscreen, const string& title);
 		bool setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const string& title);
-		void unsetWindowProperties(){m_WindowPropertiesSet = false;}
-		bool windowPropertiesSet(){return m_WindowPropertiesSet;}
+		void unsetWindowProperties(){ m_WindowPropertiesSet = false; }
+		bool windowPropertiesSet(){ return m_WindowPropertiesSet; }
 
 		// Client/Server
-		void setInstanceType(eMGFInstanceType it){ m_MGFInstanceType = it;}
-		eMGFInstanceType getInstanceType(){return m_MGFInstanceType;}
+		void setInstanceType(eMGFInstanceType it){ m_MGFInstanceType = it; }
+		eMGFInstanceType getInstanceType(){ return m_MGFInstanceType; }
 
 		// Console command handling
 		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
@@ -418,7 +426,7 @@ class MGFramework :public MGComponent
 		static bool isNumericalInt(const string &s); // returns true if the argument contains only numbers.
 		static int staticToInt(const string &s); // returns an int converted from either a constant or a symbol.
 		int toInt(const string &s, MGSymbolTable *sym); // returns an int converted from either a constant or a symbol.
-		bool okMGFrameworkSyntax(/*const char *c*/const std::vector<std::string> &v_s);
+		bool okMGFrameworkSyntax(const std::vector<std::string> &v_s);
 
 		//Socket terminal related
 		bool socketTerminalOpen(){return m_KeepSocketTerminalOpen;}
@@ -428,7 +436,7 @@ class MGFramework :public MGComponent
 		void setPort(int p){ m_Port = p; }
 
 		// Program version
-		const char *getMGFrameworkVersion(){return MGFRAMEWORKVERSION;}
+		const char *getMGFrameworkVersion(){ return MGFRAMEWORKVERSION; }
 
 		// Execute the framework
 		void run(const char *scriptFileName, bool runOneFrame = false);
@@ -437,7 +445,7 @@ class MGFramework :public MGComponent
 		int parse(const char *sFileName);
 
 		// Evaluating log files to PASS/FAIL
-		void logEval(const char *logFileName, bool negativeTest=false);
+		void logEval(const char *logFileName, bool negativeTest = false);
 
 		// Filtering log files
 		std::string filterLine(const char* line);
@@ -450,7 +458,7 @@ class MGFramework :public MGComponent
 		void registerUsedCommand(eMGComponentConsoleCommand c, int returnValue = 0)
 		{
 			m_CommandReturnVal = returnValue;
-			m_UsedCommands[(int)c]=true; 
+			m_UsedCommands[(int)c] = true; 
 		}
 
 		// Mini map
