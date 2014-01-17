@@ -10,7 +10,7 @@ Project2Server::Project2Server()
 	unsetWindowProperties(); // Force setWindowProperties to be called before init.
 	disableTyping();
 	setInstanceType(MGFSERVERINSTANCE);
-	disableMiniMap();
+	disableFeatureMiniMap();
 	enableLogging();
 }
 

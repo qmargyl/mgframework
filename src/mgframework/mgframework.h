@@ -265,13 +265,13 @@ class MGFramework :public MGComponent
 		void disableInput(){ m_InputEnabled = false;}
 		bool isInputEnabled(){ return m_InputEnabled;}
 
-		// Mouse scrolling
-		bool mouseScrollingEnabled(){ return m_FeatureMouseScrollingEnabled; }
-		void enableMouseScrolling(){ m_FeatureMouseScrollingEnabled = true; }
-		void disableMouseScrolling(){ m_FeatureMouseScrollingEnabled = false; }
+// ***	// Feature Mouse scrolling
+		bool featureMouseScrollingEnabled(){ return m_FeatureMouseScrollingEnabled; }
+		void enableFeatureMouseScrolling(){ m_FeatureMouseScrollingEnabled = true; }
+		void disableFeatureMouseScrolling(){ m_FeatureMouseScrollingEnabled = false; }
 
-		// FPS
-		bool getDynamicFPSEnabled(){ return m_DynamicFPSEnabled; }
+// ***	// Feature Dynamic FPS
+		bool featureDynamicFPSEnabled(){ return m_DynamicFPSEnabled; }
 		void setDynamicFPSEnabled(bool val){ m_DynamicFPSEnabled = val; }
 
 		// Exit application functionality
@@ -359,9 +359,11 @@ class MGFramework :public MGComponent
 		inline int getFrameStartY(){ return m_YFrameStart; }
 		inline int getFrameEndX(){ return m_XFrameEnd; }
 		inline int getFrameEndY(){ return m_YFrameEnd; }
-		inline void activateOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = true; }
-		inline void deactivateOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = false; }
-		inline bool onlySelectOwnedMO(){ return m_OnlySelectOwnedMO; }
+
+// ***	// Feature Selective MO slection
+		inline void enableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = true; }
+		inline void disableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = false; }
+		inline bool featureOnlySelectOwnedMOEnabled(){ return m_OnlySelectOwnedMO; }
 
 
 
@@ -391,9 +393,9 @@ class MGFramework :public MGComponent
 		void disableTyping(){m_TypingEnabled = false;}
 		bool typingEnabled(){return m_TypingEnabled;}
 
-		// Rendering optimizations related
-		void activateSelectiveTileRendering(){ m_SelectiveTileRendering = true; }
-		void deactivateSelectiveTileRendering(){ m_SelectiveTileRendering = false; }
+// ***	// Feature Selective Tile Rendering
+		void enableFeatureSelectiveTileRendering(){ m_SelectiveTileRendering = true; }
+		void disableFeatureSelectiveTileRendering(){ m_SelectiveTileRendering = false; }
 		void setRenderAllTiles(){ m_RenderAll = true; }
 		void unsetRenderAllTiles(){ m_RenderAll = false; }
 		bool renderAllTiles(){ return m_RenderAll; }
@@ -461,10 +463,10 @@ class MGFramework :public MGComponent
 			m_UsedCommands[(int)c] = true; 
 		}
 
-		// Mini map
-		void enableMiniMap(){ m_MiniMapEnabled = true; }
-		void disableMiniMap(){ m_MiniMapEnabled = false; }
-		bool miniMapEnabled(){ return m_MiniMapEnabled; }
+// ***	// Feature Mini map
+		void enableFeatureMiniMap(){ m_MiniMapEnabled = true; }
+		void disableFeatureMiniMap(){ m_MiniMapEnabled = false; }
+		bool featureMiniMapEnabled(){ return m_MiniMapEnabled; }
 
 		// MO selection related
 		void countMark(){ m_MarkedMOs++; }

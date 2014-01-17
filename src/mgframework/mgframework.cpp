@@ -172,7 +172,7 @@ bool MGFramework::processEvents()
 					else if (((int) event.button.button) == 3)
 					{
 						MGFLOG_INFO("Map (right click): index = " << iClick << ", x = " << xClick << ", y = " << yClick)
-						if(mouseScrollingEnabled())
+						if(featureMouseScrollingEnabled())
 						{
 							m_Map.mouseScrollingClick(event.button.x, event.button.y);
 						}
@@ -216,7 +216,7 @@ bool MGFramework::processEvents()
 								{
 									if(!m_MO[i].isMarked())
 									{
-										if(onlySelectOwnedMO())
+										if(featureOnlySelectOwnedMOEnabled())
 										{
 											if(m_MO[i].getOwner() == getClientPlayer())
 											{
@@ -255,7 +255,7 @@ bool MGFramework::processEvents()
 							runConsoleCommand(c, this, NULL);
 						}
 					}
-					if(mouseScrollingEnabled())
+					if(featureMouseScrollingEnabled())
 					{
 						m_Map.mouseScrollingRelease(event.button.x, event.button.y);
 					}
@@ -1042,7 +1042,7 @@ void MGFramework::handleMGFGameLogics()
 	}
 
 	// Example of how FPS can be controlled dynamically
-	if(getDynamicFPSEnabled())
+	if(featureDynamicFPSEnabled())
 	{
 		if(getLastFrameDelayTime() > 10)
 		{
@@ -1689,12 +1689,12 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			int miniOn = toInt(cmdvec[1], s);
 			if(miniOn == MGF_TRUE)
 			{
-				enableMiniMap();
+				enableFeatureMiniMap();
 				MGFLOG_INFO("Mini map enabled.");
 			}
 			else
 			{
-				disableMiniMap();
+				disableFeatureMiniMap();
 				MGFLOG_INFO("Mini map disabled.");
 			}
 			return true;

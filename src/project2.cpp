@@ -43,8 +43,8 @@ bool Project2::init(int w, int h, int tw, int th)
 		m_Map.setRightEdge(64);
 
 		// Activate/deactivate framework features
-		activateSelectiveTileRendering();
-		enableMouseScrolling();
+		enableFeatureSelectiveTileRendering();
+		enableFeatureMouseScrolling();
 
 		// Setup application specific game logics..
 
@@ -154,7 +154,7 @@ void Project2::draw()
 
 
 		// Draw the mini map if enabled. Also draw all objects on it...
-		if(miniMapEnabled())
+		if(featureMiniMapEnabled())
 		{
 			for (int x=0; x < m_Map.getWidth(); x++)
 			{

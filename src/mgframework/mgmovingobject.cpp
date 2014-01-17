@@ -117,7 +117,6 @@ void MGMovingObject::setPath(std::list<PathItem> p)
 	{
 		setDestTileXY(m_Path.front().getX(), m_Path.front().getY());
 	}
-	// XXX: Otherwise perhaps start a timer that will trigger a new setPath?
 }
 
 

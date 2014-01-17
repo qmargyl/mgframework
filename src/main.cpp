@@ -125,20 +125,20 @@ int main(int argc, char **argv)
 	{
 		p2 = new Project2();
 		p2->setWindowProperties(MGWindow_RES_800_600, 32, false, 
-			string("Project2 (single player example application) based on MGF ") + string(p2->getMGFrameworkVersion()));
+			string("Project2 (single player test application) based on MGF ") + string(p2->getMGFrameworkVersion()));
 	}
 	else if(instanceType==MGFCLIENTINSTANCE)
 	{
 		// Add separate class later...
 		p2 = new Project2();
 		p2->setWindowProperties(640, 480, 32, false, 
-			string("Project2 (client example application) based on MGF ") + string(p2->getMGFrameworkVersion()));
+			string("Project2 (client test application) based on MGF ") + string(p2->getMGFrameworkVersion()));
 	}
 	else if(instanceType==MGFSERVERINSTANCE)
 	{
 		p2 = new Project2Server();
 		p2->setWindowProperties(800, 600, 32, false, 
-			string("Project2 (server example application) based on MGF ") + string(p2->getMGFrameworkVersion()));
+			string("Project2 (server test application) based on MGF ") + string(p2->getMGFrameworkVersion()));
 	}
 
 	if(loggingOn) p2->enableLogging();
