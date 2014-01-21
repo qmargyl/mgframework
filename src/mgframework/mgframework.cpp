@@ -50,7 +50,8 @@ MGFramework::MGFramework():
 	m_NDrawnTiles(0),
 	m_PlayerNumber(MGF_NOPLAYER),
 	m_OnlySelectOwnedMO(false),
-	m_FeatureMouseScrollingEnabled(true)
+	m_FeatureMouseScrollingEnabled(true),
+	m_FeatureCenterOnMO(-1)
 {
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
@@ -171,10 +172,15 @@ bool MGFramework::processEvents()
 					}
 					else if (((int) event.button.button) == 3)
 					{
+						// Right button
 						MGFLOG_INFO("Map (right click): index = " << iClick << ", x = " << xClick << ", y = " << yClick)
 						if(featureMouseScrollingEnabled())
 						{
 							m_Map.mouseScrollingClick(event.button.x, event.button.y);
+						}
+						else if(featureCenterOnMO() && (getNumberOfMO() > centerMOIndex()) )
+						{
+							m_MO[centerMOIndex()].setPath(m_Map.calculatePath(MGFBASICPATH1, m_MO[centerMOIndex()].getTileX(), m_MO[centerMOIndex()].getTileY(), xClick, yClick));
 						}
 					}
 
@@ -270,7 +276,10 @@ bool MGFramework::processEvents()
 					// Set flag to trigger complete re-render
 					setRenderAllTiles();
 				}
-				if(isFramingOngoing()) updateFraming(event.motion.x, event.motion.y);
+				if(isFramingOngoing())
+				{
+					updateFraming(event.motion.x, event.motion.y);
+				}
 				break;
 			}
 

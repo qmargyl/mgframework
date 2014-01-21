@@ -45,6 +45,9 @@ bool Project2::init(int w, int h, int tw, int th)
 		// Activate/deactivate framework features
 		enableFeatureSelectiveTileRendering();
 		enableFeatureMouseScrolling();
+		disableFeatureCenterOnMO();
+		//disableFeatureMouseScrolling();
+		//enableFeatureCenterOnMO(0);
 
 		// Setup application specific game logics..
 

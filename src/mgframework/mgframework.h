@@ -243,6 +243,9 @@ class MGFramework :public MGComponent
 		inline void resetDrawnTilesCounter(){ m_NDrawnTiles = 0; }
 		inline void increaseDrawnTilesCounter(){ ++m_NDrawnTiles; }
 
+		// Center on MO
+		int m_FeatureCenterOnMO;
+
 		// Font
 #ifndef MGF_DEBUGGING_ENABLED
 		TTF_Font* m_Font;
@@ -269,6 +272,12 @@ class MGFramework :public MGComponent
 		bool featureMouseScrollingEnabled(){ return m_FeatureMouseScrollingEnabled; }
 		void enableFeatureMouseScrolling(){ m_FeatureMouseScrollingEnabled = true; }
 		void disableFeatureMouseScrolling(){ m_FeatureMouseScrollingEnabled = false; }
+
+// ***	// Feature Center on MO
+		bool featureCenterOnMO(){ return (m_FeatureCenterOnMO > -1); }
+		int centerMOIndex(){ return m_FeatureCenterOnMO; }
+		void enableFeatureCenterOnMO(int moindex = 0){ m_FeatureCenterOnMO = moindex; }
+		void disableFeatureCenterOnMO(){ m_FeatureCenterOnMO = -1; }
 
 // ***	// Feature Dynamic FPS
 		bool featureDynamicFPSEnabled(){ return m_DynamicFPSEnabled; }
