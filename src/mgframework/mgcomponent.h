@@ -13,14 +13,33 @@
 #define MGF_TRUE 1
 #define MGF_FALSE 0
 
+// These can be set to disable warning, info and error traces on a global level 
+//#define MGFLOG_WARNING(x)
+//#define MGFLOG_INFO(x)
+//#define MGFLOG_ERROR(x)
+//#define MGFLOG_STATIC_WARNING(x)
+//#define MGFLOG_STATIC_INFO(x)
+//#define MGFLOG_STATIC_ERROR(x)
+
+#ifndef MGFLOG_WARNING
 #define MGFLOG_WARNING(x)								{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: "	<< x << std::endl; }
+#endif
+#ifndef MGFLOG_INFO
 #define MGFLOG_INFO(x)				if(loggingEnabled()){ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: "		<< x << std::endl; }
+#endif
+#ifndef MGFLOG_ERROR
 #define MGFLOG_ERROR(x)									{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") ERROR: "	<< x << std::endl; }
+#endif
 
+#ifndef MGFLOG_STATIC_WARNING
 #define MGFLOG_STATIC_WARNING(x)						{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " WARNING: "	<< x << std::endl; }
+#endif
+#ifndef MGFLOG_STATIC_INFO
 #define MGFLOG_STATIC_INFO(x)		if(loggingEnabled()){ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " INFO: "		<< x << std::endl; }
+#endif
+#ifndef MGFLOG_STATIC_ERROR
 #define MGFLOG_STATIC_ERROR(x)							{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " ERROR: "	<< x << std::endl; }
-
+#endif
 
 typedef unsigned short      WORD;
 

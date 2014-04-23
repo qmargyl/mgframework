@@ -9,8 +9,8 @@
 #include <winsock.h>
 
 //Windows macros overriding std if not undefined
-#undef min(a, b)
-#undef max(a, b)
+#undef min
+#undef max
 
 
 MGFramework::MGFramework():
