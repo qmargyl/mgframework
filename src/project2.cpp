@@ -195,7 +195,6 @@ void Project2::draw()
 	}
 
 	// Example of how text can be printed on the surface.. Here FPS and time left between frames.
-#ifndef MGF_DEBUGGING_ENABLED
 	drawText(getSurface(), (string("MOs: ") + MGFramework::toString((int)getNumberOfMO()) + 
 			 string("(") + MGFramework::toString((int)MGMovingObject::nMovingMO()) + string(")") + string("          ")).c_str(), 
 			 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 30, 0, 0, 0, 0, 255, 0);
@@ -205,7 +204,6 @@ void Project2::draw()
 			 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 70, 0, 0, 0, 0, 255, 0);
 	drawText(getSurface(), (string("DT: ") + MGFramework::toString(getDrawnTilesCounter()) + string("          ")).c_str(), 
 			 16, m_Window.getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 90, 0, 0, 0, 0, 255, 0);
-#endif
 
 
 	// Draw marking frame if marking is ongoing

@@ -37,3 +37,4 @@ build/win/VC/Project2/Debug/*.*
 
 # All log files..
 *.log
+*.html

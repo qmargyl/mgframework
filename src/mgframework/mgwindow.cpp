@@ -7,8 +7,8 @@
 #include <GL/glu.h>
 #include "mgwindow.h"
 #include "mgframework.h"
-#ifndef MGF_DEBUGGING_ENABLED
-#include "SDL_ttf.h"
+#ifndef MGF_DISABLE_TTF
+	#include "SDL_ttf.h"
 #endif
 
 MGWindow::MGWindow():
@@ -35,7 +35,7 @@ bool MGWindow::createWindow()
 		return false;
 	}
 
-#ifndef MGF_DEBUGGING_ENABLED
+#ifndef MGF_DISABLE_TTF
 	TTF_Init(); // To debug all TTF references must be commented out.
 #endif
 

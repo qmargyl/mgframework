@@ -8,9 +8,6 @@
 #include <ctime>
 #include <winsock.h>
 
-
-using namespace std;
-
 //Windows macros overriding std if not undefined
 #undef min(a, b)
 #undef max(a, b)
@@ -39,7 +36,7 @@ MGFramework::MGFramework():
 	m_Quit(false),
 	m_DelayTime(0),
 	m_InputEnabled(true),
-#ifndef MGF_DEBUGGING_ENABLED
+#ifndef MGF_DISABLE_TTF
 	m_Font(0),
 #endif
 	m_DynamicFPSEnabled(true),
@@ -1539,7 +1536,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		{
 			registerUsedCommand(MGComponent_OPEN_TERMINALSERVER);
 			MGFLOG_INFO("Opening terminal server...");
-#ifndef MGF_DEBUGGING_ENABLED
+#ifndef MGF_DISABLE_WINSOCK
 			openSocketTerminal();
 			m_SocketTerminal = SDL_CreateThread(runMGFrameworkSocketTerminal, this);
 #endif
@@ -1550,7 +1547,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		{
 			registerUsedCommand(MGComponent_CLOSE_TERMINALSERVER);
 			MGFLOG_INFO("Closing terminal server...");
-#ifndef MGF_DEBUGGING_ENABLED
+#ifndef MGF_DISABLE_WINSOCK
 			if(socketTerminalOpen())
 			{
 				closeSocketTerminal();
@@ -2355,10 +2352,11 @@ SDL_Surface *MGFramework::loadBMPImage( std::string filename )
 	return optimizedImage;
 }
 
-#ifndef MGF_DEBUGGING_ENABLED
+
 void MGFramework::drawText(SDL_Surface* screen, const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB)
 {
-	/*TTF_Font* */m_Font = TTF_OpenFont("ARIAL.TTF", size);
+#ifndef MGF_DISABLE_TTF
+	m_Font = TTF_OpenFont("ARIAL.TTF", size);
 	SDL_Color foregroundColor = { fR, fG, fB };
 	SDL_Color backgroundColor = { bR, bG, bB };
 	SDL_Surface* textSurface = TTF_RenderText_Shaded(m_Font, string, foregroundColor, backgroundColor);
@@ -2366,8 +2364,9 @@ void MGFramework::drawText(SDL_Surface* screen, const char* string, int size, in
 	SDL_BlitSurface(textSurface, NULL, screen, &textLocation);
 	SDL_FreeSurface(textSurface);
 	TTF_CloseFont(m_Font);
-}
 #endif
+}
+
 
 
 void MGFramework::putPixel32(SDL_Surface *surface, int x, int y, Uint32 pixel )
@@ -2633,18 +2632,20 @@ int MGFramework::toInt(const string &s, MGSymbolTable *sym)
 
 
 
-#ifndef MGF_DEBUGGING_ENABLED
+
 int MGFramework::initializeWinsock(WORD wVersionRequested)
 {
+#ifndef MGF_DISABLE_WINSOCK
 	WSADATA wsaData;
 	int err = WSAStartup(wVersionRequested, &wsaData);
 
 	if (err!=0) return 0; // Tell the user that we couldn't find a usable winsock.dll 
 	if (LOBYTE(wsaData.wVersion )!=1 || HIBYTE(wsaData.wVersion)!=1) return 0;
 	//Everything is fine: proceed
+#endif
 	return 1;
 }
-#endif
+
 
 
 bool MGFramework::okMGFrameworkSyntax(const std::vector<std::string> &v_s)
@@ -2724,9 +2725,10 @@ void MGFramework::deleteSO(int index)
 }
 
 
-#ifndef MGF_DEBUGGING_ENABLED
+
 int runMGFrameworkSocketTerminal(void *fm)
 {
+#ifndef MGF_DISABLE_WINSOCK
 	MGFramework *mgf = (MGFramework *)fm;
 	int PORTNR = mgf->getPort();
 	mgf->logIfEnabled((std::string("Opening socket terminal... port ") + MGFramework::toString(mgf->getPort())).c_str());
@@ -2814,6 +2816,6 @@ int runMGFrameworkSocketTerminal(void *fm)
 		WSACleanup();
 	}
 	mgf->logIfEnabled("Socket terminal closed...");
+#endif
 	return 0;
 }
-#endif

@@ -1,15 +1,16 @@
 #ifndef _MG_FRAMEWORK_H
 #define _MG_FRAMEWORK_H
 
-//#define MGF_DEBUGGING_ENABLED		// This flag disables the socket terminal and TTF as these are not possible to compile for Debug.
-
+// Disable features by #define
+//#define MGF_DISABLE_TTF
+#define MGF_DISABLE_WINSOCK
 
 // SDL
 #include <SDL/SDL.h>
 #include <SDL/SDL_thread.h>
 
-#ifndef MGF_DEBUGGING_ENABLED
-  #include "SDL_ttf.h"
+#ifndef MGF_DISABLE_TTF
+	#include "SDL_ttf.h"
 #endif
 
 // MGF header files
@@ -168,9 +169,9 @@ public:
 };
 
 
-#ifndef MGF_DEBUGGING_ENABLED
+
 int runMGFrameworkSocketTerminal(void *fm);
-#endif
+
 
 class MGFramework :public MGComponent
 {
@@ -247,7 +248,7 @@ class MGFramework :public MGComponent
 		int m_FeatureCenterOnMO;
 
 		// Font
-#ifndef MGF_DEBUGGING_ENABLED
+#ifndef MGF_DISABLE_TTF
 		TTF_Font* m_Font;
 #endif
 
@@ -381,9 +382,9 @@ class MGFramework :public MGComponent
 		void drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		SDL_Surface *loadBMPImage( std::string filename );
 
-#ifndef MGF_DEBUGGING_ENABLED
+		// Graphics depending on sdl_ttf
 		void drawText(SDL_Surface* screen, const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
-#endif
+
 		void putPixel32(SDL_Surface *surface, int x, int y, Uint32 pixel);
 		Uint32 getPixel32(SDL_Surface *surface, int x, int y);
 		void drawCircle32(SDL_Surface *surface, int n_cx, int n_cy, int radius, Uint32 pixel);
@@ -490,10 +491,7 @@ class MGFramework :public MGComponent
 		bool isSelectiveTileRenderingActive(){ return m_SelectiveTileRendering; }
 
 
-#ifndef MGF_DEBUGGING_ENABLED
 		static int initializeWinsock(WORD wVersionRequested);
-#endif
-
 
 };
 
