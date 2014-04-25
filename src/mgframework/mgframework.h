@@ -1,17 +1,8 @@
 #ifndef _MG_FRAMEWORK_H
 #define _MG_FRAMEWORK_H
 
-// Disable features by #define
-//#define MGF_DISABLE_TTF
-#define MGF_DISABLE_WINSOCK
-
 // SDL
 #include <SDL/SDL.h>
-#include <SDL/SDL_thread.h>
-
-#ifndef MGF_DISABLE_TTF
-	#include "SDL_ttf.h"
-#endif
 
 // MGF header files
 #include "mgcomponent.h"
@@ -29,8 +20,6 @@
 #define MGF_LOGLINE_MAXLENGTH		1024
 #define MGF_MOPOSITIONINGATTEMPTS	100
 #define MGF_SOPOSITIONINGATTEMPTS	100
-
-
 
 
 enum eMGComponentConsoleCommand{
@@ -247,11 +236,6 @@ class MGFramework :public MGComponent
 		// Center on MO
 		int m_FeatureCenterOnMO;
 
-		// Font
-#ifndef MGF_DISABLE_TTF
-		TTF_Font* m_Font;
-#endif
-
 	protected:
 		MGWindow m_Window;				// The framework window
 		MGMovingObject *m_MO;			// Moving Objects
@@ -376,21 +360,9 @@ class MGFramework :public MGComponent
 		inline bool featureOnlySelectOwnedMOEnabled(){ return m_OnlySelectOwnedMO; }
 
 
-
 		// Graphics related, based on SDL
-		inline SDL_Surface *getSurface(){return m_Window.m_Screen;}
-		void drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
-		SDL_Surface *loadBMPImage( std::string filename );
-
-		// Graphics depending on sdl_ttf
-		void drawText(SDL_Surface* screen, const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
-
-		void putPixel32(SDL_Surface *surface, int x, int y, Uint32 pixel);
-		Uint32 getPixel32(SDL_Surface *surface, int x, int y);
-		void drawCircle32(SDL_Surface *surface, int n_cx, int n_cy, int radius, Uint32 pixel);
-		void drawFillCircle32(SDL_Surface *surface, int cx, int cy, int radius, Uint32 pixel);
-		void vLine32(SDL_Surface *surface, int x, int y, int length, Uint32 pixel);
-		void hLine32(SDL_Surface *surface, int x, int y, int length, Uint32 pixel);
+		void drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY);
+		void drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
 
 		// Controlling game speed and execution
 		inline Uint32 getFPS();
@@ -489,7 +461,6 @@ class MGFramework :public MGComponent
 
 		// Rendering optimizations related
 		bool isSelectiveTileRenderingActive(){ return m_SelectiveTileRendering; }
-
 
 		static int initializeWinsock(WORD wVersionRequested);
 

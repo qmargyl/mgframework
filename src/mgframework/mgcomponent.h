@@ -8,6 +8,9 @@
 #include <iomanip>
 #include <SDL/SDL.h>
 
+// Disable features by #define
+//#define MGF_DISABLE_TTF
+#define MGF_DISABLE_WINSOCK
 
 // Macros...
 #define MGF_TRUE 1
@@ -42,6 +45,7 @@
 #endif
 
 typedef unsigned short      WORD;
+//typedef unsigned long       DWORD;
 
 enum eMGComponentConsoleCommand;
 

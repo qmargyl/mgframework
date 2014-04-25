@@ -3,7 +3,13 @@
 
 #include "mgcomponent.h"
 
-struct SDL_Surface;
+// SDL
+#include <SDL/SDL.h>
+#include <SDL/SDL_thread.h>
+
+#ifndef MGF_DISABLE_TTF
+	#include "SDL_ttf.h"
+#endif
 
 using std::string;
 
@@ -26,13 +32,16 @@ class MGWindow :public MGComponent
 		bool m_Fullscreen;
 		string m_Title;
 		int m_Flags;
+		SDL_Surface * m_Screen;
+		// Font
+#ifndef MGF_DISABLE_TTF
+		TTF_Font* m_Font;
+#endif
 
 		void setFlags(int flags){ m_Flags = flags; }
 		int getFlags(){ return m_Flags; }
 			
 	public:
-
-		SDL_Surface * m_Screen;
 
 		MGWindow();
 		~MGWindow();
@@ -49,6 +58,18 @@ class MGWindow :public MGComponent
 		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
+		SDL_Surface *getSurface();
+		void flipSurface();
+
+		void drawSprite(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
+		SDL_Surface *loadBMPImage( std::string filename );
+		void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
+		void putPixel32(int x, int y, Uint32 pixel);
+		Uint32 getPixel32(int x, int y);
+		void drawCircle32(int n_cx, int n_cy, int radius, Uint32 pixel);
+		void drawFillCircle32(int cx, int cy, int radius, Uint32 pixel);
+		void vLine32(int x, int y, int length, Uint32 pixel);
+		void hLine32(int x, int y, int length, Uint32 pixel);
 };
 
 

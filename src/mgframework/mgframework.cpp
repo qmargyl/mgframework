@@ -6,7 +6,10 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+// XXX: Clean this up
+//#ifndef MGF_DISABLE_WINSOCK
 #include <winsock.h>
+//#endif
 
 //Windows macros overriding std if not undefined
 #undef min
@@ -36,9 +39,9 @@ MGFramework::MGFramework():
 	m_Quit(false),
 	m_DelayTime(0),
 	m_InputEnabled(true),
-#ifndef MGF_DISABLE_TTF
-	m_Font(0),
-#endif
+//#ifndef MGF_DISABLE_TTF
+//	m_Font(0),
+//#endif
 	m_DynamicFPSEnabled(true),
 	m_Port(0),
 	m_CommandReturnVal(0),
@@ -53,7 +56,7 @@ MGFramework::MGFramework():
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
 
-	// Setup the framework for automatic regression testing...
+	// Setup the framework for automatic system level testing...
 
 	// At framework creation, no commands have been used..
 	for(int i=0; i<MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
@@ -996,14 +999,14 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 		// General game logics..
 		handleMGFGameLogics();
 
-		// Application specific game logics and graphics..
+		// Application specific game logics..
 		handleGameLogics();
 		
 		// A server instance of the framework has no graphics.
 		if(getInstanceType() != MGFSERVERINSTANCE) 
 		{
 			draw();
-			SDL_Flip(getSurface());
+			m_Window.flipSurface();
 		}
 
 		// Sleep if there is time to spare..
@@ -1828,7 +1831,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 }
 
 
-
 eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
 {
 	if(cmdvec.size() == 1)
@@ -2008,6 +2010,7 @@ Uint32 MGFramework::getFPS()
 	}
 }
 
+
 void MGFramework::setDesiredFPS(Uint32 f)
 {
 	if(f >= 1) // Don't allow an FPS lower than 1
@@ -2019,6 +2022,7 @@ void MGFramework::setDesiredFPS(Uint32 f)
 		MGFLOG_WARNING("FPS incorrectly calculated (void MGFramework::setDesiredFPS(Uint32 f)): " << f);
 	}
 }
+
 
 Uint32 MGFramework::getDesiredFPS()
 {
@@ -2034,7 +2038,6 @@ Uint32 MGFramework::getDesiredFPS()
 }
 
 
-
 bool MGFramework::setWindowProperties(int width, int height, int bpp, bool fullscreen, const string& title)
 {
 	m_Window.setProperties(width, height, bpp, fullscreen, title);
@@ -2042,12 +2045,14 @@ bool MGFramework::setWindowProperties(int width, int height, int bpp, bool fulls
 	return true;
 }
 
+
 bool MGFramework::setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const string& title)
 {
 	m_Window.setProperties(screenResolution, bpp, fullscreen, title);
 	m_WindowPropertiesSet = true;
 	return true;
 }
+
 
 void MGFramework::deleteAllMO()
 {
@@ -2066,6 +2071,7 @@ void MGFramework::deleteAllMO()
 	// Make sure tiles are re-rendered after deleting MOs
 	setRenderAllTiles();
 }
+
 
 int MGFramework::addMO(int n)
 {
@@ -2102,6 +2108,7 @@ int MGFramework::addMO(int n)
 	return nOld; // Return index of first MO added.
 }
 
+
 void MGFramework::deleteMO(int index)
 {
 	if(index < 0 || index >= getNumberOfMO())
@@ -2124,7 +2131,6 @@ void MGFramework::deleteMO(int index)
 	// Make sure tiles are re-rendered after deleting MOs
 	setRenderAllTiles();
 }
-
 
 
 bool MGFramework::setupMO(int i, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2)
@@ -2193,8 +2199,6 @@ bool MGFramework::setupMO(int i, int x, int y, unsigned int owner, int speed, in
 }
 
 
-
-
 bool MGFramework::setupSO(int i, int x, int y)
 {
 	if(i < 0 || i >= getNumberOfSO())
@@ -2260,6 +2264,7 @@ void MGFramework::deleteAllPE()
 	m_NPE = 0;
 }
 
+
 void MGFramework::addPE(int n)
 {
 	MGPeriodicEvent *oldPE = new MGPeriodicEvent[getNumberOfPE()];
@@ -2312,7 +2317,6 @@ int MGFramework::getNumberOfUsedCommands()
 }
 
 
-
 void MGFramework::quit()
 { 
 	m_Quit = true; 
@@ -2321,155 +2325,17 @@ void MGFramework::quit()
 }
 
 
-
-void MGFramework::drawSprite(SDL_Surface* imageSurface, SDL_Surface* screenSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)
+void MGFramework::drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH)
 {
 	increaseDrawnTilesCounter();
-	SDL_Rect srcRect;
-	srcRect.x = srcX;
-	srcRect.y = srcY;
-	srcRect.w = width;
-	srcRect.h = height;
-	SDL_Rect dstRect;
-	dstRect.x = dstX;
-	dstRect.y = dstY;
-	dstRect.w = width;
-	dstRect.h = height;
-	SDL_BlitSurface(imageSurface, &srcRect, screenSurface, &dstRect);
+	m_Window.drawSprite(imageSurface, srcX, srcY, dstX, dstY, tileW, tileH);
 }
 
 
-SDL_Surface *MGFramework::loadBMPImage( std::string filename ) 
+void MGFramework::drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY)
 {
-	SDL_Surface* loadedImage = NULL;
-	SDL_Surface* optimizedImage = NULL;
-	loadedImage = SDL_LoadBMP( filename.c_str() );
-	if( loadedImage != NULL )
-	{
-		optimizedImage = SDL_DisplayFormat( loadedImage );
-		SDL_FreeSurface( loadedImage );
-	}
-	return optimizedImage;
-}
-
-
-void MGFramework::drawText(SDL_Surface* screen, const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB)
-{
-#ifndef MGF_DISABLE_TTF
-	m_Font = TTF_OpenFont("ARIAL.TTF", size);
-	SDL_Color foregroundColor = { fR, fG, fB };
-	SDL_Color backgroundColor = { bR, bG, bB };
-	SDL_Surface* textSurface = TTF_RenderText_Shaded(m_Font, string, foregroundColor, backgroundColor);
-	SDL_Rect textLocation = { x, y, 0, 0 };
-	SDL_BlitSurface(textSurface, NULL, screen, &textLocation);
-	SDL_FreeSurface(textSurface);
-	TTF_CloseFont(m_Font);
-#endif
-}
-
-
-
-void MGFramework::putPixel32(SDL_Surface *surface, int x, int y, Uint32 pixel )
-{
-	//Convert the pixels to 32 bit
-	Uint32 *pixels = (Uint32 *)surface->pixels;
-	//Set the pixel
-	pixels[ ( y * surface->w ) + x ] = pixel;
-}
-
-Uint32 MGFramework::getPixel32(SDL_Surface *surface, int x, int y)
-{
-	Uint32 *pixels = (Uint32 *)surface->pixels;
-	return pixels[ ( y * surface->w ) + x ];
-}
-
-void MGFramework::drawCircle32(SDL_Surface *surface, int n_cx, int n_cy, int radius, Uint32 pixel)
-{
-    // if the first pixel in the screen is represented by (0,0) (which is in sdl)
-    // remember that the beginning of the circle is not in the middle of the pixel
-    // but to the left-top from it:
- 
-    double error = (double)-radius;
-    double x = (double)radius -0.5;
-    double y = (double)0.5;
-    double cx = n_cx - 0.5;
-    double cy = n_cy - 0.5;
- 
-    while (x >= y)
-    {
-        putPixel32(surface, (int)(cx + x), (int)(cy + y), pixel);
-        putPixel32(surface, (int)(cx + y), (int)(cy + x), pixel);
- 
-        if (x != 0)
-        {
-            putPixel32(surface, (int)(cx - x), (int)(cy + y), pixel);
-            putPixel32(surface, (int)(cx + y), (int)(cy - x), pixel);
-        }
- 
-        if (y != 0)
-        {
-            putPixel32(surface, (int)(cx + x), (int)(cy - y), pixel);
-            putPixel32(surface, (int)(cx - y), (int)(cy + x), pixel);
-        }
- 
-        if (x != 0 && y != 0)
-        {
-            putPixel32(surface, (int)(cx - x), (int)(cy - y), pixel);
-            putPixel32(surface, (int)(cx - y), (int)(cy - x), pixel);
-        }
- 
-        error += y;
-        ++y;
-        error += y;
- 
-        if (error >= 0)
-        {
-            --x;
-            error -= x;
-            error -= x;
-        }
-    }
-}
-
-
-void MGFramework::drawFillCircle32(SDL_Surface *surface, int cx, int cy, int radius, Uint32 pixel)
-{
-    static const int BPP = 4;
-    double r = (double)radius;
-    for (double dy = 1; dy <= r; dy += 1.0)
-    {
-        double dx = floor(sqrt((2.0 * r * dy) - (dy * dy)));
-        int x = cx - (int)dx;
- 
-        // Grab a pointer to the left-most pixel for each half of the circle
-        Uint8 *target_pixel_a = (Uint8 *)surface->pixels + ((int)(cy + r - dy)) * surface->pitch + x * BPP;
-        Uint8 *target_pixel_b = (Uint8 *)surface->pixels + ((int)(cy - r + dy)) * surface->pitch + x * BPP;
- 
-        for (; x <= cx + dx; x++)
-        {
-            *(Uint32 *)target_pixel_a = pixel;
-            *(Uint32 *)target_pixel_b = pixel;
-            target_pixel_a += BPP;
-            target_pixel_b += BPP;
-        }
-    }
-}
-
-
-void MGFramework::vLine32(SDL_Surface *surface, int x, int y, int length, Uint32 pixel)
-{
-	for(int i=y; i<y+length; i++)
-	{
-		putPixel32(surface, x, i, pixel);
-	}
-}
-
-void MGFramework::hLine32(SDL_Surface *surface, int x, int y, int length, Uint32 pixel)
-{
-	for(int i=x; i<x+length; i++)
-	{
-		putPixel32(surface, i, y, pixel);
-	}
+	increaseDrawnTilesCounter();
+	m_Window.drawSprite(imageSurface, srcX, srcY, dstX, dstY, m_Map.getTileWidth(), m_Map.getTileHeight());
 }
 
 
