@@ -222,6 +222,7 @@ class MGFramework :public MGComponent
 		// Symbol related
 		int m_CommandReturnVal;
 		void symbolAssignTo(string sym, string val, MGSymbolTable *s);
+		void symbolAssignTo(const std::vector<std::string> &cmdvec, MGSymbolTable *s);
 
 		// Command queue related
 		std::vector<std::string> m_CommandQueue;

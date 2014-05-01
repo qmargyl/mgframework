@@ -67,7 +67,7 @@ echo|set /p="</td></tr></p>"
 
 
 
-:: Path test cases
+:: Symbol test cases
 :: ===============
 
 echo|set /p="<tr><td><p>"
@@ -94,5 +94,24 @@ echo|set /p="{<br>Running ... "
 project2.exe -logging -script .\test\tc_402_feature_symbol.mgf:ext_testcase_003	>	.\test\result\tc_402_feature_symbol_testcase_003.log
 echo|set /p="<b>DONE</b><br>"
 project2.exe -log_eval .\test\result\tc_402_feature_symbol_testcase_003.log -log_compare .\test\expected\tc_402_feature_symbol_testcase_003.log.filtered
+echo|set /p="}<br>"
+echo|set /p="</td></tr></p>"
+
+:: Feature 1001: Advanced assignment
+echo|set /p="<tr><td><p>"
+echo|set /p="Test case: Advanced assignment (tc_402_feature_symbol.mgf:ext_testcase_004)<br>"
+echo|set /p="{<br>Running ... "
+project2.exe -logging -script .\test\tc_402_feature_symbol.mgf:ext_testcase_004	>	.\test\result\tc_402_feature_symbol_testcase_004.log
+echo|set /p="<b>DONE</b><br>"
+project2.exe -log_eval .\test\result\tc_402_feature_symbol_testcase_004.log -log_compare .\test\expected\tc_402_feature_symbol_testcase_004.log.filtered
+echo|set /p="}<br>"
+echo|set /p="</td></tr></p>"
+
+echo|set /p="<tr><td><p>"
+echo|set /p="Test case .\test\tc_402_feature_symbol.mgf:ext_testcase_005<br>"
+echo|set /p="{<br>Running ... "
+project2.exe -logging -script .\test\tc_402_feature_symbol.mgf:ext_testcase_005	>	.\test\result\tc_402_feature_symbol_testcase_005.log
+echo|set /p="<b>DONE</b><br>"
+project2.exe -log_eval .\test\result\tc_402_feature_symbol_testcase_005.log -log_compare .\test\expected\tc_402_feature_symbol_testcase_005.log.filtered
 echo|set /p="}<br>"
 echo|set /p="</td></tr></p>"

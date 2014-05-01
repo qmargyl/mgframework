@@ -1,0 +1,100 @@
+Symbol Table
+Symbol Table
+'q' : X
+Symbol Table
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::symbolAssignTo non-supported right-hand-side (3): q+q
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: w
+Symbol Table
+'q' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (2 != 0)
+Symbol Table
+'q' : X
+'e' : X
+Symbol Table
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::symbolAssignTo non-supported right-hand-side (3): X+7
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: r
+Symbol Table
+'q' : X
+'e' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (8 != 0)
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::symbolAssignTo non-supported right-hand-side (3): X-2
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: t
+Symbol Table
+'q' : X
+'e' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (3 != 0)
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::symbolAssignTo non-supported right-hand-side (15): X+2+3+4+5+17-8-9
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: y
+Symbol Table
+'q' : X
+'e' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (15 != 0)
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::symbolAssignTo non-supported right-hand-side (3): X*9
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: u
+Symbol Table
+'q' : X
+'e' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (63 != 0)
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::symbolAssignTo non-supported right-hand-side (3): X/2
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: i
+Symbol Table
+'q' : X
+'e' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (3 != 0)
+Symbol Table
+'q' : X
+'e' : X
+'o' : X
+Symbol Table
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::symbolAssignTo non-supported right-hand-side (5): X*5+3
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: p
+Symbol Table
+'q' : X
+'e' : X
+'o' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (33 != 0)
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::symbolAssignTo non-supported right-hand-side (5): X+5*6
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: a
+Symbol Table
+'q' : X
+'e' : X
+'o' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (33 != 0)
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::symbolAssignTo non-supported right-hand-side (7): q+w+r+t
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: s
+Symbol Table
+'q' : X
+'e' : X
+'o' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (14 != 0)
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: (
+Symbol Table
+'q' : X
+'e' : X
+'o' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::symbolAssignTo non-supported right-hand-side (7): (4+6)*3
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: d
+Symbol Table
+'q' : X
+'e' : X
+'o' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (30 != 0)
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::symbolAssignTo non-supported right-hand-side (7): X*(d*3)
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: f
+Symbol Table
+'q' : X
+'e' : X
+'o' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (180 != 0)
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::symbolAssignTo non-supported right-hand-side (19): X+((45+45)/(8+1))*10-99
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::toInt failed to convert string to integer: g
+Symbol Table
+'q' : X
+'e' : X
+'o' : X
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (4 != 0)
+Symbol Table
+'testcase_004' : X
+Symbol Table
+Exiting application...
+Execution time: X

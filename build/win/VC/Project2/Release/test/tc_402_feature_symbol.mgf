@@ -3,8 +3,9 @@
 call testcase_001
 call testcase_002
 call testcase_003
-call testcase_004
+call testcase_004 // Feature 1001: Advanced assignment
 call testcase_005
+
 
 
 // ... and then exit.
@@ -85,17 +86,39 @@ end
 
 
 
-
-
-
-
-
-
-
+// Feature 1001: Advanced assignment
 function testcase_004
-
+  q=1
+  expect q 1
+  w=q+q
+  expect w 2
+  e=12345
+  expect e 12345
+  r=1+7
+  expect r 8
+  t=5-2
+  expect t 3
+  y=1+2+3+4+5+17-8-9
+  expect y 15
+  u=7*9
+  expect u 63
+  i=6/2
+  expect i 3
+  o=0
+  expect o 0
+  p=6*5+3
+  expect p 33
+  a=3+5*6
+  expect a 33
+  s=q+w+r+t
+  expect s 14
+  d=(4+6)*3
+  expect d 30
+  f=2*(d*3)
+  expect f 180
+  g=3+((45+45)/(8+1))*10-99 //4
+  expect g 4
 end
-
 
 
 

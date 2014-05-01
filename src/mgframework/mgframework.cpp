@@ -1118,6 +1118,28 @@ void MGFramework::symbolAssignTo(string sym, string val, MGSymbolTable *s)
 	m_SymbolTable->printTable();
 }
 
+void MGFramework::symbolAssignTo(const std::vector<std::string> &cmdvec, MGSymbolTable *s)
+{
+	if(cmdvec.size() < 3)
+	{
+		MGFLOG_ERROR("MGFramework::symbolAssignTo too few tokens");
+	}
+	else if(cmdvec.size() == 3)
+	{
+		symbolAssignTo(cmdvec[0], cmdvec[2], s);
+	}
+	else
+	{
+		std::string str;
+		str.clear();
+		for(unsigned int i = 2; i < cmdvec.size(); ++i)
+		{
+			str += cmdvec[i];
+		}
+		MGFLOG_ERROR("MGFramework::symbolAssignTo non-supported right-hand-side (" << cmdvec.size() - 2 << "): " << str);
+	}
+}
+
 
 bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {
@@ -1817,7 +1839,8 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_SYMBOL_ASSIGNTO_INT:
 		{
 			registerUsedCommand(MGComponent_SYMBOL_ASSIGNTO_INT, toInt(cmdvec[2], s));
-			symbolAssignTo(cmdvec[0], cmdvec[2], s);
+			//symbolAssignTo(cmdvec[0], cmdvec[2], s);
+			symbolAssignTo(cmdvec, s);
 			return true;
 		}
 
@@ -2516,7 +2539,7 @@ int MGFramework::initializeWinsock(WORD wVersionRequested)
 
 bool MGFramework::okMGFrameworkSyntax(const std::vector<std::string> &v_s)
 {
-	if(v_s.size()>0 && v_s[v_s.size()-1]!=string(""))
+	if(v_s.size()>0 && v_s[v_s.size()-1] != string(""))
 	{
 		return true;
 	}

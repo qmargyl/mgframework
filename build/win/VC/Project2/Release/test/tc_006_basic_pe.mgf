@@ -116,6 +116,9 @@ delete all pe
 expect getnumberofmo 0
 
 
+
+
+
 // Exiting application when all tests have run
 exit application
 
@@ -126,8 +129,4 @@ exit application
 function pe_delete_all_mo
   delete all mo
 end
-
-
-
-
 
