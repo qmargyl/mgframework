@@ -133,7 +133,6 @@ void MGMap::mouseScrollingClick(int x, int y)
 
 bool MGMap::mouseScrollingUpdate(int x, int y)
 {
-	// Possible optimization by re-using x and y variables and making the method inline.
 	if(m_MouseScrollingOngoing)
 	{
 		int setY = getScrollY() + m_MouseScrollingYClick - y;

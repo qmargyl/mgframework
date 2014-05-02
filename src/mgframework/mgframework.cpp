@@ -108,11 +108,9 @@ bool MGFramework::processEvents()
 	{
 		switch (event.type)
 		{
-			// Quit event
 			case SDL_QUIT:
 			{
 				MGFLOG_INFO("SDL_QUIT")
-				// Return false because we are quitting.
 				return false;
 			}
 
@@ -741,7 +739,14 @@ void MGFramework::logEval(const char *logFileName, bool negativeTest)
 		{
 			for(unsigned int i = 0; i < errors.size(); ++i)
 			{
-				std::cout << "<font color=red>" << errors[i] << "</font><br>" << std::endl;
+				if(negativeTest)
+				{
+					std::cout << "<font color=purple>" << errors[i] << "</font><br>" << std::endl;
+				}
+				else
+				{
+					std::cout << "<font color=red>" << errors[i] << "</font><br>" << std::endl;
+				}
 			}
 		}
 
@@ -1083,10 +1088,12 @@ void MGFramework::activateConsole()
 	disableFrameCountdown();
 	enableTyping();
 	string cLine;
-	do{
+	do
+	{
 		std::cout << "mg> ";
 		std::getline(std::cin, cLine);
-	}while(runConsoleCommand(cLine.c_str(), this, NULL));
+	}
+	while(runConsoleCommand(cLine.c_str(), this, NULL));
 	disableTyping();
 }
 
@@ -1607,23 +1614,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				if(m_MO != NULL && m_MO[i].isMarked())
 				{
 					m_MO[i].runConsoleCommand(c, this, s);
-
-					/*
-					std::string cmd("");
-					for(int n=0; n<cmdvec.size(); ++n)
-					{
-						if(n==1)
-						{
-							cmd += ( toString(i) + std::string(" "));
-						}
-						else
-						{
-							cmd += ( cmdvec[n] + std::string(" "));
-						}
-					}
-					MGFLOG_INFO("Adding to command queue: " << cmd.c_str())
-					m_CommandQueue.push_back(cmd.c_str());
-					*/
 				}
 				else if(m_MO == NULL)
 				{
@@ -1641,23 +1631,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				if(m_MO != NULL)
 				{
 					m_MO[i].runConsoleCommand(c, this, s);
-
-					/*
-					std::string cmd("");
-					for(int n=0; n<cmdvec.size(); ++n)
-					{
-						if(n==1)
-						{
-							cmd += ( toString(i) + std::string(" "));
-						}
-						else
-						{
-							cmd += ( cmdvec[n] + std::string(" "));
-						}
-					}
-					MGFLOG_INFO("Adding to command queue: " << cmd.c_str())
-					m_CommandQueue.push_back(cmd.c_str());
-					*/
 				}
 				else
 				{
@@ -1839,7 +1812,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_SYMBOL_ASSIGNTO_INT:
 		{
 			registerUsedCommand(MGComponent_SYMBOL_ASSIGNTO_INT, toInt(cmdvec[2], s));
-			//symbolAssignTo(cmdvec[0], cmdvec[2], s);
 			symbolAssignTo(cmdvec, s);
 			return true;
 		}
