@@ -2,11 +2,8 @@
 
 #include <sstream>
 #include <string>
-//#include <stdio>
 #include <iostream>
-
 #include "mgcomponent.h"
-
 
 int MGComponent::m_IDGenerator = 0;
 size_t MGComponent::m_allocatedMemory = 0;
@@ -48,9 +45,9 @@ bool MGComponent::detectCollisionPointRectangle(int px, int py, int x1, int y1, 
 
 std::string MGComponent::toString(int number)
 {
-	std::stringstream ss;	//create a stringstream
-	ss << number;		//add number to the stream
-	return ss.str();	//return a string with the contents of the stream
+	std::stringstream ss;
+	ss << number;
+	return ss.str();
 }
 
 std::vector<std::string> MGComponent::split(char *str, const char *c)
@@ -70,6 +67,7 @@ std::vector<std::string> MGComponent::split(char *str, const char *c)
 	return splitLine;
 }
 
+//TODO: This function needs more self-explaining variable names
 std::vector<std::string> MGComponent::symbols(char *str)
 {
 	std::vector<std::string> splitLine;

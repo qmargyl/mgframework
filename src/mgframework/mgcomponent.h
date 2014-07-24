@@ -25,23 +25,23 @@
 //#define MGFLOG_STATIC_ERROR(x)
 
 #ifndef MGFLOG_WARNING
-#define MGFLOG_WARNING(x)								{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: "	<< x << std::endl; }
+#define MGFLOG_WARNING(x)								{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") WARNING: " << x << std::endl; }
 #endif
 #ifndef MGFLOG_INFO
-#define MGFLOG_INFO(x)				if(loggingEnabled()){ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: "		<< x << std::endl; }
+#define MGFLOG_INFO(x)				if(loggingEnabled()){ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") INFO: " << x << std::endl; }
 #endif
 #ifndef MGFLOG_ERROR
-#define MGFLOG_ERROR(x)									{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") ERROR: "	<< x << std::endl; }
+#define MGFLOG_ERROR(x)									{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " (ID:" << getID() << ") ERROR: " << x << std::endl; }
 #endif
 
 #ifndef MGFLOG_STATIC_WARNING
-#define MGFLOG_STATIC_WARNING(x)						{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " WARNING: "	<< x << std::endl; }
+#define MGFLOG_STATIC_WARNING(x)						{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " WARNING: " << x << std::endl; }
 #endif
 #ifndef MGFLOG_STATIC_INFO
-#define MGFLOG_STATIC_INFO(x)		if(loggingEnabled()){ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " INFO: "		<< x << std::endl; }
+#define MGFLOG_STATIC_INFO(x)		if(loggingEnabled()){ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " INFO: " << x << std::endl; }
 #endif
 #ifndef MGFLOG_STATIC_ERROR
-#define MGFLOG_STATIC_ERROR(x)							{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " ERROR: "	<< x << std::endl; }
+#define MGFLOG_STATIC_ERROR(x)							{ float t = MGF_GetExecTimeS(); std::cout << "[" << std::setfill('0') << std::setw(8) << t << "] " << __FILE__ << ":" << __LINE__ << " ERROR: " << x << std::endl; }
 #endif
 
 typedef unsigned short      WORD;
@@ -104,14 +104,14 @@ public:
 	int getID(){ return m_ID;}
 
 	// Configuration of Logging...
-	void enableLogging(){m_LoggingEnabled = true;}
-	void disableLogging(){m_LoggingEnabled = false;}
-	bool loggingEnabled(){return m_LoggingEnabled;}
+	void enableLogging(){ m_LoggingEnabled = true;}
+	void disableLogging(){ m_LoggingEnabled = false;}
+	bool loggingEnabled(){ return m_LoggingEnabled;}
 
 	// Component owner...
-	void setOwner(unsigned int owner){m_Owner = owner;}
-	unsigned int getOwner(){return m_Owner;}
-	bool isOwned(){return m_Owner != MGF_NOPLAYER;}
+	void setOwner(unsigned int owner){ m_Owner = owner;}
+	unsigned int getOwner(){ return m_Owner;}
+	bool isOwned(){ return m_Owner != MGF_NOPLAYER;}
 
 	// Utility functions
 	static std::string toString(bool b){ if(b) return std::string("true"); return std::string("false"); }

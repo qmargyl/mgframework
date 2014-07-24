@@ -27,7 +27,7 @@ private:
 	
 
 	double getDistance(int wx, int wy);
-	int getTileSize(){ return m_TileSize;}
+	int getTileSize(){ return m_TileSize;} //TODO: Make this static
 	double getSpeed(){ return m_Speed;}
 
 	//Marking related
@@ -67,44 +67,41 @@ public:
 	void update(MGFramework *w);
 	void copy(MGMovingObject *src);
 
-	int getTileX(){ return m_TileX;}
-	int getTileY(){ return m_TileY;}
-	int getDestTileX(){	if(m_FinishingLastMove) return m_TempDestTileX;	return m_DestTileX;	}
-	int getDestTileY(){	if(m_FinishingLastMove)	return m_TempDestTileY;	return m_DestTileY;	}
+	inline const int getTileX(){ return m_TileX; }
+	inline const int getTileY(){ return m_TileY; }
+	inline const int getDestTileX(){	if(m_FinishingLastMove) return m_TempDestTileX;	return m_DestTileX;	}
+	inline const int getDestTileY(){	if(m_FinishingLastMove)	return m_TempDestTileY;	return m_DestTileY;	}
 
-	int getXOffset(){ return (int)(m_X+0.5);} // Difference between actual coordinate and tile coordinate
-	int getYOffset(){ return (int)(m_Y+0.5);}
-	int getCenterX(){ return getTileX()*getTileSize() + (int)(0.5 *getTileSize());}
-	int getCenterY(){ return getTileY()*getTileSize() + (int)(0.5 *getTileSize());}
+	inline const int getXOffset(){ return (int)(m_X + 0.5); } // Difference between actual coordinate and tile coordinate
+	inline const int getYOffset(){ return (int)(m_Y + 0.5); }
+	inline const int getCenterX(){ return getTileX() * getTileSize() + (int)(0.5 * getTileSize()); }
+	inline const int getCenterY(){ return getTileY() * getTileSize() + (int)(0.5 * getTileSize()); }
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
 	//Marking related
-	void mark(){m_Marked=true;}
-	void unMark(){m_Marked=false;}
-	bool isMarked(){return m_Marked;}
+	inline void mark(){ m_Marked = true; }
+	inline void unMark(){ m_Marked = false; }
+	inline bool isMarked(){ return m_Marked; }
 
-	void setTimeOfLastUpdate(Uint32 ms){ m_TimeOfLastUpdate = ms; }
-	Uint32 getTimeOfLastUpdate(){ return m_TimeOfLastUpdate; }
+	//Update frequency related
+	inline void setTimeOfLastUpdate(Uint32 ms){ m_TimeOfLastUpdate = ms; }
+	inline const Uint32 getTimeOfLastUpdate(){ return m_TimeOfLastUpdate; }
 
 	//State related
-	bool isCreated(){ return m_CurrentState == MOStateCreated; }
-	bool isIdle(){ return m_CurrentState == MOStateIdle; }
-	bool isMoving(){ return m_CurrentState == MOStateMoving; }
-	bool isStuck(){ return m_CurrentState == MOStateStuck; }
-	static bool anyMovingMO(){ return (m_MovingMOCounter > 0); }
-	static int nMovingMO(){ return m_MovingMOCounter; }
+	inline const bool isCreated(){ return getCurrentState() == MOStateCreated; }
+	inline const bool isIdle(){ return getCurrentState() == MOStateIdle; }
+	inline const bool isMoving(){ return getCurrentState() == MOStateMoving; }
+	inline const bool isStuck(){ return getCurrentState() == MOStateStuck; }
+	inline const static bool anyMovingMO(){ return (m_MovingMOCounter > 0); }
+	inline const static int nMovingMO(){ return m_MovingMOCounter; }
 
 	// History related
 	void enableHistory(){ if(!m_History) m_History = new std::vector<std::string>; }
 	void disableHistory(){ if(m_History) delete m_History; m_History = NULL; }
 	void printHistory();
-	void addToHistory(const char *str);
-
-
+	void addToHistory(const char *str); //TODO: Make this private?
 
 };
-
-
 
 #endif
