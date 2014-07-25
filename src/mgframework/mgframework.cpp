@@ -154,6 +154,7 @@ bool MGFramework::processEvents()
 
 						// Unmark all MO..
 						for(int i=0; i<getNumberOfMO(); i++)
+						//for(int i = getNumberOfMO(); i--;)
 						{
 							if(m_MO != NULL && m_MO[i].isMarked())
 							{
@@ -1051,7 +1052,7 @@ void MGFramework::handleMGFGameLogics()
 	}
 
 	// Update all moving objects
-	for(int i=0;i<getNumberOfMO();i++)
+	for(int i = getNumberOfMO(); i--;)//for(int i=0;i<getNumberOfMO();i++)
 	{
 		m_MO[i].update(this);
 	}
@@ -1610,7 +1611,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_MO_MARKED_X:
 		{
 			registerUsedCommand(MGComponent_MO_MARKED_X);
-			for(int i=0; i<getNumberOfMO(); i++)
+			for(int i = getNumberOfMO(); i--;)//for(int i=0; i<getNumberOfMO(); i++)
 			{
 				if(m_MO != NULL && m_MO[i].isMarked())
 				{
@@ -1627,7 +1628,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_MO_ALL_X:
 		{
 			registerUsedCommand(MGComponent_MO_ALL_X);
-			for(int i=0; i<getNumberOfMO(); i++)
+			for(int i = getNumberOfMO(); i--;)//for(int i=0; i<getNumberOfMO(); i++)
 			{
 				if(m_MO != NULL)
 				{
@@ -2053,7 +2054,7 @@ bool MGFramework::setWindowProperties(eMGWindowScreenResolution screenResolution
 void MGFramework::deleteAllMO()
 {
 	// Since all MO are deleted we can unoccupy all their tiles..
-	for(int i = 0; i < getNumberOfMO(); ++i)
+	for(int i = getNumberOfMO(); i--;)//for(int i = 0; i < getNumberOfMO(); ++i)
 	{
 		m_Map.unOccupy(m_MO[i].getTileX(), m_MO[i].getTileY());
 		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_MO[i].getTileX(), m_MO[i].getTileY());

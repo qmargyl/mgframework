@@ -102,7 +102,7 @@ void Project2::draw()
 
 		// Draw all moving objects...
 		int oX,oY;
-		for(int i=0;i<getNumberOfMO();i++)
+		for(int i = getNumberOfMO(); i--;)//for(int i=0;i<getNumberOfMO();i++)
 		{
 			if(m_MO != NULL)
 			{
@@ -187,7 +187,7 @@ void Project2::draw()
 				}
 			}
 			// Draw all moving objects on the mini map..
-			for(int i=0;i<getNumberOfMO();i++)
+			for(int i = getNumberOfMO(); i--;)//for(int i=0;i<getNumberOfMO();i++)
 			{
 				m_Window.putPixel32(m_MO[i].getTileX() + m_Window.getWidth() - m_Map.getWidth() - 16, m_MO[i].getTileY() + 16, 0x00FF0000);
 			}

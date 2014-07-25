@@ -16,8 +16,8 @@
 *.obj
 
 # Pre-built or 3rd party components
-*.dll
-*.exe
+#*.dll
+#*.exe
 
 # VS files
 *.manifest
