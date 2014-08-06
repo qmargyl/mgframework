@@ -7,7 +7,7 @@ int MGMovingObject::m_MovingMOCounter = 0;
 
 MGMovingObject::MGMovingObject()
 {
-	m_History = NULL;
+	m_HistoryEnabled = false;
 	setTimeOfLastUpdate(MGF_GetExecTimeMS());
 	m_FinishingLastMove=false;
 	m_Marked=false;
@@ -22,8 +22,6 @@ MGMovingObject::MGMovingObject()
 MGMovingObject::~MGMovingObject()
 {
 	m_Path.clear();
-	//if(m_History) m_History->clear();
-	disableHistory();
 }
 
 void MGMovingObject::initialize()
@@ -336,7 +334,6 @@ void MGMovingObject::copy(MGMovingObject *src)
 	m_LoggingEnabled = src->m_LoggingEnabled;
 	m_CurrentState = src->m_CurrentState;
 	m_Path = src->m_Path;
-	//m_History = src->m_History;
 }
 
 bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
@@ -611,20 +608,21 @@ const char* MGMovingObject::toString(MOState s)
 
 void MGMovingObject::printHistory()
 {
-	if(m_History)
+	if(m_HistoryEnabled)
 	{
 		std::cout << "MGMovingObject ID " << getID() << " History" << std::endl;
-		for(unsigned int i=0; i<m_History->size(); ++i)
+		//TODO: Loop from size to zero instead, and print the history reversed.
+		for(unsigned int i = 0; i < m_History.size(); ++i)
 		{
-			std::cout << i << "\t" << m_History->at(i).c_str() << std::endl;
+			std::cout << i << "\t" << m_History.at(i).c_str() << std::endl;
 		}
 	}
 }
 
 void MGMovingObject::addToHistory(const char *str)
 {
-	if(m_History)
+	if(m_HistoryEnabled)
 	{
-		m_History->push_back(MGComponent::toString(0/*(int)MGF_GetExecTimeMS()*/) + string(": ") + string(str));
+		m_History.push_back(MGComponent::toString(0/*(int)MGF_GetExecTimeMS()*/) + string(": ") + string(str));
 	}
 }
