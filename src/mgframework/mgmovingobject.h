@@ -48,7 +48,8 @@ private:
 	static int m_MovingMOCounter;
 
 	std::list<PathItem> m_Path;
-	std::vector<std::string> *m_History;
+	std::vector<std::string> m_History;
+	bool m_HistoryEnabled;
 
 public:
 
@@ -97,8 +98,8 @@ public:
 	inline const static int nMovingMO(){ return m_MovingMOCounter; }
 
 	// History related
-	void enableHistory(){ if(!m_History) m_History = new std::vector<std::string>; }
-	void disableHistory(){ if(m_History) delete m_History; m_History = NULL; }
+	void enableHistory(){ if(!m_HistoryEnabled) m_HistoryEnabled = true; }
+	void disableHistory(){ if(m_History) m_History.clear(); m_HistoryEnabled = false; }
 	void printHistory();
 	void addToHistory(const char *str); //TODO: Make this private?
 
