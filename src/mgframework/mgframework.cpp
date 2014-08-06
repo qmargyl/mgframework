@@ -1008,7 +1008,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 
 		// Application specific game logics..
 		handleGameLogics();
-		
+
 		// A server instance of the framework has no graphics.
 		if(getInstanceType() != MGFSERVERINSTANCE) 
 		{
@@ -1020,6 +1020,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 		m_DelayTime = (1000/getDesiredFPS()) - (MGF_GetExecTimeMS() - frameStartTime);
 		if(m_DelayTime > 0)
 		{
+			//TODO: Change to SDL sleep method but move it into MGWindow class to collect all SDL dependencies there.
 			Sleep((DWORD)m_DelayTime);
 		}
 		m_ActualFrameTime = MGF_GetExecTimeMS() - frameStartTime;
@@ -1042,7 +1043,7 @@ void MGFramework::handleMGFGameLogics()
 	// Not implemented yet
 
 	// Update periodic event to trigger rare events
-	for(int i=0;i<getNumberOfPE();i++)
+	for(int i = 0; i < getNumberOfPE(); i++)
 	{
 		if(m_PE[i].update())
 		{
@@ -1071,17 +1072,6 @@ void MGFramework::handleMGFGameLogics()
 	}
 
 	resetDrawnTilesCounter();
-
-	// XXX: Perhaps the commands are already handled before getLastFrameDelayTime() returns a vaid number?
-	/*
-	int timeLeftEstimate = MGF_GetExecTimeMS();
-	while(!m_CommandQueue.empty() && (MGF_GetExecTimeMS() - timeLeftEstimate) < getLastFrameDelayTime())
-	{
-		std::string cmd = m_CommandQueue.back();
-		m_CommandQueue.pop_back();
-		runConsoleCommand(cmd.c_str(), this, NULL);
-	}
-	*/
 }
 
 
@@ -1227,7 +1217,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_SO_ALL_X:
 		{
 			registerUsedCommand(MGComponent_SO_ALL_X);
-			for(int i=0; i<getNumberOfSO(); i++)
+			for(int i = 0; i < getNumberOfSO(); i++)
 			{
 				m_SO[i].runConsoleCommand(c, this, s);
 			}
@@ -1265,7 +1255,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				// Delete only MOs connected to a specific owner
 				MGFLOG_INFO("Deleting MOs owned by " << owner);
-				for(int i = getNumberOfMO()-1; i>=0; --i)
+				for(int i = getNumberOfMO() - 1; i >= 0; --i)
 				{
 					if(m_MO[i].getOwner() == owner)
 					{
@@ -1308,7 +1298,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				// Delete only PEs connected to a specific owner
 				MGFLOG_INFO("Deleting PEs owned by " << owner);
-				for(int i = getNumberOfPE()-1; i>=0; --i)
+				for(int i = getNumberOfPE() - 1; i >= 0; --i)
 				{
 					if(m_PE[i].getOwner() == owner)
 					{
@@ -1336,7 +1326,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = toInt(cmdvec[i+1], s);
+					owner = toInt(cmdvec[i + 1], s);
 					ownerParamSet=true;
 					++i;
 				}
@@ -1351,7 +1341,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				// Delete only MOs connected to a specific owner
 				MGFLOG_INFO("Deleting SOs owned by " << owner);
-				for(int i = getNumberOfSO()-1; i>=0; --i)
+				for(int i = getNumberOfSO() - 1; i >= 0; --i)
 				{
 					if(m_SO[i].getOwner() == owner)
 					{
@@ -1387,14 +1377,14 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = toInt(cmdvec[i+1], s);
+					owner = toInt(cmdvec[i + 1], s);
 					++i;
 				}
 				else if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
 				{
-					x = toInt(cmdvec[i+1], s);
+					x = toInt(cmdvec[i + 1], s);
 					++i;
-					if(n!=1)
+					if(n != 1)
 					{
 						MGFLOG_ERROR("Parameter -x can only be set when adding one MO");
 						n = 0; // Abort MO creation..
@@ -1403,9 +1393,9 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				}
 				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
 				{
-					y = toInt(cmdvec[i+1], s);
+					y = toInt(cmdvec[i + 1], s);
 					++i;
-					if(n!=1)
+					if(n != 1)
 					{
 						MGFLOG_ERROR("Parameter -y can only be set when adding one MO");
 						n = 0; // Abort MO creation..
@@ -1414,15 +1404,15 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				}
 				else if(cmdvec[i]=="-speed" && cmdvec.size() > (i + 1))
 				{
-					speed = toInt(cmdvec[i+1], s);
+					speed = toInt(cmdvec[i + 1], s);
 					++i;
 				}
 				else if(cmdvec[i]=="-area_square" && cmdvec.size() > (i + 4))
 				{
-					x1 = toInt(cmdvec[i+1], s);
-					y1 = toInt(cmdvec[i+2], s);
-					x2 = toInt(cmdvec[i+3], s);
-					y2 = toInt(cmdvec[i+4], s);
+					x1 = toInt(cmdvec[i + 1], s);
+					y1 = toInt(cmdvec[i + 2], s);
+					x2 = toInt(cmdvec[i + 3], s);
+					y2 = toInt(cmdvec[i + 4], s);
 					i += 4;
 				}
 				else
@@ -1431,7 +1421,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					n = 0; // Abort MO creation..
 				}
 			}
-			if(n>0)
+			if(n > 0)
 			{
 				addMO(n);
 			}
@@ -1443,11 +1433,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 			if(m_MO != NULL)
 			{
-				for(int i=nBefore; i<getNumberOfMO(); i++)
+				for(int i = nBefore; i < getNumberOfMO(); i++)
 				{
 					// If setup fails we must setup the same index again 
 					// since the failing MO has been deleted.
-					if(!setupMO(i, x, y, owner, speed, x1, y1, x2, y2))--i;
+					if(!setupMO(i, x, y, owner, speed, x1, y1, x2, y2)) --i;
 				}
 			}
 			else
@@ -1470,9 +1460,9 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
 				{
-					x = toInt(cmdvec[i+1], s);
+					x = toInt(cmdvec[i + 1], s);
 					++i;
-					if(n!=1)
+					if(n != 1)
 					{
 						MGFLOG_ERROR("Parameter -x can only be set when adding one SO");
 						n = 0; // Abort SO creation..
@@ -1481,9 +1471,9 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				}
 				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
 				{
-					y = toInt(cmdvec[i+1], s);
+					y = toInt(cmdvec[i + 1], s);
 					++i;
-					if(n!=1)
+					if(n != 1)
 					{
 						MGFLOG_ERROR("Parameter -y can only be set when adding one SO");
 						n = 0; // Abort SO creation..
@@ -1496,7 +1486,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					n = 0; // Abort SO creation..
 				}
 			}
-			if(n>0)
+			if(n > 0)
 			{
 				addSO(n);
 			}
@@ -1512,7 +1502,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				{
 					// If setup fails we must setup the same index again 
 					// since the failing SO has been deleted.
-					if(!setupSO(i, x, y))--i;
+					if(!setupSO(i, x, y)) --i;
 				}
 			}
 			else
@@ -1526,7 +1516,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_ADD_PE_INT_PARAMLIST:
 		{
 			registerUsedCommand(MGComponent_ADD_PE_INT_PARAMLIST);
-			int nBefore=getNumberOfPE();
+			int nBefore = getNumberOfPE();
 			int n = toInt(cmdvec[2], s);
 			int owner = 0;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
@@ -1542,7 +1532,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					n = 0; // Abort PE creation..
 				}
 			}
-			if(n>0)
+			if(n > 0)
 			{
 				addPE(n);
 			}
@@ -1551,7 +1541,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				MGFLOG_ERROR("Error in command (add pe <n>)");
 				return true;
 			}
-			for(int i=nBefore; i<getNumberOfPE(); i++)
+			for(int i = nBefore; i < getNumberOfPE(); i++)
 			{
 				if(m_PE != NULL)
 				{
