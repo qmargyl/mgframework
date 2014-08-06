@@ -99,7 +99,7 @@ public:
 
 	// History related
 	void enableHistory(){ if(!m_HistoryEnabled) m_HistoryEnabled = true; }
-	void disableHistory(){ if(m_History) m_History.clear(); m_HistoryEnabled = false; }
+	void disableHistory(){ if(m_HistoryEnabled) m_History.clear(); m_HistoryEnabled = false; }
 	void printHistory();
 	void addToHistory(const char *str); //TODO: Make this private?
 
