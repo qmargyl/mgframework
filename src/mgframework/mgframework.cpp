@@ -6,6 +6,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include "mgpathitem.h"
 
 // XXX: Clean this up
 //#ifndef MGF_DISABLE_WINSOCK

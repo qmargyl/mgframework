@@ -4,7 +4,7 @@
 #include <list>
 
 class MGFramework;
-class PathItem;
+class MGPathItem;
 
 class MGMovingObject :public MGComponent
 {
@@ -47,7 +47,7 @@ private:
 	const char* toString(MOState s);
 	static int m_MovingMOCounter;
 
-	std::list<PathItem> m_Path;
+	std::list<MGPathItem> m_Path;
 	std::vector<std::string> m_History;
 	bool m_HistoryEnabled;
 
@@ -62,7 +62,7 @@ public:
 	void setNextXY(int x, int y, MGFramework *world);
 
 	void setDestTileXY(int x, int y);
-	void setPath(std::list<PathItem> p);
+	void setPath(std::list<MGPathItem> p);
 
 	void setSpeed(double s, int tileSize); // Seconds, Distance to next tile (pixels)
 	void update(MGFramework *w);

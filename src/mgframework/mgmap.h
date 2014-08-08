@@ -14,7 +14,7 @@
 #define MGMAP_TP_PROPERTY_4  16
 #define MGMAP_TP_PROPERTY_5  32
 
-class PathItem;
+class MGPathItem;
 
 enum eMGFPathType{
 	MGFSTRAIGHTLINE = 0,
@@ -126,7 +126,7 @@ public:
 	void save(); // Not implemented yet
 
 	// Path related
-	std::list<PathItem> calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by); // Calculates the path from A to B
+	std::list<MGPathItem> calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by); // Calculates the path from A to B
 
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);

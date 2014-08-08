@@ -1,5 +1,6 @@
 #include "mgframework.h"
 #include "mgmovingobject.h"
+#include "mgpathitem.h"
 #include <iostream>
 
 int MGMovingObject::m_TileSize = 0;
@@ -107,7 +108,7 @@ void MGMovingObject::setDestTileXY(int x, int y)
 }
 
 
-void MGMovingObject::setPath(std::list<PathItem> p)
+void MGMovingObject::setPath(std::list<MGPathItem> p)
 {
 	m_Path.clear();
 	m_Path = p;
@@ -141,7 +142,7 @@ void MGMovingObject::update(MGFramework *w)
 		int timeSinceLastUpdate = MGF_GetExecTimeMS() - getTimeOfLastUpdate();
 		double d = m_Speed * (timeSinceLastUpdate / 1000.0);
 
-		PathItem pathI = m_Path.front();
+		MGPathItem pathI = m_Path.front();
 		int x = pathI.getX();
 		int y = pathI.getY();
 

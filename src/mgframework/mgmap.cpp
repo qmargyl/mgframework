@@ -7,6 +7,7 @@
 #include <sstream>
 #include "mgmap.h"
 #include "mgframework.h"
+#include "mgpathitem.h"
 
 unsigned long int MGMap::m_SC_CalculatedPaths = 0;
 unsigned long int MGMap::m_SC_LongestCalculatedPath = 0;
@@ -266,7 +267,7 @@ eMGComponentConsoleCommand MGMap::detectMGComponentConsoleCommand(const std::vec
 	return MGComponent_UNDEFINED;
 }
 
-std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
+std::list<MGPathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by)
 {
 	// Algorithm MGFSKYPATH:
 	// 1) Step (x,y) towards target. Diagonally first and then straight ahead.
@@ -277,19 +278,19 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 	// 3) Step (x,y) and goto 1)
 
 	MGFLOG_INFO("MGMap::calculatePath will find a path (" << ax << ", " << ay << ") -> (" << bx << ", " << by << ")");
-	std::list<PathItem> path;
+	std::list<MGPathItem> path;
 
 	if(pathType==MGFBASICPATH1)
 	{
 		int x=ax;
 		int y=ay;
-		std::list<PathItem> neighbors;
-		std::list<PathItem> evaluated;
-		PathItem *n;
-		PathItem *e;
+		std::list<MGPathItem> neighbors;
+		std::list<MGPathItem> evaluated;
+		MGPathItem *n;
+		MGPathItem *e;
 
 		double distanceToTarget = MGFramework::distance(ax, ay, bx, by);
-		PathItem *now = new PathItem(ax, ay, distanceToTarget);
+		MGPathItem *now = new MGPathItem(ax, ay, distanceToTarget);
 		path.push_back(*now);
 
 		while (x!=bx || y!=by)
@@ -329,9 +330,9 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			MGFLOG_INFO("MGMap::calculatePath has current (x,y) = (" << x << ", " << y << ")");
 			if(x+1<getWidth() && y+1<getHeight() && !occupant(x+1,y+1))
 			{
-				n = new PathItem(x+1, y+1, distance(x+1, y+1, bx, by));
+				n = new MGPathItem(x+1, y+1, distance(x+1, y+1, bx, by));
 				bool skip = false;
-				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				for (std::list<MGPathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
 					if(n->equalCoordinate(&(*it)))
 					{
@@ -342,9 +343,9 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			}
 			if(x-1>=0 && y-1>=0 && !occupant(x-1,y-1))
 			{
-				n = new PathItem(x-1, y-1, distance(x-1, y-1, bx, by));
+				n = new MGPathItem(x-1, y-1, distance(x-1, y-1, bx, by));
 				bool skip = false;
-				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				for (std::list<MGPathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
 					if(n->equalCoordinate(&(*it)))
 					{
@@ -355,9 +356,9 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			}
 			if(x+1<getWidth() && y-1>=0 && !occupant(x+1,y-1))
 			{
-				n = new PathItem(x+1, y-1, distance(x+1, y-1, bx, by));
+				n = new MGPathItem(x+1, y-1, distance(x+1, y-1, bx, by));
 				bool skip = false;
-				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				for (std::list<MGPathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
 					if(n->equalCoordinate(&(*it)))
 					{
@@ -368,9 +369,9 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			}
 			if(x-1>=0 && y+1<getHeight() && !occupant(x-1,y+1))
 			{
-				n = new PathItem(x-1, y+1, distance(x-1, y+1, bx, by));
+				n = new MGPathItem(x-1, y+1, distance(x-1, y+1, bx, by));
 				bool skip = false;
-				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				for (std::list<MGPathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
 					if(n->equalCoordinate(&(*it)))
 					{
@@ -381,9 +382,9 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			}
 			if(y+1<getHeight() && !occupant(x,y+1))
 			{
-				n = new PathItem(x, y+1, distance(x, y+1, bx, by));
+				n = new MGPathItem(x, y+1, distance(x, y+1, bx, by));
 				bool skip = false;
-				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				for (std::list<MGPathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
 					if(n->equalCoordinate(&(*it)))
 					{
@@ -394,9 +395,9 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			}
 			if(y-1>=0 && !occupant(x,y-1))
 			{
-				n = new PathItem(x, y-1, distance(x, y-1, bx, by));
+				n = new MGPathItem(x, y-1, distance(x, y-1, bx, by));
 				bool skip = false;
-				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				for (std::list<MGPathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
 					if(n->equalCoordinate(&(*it)))
 					{
@@ -407,9 +408,9 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			}
 			if(x+1<getWidth() && !occupant(x+1,y))
 			{
-				n = new PathItem(x+1, y, distance(x+1, y, bx, by));
+				n = new MGPathItem(x+1, y, distance(x+1, y, bx, by));
 				bool skip = false;
-				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				for (std::list<MGPathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
 					if(n->equalCoordinate(&(*it)))
 					{
@@ -420,9 +421,9 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 			}
 			if(x-1>=0 && !occupant(x-1,y))
 			{
-				n = new PathItem(x-1, y, distance(x-1, y, bx, by));
+				n = new MGPathItem(x-1, y, distance(x-1, y, bx, by));
 				bool skip = false;
-				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				for (std::list<MGPathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
 					if(n->equalCoordinate(&(*it)))
 					{
@@ -442,13 +443,13 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 				MGFLOG_INFO("MGMap::calculatePath will now evaluate " << neighbors.size() << " neighbors");
 
 				// XXX: Set a limit for how many neighbors we will consider at the most, in each step. 
-				for (std::list<PathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
+				for (std::list<MGPathItem>::iterator it=neighbors.begin(); it != neighbors.end(); ++it)
 				{
 					if((*it).getH()<besth)
 					{
 						// First we check if the found tile has already been evaluated.
 						bool alreadyEvaluated = false;
-						for (std::list<PathItem>::iterator ae = evaluated.begin(); ae != evaluated.end(); ++ae)
+						for (std::list<MGPathItem>::iterator ae = evaluated.begin(); ae != evaluated.end(); ++ae)
 						{
 							if((*ae).equalCoordinate(&(*it)))
 							{
@@ -459,7 +460,7 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 						if(!alreadyEvaluated)
 						{
 							// Add the current (x,y) to list of evaluated coordinates..
-							e = new PathItem(x, y, MGFramework::distance(x, y, bx, by));
+							e = new MGPathItem(x, y, MGFramework::distance(x, y, bx, by));
 							evaluated.push_back(*e);
 
 							MGFLOG_INFO("MGMap::calculatePath found better candidate: " << besth << " > " << (*it).getH() << ", (" << (*it).getX() << "," << (*it).getY() << ")");
@@ -514,7 +515,7 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 						path.clear();
 						break;
 					}
-					PathItem *pI = new PathItem(bestx, besty, MGFramework::distance(bestx, besty, bx, by));
+					MGPathItem *pI = new MGPathItem(bestx, besty, MGFramework::distance(bestx, besty, bx, by));
 					path.push_back(*pI);
 					x=bestx;
 					y=besty;
@@ -645,7 +646,7 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 				path.clear();
 			}
 
-			PathItem *pI = new PathItem(x, y);
+			MGPathItem *pI = new MGPathItem(x, y);
 			path.push_back(*pI);
 
 		}//while
@@ -660,7 +661,7 @@ std::list<PathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay, 
 		if(loggingEnabled())
 		{
 			MGFLOG_INFO("Path:");
-			for (std::list<PathItem>::iterator it=path.begin(); it != path.end(); ++it)
+			for (std::list<MGPathItem>::iterator it=path.begin(); it != path.end(); ++it)
 			{
 				MGFLOG_INFO("(" << (*it).getX() << ", " << (*it).getY() << ")");
 			}
