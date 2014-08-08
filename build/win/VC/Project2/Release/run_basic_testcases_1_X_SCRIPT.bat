@@ -8,15 +8,15 @@ echo.
 
 
 :: Create directory for log files..
-mkdir .\test\result
+mkdir .\system_test\result
 
 
 echo|set /p="<tr><td><p>"
-echo|set /p="Test case .\test\tc_008_basic_script.mgf<br>"
+echo|set /p="Test case .\system_test\tc_008_basic_script.mgf<br>"
 echo|set /p="{<br>Running ... "
-project2.exe -logging -script .\test\tc_008_basic_script.mgf	>	.\test\result\tc_008_basic_script.log
+project2.exe -logging -script .\system_test\tc_008_basic_script.mgf	>	.\system_test\result\tc_008_basic_script.log
 echo|set /p="<b>DONE</b><br>"
-project2.exe -log_eval .\test\result\tc_008_basic_script.log -log_compare .\test\expected\tc_008_basic_script.log.filtered
+project2.exe -log_eval .\system_test\result\tc_008_basic_script.log -log_compare .\system_test\expected\tc_008_basic_script.log.filtered
 echo|set /p="}<br>"
 echo|set /p="</td></tr></p>"
 

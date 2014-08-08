@@ -90,7 +90,7 @@ expect getnumberofpe 0
 add pe 1 -owner 1
 expect getnumberofpe 1
 pe 0 setuptimer 1
-pe 0 << .\\test\\tc_006_basic_pe.mgf:pe_delete_all_mo
+pe 0 << .\\system_test\\tc_006_basic_pe.mgf:pe_delete_all_mo
 delete all mo
 add mo 1 -owner 1
 pe 0 activate

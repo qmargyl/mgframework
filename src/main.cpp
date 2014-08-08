@@ -15,9 +15,11 @@ int main(int argc, char **argv)
 	bool logEvalNegative = false;
 	bool logCompare = false;
 	bool noRandom = false;
+	bool classTest = false;
 	char scriptFileName[128] = "";
 	char logEvalFileName[128] = "";
 	char logCompareFileName[128] = "";
+	char classTestParam[128] = "";
 
 	if(argc==1)
 	{
@@ -111,11 +113,32 @@ int main(int argc, char **argv)
 			{
 				noRandom = true;
 			}
+			else if(strcmp(argv[i], "-classtest")==0)
+			{
+				if(i+1 == argc)
+				{
+					//No parameter after -classtest
+					goto EXIT_MAIN_RIGHT_AWAY;
+				}
+				else
+				{
+					//Store argv[++i] as classtest param..
+					strcpy(classTestParam, argv[++i]);
+					classTest = true;
+				}
+			}
 			else
 			{
 				// Unknown parameter.
 			}
 		}
+	}
+
+
+	if(classTest)
+	{
+		// Run configured class tests and then exit
+		goto EXIT_MAIN_RIGHT_AWAY;
 	}
 
 

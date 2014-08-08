@@ -6,19 +6,19 @@ echo Basic regression test for mgframework runframes command
 
 
 :: Create directory for log files..
-mkdir .\test\result
+mkdir .\system_test\result
 
 
 
 
 :: Run all test cases and save log files..
 
-echo Running test case .\test\tc_003_basic_runframes.mgf
-project2.exe -logging -script .\test\tc_003_basic_runframes.mgf	>	.\test\result\tc_003_basic_runframes.log
+echo Running test case .\system_test\tc_003_basic_runframes.mgf
+project2.exe -logging -script .\system_test\tc_003_basic_runframes.mgf	>	.\system_test\result\tc_003_basic_runframes.log
 
 :: Evaluate log files and save filtered log..
 
-project2.exe -log_eval .\test\result\tc_003_basic_runframes.log -log_compare .\test\expected\tc_003_basic_runframes.log.filtered
+project2.exe -log_eval .\system_test\result\tc_003_basic_runframes.log -log_compare .\system_test\expected\tc_003_basic_runframes.log.filtered
 
 
 pause

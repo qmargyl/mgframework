@@ -1,16 +1,18 @@
 MG Framework list of known issues to be fixed/investigated
 ======================================================================
 
-* MOs sometimes (very rarely) walk outside the map. Not seen for many
-  months.
+* MOs sometimes (very rarely) move outside the map.
 
-* Creating large amounts of MOs can cause free function to crash. This
-  is likely due to lack of thread safety in the terminal server.
+* MOs sometimes move on top of another MO.
+
+* Creating large amounts of MOs can cause a crash.
+
+* Moving large amounts of MOs can cause a crash.
 
 * Hitting escape to open the console in the example application while
   saving console output to log file will result in input in console and
   output in log file. It bahaves as usual otherwise but is not very
   practical. One can easily mistake it for a crash since the prompt is
-  not seen and the applicatio crashes if you try to control the graphical
+  not seen and the application crashes if you try to control the graphical
   window while in console mode.
 
