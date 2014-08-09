@@ -20,10 +20,10 @@ mkdir .\class_test\result
 :: ===============
 
 echo|set /p="<tr><td><p>"
-echo|set /p="Test suite: A* algorithm<br>"
+echo|set /p="Test suite: All test cases<br>"
 echo|set /p="{<br>Running ... "
-project2.exe -logging -classtest astar	>	.\class_test\result\tc_101_astar_suite.log
+project2.exe -logging -classtest all	>	.\class_test\result\tc_101_all_testcases.log
 echo|set /p="<b>DONE</b><br>"
-project2.exe -log_eval .\class_test\result\tc_101_astar_suite.log
+project2.exe -log_eval .\class_test\result\tc_101_all_testcases.log
 echo|set /p="}<br>"
 echo|set /p="</td></tr></p>"

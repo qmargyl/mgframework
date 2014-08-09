@@ -1,6 +1,7 @@
 #include "project2.h"
 #include "project2_server.h"
 #include "mgframework/mgframework.h"
+#include "mgframework/mgclasstester.h"
 
 using std::string;
 
@@ -118,14 +119,15 @@ int main(int argc, char **argv)
 				if(i+1 == argc)
 				{
 					//No parameter after -classtest
-					goto EXIT_MAIN_RIGHT_AWAY;
+					strcpy(classTestParam, "all");
 				}
 				else
 				{
+					// NOT IMPLEMENTED YET
 					//Store argv[++i] as classtest param..
 					strcpy(classTestParam, argv[++i]);
-					classTest = true;
 				}
+				classTest = true;
 			}
 			else
 			{
@@ -138,6 +140,7 @@ int main(int argc, char **argv)
 	if(classTest)
 	{
 		// Run configured class tests and then exit
+		MGClassTester::runAll();
 		goto EXIT_MAIN_RIGHT_AWAY;
 	}
 

@@ -184,6 +184,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\src\mgframework\mgclasstester.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\src\mgframework\mgcomponent.cpp"
 				>
 			</File>
@@ -227,12 +231,28 @@
 				RelativePath="..\..\..\..\src\project2_server.cpp"
 				>
 			</File>
+			<Filter
+				Name="class_test"
+				>
+				<File
+					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGMap_initialize.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGPathGenerator_calculatePathAStar.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Headers"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\..\..\src\mgframework\mgclasstester.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\..\..\src\mgframework\mgcomponent.h"
 				>

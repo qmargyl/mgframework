@@ -667,6 +667,11 @@ void MGFramework::logEval(const char *logFileName, bool negativeTest)
 		char *neof = NULL;
 		//MGFLOG_INFO(std::cout << "MGFramework::logEval starting to parse log file " << logFileName << std::endl;);
 
+		std::string errSubstr("ERROR");
+		std::string warnSubstr("WARNING");
+		std::string exitSubstr("Exiting application...");
+		std::string tcSubstr("[TC]");
+
 		while(true)
 		{
 			// Read until new line or end of file, whichever happens first..
@@ -680,12 +685,10 @@ void MGFramework::logEval(const char *logFileName, bool negativeTest)
 				// An error defined as a log line containing at least one "ERROR".
 				std::string line(logLine);
 
-				std::string errSubstr("ERROR");
-				std::string warnSubstr("WARNING");
-				std::string exitSubstr("Exiting application...");
 				std::size_t foundErr = line.find(errSubstr);
 				std::size_t foundWarn = line.find(warnSubstr);
 				std::size_t foundExit = line.find(exitSubstr);
+				std::size_t foundTC = line.find(tcSubstr);
 
 				if (foundErr != std::string::npos)
 				{
@@ -701,6 +704,11 @@ void MGFramework::logEval(const char *logFileName, bool negativeTest)
 				if (foundExit != std::string::npos)
 				{
 					nExitApp++;
+				}
+
+				if (foundTC != std::string::npos)
+				{
+					std::cout << "<br>" << line.c_str() << std::endl;
 				}
 
 
