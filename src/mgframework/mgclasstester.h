@@ -5,7 +5,7 @@
 
 #define ASSERT_NOT_EQUAL(x, y, msg)	do{ \
 		if(x != y){ \
-			std::cout << "[ASSERT] " << __FILE__ << ":" << __LINE__ << " ERROR: " << msg << std::endl; \
+			std::cout << "[ASSERT] " << __FILE__ << ":" << __LINE__ << " MSG: " << msg << std::endl; \
 			return; \
 		} \
 	} while(0)
@@ -14,6 +14,11 @@
 		std::cout << "[TC] " << #f << std::endl; \
 		f ## (); \
 	} while(0)
+
+#define FINISH_TESTSUITE() do{ \
+		std::cout << "Exiting application..." << std::endl; \
+	} while(0)
+
 
 
 class MGClassTester
@@ -28,6 +33,7 @@ public:
 	{
 		RUNTEST(test_MGMap_initialize);
 		RUNTEST(test_MGPathGenerator_calculatePathAStar);
+		FINISH_TESTSUITE();
 	}
 };
 

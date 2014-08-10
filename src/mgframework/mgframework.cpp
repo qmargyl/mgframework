@@ -647,9 +647,10 @@ void MGFramework::logEval(const char *logFileName, bool negativeTest)
 	FILE *lf = NULL;
 	errno_t logError = fopen_s(&lf, logFileName, "rt");
 
-	int nErrors=0;
-	int nWarnings=0;
-	int nExitApp=0;
+	int nErrors = 0;
+	int nWarnings = 0;
+	int nExitApp = 0;
+	int nAsserts = 0;
 	std::string execTimeMS("");
 
 	// Error list for printing
@@ -671,6 +672,7 @@ void MGFramework::logEval(const char *logFileName, bool negativeTest)
 		std::string warnSubstr("WARNING");
 		std::string exitSubstr("Exiting application...");
 		std::string tcSubstr("[TC]");
+		std::string assertSubstr("[ASSERT]");
 
 		while(true)
 		{
@@ -689,6 +691,7 @@ void MGFramework::logEval(const char *logFileName, bool negativeTest)
 				std::size_t foundWarn = line.find(warnSubstr);
 				std::size_t foundExit = line.find(exitSubstr);
 				std::size_t foundTC = line.find(tcSubstr);
+				std::size_t foundAssert = line.find(assertSubstr);
 
 				if (foundErr != std::string::npos)
 				{
@@ -711,6 +714,13 @@ void MGFramework::logEval(const char *logFileName, bool negativeTest)
 					std::cout << "<br>" << line.c_str() << std::endl;
 				}
 
+				if (foundAssert != std::string::npos)
+				{
+					nAsserts++;
+					std::cout << "<br><font color=red>" << line.c_str() << "</font>" << std::endl;
+				}
+
+
 
 				std::string exetimeSubstr("Execution time: ");
 				std::size_t foundExecutionTime = line.find(exetimeSubstr);
@@ -729,6 +739,10 @@ void MGFramework::logEval(const char *logFileName, bool negativeTest)
 		else if(nExitApp == 0)
 		{
 			std::cout << "<b><font color=red>FAIL</font></b> (did not finish)";
+		}
+		else if(nAsserts != 0)
+		{
+			std::cout << "<br><b><font color=red>FAIL</font></b> (" << nAsserts << " asserts, " << nWarnings << " warnings)";
 		}
 		else
 		{
