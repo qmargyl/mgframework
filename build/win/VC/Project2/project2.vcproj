@@ -243,6 +243,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="stubs"
+				>
+				<File
+					RelativePath="..\..\..\..\src\mgframework\stubs\mgframeworkstub.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\src\mgframework\stubs\mgframeworkstub.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Headers"
