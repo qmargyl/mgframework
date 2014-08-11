@@ -103,9 +103,15 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 	open.push_back(nodeStart);
 
 	int passes = 0;
-	int deletions = 0;
-	int additions = 0;
-	int lookups = 0;
+	int openDeletions = 0;
+	int closedDeletions = 0;
+	int openAdditions = 0;
+	int successorDeletions = 0;
+	int closedAdditions = 0;
+	int successorAdditions = 0;
+	int openLookups = 0;
+	int closedLookups = 0;
+	int successorLookups = 0;
 	bool pathWasFound = false;
 
 	while(!open.empty())
@@ -114,7 +120,7 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 	
 		// Take the node with smallest F from open list and call it nodeCurrent
 		std::list<MGAStarNode>::iterator nodeCurrentIt = open.begin();
-		lookups++;
+		openLookups++;
 		for(std::list<MGAStarNode>::iterator nodeIt = open.begin(); nodeIt != open.end(); nodeIt++)
 		{
 			if((*nodeIt).getF() < (*nodeCurrentIt).getF())
@@ -123,7 +129,7 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 			}
 		}
 		MGAStarNode nodeCurrent(*nodeCurrentIt);
-		deletions++;
+		openDeletions++;
 		open.erase(nodeCurrentIt);
 		
 		// Step 6 done!!
@@ -131,10 +137,16 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 		if(nodeCurrent == nodeGoal)
 		{
 			pathWasFound = true;
-			additions++;
+			closedAdditions++;
 			closed.push_back(nodeCurrent);
-			printf(	"Path found (%d,%d) -> (%d,%d) in %d passes, %d deletions, %d additions, %d lookups!!\n", 
-					nodeStart.getX(), nodeStart.getY(), nodeGoal.getX(), nodeGoal.getY(), passes, deletions, additions, lookups);
+			printf(	"Path found (%d,%d) -> (%d,%d) in %d passes\n"
+					"%d open deletions, %d closed deletions, %d successor deletions, "
+					"%d open additions, %d closed additions, %d successor additions, "
+					"%d open lookups, %d closed lookups, %d successor lookups\n", 
+					nodeStart.getX(), nodeStart.getY(), nodeGoal.getX(), nodeGoal.getY(), passes, 
+					openDeletions, closedDeletions, successorDeletions,
+					openAdditions, closedAdditions, successorAdditions,
+					openLookups, closedLookups, successorLookups);
 			for(std::list<MGAStarNode>::iterator nodeIt = closed.begin(); nodeIt != closed.end(); nodeIt++)
 			{
 				printf("(%d,%d) <- (%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY(), (*nodeIt).getParentX(), (*nodeIt).getParentY());
@@ -152,42 +164,42 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 		if(x < xMax && y < yMax && map[y + 1][x + 1] == 0)
 		{
 			successors.push_back(MGAStarNode(x + 1, y + 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-			additions++;
+			successorAdditions++;
 		}
 		if(x < xMax && map[y][x + 1] == 0)
 		{
 			successors.push_back(MGAStarNode(x + 1, y, nodeGoal, nodeCurrent.getG() + 1.0));
-			additions++;
+			successorAdditions++;
 		}
 		if(y < yMax && map[y + 1][x] == 0)
 		{
 			successors.push_back(MGAStarNode(x, y + 1, nodeGoal, nodeCurrent.getG() + 1.0));
-			additions++;
+			successorAdditions++;
 		}
 		if(x > xMin && y > yMin && map[y - 1][x - 1] == 0)
 		{
 			successors.push_back(MGAStarNode(x - 1, y - 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-			additions++;
+			successorAdditions++;
 		}
 		if(x > xMin && map[y][x - 1] == 0)
 		{
 			successors.push_back(MGAStarNode(x - 1, y, nodeGoal, nodeCurrent.getG() + 1.0));
-			additions++;
+			successorAdditions++;
 		}
 		if(y > yMin && map[y - 1][x] == 0)
 		{
 			successors.push_back(MGAStarNode(x, y - 1, nodeGoal, nodeCurrent.getG() + 1.0));
-			additions++;
+			successorAdditions++;
 		}
 		if(x < xMax && y > yMin && map[y - 1][x + 1] == 0)
 		{
 			successors.push_back(MGAStarNode(x + 1, y - 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-			additions++;
+			successorAdditions++;
 		}
 		if(x > xMin && y < yMax && map[y + 1][x - 1] == 0)
 		{
 			successors.push_back(MGAStarNode(x - 1, y + 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-			additions++;
+			successorAdditions++;
 		}
 		
 		// Step 8 (and 11) done!!
@@ -195,47 +207,41 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 		for(std::list<MGAStarNode>::iterator nodeSuccessor = successors.begin(); nodeSuccessor != successors.end(); )
 		{
 			// Find the successor in the open list
-			lookups++;
+			openLookups++;
 			std::list<MGAStarNode>::iterator evaluateOpenIt = find(open.begin(), open.end(), *nodeSuccessor);
-			if(evaluateOpenIt != open.end() && (*evaluateOpenIt).getF() <= (*nodeSuccessor).getF())
+			if(evaluateOpenIt != open.end())
 			{
-				nodeSuccessor = successors.erase(nodeSuccessor);
-				deletions++;
-				continue;
-			}			
-			
-			// Step 13 done!!
+				if((*evaluateOpenIt).getF() <= (*nodeSuccessor).getF())
+				{
+					nodeSuccessor = successors.erase(nodeSuccessor);
+					successorDeletions++;
+					continue;
+				}
+				else
+				{
+					open.erase(evaluateOpenIt);
+					openDeletions++;
+				}
+			}
 			
 			// Find the successor in the closed list
-			lookups++;
+			closedLookups++;
 			std::list<MGAStarNode>::iterator evaluateClosedIt = find(closed.begin(), closed.end(), *nodeSuccessor);
-			if(evaluateClosedIt != closed.end() && (*evaluateClosedIt).getF() <= (*nodeSuccessor).getF())
+			if(evaluateClosedIt != closed.end())
 			{
-				nodeSuccessor = successors.erase(nodeSuccessor);
-				deletions++;
-				continue;
+				if((*evaluateClosedIt).getF() <= (*nodeSuccessor).getF())
+				{
+					nodeSuccessor = successors.erase(nodeSuccessor);
+					successorDeletions++;
+					continue;
+				}
+				else
+				{
+					closed.erase(evaluateClosedIt);
+					closedDeletions++;
+				}
 			}
 			
-			// Step 14 done!!
-			
-			// Remove the successor from the open list, if present
-			lookups++;
-			std::list<MGAStarNode>::iterator removeOpenIt = find(open.begin(), open.end(), *nodeSuccessor);
-			if(removeOpenIt != open.end())
-			{
-				open.erase(removeOpenIt);
-				deletions++;
-			}
-			
-			// Remove the successor from the closed list, if present
-			lookups++;
-			std::list<MGAStarNode>::iterator removeClosedIt = find(closed.begin(), closed.end(), *nodeSuccessor);
-			if(removeClosedIt != closed.end())
-			{
-				closed.erase(removeClosedIt);
-				deletions++;
-			}			
-
 			// Step 15 done!!
 			
 			(*nodeSuccessor).setParent(nodeCurrent);
@@ -247,19 +253,25 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 			// Step 17 done!!
 			
 			open.push_back(*nodeSuccessor);
-			additions++;
+			openAdditions++;
 			
 			nodeSuccessor++;
 		}
 		
 		closed.push_back(nodeCurrent);
-		additions++;
+		closedAdditions++;
 	}
 	
 	if(!pathWasFound)
 	{
-		printf(	"Path not found (%d,%d) -> (%d,%d) in %d passes, %d deletions, %d additions, %d lookups!!\n",
-				nodeStart.getX(), nodeStart.getY(), nodeGoal.getX(), nodeGoal.getY(), passes, deletions, additions, lookups);
+		printf(	"Path not found (%d,%d) -> (%d,%d) in %d passes\n"
+				"%d open deletions, %d closed deletions, %d successor deletions, "
+				"%d open additions, %d closed additions, %d successor additions, "
+				"%d open lookups, %d closed lookups, %d successor lookups\n",
+				nodeStart.getX(), nodeStart.getY(), nodeGoal.getX(), nodeGoal.getY(), passes,
+				openDeletions, closedDeletions, successorDeletions,
+				openAdditions, closedAdditions, successorAdditions,
+				openLookups, closedLookups, successorLookups);
 		path.clear();
 	}
 }
@@ -284,6 +296,8 @@ int main()
 	calculateAStar(8,1,4,2,0,0,8,8, map, path);
 	path.clear();
 	calculateAStar(8,4,8,8,0,0,8,8, map, path); // no path available
+	path.clear();
+	calculateAStar(4,2,4,2,0,0,8,8, map, path);
 	path.clear();
 }
 
