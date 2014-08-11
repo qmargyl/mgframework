@@ -152,6 +152,33 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 				printf("(%d,%d) <- (%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY(), (*nodeIt).getParentX(), (*nodeIt).getParentY());
 			}
 			// TODO: Save the actual path in @path. Start from $closed(last) and follow it to @nodeGoal
+			/*
+			if(!closed.empty())
+			{
+				std::list<MGAStarNode>::iterator pathIt = closed.begin();
+				pathIt--; // Point to nodeGoal in closed list
+				int lastParentX = (*pathIt).getParentX();
+				int lastParentY = (*pathIt).getParentY();
+				path.push_back(MGAStarNode(*pathIt));
+				while(*pathIt != nodeStart)
+				{
+					if((*pathIt).getX() == lastParentX && (*pathIt).getY() == lastParentY)
+					{
+						path.push_back(MGAStarNode(*pathIt));
+						lastParentX = (*pathIt).getParentX();
+						lastParentY = (*pathIt).getParentY();
+					}
+					pathIt--;
+				}
+				// pathIt should now point to nodeStart
+				path.push_back(MGAStarNode(*pathIt));
+			}
+			printf("Result:\n");
+			for(std::list<MGAStarNode>::iterator nodeIt = path.begin(); nodeIt != path.end(); nodeIt++)
+			{
+				printf("(%d,%d) <- (%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY(), (*nodeIt).getParentX(), (*nodeIt).getParentY());
+			}
+			*/
 			break;
 		}
 		
