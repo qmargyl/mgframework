@@ -149,36 +149,42 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 					openLookups, closedLookups, successorLookups);
 			for(std::list<MGAStarNode>::iterator nodeIt = closed.begin(); nodeIt != closed.end(); nodeIt++)
 			{
-				printf("(%d,%d) <- (%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY(), (*nodeIt).getParentX(), (*nodeIt).getParentY());
+				printf("(%d,%d) <- (%d,%d), ", (*nodeIt).getX(), (*nodeIt).getY(), (*nodeIt).getParentX(), (*nodeIt).getParentY());
 			}
-			// TODO: Save the actual path in @path. Start from $closed(last) and follow it to @nodeGoal
-			/*
+			printf("DONE\n");
+
+			//Now, save the actual path in @path. Start from $closed(last) and follow it to @nodeStart
 			if(!closed.empty())
 			{
-				std::list<MGAStarNode>::iterator pathIt = closed.begin();
-				pathIt--; // Point to nodeGoal in closed list
-				int lastParentX = (*pathIt).getParentX();
-				int lastParentY = (*pathIt).getParentY();
-				path.push_back(MGAStarNode(*pathIt));
-				while(*pathIt != nodeStart)
+				MGAStarNode pathEnt = closed.back();
+				int lastParentX = pathEnt.getParentX();
+				int lastParentY = pathEnt.getParentY();
+				path.push_front(MGAStarNode(pathEnt));
+				while(!(pathEnt == nodeStart))
 				{
-					if((*pathIt).getX() == lastParentX && (*pathIt).getY() == lastParentY)
+					if(pathEnt.getX() == lastParentX && pathEnt.getY() == lastParentY)
 					{
-						path.push_back(MGAStarNode(*pathIt));
-						lastParentX = (*pathIt).getParentX();
-						lastParentY = (*pathIt).getParentY();
+						path.push_front(MGAStarNode(pathEnt));
+						lastParentX = pathEnt.getParentX();
+						lastParentY = pathEnt.getParentY();
 					}
-					pathIt--;
+					closed.pop_back();
+					pathEnt = closed.back();
 				}
-				// pathIt should now point to nodeStart
-				path.push_back(MGAStarNode(*pathIt));
 			}
+
+			// Handle the special case where nodeStart equals nodeGoal
+			if(!path.empty() && (*path.begin()) == nodeStart)
+			{
+				path.clear();
+			}
+
 			printf("Result:\n");
 			for(std::list<MGAStarNode>::iterator nodeIt = path.begin(); nodeIt != path.end(); nodeIt++)
 			{
-				printf("(%d,%d) <- (%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY(), (*nodeIt).getParentX(), (*nodeIt).getParentY());
+				printf("(%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY());
 			}
-			*/
+
 			break;
 		}
 		
@@ -250,7 +256,7 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 					openDeletions++;
 				}
 			}
-			
+
 			// Find the successor in the closed list
 			closedLookups++;
 			std::list<MGAStarNode>::iterator evaluateClosedIt = find(closed.begin(), closed.end(), *nodeSuccessor);
