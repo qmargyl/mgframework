@@ -160,10 +160,10 @@ class MGFramework :public MGComponent
 		int m_PlayerNumber;
 
 		// FPS related
-		Uint32 m_FrameTime;			// Holds current frame time
-		Uint32 m_ActualFrameTime;	// Calculated for each frame
-		Uint32 m_FPS;				// Holds desired FPS
-		Sint32 m_DelayTime;			// Holds delay in ms for last frame
+		unsigned int m_FrameTime;			// Holds current frame time
+		unsigned int m_ActualFrameTime;	// Calculated for each frame
+		unsigned int m_FPS;				// Holds desired FPS
+		int m_DelayTime;			// Holds delay in ms for last frame
 		bool m_DynamicFPSEnabled;	// Feature activation
 
 		// Mouse scrolling
@@ -343,10 +343,10 @@ class MGFramework :public MGComponent
 		void drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
 
 		// Controlling game speed and execution
-		inline Uint32 getFPS();
-		inline void setDesiredFPS(Uint32 f);
-		inline Uint32 getDesiredFPS();
-		inline Sint32 getLastFrameDelayTime(){return m_DelayTime;}	// How much time was left for additional calculations last frame.
+		inline unsigned int getFPS();
+		inline void setDesiredFPS(unsigned int f);
+		inline unsigned int getDesiredFPS();
+		inline int getLastFrameDelayTime(){return m_DelayTime;}	// How much time was left for additional calculations last frame.
 
 		// Console activation related
 		void enableTyping(){m_TypingEnabled = true;}

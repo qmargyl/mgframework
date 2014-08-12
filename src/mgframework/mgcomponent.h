@@ -6,7 +6,6 @@
 #include <string>
 #include <cmath>
 #include <iomanip>
-#include <SDL/SDL.h>
 
 // Disable features by #define
 //#define MGF_DISABLE_TTF
@@ -125,7 +124,7 @@ public:
 	static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
 	static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);
 	static float MGF_GetExecTimeS(){ return ((float)clock())/CLOCKS_PER_SEC; }
-	static Uint32 MGF_GetExecTimeMS(){ return (Uint32)(1000.0 * MGF_GetExecTimeS()); }
+	static unsigned int MGF_GetExecTimeMS(){ return (unsigned int)(1000.0 * MGF_GetExecTimeS()); }
 
 };
 

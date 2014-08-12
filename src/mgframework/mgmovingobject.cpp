@@ -430,13 +430,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			addToHistory(	(std::string("CalculatePath: ") + MGComponent::toString(getTileX()) + 
 							 std::string(",") + MGComponent::toString(getTileY()) + std::string(" -> ") +
 							 MGComponent::toString(dx) + std::string(",") + MGComponent::toString(dy)).c_str());
-
-			//TODO: Why verify the !occupant of dx,dy here and not just let the MO start moving towards it and see what happens?
-			if(!w->m_Map.occupant(dx, dy) && (getTileX() != dx || getTileY() != dy))
-			{
-				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
-				MGFLOG_INFO("Path length: " << m_Path.size());
-			}
+			setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
+			MGFLOG_INFO("Path length: " << m_Path.size());
 			return true;
 		}
 

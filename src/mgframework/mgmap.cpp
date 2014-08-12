@@ -49,7 +49,7 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 	if(m_Occupied) delete[] m_Occupied;
 	if(m_MarkedForRendering) delete[] m_MarkedForRendering;
 
-	m_TileProperty = new Uint32[w*h];
+	m_TileProperty = new unsigned int[w*h];
 	m_Occupied = new int[w*h];
 	m_MarkedForRendering = new bool[w*h];
 	m_Width = w;

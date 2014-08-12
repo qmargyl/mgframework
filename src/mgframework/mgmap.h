@@ -1,11 +1,9 @@
 #ifndef _MG_MAP_H
 #define _MG_MAP_H
 
-#include <SDL/SDL.h>
 #include <iostream>
 #include <list>
 #include "mgcomponent.h"
-
 
 #define MGMAP_TP_NOOBSTACLE  0
 #define MGMAP_TP_PROPERTY_1  2
@@ -35,7 +33,7 @@ private:
 	int m_ScrollX; // Number of pixels from top left.
 	int m_ScrollY; // Number of pixels from top left.
 
-	Uint32 *m_TileProperty; // Allows for many unique properties (ex: water, sand, grass, walkable, non-walkable etc.)
+	unsigned int *m_TileProperty; // Allows for many unique properties (ex: water, sand, grass, walkable, non-walkable etc.)
 	int *m_Occupied;
 	int m_WindowHeight;
 	int m_WindowWidth;
@@ -92,8 +90,8 @@ public:
 
 	void init(int w, int h, int tw, int th, int windowWidth, int windowHeight);
 	void reInit(int w, int h, int tw, int th);
-	void setTileProperty(int x, int y, Uint32 value){ m_TileProperty[y*getWidth()+x]=value;}
-	Uint32 getTileProperty(int x, int y){ return m_TileProperty[y*getWidth()+x];}
+	void setTileProperty(int x, int y, unsigned int value){ m_TileProperty[y*getWidth()+x]=value;}
+	unsigned int getTileProperty(int x, int y){ return m_TileProperty[y*getWidth()+x];}
 
 	void occupy(int x, int y, int id)
 	{ 

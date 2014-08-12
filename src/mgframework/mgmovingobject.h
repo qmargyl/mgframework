@@ -86,8 +86,8 @@ public:
 	inline bool isMarked(){ return m_Marked; }
 
 	//Update frequency related
-	inline void setTimeOfLastUpdate(Uint32 ms){ m_TimeOfLastUpdate = ms; }
-	inline const Uint32 getTimeOfLastUpdate(){ return m_TimeOfLastUpdate; }
+	inline void setTimeOfLastUpdate(unsigned int ms){ m_TimeOfLastUpdate = ms; }
+	inline const unsigned int getTimeOfLastUpdate(){ return m_TimeOfLastUpdate; }
 
 	//State related
 	inline const bool isCreated(){ return getCurrentState() == MOStateCreated; }

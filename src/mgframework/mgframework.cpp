@@ -981,10 +981,10 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 {
 	int result = parse(scriptFileName);
 
-	Uint32 frameStartTime = 0; 
+	unsigned int frameStartTime = 0; 
 	if(!runOneFrame) m_DelayTime = 0;
 	// Assume an initial value of m_FrameTime of 1000/getDesiredFPS().
-	Uint32 lastFrameTime = MGF_GetExecTimeMS()-(1000/getDesiredFPS()); // MGF_GetExecTimeMS() - lastFrameTime cannot be zero.
+	unsigned int lastFrameTime = MGF_GetExecTimeMS()-(1000/getDesiredFPS()); // MGF_GetExecTimeMS() - lastFrameTime cannot be zero.
 
 	// Frame loop (processEvents, handleGameLogics, draw)
 	while(processEvents())
@@ -1992,36 +1992,36 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 }
 
 
-Uint32 MGFramework::getFPS()
+unsigned int MGFramework::getFPS()
 {
 	/*
 	// XXX: Will this give more accurate timing?
-	if(m_ActualFrameTime>0) return (Uint32)(1000/m_ActualFrameTime);
+	if(m_ActualFrameTime>0) return (unsigned int)(1000/m_ActualFrameTime);
 	return getDesiredFPS();
 	*/
 
 	if(m_FrameTime > 0)
 	{
-		Uint32 result = (Uint32)(1000/m_FrameTime);
+		unsigned int result = (unsigned int)(1000/m_FrameTime);
 		if((result > 0) && (result < (2*getDesiredFPS())))
 		{
 			return result;
 		}
 		else
 		{
-			MGFLOG_WARNING("FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << "m_FrameTime:" << m_FrameTime << ", result:" << result);
+			MGFLOG_WARNING("FPS incorrectly calculated (MGFramework::getIntFPS()): " << "m_FrameTime:" << m_FrameTime << ", result:" << result);
 			return getDesiredFPS();
 		}
 	}
 	else
 	{
-		MGFLOG_WARNING("FPS incorrectly calculated (Uint32 MGFramework::getIntFPS()): " << m_FrameTime);
+		MGFLOG_WARNING("FPS incorrectly calculated (MGFramework::getIntFPS()): " << m_FrameTime);
 		return getDesiredFPS();
 	}
 }
 
 
-void MGFramework::setDesiredFPS(Uint32 f)
+void MGFramework::setDesiredFPS(unsigned int f)
 {
 	if(f >= 1) // Don't allow an FPS lower than 1
 	{
@@ -2029,12 +2029,12 @@ void MGFramework::setDesiredFPS(Uint32 f)
 	}
 	else
 	{
-		MGFLOG_WARNING("FPS incorrectly calculated (void MGFramework::setDesiredFPS(Uint32 f)): " << f);
+		MGFLOG_WARNING("FPS incorrectly calculated (void MGFramework::setDesiredFPS(f)): " << f);
 	}
 }
 
 
-Uint32 MGFramework::getDesiredFPS()
+unsigned int MGFramework::getDesiredFPS()
 {
 	if(m_FPS >= 1) // Don't allow an FPS lower than 1
 	{
@@ -2042,7 +2042,7 @@ Uint32 MGFramework::getDesiredFPS()
 	}
 	else
 	{
-		MGFLOG_WARNING("FPS incorrectly calculated (Uint32 MGFramework::getDesiredFPS()): " << m_FPS << ", returning 1");
+		MGFLOG_WARNING("FPS incorrectly calculated (MGFramework::getDesiredFPS()): " << m_FPS << ", returning 1");
 		return 1;
 	}
 }
