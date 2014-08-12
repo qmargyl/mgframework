@@ -8,6 +8,7 @@
 #include "mgmap.h"
 #include "mgframework.h"
 #include "mgpathitem.h"
+#include "mgpathgenerator.h"
 
 unsigned long int MGMap::m_SC_CalculatedPaths = 0;
 unsigned long int MGMap::m_SC_LongestCalculatedPath = 0;
@@ -273,7 +274,12 @@ std::list<MGPathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay
 	MGFLOG_INFO("MGMap::calculatePath will find a path (" << ax << ", " << ay << ") -> (" << bx << ", " << by << ")");
 	std::list<MGPathItem> path;
 
-	if(pathType==MGFBASICPATH1)
+	if(pathType == MGFASTARLIST)
+	{
+		MGPathGenerator::calculatePathAStar(ax, ay, bx, by, *this, path);
+	}
+
+	else if(pathType == MGFBASICPATH1)
 	{
 		int x=ax;
 		int y=ay;
