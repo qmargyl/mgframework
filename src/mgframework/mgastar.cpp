@@ -157,16 +157,16 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 			if(!closed.empty())
 			{
 				MGAStarNode pathEnt = closed.back();
-				int lastParentX = pathEnt.getParentX();
-				int lastParentY = pathEnt.getParentY();
+				int lastParentX = closed.back().getParentX();
+				int lastParentY = closed.back().getParentY();
 				path.push_front(MGAStarNode(pathEnt));
 				while(!(pathEnt == nodeStart))
 				{
 					if(pathEnt.getX() == lastParentX && pathEnt.getY() == lastParentY)
 					{
 						path.push_front(MGAStarNode(pathEnt));
-						lastParentX = pathEnt.getParentX();
-						lastParentY = pathEnt.getParentY();
+						lastParentX = closed.back().getParentX();
+						lastParentY = closed.back().getParentY();
 					}
 					closed.pop_back();
 					pathEnt = closed.back();
@@ -177,12 +177,6 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 			if(!path.empty() && (*path.begin()) == nodeStart)
 			{
 				path.clear();
-			}
-
-			printf("Result:\n");
-			for(std::list<MGAStarNode>::iterator nodeIt = path.begin(); nodeIt != path.end(); nodeIt++)
-			{
-				printf("(%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY());
 			}
 
 			break;
@@ -325,12 +319,27 @@ int main()
 
 	std::list<MGAStarNode> path;
 	calculateAStar(1,1,6,4,0,0,8,8, map, path);
+	printf("Result:\n");
+	for(std::list<MGAStarNode>::iterator nodeIt = path.begin(); nodeIt != path.end(); nodeIt++)
+	{
+		printf("(%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY());
+	}	
 	path.clear();
 	calculateAStar(8,1,4,2,0,0,8,8, map, path);
+	printf("Result:\n");
+	for(std::list<MGAStarNode>::iterator nodeIt = path.begin(); nodeIt != path.end(); nodeIt++)
+	{
+		printf("(%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY());
+	}	
 	path.clear();
 	calculateAStar(8,4,8,8,0,0,8,8, map, path); // no path available
 	path.clear();
 	calculateAStar(4,2,4,2,0,0,8,8, map, path);
+	printf("Result:\n");
+	for(std::list<MGAStarNode>::iterator nodeIt = path.begin(); nodeIt != path.end(); nodeIt++)
+	{
+		printf("(%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY());
+	}	
 	path.clear();
 }
 
