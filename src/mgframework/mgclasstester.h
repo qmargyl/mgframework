@@ -5,7 +5,7 @@
 
 #define ASSERT_NOT_EQUAL(x, y, msg)	do{ \
 		if(x != y){ \
-			std::cout << "[ASSERT] " << __FILE__ << ":" << __LINE__ << " MSG: " << msg << std::endl; \
+			std::cout << "[ASSERT] " << __FILE__ << ":" << __LINE__ << " MSG: " << msg << ", " << x << ", " << y << std::endl; \
 			return; \
 		} \
 	} while(0)

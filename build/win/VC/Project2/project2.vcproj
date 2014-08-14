@@ -208,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\src\mgframework\mgpathitem.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\src\mgframework\mgperiodicevent.cpp"
 				>
 			</File>
@@ -261,6 +265,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\..\..\src\mgframework\mgastarnode.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\..\..\src\mgframework\mgclasstester.h"
 				>

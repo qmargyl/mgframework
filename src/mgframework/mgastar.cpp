@@ -48,7 +48,18 @@ class MGAStarNode
 		  m_G(g)
 		{
 			setH(heuristic(goal));
-		}		
+		}
+
+		MGAStarNode(int x, int y, double g = 0.0)
+		: m_X(x),
+		  m_Y(y),
+		  m_ParentX(x),
+		  m_ParentY(y),
+		  m_H(0.0),
+		  m_G(g)
+		{
+
+		}
 		
 		MGAStarNode(const MGAStarNode& node)
 		: m_X(node.getX()),
@@ -98,7 +109,7 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 {
 	std::list<MGAStarNode> open;
 	std::list<MGAStarNode> closed;
-	MGAStarNode nodeGoal(x2, y2, nodeGoal, 0.0);
+	MGAStarNode nodeGoal(x2, y2, 0.0);
 	MGAStarNode nodeStart(x1, y1, nodeGoal, 0.0);
 	open.push_back(nodeStart);
 
