@@ -95,7 +95,7 @@ class MGAStarNode
 			// Pythagorean Theorem
 			int dx = getX() - node.getX();
 			int dy = getY() - node.getY();
-			return sqrt(dx*dx+dy*dy);
+			return sqrt(dx * dx + dy * dy);
 		}
 		
 		void setParent(MGAStarNode &node)
@@ -139,6 +139,9 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 				nodeCurrentIt = nodeIt;
 			}
 		}
+		
+		printf("Best open = (%d, %d): %f\n", (*nodeCurrentIt).getX(), (*nodeCurrentIt).getY(), (*nodeCurrentIt).getF());
+		
 		MGAStarNode nodeCurrent(*nodeCurrentIt);
 		openDeletions++;
 		open.erase(nodeCurrentIt);
@@ -168,16 +171,16 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 			if(!closed.empty())
 			{
 				MGAStarNode pathEnt = closed.back();
-				int lastParentX = pathEnt.getParentX();
-				int lastParentY = pathEnt.getParentY();
+				int lastParentX = closed.back().getParentX();
+				int lastParentY = closed.back().getParentY();
 				path.push_front(MGAStarNode(pathEnt));
 				while(!(pathEnt == nodeStart))
 				{
 					if(pathEnt.getX() == lastParentX && pathEnt.getY() == lastParentY)
 					{
 						path.push_front(MGAStarNode(pathEnt));
-						lastParentX = pathEnt.getParentX();
-						lastParentY = pathEnt.getParentY();
+						lastParentX = closed.back().getParentX();
+						lastParentY = closed.back().getParentY();
 					}
 					closed.pop_back();
 					pathEnt = closed.back();
@@ -190,62 +193,40 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 				path.clear();
 			}
 
-			printf("Result:\n");
-			for(std::list<MGAStarNode>::iterator nodeIt = path.begin(); nodeIt != path.end(); nodeIt++)
-			{
-				printf("(%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY());
-			}
-
 			break;
 		}
 		
 		// Step 7 done!!
 		
 		// Generate successors (neighbors)
+		std::list<MGAStarNode> potentialSuccessors;
 		std::list<MGAStarNode> successors;
 		int x = nodeCurrent.getX();
 		int y = nodeCurrent.getY();
-		if(x < xMax && y < yMax && map[y + 1][x + 1] == 0)
-		{
-			successors.push_back(MGAStarNode(x + 1, y + 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-			successorAdditions++;
-		}
-		if(x < xMax && map[y][x + 1] == 0)
-		{
-			successors.push_back(MGAStarNode(x + 1, y, nodeGoal, nodeCurrent.getG() + 1.0));
-			successorAdditions++;
-		}
-		if(y < yMax && map[y + 1][x] == 0)
-		{
-			successors.push_back(MGAStarNode(x, y + 1, nodeGoal, nodeCurrent.getG() + 1.0));
-			successorAdditions++;
-		}
-		if(x > xMin && y > yMin && map[y - 1][x - 1] == 0)
-		{
-			successors.push_back(MGAStarNode(x - 1, y - 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-			successorAdditions++;
-		}
-		if(x > xMin && map[y][x - 1] == 0)
-		{
-			successors.push_back(MGAStarNode(x - 1, y, nodeGoal, nodeCurrent.getG() + 1.0));
-			successorAdditions++;
-		}
-		if(y > yMin && map[y - 1][x] == 0)
-		{
-			successors.push_back(MGAStarNode(x, y - 1, nodeGoal, nodeCurrent.getG() + 1.0));
-			successorAdditions++;
-		}
-		if(x < xMax && y > yMin && map[y - 1][x + 1] == 0)
-		{
-			successors.push_back(MGAStarNode(x + 1, y - 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-			successorAdditions++;
-		}
-		if(x > xMin && y < yMax && map[y + 1][x - 1] == 0)
-		{
-			successors.push_back(MGAStarNode(x - 1, y + 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-			successorAdditions++;
-		}
 		
+		potentialSuccessors.push_back(MGAStarNode(x + 1, y + 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
+		potentialSuccessors.push_back(MGAStarNode(x + 1, y, nodeGoal, nodeCurrent.getG() + 1.01));
+		potentialSuccessors.push_back(MGAStarNode(x, y + 1, nodeGoal, nodeCurrent.getG() + 1.01));
+		potentialSuccessors.push_back(MGAStarNode(x - 1, y - 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
+		potentialSuccessors.push_back(MGAStarNode(x - 1, y, nodeGoal, nodeCurrent.getG() + 1.01));
+		potentialSuccessors.push_back(MGAStarNode(x, y - 1, nodeGoal, nodeCurrent.getG() + 1.01));
+		potentialSuccessors.push_back(MGAStarNode(x + 1, y - 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
+		potentialSuccessors.push_back(MGAStarNode(x - 1, y + 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
+		
+		for(std::list<MGAStarNode>::iterator potSuccIt = potentialSuccessors.begin(); potSuccIt != potentialSuccessors.end(); potSuccIt++)
+		{
+			if(	(*potSuccIt).getX() >= xMin && 
+				(*potSuccIt).getX() <= xMax && 
+				(*potSuccIt).getY() >= yMin && 
+				(*potSuccIt).getY() <= yMax &&
+				map[(*potSuccIt).getY()][(*potSuccIt).getX()] == 0 &&
+				((*potSuccIt).getX() != nodeCurrent.getParentX() || (*potSuccIt).getY() != nodeCurrent.getParentY()))
+			{
+				successors.push_back((*potSuccIt));
+				successorAdditions++;
+			}
+		}
+	
 		// Step 8 (and 11) done!!
 
 		for(std::list<MGAStarNode>::iterator nodeSuccessor = successors.begin(); nodeSuccessor != successors.end(); )
@@ -295,7 +276,7 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 			(*nodeSuccessor).setH((*nodeSuccessor).heuristic(nodeGoal));
 			
 			// Step 17 done!!
-			
+			printf("\tAdding successor (%d, %d): %f\n", (*nodeSuccessor).getX(), (*nodeSuccessor).getY(), (*nodeSuccessor).getF());
 			open.push_back(*nodeSuccessor);
 			openAdditions++;
 			
@@ -322,7 +303,8 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 
 int main()
 {
-	int map[9][9] = {
+
+	int map[][9] = {
 						{0, 0, 0, 0, 0, 1, 0, 0, 0},
 						{0, 0, 0, 0, 0, 1, 0, 0, 0},
 						{0, 1, 0, 0, 0, 1, 0, 0, 0},
@@ -333,15 +315,26 @@ int main()
 						{0, 0, 0, 0, 1, 1, 1, 1, 1},
 						{0, 0, 0, 0, 1, 1, 1, 1, 0}
 					};
-
+/*
+	int map[][9] = {
+						{0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0, 0, 0, 0},
+						{0, 0, 0, 0, 0, 0, 0, 0, 0}
+					};
+*/
 	std::list<MGAStarNode> path;
 	calculateAStar(1,1,6,4,0,0,8,8, map, path);
-	path.clear();
-	calculateAStar(8,1,4,2,0,0,8,8, map, path);
-	path.clear();
-	calculateAStar(8,4,8,8,0,0,8,8, map, path); // no path available
-	path.clear();
-	calculateAStar(4,2,4,2,0,0,8,8, map, path);
+	printf("Result:\n");
+	for(std::list<MGAStarNode>::iterator nodeIt = path.begin(); nodeIt != path.end(); nodeIt++)
+	{
+		printf("(%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY());
+	}	
 	path.clear();
 }
 

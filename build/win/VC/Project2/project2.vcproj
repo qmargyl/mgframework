@@ -239,6 +239,10 @@
 				Name="class_test"
 				>
 				<File
+					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGAStarNode.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGMap_initialize.cpp"
 					>
 				</File>

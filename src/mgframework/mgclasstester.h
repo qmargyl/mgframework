@@ -25,6 +25,7 @@ class MGClassTester
 {
 private:
 	static void test_MGMap_initialize();
+	static void test_MGAStarNode();
 	static void test_MGPathGenerator_calculatePathAStar();
 
 
@@ -32,6 +33,7 @@ public:
 	static void runAll()
 	{
 		RUNTEST(test_MGMap_initialize);
+		RUNTEST(test_MGAStarNode);
 		RUNTEST(test_MGPathGenerator_calculatePathAStar);
 		FINISH_TESTSUITE();
 	}
