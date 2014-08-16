@@ -63,8 +63,8 @@ void MGClassTester::test_MGPathGenerator_calculatePathAStar()
 	map.reInit(100, 200, 16, 16);
 
 	// Long path
-	MGPathGenerator::calculatePathAStar(5, 5, 93, 189, map, path);
-	ASSERT_NOT_EQUAL(path.size(), 184, "Long path in open terrain has incorrect length");
-	path.clear();
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+//	MGPathGenerator::calculatePathAStar(5, 5, 93, 189, map, path);
+//	ASSERT_NOT_EQUAL(path.size(), 184, "Long path in open terrain has incorrect length");
+//	path.clear();
+//	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
 }
