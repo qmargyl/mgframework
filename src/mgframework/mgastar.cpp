@@ -38,7 +38,7 @@ class MGAStarNode
 		double m_G;
 
 	public:
-		
+
 		MGAStarNode(int x, int y, const MGAStarNode& goal, double g = 0.0)
 		: m_X(x),
 		  m_Y(y),
@@ -58,9 +58,8 @@ class MGAStarNode
 		  m_H(0.0),
 		  m_G(g)
 		{
-
 		}
-		
+
 		MGAStarNode(const MGAStarNode& node)
 		: m_X(node.getX()),
 		  m_Y(node.getY()),
@@ -69,15 +68,14 @@ class MGAStarNode
 		  m_H(node.getH()),
 		  m_G(node.getG())
 		{
-		
 		}
-		
+
 		// True if the states of @this and @node are equal
 		bool operator==(const MGAStarNode& node)
 		{
 			return m_X == node.getX() && m_Y == node.getY();
 		}
-		
+
 		const int getX() const { return m_X; }
 		const int getY() const { return m_Y; }
 		const double getF() const { return getG() + getH(); }
@@ -85,11 +83,12 @@ class MGAStarNode
 		const double getG() const { return m_G; }
 		const int getParentX() const { return m_ParentX; }
 		const int getParentY() const { return m_ParentY; }
-		
+
 		//void setG(double g){ m_G = g; }
 		void setH(double h){ m_H = h; }
-		
+
 		// Under-estimate the remaining path length from @this to @node
+		/*
 		double heuristic(const MGAStarNode &node)
 		{
 			// Pythagorean Theorem
@@ -97,7 +96,17 @@ class MGAStarNode
 			int dy = getY() - node.getY();
 			return sqrt(dx * dx + dy * dy);
 		}
-		
+		*/
+
+		double heuristic(const MGAStarNode &node)
+		{
+			// Actual distance when there are no obstacles between start and goal
+			int dx = abs(getX() - node.getX());
+			int dy = abs(getY() - node.getY());
+			int dxy = max(dx, dy) - min(dx, dy);
+			return min(dx, dy) * sqrt_2 + dxy * 1.0;
+		}
+
 		void setParent(MGAStarNode &node)
 		{
 			m_ParentX = node.getX();
@@ -205,11 +214,11 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 		int y = nodeCurrent.getY();
 		
 		potentialSuccessors.push_back(MGAStarNode(x + 1, y + 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-		potentialSuccessors.push_back(MGAStarNode(x + 1, y, nodeGoal, nodeCurrent.getG() + 1.01));
-		potentialSuccessors.push_back(MGAStarNode(x, y + 1, nodeGoal, nodeCurrent.getG() + 1.01));
+		potentialSuccessors.push_back(MGAStarNode(x + 1, y, nodeGoal, nodeCurrent.getG() + 1.0));
+		potentialSuccessors.push_back(MGAStarNode(x, y + 1, nodeGoal, nodeCurrent.getG() + 1.0));
 		potentialSuccessors.push_back(MGAStarNode(x - 1, y - 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-		potentialSuccessors.push_back(MGAStarNode(x - 1, y, nodeGoal, nodeCurrent.getG() + 1.01));
-		potentialSuccessors.push_back(MGAStarNode(x, y - 1, nodeGoal, nodeCurrent.getG() + 1.01));
+		potentialSuccessors.push_back(MGAStarNode(x - 1, y, nodeGoal, nodeCurrent.getG() + 1.0));
+		potentialSuccessors.push_back(MGAStarNode(x, y - 1, nodeGoal, nodeCurrent.getG() + 1.0));
 		potentialSuccessors.push_back(MGAStarNode(x + 1, y - 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
 		potentialSuccessors.push_back(MGAStarNode(x - 1, y + 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
 		
@@ -277,7 +286,7 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 			
 			// Step 17 done!!
 			printf("\tAdding successor (%d, %d): %f\n", (*nodeSuccessor).getX(), (*nodeSuccessor).getY(), (*nodeSuccessor).getF());
-			open.push_back(*nodeSuccessor);
+			open.push_front(*nodeSuccessor); // push_front allows the algorithm to find the most recently added neighbor first
 			openAdditions++;
 			
 			nodeSuccessor++;
@@ -329,7 +338,7 @@ int main()
 					};
 */
 	std::list<MGAStarNode> path;
-	calculateAStar(1,1,6,4,0,0,8,8, map, path);
+	calculateAStar(1, 1, 6, 4, 0, 0, 8, 8, map, path);
 	printf("Result:\n");
 	for(std::list<MGAStarNode>::iterator nodeIt = path.begin(); nodeIt != path.end(); nodeIt++)
 	{
