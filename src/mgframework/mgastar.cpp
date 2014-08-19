@@ -240,6 +240,8 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 
 		for(std::list<MGAStarNode>::iterator nodeSuccessor = successors.begin(); nodeSuccessor != successors.end(); )
 		{
+			(*nodeSuccessor).setH((*nodeSuccessor).heuristic(nodeGoal));
+
 			// Find the successor in the open list
 			openLookups++;
 			std::list<MGAStarNode>::iterator evaluateOpenIt = find(open.begin(), open.end(), *nodeSuccessor);
@@ -275,23 +277,19 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 					closedDeletions++;
 				}
 			}
-			
+
 			// Step 15 done!!
-			
+
 			(*nodeSuccessor).setParent(nodeCurrent);
-			
-			// Step 16 done!!
-			
-			(*nodeSuccessor).setH((*nodeSuccessor).heuristic(nodeGoal));
-			
+
 			// Step 17 done!!
 			printf("\tAdding successor (%d, %d): %f\n", (*nodeSuccessor).getX(), (*nodeSuccessor).getY(), (*nodeSuccessor).getF());
 			open.push_front(*nodeSuccessor); // push_front allows the algorithm to find the most recently added neighbor first
 			openAdditions++;
-			
+
 			nodeSuccessor++;
 		}
-		
+
 		closed.push_back(nodeCurrent);
 		closedAdditions++;
 	}
