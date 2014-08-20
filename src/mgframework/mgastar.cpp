@@ -84,20 +84,9 @@ class MGAStarNode
 		const int getParentX() const { return m_ParentX; }
 		const int getParentY() const { return m_ParentY; }
 
-		//void setG(double g){ m_G = g; }
 		void setH(double h){ m_H = h; }
 
 		// Under-estimate the remaining path length from @this to @node
-		/*
-		double heuristic(const MGAStarNode &node)
-		{
-			// Pythagorean Theorem
-			int dx = getX() - node.getX();
-			int dy = getY() - node.getY();
-			return sqrt(dx * dx + dy * dy);
-		}
-		*/
-
 		double heuristic(const MGAStarNode &node)
 		{
 			// Actual distance when there are no obstacles between start and goal
@@ -154,8 +143,6 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 		MGAStarNode nodeCurrent(*nodeCurrentIt);
 		openDeletions++;
 		open.erase(nodeCurrentIt);
-		
-		// Step 6 done!!
 
 		if(nodeCurrent == nodeGoal)
 		{
@@ -204,9 +191,7 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 
 			break;
 		}
-		
-		// Step 7 done!!
-		
+
 		// Generate successors (neighbors)
 		std::list<MGAStarNode> potentialSuccessors;
 		std::list<MGAStarNode> successors;
@@ -231,12 +216,11 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 				map[(*potSuccIt).getY()][(*potSuccIt).getX()] == 0 &&
 				((*potSuccIt).getX() != nodeCurrent.getParentX() || (*potSuccIt).getY() != nodeCurrent.getParentY()))
 			{
+				(*potSuccIt).setH((*potSuccIt).heuristic(nodeGoal));
 				successors.push_back((*potSuccIt));
 				successorAdditions++;
 			}
 		}
-	
-		// Step 8 (and 11) done!!
 
 		for(std::list<MGAStarNode>::iterator nodeSuccessor = successors.begin(); nodeSuccessor != successors.end(); )
 		{
@@ -247,6 +231,9 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 			{
 				if((*evaluateOpenIt).getF() <= (*nodeSuccessor).getF())
 				{
+					printf("\t\tKeeping (%d, %d):%f and skipping successor (%d, %d):%f\n", 
+						(*evaluateOpenIt).getX(), (*evaluateOpenIt).getY(), (*evaluateOpenIt).getF(),
+						(*nodeSuccessor).getX(), (*nodeSuccessor).getY(), (*nodeSuccessor).getF());
 					nodeSuccessor = successors.erase(nodeSuccessor);
 					successorDeletions++;
 					continue;
@@ -275,23 +262,15 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 					closedDeletions++;
 				}
 			}
-			
-			// Step 15 done!!
-			
+
 			(*nodeSuccessor).setParent(nodeCurrent);
-			
-			// Step 16 done!!
-			
-			(*nodeSuccessor).setH((*nodeSuccessor).heuristic(nodeGoal));
-			
-			// Step 17 done!!
 			printf("\tAdding successor (%d, %d): %f\n", (*nodeSuccessor).getX(), (*nodeSuccessor).getY(), (*nodeSuccessor).getF());
 			open.push_front(*nodeSuccessor); // push_front allows the algorithm to find the most recently added neighbor first
 			openAdditions++;
-			
+			// Step to next successor
 			nodeSuccessor++;
 		}
-		
+
 		closed.push_back(nodeCurrent);
 		closedAdditions++;
 	}
@@ -312,7 +291,7 @@ void calculateAStar(int x1, int y1, int x2, int y2, int xMin, int yMin, int xMax
 
 int main()
 {
-
+/*
 	int map[][9] = {
 						{0, 0, 0, 0, 0, 1, 0, 0, 0},
 						{0, 0, 0, 0, 0, 1, 0, 0, 0},
@@ -324,7 +303,7 @@ int main()
 						{0, 0, 0, 0, 1, 1, 1, 1, 1},
 						{0, 0, 0, 0, 1, 1, 1, 1, 0}
 					};
-/*
+*/
 	int map[][9] = {
 						{0, 0, 0, 0, 0, 0, 0, 0, 0},
 						{0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -336,9 +315,9 @@ int main()
 						{0, 0, 0, 0, 0, 0, 0, 0, 0},
 						{0, 0, 0, 0, 0, 0, 0, 0, 0}
 					};
-*/
+
 	std::list<MGAStarNode> path;
-	calculateAStar(1, 1, 6, 4, 0, 0, 8, 8, map, path);
+	calculateAStar(5, 5, 7, 8, 0, 0, 8, 8, map, path);
 	printf("Result:\n");
 	for(std::list<MGAStarNode>::iterator nodeIt = path.begin(); nodeIt != path.end(); nodeIt++)
 	{
