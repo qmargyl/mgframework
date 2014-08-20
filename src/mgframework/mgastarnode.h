@@ -2,6 +2,11 @@
 #define _MGASTARNODE_H
 
 #include <cmath>
+#include <algorithm>
+
+#ifndef sqrt_2
+#define sqrt_2 (1.414213562373095)
+#endif
 
 class MGAStarNode
 {
@@ -65,12 +70,23 @@ class MGAStarNode
 		void setH(double h){ m_H = h; }
 		
 		// Under-estimate the remaining path length from @this to @node
+		/*
 		double heuristic(const MGAStarNode &node)
 		{
 			// Pythagorean Theorem
 			int dx = getX() - node.getX();
 			int dy = getY() - node.getY();
 			return std::sqrt((double)(dx*dx+dy*dy));
+		}
+		*/
+
+		double heuristic(const MGAStarNode &node)
+		{
+			// Actual distance when there are no obstacles between start and goal
+			int dx = abs(getX() - node.getX());
+			int dy = abs(getY() - node.getY());
+			int dxy = std::max(dx, dy) - std::min(dx, dy);
+			return std::min(dx, dy) * sqrt_2 + dxy * 1.0;
 		}
 		
 		void setParent(MGAStarNode &node)

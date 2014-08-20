@@ -17,7 +17,7 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 	int xMin = 0;
 	int yMin = 0;
 	int xMax = map.getWidth() - 1;
-	int yMax = map.getHeight() -1;
+	int yMax = map.getHeight() - 1;
 
 	std::list<MGAStarNode> open;
 	std::list<MGAStarNode> closed;
@@ -53,6 +53,9 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 				nodeCurrentIt = nodeIt;
 			}
 		}
+
+		printf("Best open = (%d, %d): %f\n", (*nodeCurrentIt).getX(), (*nodeCurrentIt).getY(), (*nodeCurrentIt).getF());
+
 		MGAStarNode nodeCurrent(*nodeCurrentIt);
 		openDeletions++;
 		open.erase(nodeCurrentIt);
@@ -114,54 +117,40 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 		// Step 7 done!!
 		
 		// Generate successors (neighbors)
+		std::list<MGAStarNode> potentialSuccessors;
 		std::list<MGAStarNode> successors;
 		int x = nodeCurrent.getX();
 		int y = nodeCurrent.getY();
-		if(x < xMax && y < yMax && map.occupant(x + 1, y + 1) == 0)
+
+		potentialSuccessors.push_back(MGAStarNode(x + 1, y + 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
+		potentialSuccessors.push_back(MGAStarNode(x + 1, y, nodeGoal, nodeCurrent.getG() + 1.0));
+		potentialSuccessors.push_back(MGAStarNode(x, y + 1, nodeGoal, nodeCurrent.getG() + 1.0));
+		potentialSuccessors.push_back(MGAStarNode(x - 1, y - 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
+		potentialSuccessors.push_back(MGAStarNode(x - 1, y, nodeGoal, nodeCurrent.getG() + 1.0));
+		potentialSuccessors.push_back(MGAStarNode(x, y - 1, nodeGoal, nodeCurrent.getG() + 1.0));
+		potentialSuccessors.push_back(MGAStarNode(x + 1, y - 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
+		potentialSuccessors.push_back(MGAStarNode(x - 1, y + 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
+
+		for(std::list<MGAStarNode>::iterator potSuccIt = potentialSuccessors.begin(); potSuccIt != potentialSuccessors.end(); potSuccIt++)
 		{
-			successors.push_back(MGAStarNode(x + 1, y + 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-			successorAdditions++;
+			if(	(*potSuccIt).getX() >= xMin &&
+				(*potSuccIt).getX() <= xMax &&
+				(*potSuccIt).getY() >= yMin &&
+				(*potSuccIt).getY() <= yMax &&
+				map.occupant((*potSuccIt).getX(), (*potSuccIt).getY()) == 0 &&
+				((*potSuccIt).getX() != nodeCurrent.getParentX() || (*potSuccIt).getY() != nodeCurrent.getParentY()))
+			{
+				successors.push_back((*potSuccIt));
+				successorAdditions++;
+			}
 		}
-		if(x < xMax && map.occupant(x + 1, y) == 0)
-		{
-			successors.push_back(MGAStarNode(x + 1, y, nodeGoal, nodeCurrent.getG() + 1.0));
-			successorAdditions++;
-		}
-		if(y < yMax && map.occupant(x, y + 1) == 0)
-		{
-			successors.push_back(MGAStarNode(x, y + 1, nodeGoal, nodeCurrent.getG() + 1.0));
-			successorAdditions++;
-		}
-		if(x > xMin && y > yMin && map.occupant(x - 1, y - 1) == 0)
-		{
-			successors.push_back(MGAStarNode(x - 1, y - 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-			successorAdditions++;
-		}
-		if(x > xMin && map.occupant(x - 1, y) == 0)
-		{
-			successors.push_back(MGAStarNode(x - 1, y, nodeGoal, nodeCurrent.getG() + 1.0));
-			successorAdditions++;
-		}
-		if(y > yMin && map.occupant(x, y - 1) == 0)
-		{
-			successors.push_back(MGAStarNode(x, y - 1, nodeGoal, nodeCurrent.getG() + 1.0));
-			successorAdditions++;
-		}
-		if(x < xMax && y > yMin && map.occupant(x + 1, y - 1) == 0)
-		{
-			successors.push_back(MGAStarNode(x + 1, y - 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-			successorAdditions++;
-		}
-		if(x > xMin && y < yMax && map.occupant(x - 1, y + 1) == 0)
-		{
-			successors.push_back(MGAStarNode(x - 1, y + 1, nodeGoal, nodeCurrent.getG() + sqrt_2));
-			successorAdditions++;
-		}
-		
+
 		// Step 8 (and 11) done!!
 
 		for(std::list<MGAStarNode>::iterator nodeSuccessor = successors.begin(); nodeSuccessor != successors.end(); )
 		{
+			(*nodeSuccessor).setH((*nodeSuccessor).heuristic(nodeGoal));
+
 			// Find the successor in the open list
 			openLookups++;
 			std::list<MGAStarNode>::iterator evaluateOpenIt = find(open.begin(), open.end(), *nodeSuccessor);
@@ -201,14 +190,10 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 			// Step 15 done!!
 			
 			(*nodeSuccessor).setParent(nodeCurrent);
-			
-			// Step 16 done!!
-			
-			(*nodeSuccessor).setH((*nodeSuccessor).heuristic(nodeGoal));
-			
+
 			// Step 17 done!!
-			
-			open.push_back(*nodeSuccessor);
+			printf("\tAdding successor (%d, %d): %f\n", (*nodeSuccessor).getX(), (*nodeSuccessor).getY(), (*nodeSuccessor).getF());
+			open.push_front(*nodeSuccessor); // push_front allows the algorithm to find the most recently added neighbor first
 			openAdditions++;
 			
 			nodeSuccessor++;

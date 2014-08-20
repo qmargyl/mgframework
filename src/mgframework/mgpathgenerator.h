@@ -5,9 +5,9 @@
 #include "mgframework.h"
 #include "mgastarnode.h"
 
-
+#ifndef sqrt_2
 #define sqrt_2 (1.414213562373095)
-
+#endif
 
 
 class MGPathGenerator : public MGComponent
