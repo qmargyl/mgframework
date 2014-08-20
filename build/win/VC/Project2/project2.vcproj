@@ -243,6 +243,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGComponent.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGMap_initialize.cpp"
 					>
 				</File>
@@ -254,6 +258,10 @@
 			<Filter
 				Name="stubs"
 				>
+				<File
+					RelativePath="..\..\..\..\src\mgframework\stubs\mgcomponentimpl.h"
+					>
+				</File>
 				<File
 					RelativePath="..\..\..\..\src\mgframework\stubs\mgframeworkstub.cpp"
 					>
