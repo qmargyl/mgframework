@@ -1,9 +1,6 @@
 #ifndef _MG_PATHITEM_H
 #define _MG_PATHITEM_H
 
-//class MGAStarNode;
-//#include "mgpathgenerator.h"
-
 class MGPathItem
 {
 private:
@@ -15,9 +12,7 @@ public:
 	MGPathItem(){}
 	MGPathItem(int x, int y);
 	MGPathItem(int x, int y, double h);
-/*
-	MGPathItem(MGAStarNode node);
-*/
+
 	~MGPathItem(){}
 	int getX(){ return m_X; }
 	int getY(){ return m_Y; }

@@ -1,4 +1,3 @@
-
 #include "mgsymboltable.h"
 #include "mgframework.h"
 

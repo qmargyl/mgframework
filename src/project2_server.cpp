@@ -1,7 +1,6 @@
 #include "project2_server.h"
 #include <iostream>
 #include "mgframework/mgframework.h"
-#include "mgframework/mgmovingobject.h"
 
 
 Project2Server::Project2Server()

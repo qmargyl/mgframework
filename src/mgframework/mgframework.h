@@ -1,10 +1,6 @@
 #ifndef _MG_FRAMEWORK_H
 #define _MG_FRAMEWORK_H
 
-// SDL
-#include <SDL/SDL.h>
-
-// MGF header files
 #include "mgcomponent.h"
 #include "mgwindow.h"
 #include "mgmap.h"

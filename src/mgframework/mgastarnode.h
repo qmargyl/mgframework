@@ -70,16 +70,6 @@ class MGAStarNode
 		void setH(double h){ m_H = h; }
 		
 		// Under-estimate the remaining path length from @this to @node
-		/*
-		double heuristic(const MGAStarNode &node)
-		{
-			// Pythagorean Theorem
-			int dx = getX() - node.getX();
-			int dy = getY() - node.getY();
-			return std::sqrt((double)(dx*dx+dy*dy));
-		}
-		*/
-
 		double heuristic(const MGAStarNode &node)
 		{
 			// Actual distance when there are no obstacles between start and goal

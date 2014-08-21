@@ -2,7 +2,6 @@
 #include <iostream>
 #include <algorithm> 
 #include "mgframework/mgframework.h"
-#include "mgframework/mgmovingobject.h"
 
 Project2::Project2()
 {

@@ -1,8 +1,5 @@
 #include "mgframework.h"
 #include "mgperiodicevent.h"
-#include <SDL/SDL.h>
-
-
 
 
 MGPeriodicEvent::MGPeriodicEvent()
