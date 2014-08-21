@@ -2,136 +2,102 @@
 #include "project2_server.h"
 #include "mgframework/mgframework.h"
 #include "mgframework/mgclasstester.h"
-
-using std::string;
+#include <string>
 
 int main(int argc, char **argv)
 {
-	MGFramework* p2=0;
+	MGFramework* p2 = 0;
 
 	eMGFInstanceType instanceType = MGFSINGLEPLAYERINSTANCE;
 	bool loggingOn = false;
-	bool scriptFile = false;
-	bool logEval = false;
 	bool logEvalNegative = false;
-	bool logCompare = false;
 	bool noRandom = false;
 	bool classTest = false;
-	char scriptFileName[128] = "";
-	char logEvalFileName[128] = "";
-	char logCompareFileName[128] = "";
-	char classTestParam[128] = "";
+	std::string scriptFileName;
+	std::string logEvalFileName;
+	std::string logCompareFileName;
+	std::string classTestParam;
 
-	if(argc==1)
+	if(argc > 1)
 	{
-		// No parameters were given
-	}
-	else
-	{
-		for(int i=1; i<argc; i++)
+		for(int i = 1; i < argc; i++)
 		{
-			if(strcmp(argv[i], "-logging")==0)
+			if(std::string(argv[i]) == std::string("-logging"))
 			{
 				loggingOn = true;
 			}
-			else if(strcmp(argv[i], "-help")==0)
-			{
-				std::cout << std::endl << argv[0] << " supports the following parameters:" << std::endl;
-				std::cout << "-logging" << std::endl;
-				std::cout << " Enables debug logging to console." << std::endl;
-
-				goto EXIT_MAIN_RIGHT_AWAY;
-			}
-			else if(strcmp(argv[i], "-server")==0)
+			else if(std::string(argv[i]) == std::string("-server"))
 			{
 				instanceType = MGFSERVERINSTANCE;
 			}
-			else if(strcmp(argv[i], "-client")==0)
+			else if(std::string(argv[i]) == std::string("-client"))
 			{
 				instanceType = MGFCLIENTINSTANCE;
 			}
-			else if(strcmp(argv[i], "-script")==0)
+			else if(std::string(argv[i]) == std::string("-script"))
 			{
-				if(i+1 == argc)
+				if(i + 1 == argc)
 				{
-					//No parameter after -script
 					goto EXIT_MAIN_RIGHT_AWAY;
 				}
 				else
 				{
-					//Store argv[++i] as script file name..
-					strcpy(scriptFileName, argv[++i]);
-					scriptFile = true;
+					scriptFileName = std::string(argv[++i]);
 				}
 			}
-			else if(strcmp(argv[i], "-log_eval")==0)
+			else if(std::string(argv[i]) == std::string("-log_eval"))
 			{
-				if(i+1 == argc)
+				if(i + 1 == argc)
 				{
-					//No parameter after -log_eval
 					goto EXIT_MAIN_RIGHT_AWAY;
 				}
 				else
 				{
-					//Store argv[++i] as script file name..
-					strcpy(logEvalFileName, argv[++i]);
-					logEval = true;
+					logEvalFileName = std::string(argv[++i]);
 					instanceType = MGFSERVERINSTANCE;
 				}
 			}
-			else if(strcmp(argv[i], "-log_eval_negative")==0)
+			else if(std::string(argv[i]) == std::string("-log_eval_negative"))
 			{
-				if(i+1 == argc)
+				if(i + 1 == argc)
 				{
-					//No parameter after -log_eval_negative
 					goto EXIT_MAIN_RIGHT_AWAY;
 				}
 				else
 				{
-					//Store argv[++i] as script file name..
-					strcpy(logEvalFileName, argv[++i]);
-					logEval = true;
+					logEvalFileName = std::string(argv[++i]);
 					logEvalNegative = true;
 					instanceType = MGFSERVERINSTANCE;
 				}
 			}
-			else if(strcmp(argv[i], "-log_compare")==0)
+			else if(std::string(argv[i]) == std::string("-log_compare"))
 			{
-				if(i+1 == argc)
+				if(i + 1 == argc)
 				{
-					//No parameter after -log_eval
 					goto EXIT_MAIN_RIGHT_AWAY;
 				}
 				else
 				{
-					//Store argv[++i] as script file name..
-					strcpy(logCompareFileName, argv[++i]);
-					logCompare = true;
+					logCompareFileName = std::string(argv[++i]);
 					instanceType = MGFSERVERINSTANCE;
 				}
 			}
-			else if(strcmp(argv[i], "-no_random")==0)
+			else if(std::string(argv[i]) == std::string("-no_random"))
 			{
 				noRandom = true;
 			}
-			else if(strcmp(argv[i], "-classtest")==0)
+			else if(std::string(argv[i]) == std::string("-classtest"))
 			{
-				if(i+1 == argc)
+				if(i + 1 == argc)
 				{
-					//No parameter after -classtest
-					strcpy(classTestParam, "all");
+					classTestParam = std::string("all");
 				}
 				else
 				{
 					// NOT IMPLEMENTED YET
-					//Store argv[++i] as classtest param..
-					strcpy(classTestParam, argv[++i]);
+					classTestParam = std::string(argv[++i]);
 				}
 				classTest = true;
-			}
-			else
-			{
-				// Unknown parameter.
 			}
 		}
 	}
@@ -146,39 +112,46 @@ int main(int argc, char **argv)
 
 
 	// Create and initialize the framework...
-
-	if(instanceType==MGFSINGLEPLAYERINSTANCE)
+	switch(instanceType)
 	{
-		p2 = new Project2();
-		p2->setWindowProperties(MGWindow_RES_800_600, 32, false, 
-			string("Project2 (single player test application) based on MGF ") + string(p2->getMGFrameworkVersion()));
-	}
-	else if(instanceType==MGFCLIENTINSTANCE)
-	{
-		// Add separate class later...
-		p2 = new Project2();
-		p2->setWindowProperties(640, 480, 32, false, 
-			string("Project2 (client test application) based on MGF ") + string(p2->getMGFrameworkVersion()));
-	}
-	else if(instanceType==MGFSERVERINSTANCE)
-	{
-		p2 = new Project2Server();
-		p2->setWindowProperties(800, 600, 32, false, 
-			string("Project2 (server test application) based on MGF ") + string(p2->getMGFrameworkVersion()));
+		case MGFSINGLEPLAYERINSTANCE:
+		{
+			p2 = new Project2();
+			p2->setWindowProperties(MGWindow_RES_800_600, 32, false, 
+				std::string("Project2 (single player test application) based on MGF ") + 
+							std::string(p2->getMGFrameworkVersion()));
+			break;
+		}
+		case MGFCLIENTINSTANCE:
+		{
+			p2 = new Project2();
+			p2->setWindowProperties(640, 480, 32, false, 
+				std::string("Project2 (client test application) based on MGF ") + 
+							std::string(p2->getMGFrameworkVersion()));
+			break;
+		}
+		case MGFSERVERINSTANCE:
+		{
+			p2 = new Project2Server();
+			p2->setWindowProperties(800, 600, 32, false, 
+				std::string("Project2 (server test application) based on MGF ") + 
+							std::string(p2->getMGFrameworkVersion()));
+			break;
+		}
 	}
 
 	if(loggingOn) p2->enableLogging();
 
-	if(logEval)
+	if(logEvalFileName != std::string(""))
 	{
 		// In case of using the framework for log evaluation, don't init and run.
 		// Create filtered logs first, then run evaluation..
-		p2->logFilter(logEvalFileName);
-		p2->logEval(logEvalFileName, logEvalNegative);
-		if(logCompare)
+		p2->logFilter(logEvalFileName.c_str());
+		MGClassTester::logEval(logEvalFileName.c_str(), logEvalNegative);
+		if(logCompareFileName != std::string(""))
 		{
 			// Compares logEvalFileName.filtered to logCompareFileName 
-			p2->logCompare(logEvalFileName, logCompareFileName);
+			p2->logCompare(logEvalFileName.c_str(), logCompareFileName.c_str());
 		}
 	}
 	else if(p2->windowPropertiesSet())
@@ -186,13 +159,13 @@ int main(int argc, char **argv)
 		// If initialization is ok, run the framework...
 		if(p2->init(128, 128, 32, 32))
 		{
-			if(scriptFile)
+			if(scriptFileName != std::string(""))
 			{
 				if(noRandom)
 				{
 					p2->randomize(666);
 				}
-				p2->run(scriptFileName);
+				p2->run(scriptFileName.c_str());
 			}
 			else
 			{

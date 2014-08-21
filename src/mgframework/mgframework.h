@@ -402,9 +402,6 @@ class MGFramework :public MGComponent
 		// Parsing script files containing mgf commands
 		int parse(const char *sFileName);
 
-		// Evaluating log files to PASS/FAIL
-		void logEval(const char *logFileName, bool negativeTest = false);
-
 		// Filtering log files
 		std::string filterLine(const char* line);
 		void logFilter(const char *logFileName);

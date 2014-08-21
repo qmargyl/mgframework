@@ -1,0 +1,1 @@
+This directory is used by GNU Make when building class tests for Linux

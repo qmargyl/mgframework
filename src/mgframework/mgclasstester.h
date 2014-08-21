@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#define MGCLASSTESTER_LOGLINE_MAXLENGTH 1024
+
 #define ASSERT_NOT_EQUAL(x, y, msg)	do{ \
 		if(x != y){ \
 			std::cout << "[ASSERT] " << __FILE__ << ":" << __LINE__ << " MSG: " << msg << ", " << x << ", " << y << std::endl; \
@@ -39,6 +41,8 @@ public:
 		RUNTEST(test_MGPathGenerator_calculatePathAStar);
 		FINISH_TESTSUITE();
 	}
+
+	static void logEval(const char *logFileName, bool negativeTest);
 };
 
 #endif
