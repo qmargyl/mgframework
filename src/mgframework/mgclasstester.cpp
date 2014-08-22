@@ -1,5 +1,7 @@
 #include "mgclasstester.h"
+#include <iostream>
 #include <vector>
+#include <string>
 #include <cstring>
 #include <cstdio>
 
@@ -126,11 +128,11 @@ void MGClassTester::logEval(const char *logFileName, bool negativeTest)
 			{
 				if(negativeTest)
 				{
-					std::cout << "<font color=purple>" << errors[i] << "</font><br>" << std::endl;
+					std::cout << "<font color=purple>" << errors[i].c_str() << "</font><br>" << std::endl;
 				}
 				else
 				{
-					std::cout << "<font color=red>" << errors[i] << "</font><br>" << std::endl;
+					std::cout << "<font color=red>" << errors[i].c_str() << "</font><br>" << std::endl;
 				}
 			}
 		}

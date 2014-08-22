@@ -16,8 +16,12 @@
 #define MGF_MOPOSITIONINGATTEMPTS	100
 #define MGF_SOPOSITIONINGATTEMPTS	100
 
-
-enum eMGComponentConsoleCommand : unsigned int {
+#ifndef UNITTEST_LINUX
+enum eMGComponentConsoleCommand 
+#else
+enum eMGComponentConsoleCommand : unsigned int
+#endif
+{
 	MGComponent_UNDEFINED = 0,
 
 	//MGFramework basic commands

@@ -45,7 +45,11 @@
 
 typedef unsigned short      WORD;
 
+#ifndef UNITTEST_LINUX
+enum eMGComponentConsoleCommand;
+#else
 enum eMGComponentConsoleCommand : unsigned int;
+#endif
 
 enum eMGFInstanceType{
 	MGFSERVERINSTANCE = 0,
