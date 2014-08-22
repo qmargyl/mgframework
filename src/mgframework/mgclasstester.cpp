@@ -140,3 +140,189 @@ void MGClassTester::logEval(const char *logFileName, bool negativeTest)
 		}
 	}
 }
+
+
+void MGClassTester::logFilter(const char *logFileName)
+{
+	FILE *logf = NULL;
+	FILE *filteredlf = NULL;
+	std::string filteredFN = std::string(logFileName) + std::string(".filtered");
+	
+	errno_t logError = fopen_s(&logf, logFileName, "rt");
+	if(logf == NULL)
+	{
+		std::cout << "ERROR: logFilter failed to open log file " << logFileName << ", error(" << logError << ")" << std::endl;
+		return;
+	}
+	logError = fopen_s(&filteredlf, filteredFN.c_str(), "w");
+	if(filteredlf == NULL)
+	{
+		std::cout << "ERROR: logFilter failed to open log file " << filteredFN.c_str() << ", error(" << logError << ")" << std::endl;
+		return;
+	}
+
+	std::cout << "Filtering " << logFileName << " ... ";
+	char logLine[MGCLASSTESTER_LOGLINE_MAXLENGTH] = "";
+	char *neof = NULL;
+
+	while(true)
+	{
+		// Read until new line or end of file, whichever happens first..
+		neof = fgets(logLine, MGCLASSTESTER_LOGLINE_MAXLENGTH, logf);
+		if(neof == NULL)
+		{
+			break;
+		}
+		else
+		{
+			std::string line(logLine);
+			std::string infoSubstr(" INFO: ");
+
+			std::size_t foundInfo = line.find(infoSubstr);
+
+			if (foundInfo != std::string::npos)
+			{
+				// Ignore all info prints - result should not depend on logging settings
+			}
+			else
+			{
+				fputs(filterLine(logLine).c_str(), filteredlf);
+			}
+		}
+	}
+
+
+	if(logf != NULL)
+	{
+		fclose(logf);
+	}
+
+	if(filteredlf != NULL)
+	{
+		fclose(filteredlf);
+	}
+
+	std::cout << "<b>DONE</b><br>" << std::endl;
+}
+
+
+void MGClassTester::logCompare(const char *logFileName1, const char *logFileName2)
+{
+	std::string filteredFN = std::string(logFileName1) + std::string(".filtered");
+	std::cout << "Expected " << filteredFN.c_str() << " ... <b>";
+
+	FILE *logf1 = NULL;
+	FILE *logf2 = NULL;
+	
+	errno_t logError = fopen_s(&logf1, filteredFN.c_str(), "rt");
+	if(logf1 == NULL)
+	{
+		std::cout << "ERROR: logCompare failed to open log file " << filteredFN.c_str() << ", error(" << logError << ")" << std::endl;
+		return;
+	}
+	logError = fopen_s(&logf2, logFileName2, "rt");
+	if(logf2 == NULL)
+	{
+		std::cout << "ERROR: logCompare failed to open log file " << logFileName2 << ", error(" << logError << ")" << std::endl;
+		return;
+	}
+
+	// ...
+
+	char logLine1[MGCLASSTESTER_LOGLINE_MAXLENGTH] = "";
+	char logLine2[MGCLASSTESTER_LOGLINE_MAXLENGTH] = "";
+	char *neof1 = NULL;
+	char *neof2 = NULL;
+	bool resultOk = true;
+
+	while(true)
+	{
+		// Read until new line or end of file, whichever happens first..
+		neof1 = fgets(logLine1, MGCLASSTESTER_LOGLINE_MAXLENGTH, logf1);
+		neof2 = fgets(logLine2, MGCLASSTESTER_LOGLINE_MAXLENGTH, logf2);
+		if(neof1 == NULL && neof2 == NULL)
+		{
+			break;
+		}
+		else if(neof1 == NULL || neof2 == NULL)
+		{
+			resultOk = false;
+			break;
+		}
+		else
+		{
+			if(std::string(logLine1) != std::string(logLine2))
+			{
+				resultOk = false;
+				std::cout << "<font color=red>DIFF: " << logLine1 << " - " << logLine2 << "</font>" << std::endl;
+				break;
+			}
+		}
+	}
+
+	if(logf1 != NULL)
+	{
+		fclose(logf1);
+	}
+
+	if(logf2 != NULL)
+	{
+		fclose(logf2);
+	}
+	if(resultOk)
+	{
+		std::cout << "<font color=green>PASS</font></b><br>" << std::endl;
+	}
+	else
+	{
+		std::cout << "<font color=red>FAIL</font></b><br>" << std::endl;
+	}
+}
+
+
+std::string MGClassTester::filterLine(const char* line)
+{
+	std::string lineRes("");
+	bool insideFilteredInt = false;
+	char c[2] = {0, 0};
+
+	for(unsigned int i=0; i < strlen(line); ++i)
+	{
+		if(line[i] >= '0' && line[i] <= '9')
+		{
+			if(i>0 && !insideFilteredInt && (line[i-1]=='[' || line[i-1]==':' || line[i-1]=='.'))
+			{
+				c[0]='X';
+				lineRes += std::string(c);
+				insideFilteredInt=true;
+			}
+			if(i>1 && !insideFilteredInt && line[i-1]==' ' && line[i-2]==':')
+			{
+				c[0]='X';
+				lineRes += std::string(c);
+				insideFilteredInt=true;
+			}
+			else if(insideFilteredInt)
+			{
+				// do nothing..
+			}
+			else
+			{
+				c[0]=line[i];
+				lineRes += std::string(c);
+				insideFilteredInt=false;
+			}
+		}
+		else if(line[i] == '.' && insideFilteredInt)
+		{
+			// do nothing..
+		}
+		else
+		{
+			c[0]=line[i];
+			lineRes += std::string(c);
+			insideFilteredInt=false;
+		}
+	}
+	return lineRes;
+}

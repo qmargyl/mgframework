@@ -13,7 +13,6 @@
 
 // Configurable defines...
 #define MGF_SCRIPTLINE_MAXLENGTH	256
-#define MGF_LOGLINE_MAXLENGTH		1024
 #define MGF_MOPOSITIONINGATTEMPTS	100
 #define MGF_SOPOSITIONINGATTEMPTS	100
 
@@ -401,13 +400,6 @@ class MGFramework :public MGComponent
 
 		// Parsing script files containing mgf commands
 		int parse(const char *sFileName);
-
-		// Filtering log files
-		std::string filterLine(const char* line);
-		void logFilter(const char *logFileName);
-
-		// Comparing log files
-		void logCompare(const char *logFileName1, const char *logFileName2);
 
 		// Test coverage related
 		void registerUsedCommand(eMGComponentConsoleCommand c, int returnValue = 0)

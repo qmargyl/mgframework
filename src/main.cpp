@@ -146,12 +146,12 @@ int main(int argc, char **argv)
 	{
 		// In case of using the framework for log evaluation, don't init and run.
 		// Create filtered logs first, then run evaluation..
-		p2->logFilter(logEvalFileName.c_str());
+		MGClassTester::logFilter(logEvalFileName.c_str());
 		MGClassTester::logEval(logEvalFileName.c_str(), logEvalNegative);
 		if(logCompareFileName != std::string(""))
 		{
 			// Compares logEvalFileName.filtered to logCompareFileName 
-			p2->logCompare(logEvalFileName.c_str(), logCompareFileName.c_str());
+			MGClassTester::logCompare(logEvalFileName.c_str(), logCompareFileName.c_str());
 		}
 	}
 	else if(p2->windowPropertiesSet())

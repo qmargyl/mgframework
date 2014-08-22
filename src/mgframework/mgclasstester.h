@@ -42,7 +42,11 @@ public:
 		FINISH_TESTSUITE();
 	}
 
+	// Log filtering/comparing/evaluation
 	static void logEval(const char *logFileName, bool negativeTest);
+	static std::string filterLine(const char* line);
+	static void logFilter(const char *logFileName);
+	static void logCompare(const char *logFileName1, const char *logFileName2);
 };
 
 #endif
