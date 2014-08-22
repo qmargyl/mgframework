@@ -1,11 +1,12 @@
 #include "mgclasstester.h"
 #include <vector>
-#include <string>
+#include <cstring>
+#include <cstdio>
 
 void MGClassTester::logEval(const char *logFileName, bool negativeTest)
 {
 	FILE *lf = NULL;
-	errno_t logError = fopen_s(&lf, logFileName, "rt");
+	int logError = fopen_s(&lf, logFileName, "rt");
 
 	int nErrors = 0;
 	int nWarnings = 0;
@@ -148,7 +149,7 @@ void MGClassTester::logFilter(const char *logFileName)
 	FILE *filteredlf = NULL;
 	std::string filteredFN = std::string(logFileName) + std::string(".filtered");
 	
-	errno_t logError = fopen_s(&logf, logFileName, "rt");
+	int logError = fopen_s(&logf, logFileName, "rt");
 	if(logf == NULL)
 	{
 		std::cout << "ERROR: logFilter failed to open log file " << logFileName << ", error(" << logError << ")" << std::endl;
@@ -214,7 +215,7 @@ void MGClassTester::logCompare(const char *logFileName1, const char *logFileName
 	FILE *logf1 = NULL;
 	FILE *logf2 = NULL;
 	
-	errno_t logError = fopen_s(&logf1, filteredFN.c_str(), "rt");
+	int logError = fopen_s(&logf1, filteredFN.c_str(), "rt");
 	if(logf1 == NULL)
 	{
 		std::cout << "ERROR: logCompare failed to open log file " << filteredFN.c_str() << ", error(" << logError << ")" << std::endl;

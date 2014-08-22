@@ -12,10 +12,17 @@
 		} \
 	} while(0)
 
-#define RUNTEST(f) do{ \
+#ifndef UNITTEST_LINUX
+  #define RUNTEST(f) do{ \
 		std::cout << "[TC] " << #f << std::endl; \
 		f ## (); \
 	} while(0)
+#else
+  #define RUNTEST(f) do{ \
+		std::cout << "[TC] " << #f << std::endl; \
+		f(); \
+	} while(0)
+#endif
 
 #define FINISH_TESTSUITE() do{ \
 		std::cout << "Exiting application..." << std::endl; \

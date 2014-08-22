@@ -17,7 +17,7 @@
 #define MGF_SOPOSITIONINGATTEMPTS	100
 
 
-enum eMGComponentConsoleCommand{
+enum eMGComponentConsoleCommand : unsigned int {
 	MGComponent_UNDEFINED = 0,
 
 	//MGFramework basic commands
@@ -179,7 +179,9 @@ class MGFramework :public MGComponent
 		int m_NSO; // Number of Stationary Objects
 
 		//Socket terminal related.
+#ifndef UNITTEST_LINUX
 		SDL_Thread *m_SocketTerminal;
+#endif
 		bool m_KeepSocketTerminalOpen;
 		int m_Port;
 
@@ -313,7 +315,9 @@ class MGFramework :public MGComponent
 
 
 		// Event related
+#ifndef UNITTEST_LINUX
 		unsigned int m_Keys[SDLK_LAST];	// Stores keys that are pressed
+#endif
 		virtual bool processEvents();
 
 		// Force a derived sub-class to implement this as it is not framework related.
@@ -334,8 +338,11 @@ class MGFramework :public MGComponent
 
 
 		// Graphics related, based on SDL
+#ifndef UNITTEST_LINUX
+		// TODO: Shouldn't these be moved to MGWindow??????
 		void drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY);
 		void drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
+#endif
 
 		// Controlling game speed and execution
 		inline unsigned int getFPS();

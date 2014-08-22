@@ -3,12 +3,14 @@
 
 #include "mgcomponent.h"
 
+#ifndef UNITTEST_LINUX
 // SDL
-#include <SDL/SDL.h>
-#include <SDL/SDL_thread.h>
+  #include <SDL/SDL.h>
+  #include <SDL/SDL_thread.h>
 
-#ifndef MGF_DISABLE_TTF
-	#include "SDL_ttf.h"
+  #ifndef MGF_DISABLE_TTF
+    #include "SDL_ttf.h"
+  #endif
 #endif
 
 using std::string;
@@ -32,12 +34,13 @@ class MGWindow :public MGComponent
 		bool m_Fullscreen;
 		string m_Title;
 		int m_Flags;
+#ifndef UNITTEST_LINUX
 		SDL_Surface * m_Screen;
 		// Font
-#ifndef MGF_DISABLE_TTF
+  #ifndef MGF_DISABLE_TTF
 		TTF_Font* m_Font;
+  #endif
 #endif
-
 		void setFlags(int flags){ m_Flags = flags; }
 		int getFlags(){ return m_Flags; }
 			
@@ -57,10 +60,9 @@ class MGWindow :public MGComponent
 
 		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
-
+#ifndef UNITTEST_LINUX
 		SDL_Surface *getSurface();
 		void flipSurface();
-
 		void drawSprite(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		SDL_Surface *loadBMPImage( std::string filename );
 		void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
@@ -70,6 +72,8 @@ class MGWindow :public MGComponent
 		void drawFillCircle32(int cx, int cy, int radius, Uint32 pixel);
 		void vLine32(int x, int y, int length, Uint32 pixel);
 		void hLine32(int x, int y, int length, Uint32 pixel);
+#endif
+
 };
 
 

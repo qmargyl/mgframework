@@ -1,5 +1,7 @@
+#ifndef UNITTEST_LINUX
 #include "project2.h"
 #include "project2_server.h"
+#endif
 #include "mgframework/mgframework.h"
 #include "mgframework/mgclasstester.h"
 #include <string>
@@ -110,7 +112,7 @@ int main(int argc, char **argv)
 		goto EXIT_MAIN_RIGHT_AWAY;
 	}
 
-
+#ifndef UNITTEST_LINUX
 	// Create and initialize the framework...
 	switch(instanceType)
 	{
@@ -142,6 +144,8 @@ int main(int argc, char **argv)
 
 	if(loggingOn) p2->enableLogging();
 
+#endif
+
 	if(logEvalFileName != std::string(""))
 	{
 		// In case of using the framework for log evaluation, don't init and run.
@@ -154,6 +158,7 @@ int main(int argc, char **argv)
 			MGClassTester::logCompare(logEvalFileName.c_str(), logCompareFileName.c_str());
 		}
 	}
+#ifndef UNITTEST_LINUX
 	else if(p2->windowPropertiesSet())
 	{
 		// If initialization is ok, run the framework...
@@ -177,6 +182,7 @@ int main(int argc, char **argv)
 
 		}
 	}
+#endif
 	else 
 	{
 
