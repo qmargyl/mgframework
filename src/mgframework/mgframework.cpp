@@ -210,30 +210,26 @@ bool MGFramework::processEvents()
 					{
 						for(int y=std::min(startClickY, endClickY); y<=std::max(startClickY, endClickY); y++)
 						{
-							for(int i=0; i<getNumberOfMO(); i++)
+							for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 							{
-								if(m_MO != NULL && m_MO[i].getTileX() == x && m_MO[i].getTileY() == y)
+								if((*it).getTileX() == x && (*it).getTileY() == y)
 								{
-									if(!m_MO[i].isMarked())
+									if(!(*it).isMarked())
 									{
 										if(featureOnlySelectOwnedMOEnabled())
 										{
-											if(m_MO[i].getOwner() == getClientPlayer())
+											if((*it).getOwner() == getClientPlayer())
 											{
-												m_MO[i].mark();
+												(*it).mark();
 												countMark();
 											}
 										}
 										else
 										{
-											m_MO[i].mark();
+											(*it).mark();
 											countMark();
 										}
 									}
-								}
-								if(m_MO == NULL)
-								{
-									MGFLOG_WARNING("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
 								}
 							}
 						}
@@ -243,7 +239,7 @@ bool MGFramework::processEvents()
 				else if (((int) event.button.button) == 3)
 				{
 					// Order marked MOs to go to mouse location
-					if(getNumberOfMarkedMO()>0)
+					if(getNumberOfMarkedMO() > 0)
 					{
 						int iClick = m_Map.getTileIndex(event.button.x, event.button.y);
 						if(iClick >= 0)
@@ -737,9 +733,9 @@ void MGFramework::handleMGFGameLogics()
 	}
 
 	// Update all moving objects
-	for(int i = getNumberOfMO(); i--;)//for(int i=0;i<getNumberOfMO();i++)
+	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)//for(int i=0;i<getNumberOfMO();i++)
 	{
-		m_MO[i].update(this);
+		(*it).update(this);
 	}
 
 	// Example of how FPS can be controlled dynamically
@@ -939,11 +935,18 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				// Delete only MOs connected to a specific owner
 				MGFLOG_INFO("Deleting MOs owned by " << owner);
-				for(int i = getNumberOfMO() - 1; i >= 0; --i)
+				for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); )
 				{
-					if(m_MO[i].getOwner() == owner)
+					if((*it).getOwner() == owner)
 					{
-						deleteMO(i);
+						m_Map.unOccupy((*it).getTileX(), (*it).getTileY());
+						if(isSelectiveTileRenderingActive()) m_Map.markForRendering((*it).getTileX(), (*it).getTileY());
+						setRenderAllTiles();
+						m_MO.erase(it);
+					}
+					else
+					{
+						it++;
 					}
 				}
 			}
@@ -1728,16 +1731,12 @@ bool MGFramework::setWindowProperties(eMGWindowScreenResolution screenResolution
 void MGFramework::deleteAllMO()
 {
 	// Since all MO are deleted we can unoccupy all their tiles..
-	for(int i = getNumberOfMO(); i--;)//for(int i = 0; i < getNumberOfMO(); ++i)
+	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 	{
-		m_Map.unOccupy(m_MO[i].getTileX(), m_MO[i].getTileY());
-		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_MO[i].getTileX(), m_MO[i].getTileY());
-		m_MO[i].disableHistory();
+		m_Map.unOccupy((*it).getTileX(), (*it).getTileY());
+		if(isSelectiveTileRenderingActive()) m_Map.markForRendering((*it).getTileX(), (*it).getTileY());
 	}
-
-	if(m_MO) delete[] m_MO;
-	m_MO = NULL;
-	m_NMO = 0;
+	m_MO.clear();
 	m_MarkedMOs = 0;
 	// Make sure tiles are re-rendered after deleting MOs
 	setRenderAllTiles();
@@ -1782,23 +1781,8 @@ int MGFramework::addMO(int n)
 
 void MGFramework::deleteMO(int index)
 {
-	if(index < 0 || index >= getNumberOfMO())
-	{
-		MGFLOG_ERROR("MGFramework::deleteMO was given a bad index: " << index)
-	}
-	else
-	{
-		m_Map.unOccupy(m_MO[index].getTileX(), m_MO[index].getTileY());
-		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_MO[index].getTileX(), m_MO[index].getTileY());
-
-		for(int i=index; i<getNumberOfMO()-1; ++i)
-		{
-			m_MO[i].copy(&m_MO[i+1]);
-		}
-		//No need to actually delete the MO since we will not access it if it's outside getNumberOfMO()...
-		m_MO[getNumberOfMO()-1].disableHistory();
-		m_NMO = getNumberOfMO()-1;
-	}
+	m_Map.unOccupy(m_MO[index].getTileX(), m_MO[index].getTileY());
+	if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_MO[index].getTileX(), m_MO[index].getTileY());
 	// Make sure tiles are re-rendered after deleting MOs
 	setRenderAllTiles();
 }
