@@ -2,6 +2,7 @@
 #define _MG_CLASSTESTER_H
 
 #include <iostream>
+#include <string>
 
 #define MGCLASSTESTER_LOGLINE_MAXLENGTH 1024
 
@@ -50,10 +51,10 @@ public:
 	}
 
 	// Log filtering/comparing/evaluation
-	static void logEval(const char *logFileName, bool negativeTest);
+	static void logEval(std::string logFileName, bool negativeTest);
 	static std::string filterLine(const char* line);
-	static void logFilter(const char *logFileName);
-	static void logCompare(const char *logFileName1, const char *logFileName2);
+	static void logFilter(std::string logFileName);
+	static void logCompare(std::string logFileName1, std::string logFileName2);
 };
 
 #endif

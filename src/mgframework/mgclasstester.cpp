@@ -5,9 +5,9 @@
 #include <cstring>
 #include <cstdio>
 
-void MGClassTester::logEval(const char *logFileName, bool negativeTest)
+void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 {
-	FILE *lf = fopen(logFileName, "rt");
+	FILE *lf = fopen(logFileName.c_str(), "rt");
 
 	int nErrors = 0;
 	int nWarnings = 0;
@@ -142,11 +142,11 @@ void MGClassTester::logEval(const char *logFileName, bool negativeTest)
 }
 
 
-void MGClassTester::logFilter(const char *logFileName)
+void MGClassTester::logFilter(std::string logFileName)
 {
 	std::string filteredFN = std::string(logFileName) + std::string(".filtered");
 	
-	FILE *logf = fopen(logFileName, "rt");
+	FILE *logf = fopen(logFileName.c_str(), "rt");
 	if(logf == NULL)
 	{
 		std::cout << "ERROR: logFilter failed to open log file " << logFileName << std::endl;
@@ -204,7 +204,7 @@ void MGClassTester::logFilter(const char *logFileName)
 }
 
 
-void MGClassTester::logCompare(const char *logFileName1, const char *logFileName2)
+void MGClassTester::logCompare(std::string logFileName1, std::string logFileName2)
 {
 	std::string filteredFN = std::string(logFileName1) + std::string(".filtered");
 	std::cout << "Expected " << filteredFN.c_str() << " ... <b>";
@@ -215,7 +215,7 @@ void MGClassTester::logCompare(const char *logFileName1, const char *logFileName
 		std::cout << "ERROR: logCompare failed to open log file " << filteredFN.c_str() << std::endl;
 		return;
 	}
-	FILE *logf2 = fopen(logFileName2, "rt");
+	FILE *logf2 = fopen(logFileName2.c_str(), "rt");
 	if(logf2 == NULL)
 	{
 		std::cout << "ERROR: logCompare failed to open log file " << logFileName2 << std::endl;
