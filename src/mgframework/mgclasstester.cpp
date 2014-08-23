@@ -7,8 +7,7 @@
 
 void MGClassTester::logEval(const char *logFileName, bool negativeTest)
 {
-	FILE *lf = NULL;
-	int logError = fopen_s(&lf, logFileName, "rt");
+	FILE *lf = fopen(logFileName, "rt");
 
 	int nErrors = 0;
 	int nWarnings = 0;
@@ -22,7 +21,7 @@ void MGClassTester::logEval(const char *logFileName, bool negativeTest)
 
 	if(lf == NULL)
 	{
-		std::cout << "ERROR: logEval failed to open log file " << logFileName << ", error(" << logError << ")" << std::endl;
+		std::cout << "ERROR: logEval failed to open log file " << logFileName << std::endl;
 	}
 	else
 	{
@@ -81,8 +80,6 @@ void MGClassTester::logEval(const char *logFileName, bool negativeTest)
 					nAsserts++;
 					std::cout << "<br><font color=red>" << line.c_str() << "</font>" << std::endl;
 				}
-
-
 
 				std::string exetimeSubstr("Execution time: ");
 				std::size_t foundExecutionTime = line.find(exetimeSubstr);
@@ -147,20 +144,18 @@ void MGClassTester::logEval(const char *logFileName, bool negativeTest)
 
 void MGClassTester::logFilter(const char *logFileName)
 {
-	FILE *logf = NULL;
-	FILE *filteredlf = NULL;
 	std::string filteredFN = std::string(logFileName) + std::string(".filtered");
 	
-	int logError = fopen_s(&logf, logFileName, "rt");
+	FILE *logf = fopen(logFileName, "rt");
 	if(logf == NULL)
 	{
-		std::cout << "ERROR: logFilter failed to open log file " << logFileName << ", error(" << logError << ")" << std::endl;
+		std::cout << "ERROR: logFilter failed to open log file " << logFileName << std::endl;
 		return;
 	}
-	logError = fopen_s(&filteredlf, filteredFN.c_str(), "w");
+	FILE *filteredlf = fopen(filteredFN.c_str(), "w");
 	if(filteredlf == NULL)
 	{
-		std::cout << "ERROR: logFilter failed to open log file " << filteredFN.c_str() << ", error(" << logError << ")" << std::endl;
+		std::cout << "ERROR: logFilter failed to open log file " << filteredFN.c_str() << std::endl;
 		return;
 	}
 
@@ -214,23 +209,18 @@ void MGClassTester::logCompare(const char *logFileName1, const char *logFileName
 	std::string filteredFN = std::string(logFileName1) + std::string(".filtered");
 	std::cout << "Expected " << filteredFN.c_str() << " ... <b>";
 
-	FILE *logf1 = NULL;
-	FILE *logf2 = NULL;
-	
-	int logError = fopen_s(&logf1, filteredFN.c_str(), "rt");
+	FILE *logf1 = fopen(filteredFN.c_str(), "rt");
 	if(logf1 == NULL)
 	{
-		std::cout << "ERROR: logCompare failed to open log file " << filteredFN.c_str() << ", error(" << logError << ")" << std::endl;
+		std::cout << "ERROR: logCompare failed to open log file " << filteredFN.c_str() << std::endl;
 		return;
 	}
-	logError = fopen_s(&logf2, logFileName2, "rt");
+	FILE *logf2 = fopen(logFileName2, "rt");
 	if(logf2 == NULL)
 	{
-		std::cout << "ERROR: logCompare failed to open log file " << logFileName2 << ", error(" << logError << ")" << std::endl;
+		std::cout << "ERROR: logCompare failed to open log file " << logFileName2 << std::endl;
 		return;
 	}
-
-	// ...
 
 	char logLine1[MGCLASSTESTER_LOGLINE_MAXLENGTH] = "";
 	char logLine2[MGCLASSTESTER_LOGLINE_MAXLENGTH] = "";
