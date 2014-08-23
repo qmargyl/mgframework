@@ -19,10 +19,8 @@
 
 
 MGFramework::MGFramework():
-	m_NMO(0),
 	m_NPE(0),
 	m_NSO(0),
-	m_MO(NULL),
 	m_PE(NULL),
 	m_SO(NULL),
 	m_SymbolTable(NULL),
@@ -41,9 +39,6 @@ MGFramework::MGFramework():
 	m_Quit(false),
 	m_DelayTime(0),
 	m_InputEnabled(true),
-//#ifndef MGF_DISABLE_TTF
-//	m_Font(0),
-//#endif
 	m_DynamicFPSEnabled(true),
 	m_Port(0),
 	m_CommandReturnVal(0),
@@ -80,8 +75,6 @@ MGFramework::MGFramework():
 
 MGFramework::~MGFramework()
 {
-	if(m_MO) delete[] m_MO;
-	m_MO = NULL;
 	if(m_PE) delete[] m_PE;
 	m_PE = NULL;
 	if(m_SO) delete[] m_SO;
@@ -154,17 +147,12 @@ bool MGFramework::processEvents()
 					{
 
 						// Unmark all MO..
-						for(int i=0; i<getNumberOfMO(); i++)
-						//for(int i = getNumberOfMO(); i--;)
+						for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 						{
-							if(m_MO != NULL && m_MO[i].isMarked())
+							if((*it).isMarked())
 							{
-								m_MO[i].unMark();
+								(*it).unMark();
 								countUnMark();
-							}
-							if(m_MO == NULL)
-							{
-								MGFLOG_WARNING("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
 							}
 						}
 
@@ -181,7 +169,12 @@ bool MGFramework::processEvents()
 						}
 						else if(featureCenterOnMO() && (getNumberOfMO() > centerMOIndex()) )
 						{
-							m_MO[centerMOIndex()].setPath(m_Map.calculatePath(MGFBASICPATH1, m_MO[centerMOIndex()].getTileX(), m_MO[centerMOIndex()].getTileY(), xClick, yClick));
+							std::list<MGMovingObject>::iterator it = m_MO.begin();
+							for(unsigned int i = 0; i < centerMOIndex(); i++)
+							{
+								it++;
+							}
+							(*it).setPath(m_Map.calculatePath(MGFBASICPATH1, (*it).getTileX(), (*it).getTileY(), xClick, yClick));
 						}
 					}
 

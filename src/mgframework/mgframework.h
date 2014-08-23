@@ -173,8 +173,7 @@ class MGFramework :public MGComponent
 		int m_FrameNumber;
 
 		//MO related
-		int m_NMO; // Number of Moving Objects
-		int m_MarkedMOs;
+		unsigned int m_MarkedMOs;
 
 		//PE related
 		int m_NPE; // Number of Periodic Events
@@ -213,11 +212,11 @@ class MGFramework :public MGComponent
 		inline void increaseDrawnTilesCounter(){ ++m_NDrawnTiles; }
 
 		// Center on MO
-		int m_FeatureCenterOnMO;
+		unsigned int m_FeatureCenterOnMO;
 
 	protected:
 		MGWindow m_Window;				// The framework window
-		MGMovingObject *m_MO;			// Moving Objects
+		std::list<MGMovingObject> m_MO;
 		MGPeriodicEvent *m_PE;			// Periodic Events
 		MGStationaryObject *m_SO;		// Stationary Objects
 		MGSymbolTable *m_SymbolTable;	// Symbols
@@ -239,7 +238,7 @@ class MGFramework :public MGComponent
 
 // ***	// Feature Center on MO
 		bool featureCenterOnMO(){ return (m_FeatureCenterOnMO > -1); }
-		int centerMOIndex(){ return m_FeatureCenterOnMO; }
+		unsigned int centerMOIndex(){ return m_FeatureCenterOnMO; }
 		void enableFeatureCenterOnMO(int moindex = 0){ m_FeatureCenterOnMO = moindex; }
 		void disableFeatureCenterOnMO(){ m_FeatureCenterOnMO = -1; }
 
@@ -300,7 +299,7 @@ class MGFramework :public MGComponent
 		// MO related
 		void deleteAllMO();
 		int addMO(int n); // Returns index of first MO added or -1 if there was an error.
-		int getNumberOfMO(){ return std::max(m_NMO, 0); }
+		unsigned int getNumberOfMO(){ return (unsigned int)m_MO.size(); }
 		void deleteMO(int index);		// Deletes the MO with a specified index
 		bool setupMO(int i, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2);		// Setups the MO with a specified index
 

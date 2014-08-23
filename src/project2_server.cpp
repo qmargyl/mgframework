@@ -53,17 +53,17 @@ void Project2Server::handleGameLogics()
 		if(m_PE[0].update())
 		{
 			// Set all moving objects destination coordinate.
-			for(int i=0;i<getNumberOfMO();i++)
+			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 			{
-				m_MO[i].setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
+				(*it).setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
 			}
 		}
 	}
 
 	// Update all moving objects
-	for(int i=0;i<getNumberOfMO();i++)
+	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 	{
-		m_MO[i].update(this);
+		(*it).update(this);
 	}
 
 }

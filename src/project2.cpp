@@ -101,33 +101,30 @@ void Project2::draw()
 
 		// Draw all moving objects...
 		int oX,oY;
-		for(int i = getNumberOfMO(); i--;)//for(int i=0;i<getNumberOfMO();i++)
+		for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 		{
-			if(m_MO != NULL)
+			oX = (*it).getTileX() * m_Map.getTileWidth() + m_Map.getScrollX() + (*it).getXOffset();
+			oY = (*it).getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + (*it).getYOffset();
+			// Only draw visible moving objects...
+			if(detectCollisionRectangle(oX, oY, oX + m_Map.getTileWidth(), oY + m_Map.getTileHeight(), 0, 0, m_Window.getWidth(), m_Window.getHeight()))
 			{
-				oX=m_MO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX()+m_MO[i].getXOffset();
-				oY=m_MO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + m_MO[i].getYOffset();
-				// Only draw visible moving objects...
-				if(detectCollisionRectangle(oX, oY, oX+m_Map.getTileWidth(), oY+m_Map.getTileHeight(), 0, 0, m_Window.getWidth(), m_Window.getHeight()))
+				drawTile(m_MovingObject, 0, 0, oX, oY);
+				if(isSelectiveTileRenderingActive())
 				{
-					drawTile(m_MovingObject, 0, 0, oX, oY);
-					if(isSelectiveTileRenderingActive())
-					{
-						m_Map.markForRendering(m_MO[i].getTileX(), m_MO[i].getTileY());
-						m_Map.markForRendering(m_MO[i].getTileX()+1, m_MO[i].getTileY()+1);
-						m_Map.markForRendering(m_MO[i].getTileX()-1, m_MO[i].getTileY()-1);
-						m_Map.markForRendering(m_MO[i].getTileX()+1, m_MO[i].getTileY()-1);
-						m_Map.markForRendering(m_MO[i].getTileX()-1, m_MO[i].getTileY()+1);
-						m_Map.markForRendering(m_MO[i].getTileX()+1, m_MO[i].getTileY());
-						m_Map.markForRendering(m_MO[i].getTileX()-1, m_MO[i].getTileY());
-						m_Map.markForRendering(m_MO[i].getTileX(), m_MO[i].getTileY()+1);
-						m_Map.markForRendering(m_MO[i].getTileX(), m_MO[i].getTileY()-1);
-					}
+					m_Map.markForRendering((*it).getTileX(), (*it).getTileY());
+					m_Map.markForRendering((*it).getTileX() + 1, (*it).getTileY() + 1);
+					m_Map.markForRendering((*it).getTileX() - 1, (*it).getTileY() - 1);
+					m_Map.markForRendering((*it).getTileX() + 1, (*it).getTileY() - 1);
+					m_Map.markForRendering((*it).getTileX() - 1, (*it).getTileY() + 1);
+					m_Map.markForRendering((*it).getTileX() + 1, (*it).getTileY());
+					m_Map.markForRendering((*it).getTileX() - 1, (*it).getTileY());
+					m_Map.markForRendering((*it).getTileX(), (*it).getTileY() + 1);
+					m_Map.markForRendering((*it).getTileX(), (*it).getTileY() - 1);
+				}
 
-					if(m_MO[i].isMarked())
-					{
-						drawTile(m_Mark, 0, 0, oX, oY);
-					}
+				if((*it).isMarked())
+				{
+					drawTile(m_Mark, 0, 0, oX, oY);
 				}
 			}
 		}
@@ -186,9 +183,9 @@ void Project2::draw()
 				}
 			}
 			// Draw all moving objects on the mini map..
-			for(int i = getNumberOfMO(); i--;)//for(int i=0;i<getNumberOfMO();i++)
+			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 			{
-				m_Window.putPixel32(m_MO[i].getTileX() + m_Window.getWidth() - m_Map.getWidth() - 16, m_MO[i].getTileY() + 16, 0x00FF0000);
+				m_Window.putPixel32((*it).getTileX() + m_Window.getWidth() - m_Map.getWidth() - 16, (*it).getTileY() + 16, 0x00FF0000);
 			}
 		}
 	}
