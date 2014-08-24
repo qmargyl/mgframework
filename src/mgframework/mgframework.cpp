@@ -1108,6 +1108,9 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					n = 0; // Abort MO creation..
 				}
 			}
+
+			std::list<MGMovingObject>::iterator it = m_MO.end();
+
 			if(n > 0)
 			{
 				addMO(n);
@@ -1118,18 +1121,14 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				return true;
 			}
 
-			if(m_MO != NULL)
+			// Loop from first new MO to the end.
+			for(; it != m_MO.end(); )
 			{
-				for(int i = nBefore; i < getNumberOfMO(); i++)
+				// If setup returns true we step iterator, otherwise erase has already stepped it
+				if(setupMO(it, x, y, owner, speed, x1, y1, x2, y2))
 				{
-					// If setup fails we must setup the same index again 
-					// since the failing MO has been deleted.
-					if(!setupMO(i, x, y, owner, speed, x1, y1, x2, y2)) --i;
+					it++;
 				}
-			}
-			else
-			{
-				MGFLOG_ERROR("MO storage is undefined");
 			}
 			return true;
 		}
@@ -1273,9 +1272,20 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		{
 			registerUsedCommand(MGComponent_MO_INT_X);
 			int moIndex=toInt(cmdvec[1], s);
-			if(m_MO != NULL && moIndex >= 0 && moIndex < getNumberOfMO())
+			if(moIndex >= 0 && moIndex < getNumberOfMO())
 			{
-				return m_MO[toInt(cmdvec[1], s)].runConsoleCommand(c, this, s);
+				int i = 0;
+				for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
+				{
+					if(i == toInt(cmdvec[1], s))
+					{
+						return (*it).runConsoleCommand(c, this, s);
+					}
+					else
+					{
+						i++;
+					}
+				}
 			}
 			if(m_MO == NULL)
 			{
@@ -1745,7 +1755,9 @@ void MGFramework::deleteAllMO()
 
 int MGFramework::addMO(int n)
 {
-	int tmpTotal = n + getNumberOfMO();
+	int nOld = getNumberOfMO();
+	int tmpTotal = n + nOld;
+
 	if(tmpTotal > m_Map.getWidth()*m_Map.getHeight())
 	{
 		MGFLOG_ERROR(	"MGFramework::addMO cannot create " << tmpTotal << " MO on a " 
@@ -1753,23 +1765,11 @@ int MGFramework::addMO(int n)
 		return -1;
 	}
 
-	MGMovingObject *oldMO = new MGMovingObject[getNumberOfMO()];
-	int nOld=getNumberOfMO();
-	for(int i=0; i<nOld; i++)
+	for(int i = 0; i < n; i++)
 	{
-		oldMO[i].copy(&m_MO[i]);
-	}
-	if(m_MO) delete[] m_MO;
-	m_MO = NULL;
-	m_NMO=nOld+n;
-	m_MO = new MGMovingObject[getNumberOfMO()];
-	for(int i=0; i<nOld; i++)
-	{
-		m_MO[i].copy(&oldMO[i]);
-	}
-	for(int i=nOld; i<getNumberOfMO(); ++i)
-	{
-		m_MO[i].initialize();
+		MGMovingObject mo();
+		mo.initialize();
+		m_MO.push_back(mo);
 	}
 
 	// Make sure tiles are re-rendered after creating MOs
@@ -1779,77 +1779,66 @@ int MGFramework::addMO(int n)
 }
 
 
-void MGFramework::deleteMO(int index)
+void MGFramework::deleteMO(std::list<MGMovingObject>::iterator it)
 {
-	m_Map.unOccupy(m_MO[index].getTileX(), m_MO[index].getTileY());
-	if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_MO[index].getTileX(), m_MO[index].getTileY());
+	m_Map.unOccupy((*it).getTileX(), (*it).getTileY());
+	if(isSelectiveTileRenderingActive()) m_Map.markForRendering((*it).getTileX(), (*it).getTileY());
+	m_MO.erase(it);
 	// Make sure tiles are re-rendered after deleting MOs
 	setRenderAllTiles();
 }
 
 
-bool MGFramework::setupMO(int i, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2)
+bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2)
 {
-	if(i < 0 || i >= getNumberOfMO())
-	{
-		MGFLOG_ERROR("MGFramework::setupMO was given a bad index: " << i)
-	}
-	else
-	{
-		//if(x<0) x = randomN(m_Map.getWidth());
-		//if(y<0) y = randomN(m_Map.getHeight());
-		if(x<0) x = randomN(x2-x1)+x1;
-		if(y<0) y = randomN(y2-y1)+y1;
-		bool successful=false;
+	if(x < 0) x = randomN(x2 - x1) + x1;
+	if(y < 0) y = randomN(y2 - y1) + y1;
+	bool successful=false;
 
-		for(int q=0; q<MGF_MOPOSITIONINGATTEMPTS; ++q)
+	for(int q = 0; q < MGF_MOPOSITIONINGATTEMPTS; ++q)
+	{
+		if(m_Map.occupant(x,y) != 0)
 		{
-			if(m_Map.occupant(x,y) != 0)
-			{
-				//x = randomN(m_Map.getWidth());
-				//y = randomN(m_Map.getHeight());
-				x = randomN(x2-x1)+x1;
-				y = randomN(y2-y1)+y1;
-			}
-			else
-			{
-				successful=true;
-				break;
-			}
-		}
-		// Find the first available (x,y) since the random placement failed.
-		if(!successful)
-		{
-			for(int t=0; t < m_Map.getWidth()*m_Map.getHeight(); ++t)
-			{
-				if(m_Map.occupant(m_Map.getTileX(t), m_Map.getTileY(t))==0)
-				{
-					x = m_Map.getTileX(t);
-					y = m_Map.getTileY(t);
-					successful = true;
-					break;
-				}
-			}
-		}
-
-		if(successful)
-		{
-			m_MO[i].setTileXY(x, y, this);
-			//m_MO[i].setNextXY(x, y, this);
-			m_MO[i].setDestTileXY(m_MO[i].getTileX(), m_MO[i].getTileY());
-			m_MO[i].setSpeed(1.0/(double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
-			m_MO[i].setOwner(owner);
-			m_Map.occupy(m_MO[i].getTileX(), m_MO[i].getTileY(), m_MO[i].getID());
-			if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_MO[i].getTileX(), m_MO[i].getTileY());
+			x = randomN(x2 - x1) + x1;
+			y = randomN(y2 - y1) + y1;
 		}
 		else
 		{
-			MGFLOG_ERROR("Failed to find space for MO at creation");
-			deleteMO(i);
-			return false;
+			successful = true;
+			break;
 		}
-
 	}
+	// Find the first available (x,y) since the random placement failed.
+	if(!successful)
+	{
+		for(int t=0; t < m_Map.getWidth()*m_Map.getHeight(); ++t)
+		{
+			if(m_Map.occupant(m_Map.getTileX(t), m_Map.getTileY(t))==0)
+			{
+				x = m_Map.getTileX(t);
+				y = m_Map.getTileY(t);
+				successful = true;
+				break;
+			}
+		}
+	}
+
+	if(successful)
+	{
+		(*it).setTileXY(x, y, this);
+		(*it).setDestTileXY((*it).getTileX(), (*it).getTileY());
+		(*it).setSpeed(1.0/(double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
+		(*it).setOwner(owner);
+		m_Map.occupy((*it).getTileX(), (*it).getTileY(), (*it).getID());
+		if(isSelectiveTileRenderingActive()) m_Map.markForRendering((*it).getTileX(), (*it).getTileY());
+	}
+	else
+	{
+		MGFLOG_ERROR("Failed to find space for MO at creation");
+		deleteMO(i);
+		return false;
+	}
+
 	return true;
 }
 
