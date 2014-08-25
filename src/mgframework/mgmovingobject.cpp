@@ -2,6 +2,7 @@
 #include "mgmovingobject.h"
 #include "mgpathitem.h"
 #include <iostream>
+#include <cstring>
 
 int MGMovingObject::m_TileSize = 0;
 int MGMovingObject::m_MovingMOCounter = 0;

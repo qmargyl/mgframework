@@ -1,5 +1,6 @@
 #include "mgframework.h"
 #include "mgperiodicevent.h"
+#include <cstring>
 
 
 MGPeriodicEvent::MGPeriodicEvent()
@@ -147,7 +148,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w, MGSymbolT
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					int owner = w->MGFramework::toInt(cmdvec[i+1], s);
+					unsigned int owner = (unsigned int)w->MGFramework::toInt(cmdvec[i+1], s);
 					++i;
 					if(getOwner() == owner)
 					{

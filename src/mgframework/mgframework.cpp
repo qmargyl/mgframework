@@ -4,14 +4,14 @@
 #include <cmath>
 #include <sstream>
 #include <string>
+#include <cstring>
 #include <cstdlib>
 #include <ctime>
 #include "mgpathitem.h"
 
-// XXX: Clean this up
-//#ifndef MGF_DISABLE_WINSOCK
+#ifndef UNITTEST_LINUX
 #include <winsock.h>
-//#endif
+#endif
 
 //Windows macros overriding std if not undefined
 #undef min
@@ -19,41 +19,43 @@
 
 
 MGFramework::MGFramework():
-	m_NMO(0),
-	m_NPE(0),
-	m_NSO(0),
-	m_MO(NULL),
-	m_PE(NULL),
-	m_SO(NULL),
-	m_SymbolTable(NULL),
-	m_SymbolTableTransfer(NULL),
+	m_InputEnabled(true),
+	m_Quit(false),
+	m_TypingEnabled(true),
+	m_WindowPropertiesSet(false),
+	m_MiniMapEnabled(true),
+	m_MGFInstanceType(MGFSINGLEPLAYERINSTANCE),
+	m_PlayerNumber(MGF_NOPLAYER),
 	m_FrameTime(16),
 	m_ActualFrameTime(16),
+	m_FPS(60),
+	m_DelayTime(0),
+	m_DynamicFPSEnabled(true),
+	m_FeatureMouseScrollingEnabled(true),
 	m_FrameCountdownEnabled(false),
 	m_FrameNumber(0),
+	m_NMO(0),
+	m_MarkedMOs(0),
+	m_NPE(0),
+	m_NSO(0),
 	m_KeepSocketTerminalOpen(false),
+	m_Port(0),
 	m_FramingOngoing(false),
 	m_XFrameStart(0),
 	m_YFrameStart(0),
 	m_XFrameEnd(0),
 	m_YFrameEnd(0),
-	m_MarkedMOs(0),
-	m_Quit(false),
-	m_DelayTime(0),
-	m_InputEnabled(true),
-//#ifndef MGF_DISABLE_TTF
-//	m_Font(0),
-//#endif
-	m_DynamicFPSEnabled(true),
-	m_Port(0),
-	m_CommandReturnVal(0),
-	m_RenderAll(true),
-	m_SelectiveTileRendering(false),
-	m_NDrawnTiles(0),
-	m_PlayerNumber(MGF_NOPLAYER),
 	m_OnlySelectOwnedMO(false),
-	m_FeatureMouseScrollingEnabled(true),
-	m_FeatureCenterOnMO(-1)
+	m_CommandReturnVal(0),
+	m_SelectiveTileRendering(false),
+	m_RenderAll(true),
+	m_NDrawnTiles(0),
+	m_FeatureCenterOnMO(-1),
+	m_MO(NULL),
+	m_PE(NULL),
+	m_SO(NULL),
+	m_SymbolTable(NULL),
+	m_SymbolTableTransfer(NULL)
 {
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
@@ -61,7 +63,7 @@ MGFramework::MGFramework():
 	// Setup the framework for automatic system level testing...
 
 	// At framework creation, no commands have been used..
-	for(int i=0; i<MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
+	for(unsigned int i = 0; i < MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
 	{
 		m_UsedCommands[i] = false;
 	}
@@ -95,6 +97,7 @@ MGFramework::~MGFramework()
 
 bool MGFramework::processEvents()
 {
+#ifndef UNITTEST_LINUX
 	// Quit if it has been decided to do so.. also for server instances
 	if(getQuitFlag()) return false;
 
@@ -291,7 +294,7 @@ bool MGFramework::processEvents()
 			}
 		}
 	}
-
+#endif
 	return true;
 }
 
@@ -305,7 +308,6 @@ int MGFramework::parse(const char *sFileName)
 	}
 
 	MGFLOG_INFO("MGFramework::parse was called with argument " << sFileName);
-	FILE *sf = NULL;
 	char *functionName = NULL;
 	char scriptFileName[128];
 	bool foundFunction = false;
@@ -338,10 +340,10 @@ int MGFramework::parse(const char *sFileName)
 		globalScope = true;
 	}
 
-	errno_t scriptError = fopen_s(&sf, scriptFileName, "rt");
+	FILE *sf = fopen(scriptFileName, "rt");
 	if(sf == NULL)
 	{
-		MGFLOG_ERROR("MGFramework::parse failed to open script file " << scriptFileName << ", error(" << scriptError << ")");
+		MGFLOG_ERROR("MGFramework::parse failed to open script file " << scriptFileName);
 	}
 	else
 	{
@@ -647,7 +649,7 @@ int MGFramework::parse(const char *sFileName)
 
 void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 {
-	int result = parse(scriptFileName);
+	(void)parse(scriptFileName); // Return value not needed when called from run(...)
 
 	unsigned int frameStartTime = 0; 
 	if(!runOneFrame) m_DelayTime = 0;
@@ -658,7 +660,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 	while(processEvents())
 	{
 		// Calculate the current frame time (and implicitly FPS)..
-		m_FrameTime = MGF_GetExecTimeMS() - lastFrameTime; //number of milli seconds from last frame was handled
+		m_FrameTime = MGF_GetExecTimeMS() - lastFrameTime; //number of ms from last frame was handled
 		lastFrameTime = MGF_GetExecTimeMS();
 		frameStartTime = MGF_GetExecTimeMS();
 
@@ -712,7 +714,9 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 		if(m_DelayTime > 0)
 		{
 			//TODO: Change to SDL sleep method but move it into MGWindow class to collect all SDL dependencies there.
+#ifndef UNITTEST_LINUX
 			Sleep((DWORD)m_DelayTime);
+#endif
 		}
 		m_ActualFrameTime = MGF_GetExecTimeMS() - frameStartTime;
 
@@ -1982,8 +1986,8 @@ void MGFramework::deletePE(int index)
 
 int MGFramework::getNumberOfUsedCommands()
 {
-	int n=0;
-	for(int i=MGComponent_UNDEFINED; i<MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
+	int n = 0;
+	for(unsigned int i = MGComponent_UNDEFINED; i < MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
 	{
 		if(m_UsedCommands[i])
 		{
@@ -2002,20 +2006,21 @@ void MGFramework::quit()
 	std::cout << "Execution time: " << MGF_GetExecTimeMS() << std::endl;
 }
 
-
+#ifndef UNITTEST_LINUX
 void MGFramework::drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH)
 {
 	increaseDrawnTilesCounter();
 	m_Window.drawSprite(imageSurface, srcX, srcY, dstX, dstY, tileW, tileH);
 }
+#endif
 
-
+#ifndef UNITTEST_LINUX
 void MGFramework::drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY)
 {
 	increaseDrawnTilesCounter();
 	m_Window.drawSprite(imageSurface, srcX, srcY, dstX, dstY, m_Map.getTileWidth(), m_Map.getTileHeight());
 }
-
+#endif
 
 bool MGFramework::isNumericalInt(const string &s)
 {

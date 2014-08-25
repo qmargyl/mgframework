@@ -33,7 +33,6 @@ class MGWindow :public MGComponent
 		int m_Bpp;
 		bool m_Fullscreen;
 		string m_Title;
-		int m_Flags;
 #ifndef UNITTEST_LINUX
 		SDL_Surface * m_Screen;
 		// Font
@@ -41,6 +40,8 @@ class MGWindow :public MGComponent
 		TTF_Font* m_Font;
   #endif
 #endif
+		int m_Flags;
+
 		void setFlags(int flags){ m_Flags = flags; }
 		int getFlags(){ return m_Flags; }
 			
@@ -62,7 +63,9 @@ class MGWindow :public MGComponent
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 #ifndef UNITTEST_LINUX
 		SDL_Surface *getSurface();
+#endif
 		void flipSurface();
+#ifndef UNITTEST_LINUX
 		void drawSprite(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		SDL_Surface *loadBMPImage( std::string filename );
 		void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);

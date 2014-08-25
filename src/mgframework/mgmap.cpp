@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <string>
+#include <cstring>
 #include <cmath>
 #include <sstream>
 #include "mgmap.h"
@@ -15,15 +16,15 @@ unsigned long int MGMap::m_SC_LongestCalculatedPath = 0;
 unsigned long int MGMap::m_SC_FailedPathCalculations = 0;
 
 MGMap::MGMap()
-: 	m_TopEdge(0),
-	m_BottomEdge(0),
-	m_LeftEdge(0),
-	m_RightEdge(0),
-	m_TileProperty(NULL),
+:	m_TileProperty(NULL),
 	m_Occupied(NULL),
 	m_MouseScrollingOngoing(false),
 	m_MouseScrollingXClick(0),
 	m_MouseScrollingYClick(0),
+	m_TopEdge(0),
+	m_BottomEdge(0),
+	m_LeftEdge(0),
+	m_RightEdge(0),	
 	m_MarkedForRendering(NULL)
 {
 

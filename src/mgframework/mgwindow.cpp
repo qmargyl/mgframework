@@ -1,10 +1,13 @@
 
 #include "mgwindow.h"
 #include <string>
+#include <cstring>
 #include <iostream>
+#ifndef UNITTEST_LINUX
 #include <SDL/SDL_opengl.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#endif
 #include "mgframework.h"
 
 
@@ -13,23 +16,26 @@ MGWindow::MGWindow():
 	m_Height(0),
 	m_Bpp(0),
 	m_Fullscreen(false),
+#ifndef UNITTEST_LINUX
 	m_Screen(NULL),
-	m_Flags(0),
-#ifndef MGF_DISABLE_TTF
-	m_Font(0)
+  #ifndef MGF_DISABLE_TTF
+	m_Font(0),
+  #endif
 #endif
+	m_Flags(0)
 {
-	//registerMemoryAllocation(sizeof(MGWindow));
 }
 
 MGWindow::~MGWindow()
 {
-	//registerMemoryDeallocation(sizeof(MGWindow));
+#ifndef UNITTEST_LINUX
 	SDL_Quit();
+#endif
 }
 	
 bool MGWindow::createWindow()
 {
+#ifndef UNITTEST_LINUX
 	if( SDL_Init( SDL_INIT_VIDEO ) != 0 ) 
 	{		
 		return false;
@@ -59,7 +65,7 @@ bool MGWindow::createWindow()
 	{
 		return false;
 	}
-		
+#endif	
 	return true;
 }
 
@@ -69,7 +75,9 @@ bool MGWindow::setProperties(int width, int height, int bpp, bool fullscreen, co
 	m_Title = title;
 	m_Fullscreen = fullscreen;
 	m_Bpp = bpp;
+#ifndef UNITTEST_LINUX
 	setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
+#endif
 	return true;
 }
 
@@ -102,22 +110,28 @@ bool MGWindow::setProperties(eMGWindowScreenResolution screenResolution, int bpp
 	m_Title = title;
 	m_Fullscreen = fullscreen;
 	m_Bpp = bpp;
+#ifndef UNITTEST_LINUX
 	setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
+#endif
 	return true;
 }
 
 
-
+#ifndef UNITTEST_LINUX
 SDL_Surface *MGWindow::getSurface()
 {
 	return m_Screen;
 }
+#endif
 
 void MGWindow::flipSurface()
 {
+#ifndef UNITTEST_LINUX
 	SDL_Flip(m_Screen);
+#endif
 }
 
+#ifndef UNITTEST_LINUX
 void MGWindow::drawSprite(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {
 	
@@ -133,8 +147,9 @@ void MGWindow::drawSprite(SDL_Surface* imageSurface, int srcX, int srcY, int dst
 	dstRect.h = height;
 	SDL_BlitSurface(imageSurface, &srcRect, m_Screen, &dstRect);
 }
+#endif
 
-
+#ifndef UNITTEST_LINUX
 SDL_Surface *MGWindow::loadBMPImage( std::string filename ) 
 {
 	SDL_Surface* loadedImage = NULL;
@@ -147,8 +162,9 @@ SDL_Surface *MGWindow::loadBMPImage( std::string filename )
 	}
 	return optimizedImage;
 }
+#endif
 
-
+#ifndef UNITTEST_LINUX
 void MGWindow::drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB)
 {
 #ifndef MGF_DISABLE_TTF
@@ -162,20 +178,25 @@ void MGWindow::drawText(const char* string, int size, int x, int y, int fR, int 
 	TTF_CloseFont(m_Font);
 #endif
 }
+#endif
 
-
+#ifndef UNITTEST_LINUX
 void MGWindow::putPixel32(int x, int y, Uint32 pixel)
 {
 	Uint32 *pixels = (Uint32 *)m_Screen->pixels;
 	pixels[ ( y * m_Screen->w ) + x ] = pixel;
 }
+#endif
 
+#ifndef UNITTEST_LINUX
 Uint32 MGWindow::getPixel32(int x, int y)
 {
 	Uint32 *pixels = (Uint32 *)m_Screen->pixels;
 	return pixels[ ( y * m_Screen->w ) + x ];
 }
+#endif
 
+#ifndef UNITTEST_LINUX
 void MGWindow::drawCircle32(int n_cx, int n_cy, int radius, Uint32 pixel)
 {
     // if the first pixel in the screen is represented by (0,0) (which is in sdl)
@@ -223,7 +244,9 @@ void MGWindow::drawCircle32(int n_cx, int n_cy, int radius, Uint32 pixel)
         }
     }
 }
+#endif
 
+#ifndef UNITTEST_LINUX
 void MGWindow::drawFillCircle32(int cx, int cy, int radius, Uint32 pixel)
 {
     static const int BPP = 4;
@@ -246,7 +269,9 @@ void MGWindow::drawFillCircle32(int cx, int cy, int radius, Uint32 pixel)
         }
     }
 }
+#endif
 
+#ifndef UNITTEST_LINUX
 void MGWindow::vLine32(int x, int y, int length, Uint32 pixel)
 {
 	for(int i=y; i<y+length; i++)
@@ -254,7 +279,9 @@ void MGWindow::vLine32(int x, int y, int length, Uint32 pixel)
 		putPixel32(x, i, pixel);
 	}
 }
+#endif
 
+#ifndef UNITTEST_LINUX
 void MGWindow::hLine32(int x, int y, int length, Uint32 pixel)
 {
 	for(int i=x; i<x+length; i++)
@@ -262,6 +289,7 @@ void MGWindow::hLine32(int x, int y, int length, Uint32 pixel)
 		putPixel32(i, y, pixel);
 	}
 }
+#endif
 
 bool MGWindow::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {
@@ -285,8 +313,10 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s
 		{
 			w->registerUsedCommand(MGComponent_WINDOW_FULLSCREEN_ON);
 			m_Fullscreen = true;
+#ifndef UNITTEST_LINUX
 			setFlags(SDL_FULLSCREEN | SDL_DOUBLEBUF | SDL_HWSURFACE);
 			m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, getFlags() );
+#endif
 			return false; // Deactivate console
 		}
 
@@ -294,8 +324,10 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s
 		{
 			w->registerUsedCommand(MGComponent_WINDOW_FULLSCREEN_OFF);
 			m_Fullscreen = false;
+#ifndef UNITTEST_LINUX
 			setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
 			m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, getFlags() );
+#endif
 			return true;
 		}
 
