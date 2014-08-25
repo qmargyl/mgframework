@@ -3,7 +3,7 @@ RM := rm -rf
 OBJDIR := ./obj
 
 EXECUTABLES := \
-classtest.i686
+./build/linux/classtest.i686
 
 INCLUDE_DIRS := \
 -I ./src/mgframework \
@@ -175,17 +175,20 @@ $(OBJDIR)/mgframeworkstub.o: ./src/mgframework/stubs/mgframeworkstub.cpp | $(OBJ
 
 
 
-build: classtest.i686
+build: ./build/linux/classtest.i686
 
-rebuild: clean classtest.i686
+rebuild: clean ./build/linux/classtest.i686
 
 run: build
-	./classtest.i686
+	mkdir -p ./build/win/VC/Project2/Release/class_test
+	mkdir -p ./build/win/VC/Project2/Release/class_test/result
+	./build/linux/classtest.i686 -classtest all > ./build/win/VC/Project2/Release/class_test/result/tc_101_all_testcases.log
+	@echo ' '
 
-classtest.i686: $(OBJS)
+./build/linux/classtest.i686: $(OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ $(OBJS) -o "classtest.i686" -Xlinker --start-group -lm -lstdc++ -Xlinker --end-group
+	g++ $(OBJS) -o "./build/linux/classtest.i686" --verbose -static-libstdc++
 	@echo 'Finished building target: $@'
 	@echo ' '
 
