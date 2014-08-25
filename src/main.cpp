@@ -189,15 +189,6 @@ int main(int argc, char **argv)
 	}
 
 EXIT_MAIN_RIGHT_AWAY:
-
-	if(p2)
-	{
-		delete p2;
-	}
-	else
-	{
-		return 1;
-	}
-		
+	delete p2;	
 	return 0;
 }
