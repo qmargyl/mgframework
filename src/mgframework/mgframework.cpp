@@ -149,9 +149,9 @@ bool MGFramework::processEvents()
 						// Unmark all MO..
 						for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 						{
-							if((*it).isMarked())
+							if(it->isMarked())
 							{
-								(*it).unMark();
+								it->unMark();
 								countUnMark();
 							}
 						}
@@ -174,7 +174,7 @@ bool MGFramework::processEvents()
 							{
 								it++;
 							}
-							(*it).setPath(m_Map.calculatePath(MGFBASICPATH1, (*it).getTileX(), (*it).getTileY(), xClick, yClick));
+							it->setPath(m_Map.calculatePath(MGFBASICPATH1, it->getTileX(), it->getTileY(), xClick, yClick));
 						}
 					}
 
@@ -212,21 +212,21 @@ bool MGFramework::processEvents()
 						{
 							for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 							{
-								if((*it).getTileX() == x && (*it).getTileY() == y)
+								if(it->getTileX() == x && it->getTileY() == y)
 								{
-									if(!(*it).isMarked())
+									if(!it->isMarked())
 									{
 										if(featureOnlySelectOwnedMOEnabled())
 										{
-											if((*it).getOwner() == getClientPlayer())
+											if(it->getOwner() == getClientPlayer())
 											{
-												(*it).mark();
+												it->mark();
 												countMark();
 											}
 										}
 										else
 										{
-											(*it).mark();
+											it->mark();
 											countMark();
 										}
 									}
@@ -306,9 +306,9 @@ int MGFramework::parse(const char *sFileName)
 	MGSymbolTable *symbols = new MGSymbolTable();
 
 	// Copy all symbols in transfer table to local symbol table (symbols), then delete them in the transfer table.
-	for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it=m_SymbolTableTransfer->table.begin(); it != m_SymbolTableTransfer->table.end(); ++it)
+	for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it = m_SymbolTableTransfer->table.begin(); it != m_SymbolTableTransfer->table.end(); ++it)
 	{
-		symbols->addSymbol((*it).symbol, (*it).value);
+		symbols->addSymbol(it->symbol, it->value);
 	}
 	m_SymbolTableTransfer->clear();
 
@@ -735,7 +735,7 @@ void MGFramework::handleMGFGameLogics()
 	// Update all moving objects
 	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)//for(int i=0;i<getNumberOfMO();i++)
 	{
-		(*it).update(this);
+		it->update(this);
 	}
 
 	// Example of how FPS can be controlled dynamically
@@ -914,14 +914,14 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_DELETE_ALL_MO_PARAMLIST:
 		{
 			registerUsedCommand(MGComponent_DELETE_ALL_MO_PARAMLIST);
-			int owner = 0;
+			unsigned int owner = 0;
 			bool ownerParamSet=false;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = toInt(cmdvec[i+1], s);
-					ownerParamSet=true;
+					owner = (unsigned int)toInt(cmdvec[i+1], s);
+					ownerParamSet = true;
 					++i;
 				}
 				else
@@ -937,12 +937,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				MGFLOG_INFO("Deleting MOs owned by " << owner);
 				for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); )
 				{
-					if((*it).getOwner() == owner)
+					MGFLOG_INFO("MO owned by " << it->getOwner());
+					if(it->getOwner() == owner)
 					{
-						m_Map.unOccupy((*it).getTileX(), (*it).getTileY());
-						if(isSelectiveTileRenderingActive()) m_Map.markForRendering((*it).getTileX(), (*it).getTileY());
-						setRenderAllTiles();
-						m_MO.erase(it);
+						MGFLOG_INFO("Deleting one out of " << m_MO.size() << " MOs");
+						deleteMO(it);
 					}
 					else
 					{
@@ -1109,10 +1108,9 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				}
 			}
 
-			std::list<MGMovingObject>::iterator it = m_MO.end();
-
 			if(n > 0)
 			{
+				MGFLOG_INFO("Adding MOs: " << n << ", nBefore = " << nBefore);
 				addMO(n);
 			}
 			else
@@ -1122,9 +1120,15 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			}
 
 			// Loop from first new MO to the end.
+			std::list<MGMovingObject>::iterator it = m_MO.begin();
+			for(int i = 0; i < nBefore; i++)
+			{
+				it++;
+			}
 			for(; it != m_MO.end(); )
 			{
 				// If setup returns true we step iterator, otherwise erase has already stepped it
+				MGFLOG_INFO("SetupMO, owner: " << owner);
 				if(setupMO(it, x, y, owner, speed, x1, y1, x2, y2))
 				{
 					it++;
@@ -1279,7 +1283,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				{
 					if(i == toInt(cmdvec[1], s))
 					{
-						return (*it).runConsoleCommand(c, this, s);
+						return it->runConsoleCommand(c, this, s);
 					}
 					else
 					{
@@ -1296,9 +1300,9 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			registerUsedCommand(MGComponent_MO_MARKED_X);
 			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 			{
-				if((*it).isMarked())
+				if(it->isMarked())
 				{
-					(*it).runConsoleCommand(c, this, s);
+					it->runConsoleCommand(c, this, s);
 				}
 			}
 			return true;
@@ -1309,7 +1313,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			registerUsedCommand(MGComponent_MO_ALL_X);
 			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 			{
-				(*it).runConsoleCommand(c, this, s);
+				it->runConsoleCommand(c, this, s);
 			}
 			return true;
 		}
@@ -1729,8 +1733,8 @@ void MGFramework::deleteAllMO()
 	// Since all MO are deleted we can unoccupy all their tiles..
 	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 	{
-		m_Map.unOccupy((*it).getTileX(), (*it).getTileY());
-		if(isSelectiveTileRenderingActive()) m_Map.markForRendering((*it).getTileX(), (*it).getTileY());
+		m_Map.unOccupy(it->getTileX(), it->getTileY());
+		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(it->getTileX(), it->getTileY());
 	}
 	m_MO.clear();
 	m_MarkedMOs = 0;
@@ -1767,8 +1771,12 @@ int MGFramework::addMO(int n)
 
 void MGFramework::deleteMO(std::list<MGMovingObject>::iterator it)
 {
-	m_Map.unOccupy((*it).getTileX(), (*it).getTileY());
-	if(isSelectiveTileRenderingActive()) m_Map.markForRendering((*it).getTileX(), (*it).getTileY());
+	m_Map.unOccupy(it->getTileX(), it->getTileY());
+	if(isSelectiveTileRenderingActive()) m_Map.markForRendering(it->getTileX(), it->getTileY());
+	if(it->isMarked())
+	{
+		m_MarkedMOs--;
+	}
 	m_MO.erase(it);
 	// Make sure tiles are re-rendered after deleting MOs
 	setRenderAllTiles();
@@ -1811,12 +1819,12 @@ bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, 
 
 	if(successful)
 	{
-		(*it).setTileXY(x, y, this);
-		(*it).setDestTileXY((*it).getTileX(), (*it).getTileY());
-		(*it).setSpeed(1.0/(double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
-		(*it).setOwner(owner);
-		m_Map.occupy((*it).getTileX(), (*it).getTileY(), (*it).getID());
-		if(isSelectiveTileRenderingActive()) m_Map.markForRendering((*it).getTileX(), (*it).getTileY());
+		it->setTileXY(x, y, this);
+		it->setDestTileXY(it->getTileX(), it->getTileY());
+		it->setSpeed(1.0/(double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
+		it->setOwner(owner);
+		m_Map.occupy(it->getTileX(), it->getTileY(), it->getID());
+		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(it->getTileX(), it->getTileY());
 	}
 	else
 	{
@@ -2101,18 +2109,18 @@ int MGFramework::toInt(const string &s, MGSymbolTable *sym)
 			{
 				for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it=sym->table.begin(); it != sym->table.end(); ++it)
 				{
-					if((*it).symbol == s)
+					if(it->symbol == s)
 					{
-						return (*it).value;
+						return it->value;
 					}
 				}				
 			}
 			// Then the one of global..
 			for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it=m_SymbolTable->table.begin(); it != m_SymbolTable->table.end(); ++it)
 			{
-				if((*it).symbol == s)
+				if(it->symbol == s)
 				{
-					return (*it).value;
+					return it->value;
 				}
 			}
 		}
