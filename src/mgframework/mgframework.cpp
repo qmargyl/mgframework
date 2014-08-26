@@ -1271,7 +1271,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_MO_INT_MARK:
 		{
 			registerUsedCommand(MGComponent_MO_INT_X);
-			int moIndex=toInt(cmdvec[1], s);
+			unsigned int moIndex = (unsigned int)toInt(cmdvec[1], s);
 			if(moIndex >= 0 && moIndex < getNumberOfMO())
 			{
 				int i = 0;
@@ -1287,10 +1287,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					}
 				}
 			}
-			if(m_MO == NULL)
-			{
-				MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
-			}
 			MGFLOG_WARNING("Console command was not forwarded to MO " << moIndex); 
 			return true;
 		}
@@ -1298,15 +1294,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_MO_MARKED_X:
 		{
 			registerUsedCommand(MGComponent_MO_MARKED_X);
-			for(int i = getNumberOfMO(); i--;)//for(int i=0; i<getNumberOfMO(); i++)
+			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 			{
-				if(m_MO != NULL && m_MO[i].isMarked())
+				if((*it).isMarked())
 				{
-					m_MO[i].runConsoleCommand(c, this, s);
-				}
-				else if(m_MO == NULL)
-				{
-					MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
+					(*it).runConsoleCommand(c, this, s);
 				}
 			}
 			return true;
@@ -1315,16 +1307,9 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_MO_ALL_X:
 		{
 			registerUsedCommand(MGComponent_MO_ALL_X);
-			for(int i = getNumberOfMO(); i--;)//for(int i=0; i<getNumberOfMO(); i++)
+			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 			{
-				if(m_MO != NULL)
-				{
-					m_MO[i].runConsoleCommand(c, this, s);
-				}
-				else
-				{
-					MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
-				}
+				(*it).runConsoleCommand(c, this, s);
 			}
 			return true;
 		}
@@ -1332,14 +1317,15 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_DELETE_MO_INT:
 		{
 			registerUsedCommand(MGComponent_DELETE_MO_INT);
-			int moIndex=toInt(cmdvec[2], s);
-			if(m_MO != NULL && moIndex >= 0 && moIndex < getNumberOfMO())
+			unsigned int moIndex = (unsigned int)toInt(cmdvec[2], s);
+			if(moIndex < getNumberOfMO())
 			{
-				deleteMO(moIndex);
-			}
-			else if(m_MO == NULL)
-			{
-				MGFLOG_ERROR("m_MO = NULL and getNumberOfMO() = " << getNumberOfMO())
+				std::list<MGMovingObject>::iterator it = m_MO.begin();
+				for(unsigned int i = 0; i < moIndex; i++)
+				{
+					it++;
+				}
+				deleteMO(it);
 			}
 			return true;
 		}
@@ -1455,7 +1441,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 			(void)m_Map.runConsoleCommand("map help", this, NULL);
 			(void)m_Window.runConsoleCommand("window help", this, NULL);
-			if(m_MO != NULL && getNumberOfMO() > 0)(void)m_MO[0].runConsoleCommand("mo 0 help", this, NULL);
+			if(getNumberOfMO() > 0)(void)(m_MO.begin()->runConsoleCommand("mo 0 help", this, NULL));
 
 			return true;
 		}
@@ -1767,7 +1753,7 @@ int MGFramework::addMO(int n)
 
 	for(int i = 0; i < n; i++)
 	{
-		MGMovingObject mo();
+		MGMovingObject mo;
 		mo.initialize();
 		m_MO.push_back(mo);
 	}
@@ -1835,7 +1821,7 @@ bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, 
 	else
 	{
 		MGFLOG_ERROR("Failed to find space for MO at creation");
-		deleteMO(i);
+		deleteMO(it);
 		return false;
 	}
 
