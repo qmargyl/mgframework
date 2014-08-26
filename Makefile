@@ -2,8 +2,10 @@
 RM := rm -rf
 OBJDIR := ./obj
 
-EXECUTABLES := \
-./build/linux/classtest.i686
+GENERATED_TARGETS := \
+./build/linux/classtest.i686 \
+./build/linux/classtest.purecov \
+./build/linux/classtest.pcv \
 
 INCLUDE_DIRS := \
 -I ./src/mgframework \
@@ -47,7 +49,13 @@ $(OBJDIR)/mgframework/mgsymboltable.d \
 $(OBJDIR)/mgframework/mgwindow.d \
 $(OBJDIR)/mgframework/stubs/mgframeworkstub.d \
 
-GCC_C++_BUILD := g++ -D__GNUC__=4 -DUNITTEST -DUNITTEST_LINUX $(INCLUDE_DIRS) -O0 -g3 -Wall -c -fmessage-length=0 -mfpmath=sse -msse2 -fno-builtin -std=c++0x -pedantic -Wall -Wno-long-long -gdwarf-2 -MMD -MP
+GCC_C++_FLAGS := -D__GNUC__=4 -DUNITTEST -DUNITTEST_LINUX $(INCLUDE_DIRS) -O0 -g3 -Wall -m32 -fmessage-length=0 -mfpmath=sse -msse2 -fno-builtin -std=c++0x -pedantic -Wall -Wno-long-long -gdwarf-2 -MMD -MP
+GCC_C++_BUILD := g++ -c $(GCC_C++_FLAGS)
+
+# purecov
+PURECOV_TARGET := ./build/linux/classtest.purecov
+PURECOV_VIEW_FILE := ./build/linux/classtest.purecov.pcv
+PURECOV_OPTIONS :=-cache-dir=.pure_cache -always-use-cache-dir=yes -linker=ld -g++=yes -max_threads=320 -best-effort -ptr64=no
 
 all: build
 
@@ -174,13 +182,13 @@ $(OBJDIR)/mgframeworkstub.o: ./src/mgframework/stubs/mgframeworkstub.cpp | $(OBJ
 	@echo ' '
 
 
+# regular ---------------
 
 build: ./build/linux/classtest.i686
 
 rebuild: clean ./build/linux/classtest.i686
 
 run: build
-	mkdir -p ./build/win/VC/Project2/Release/class_test
 	mkdir -p ./build/win/VC/Project2/Release/class_test/result
 	./build/linux/classtest.i686 -classtest all > ./build/win/VC/Project2/Release/class_test/result/tc_101_all_testcases.log
 	@echo ' '
@@ -192,8 +200,25 @@ run: build
 	@echo 'Finished building target: $@'
 	@echo ' '
 
+# purecov ---------------
+
+purecov: $(PURECOV_TARGET)
+
+purecovrun: $(PURECOV_TARGET)
+	$(PURECOV_TARGET) -classtest all
+
+purecovview: purecovrun $(PURECOV_VIEW_FILE)
+	@echo Running Purecov on test suite $(PURECOV_TARGET)
+	purecov -view $(PURECOV_VIEW_FILE)
+
+$(PURECOV_TARGET): ./build/linux/classtest.i686
+	@echo Purecov $(PURECOV_TARGET)
+	purecov $(PURECOV_OPTIONS) g++ $(GCC_C++_FLAGS) -lpthread $(OBJS) -static-libstdc++ -o $(PURECOV_TARGET)
+
+# clean ---------------
+
 clean:
-	-$(RM) $(OBJS) $(CC_DEPS) $(EXECUTABLES) $(OBJDIR)
+	-$(RM) $(OBJS) $(CC_DEPS) $(GENERATED_TARGETS) $(OBJDIR)
 	@echo ' '
 
 
