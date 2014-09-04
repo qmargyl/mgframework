@@ -1743,16 +1743,15 @@ void MGFramework::deleteAllMO()
 }
 
 
-int MGFramework::addMO(int n)
+void MGFramework::addMO(int n)
 {
-	int nOld = getNumberOfMO();
-	int tmpTotal = n + nOld;
+	int tmpTotal = n + getNumberOfMO();
 
 	if(tmpTotal > m_Map.getWidth()*m_Map.getHeight())
 	{
 		MGFLOG_ERROR(	"MGFramework::addMO cannot create " << tmpTotal << " MO on a " 
 						<< m_Map.getWidth() << " by " << m_Map.getHeight() << " map")
-		return -1;
+		return;
 	}
 
 	for(int i = 0; i < n; i++)
@@ -1764,30 +1763,35 @@ int MGFramework::addMO(int n)
 
 	// Make sure tiles are re-rendered after creating MOs
 	setRenderAllTiles();
-
-	return nOld; // Return index of first MO added.
 }
 
 
 void MGFramework::deleteMO(std::list<MGMovingObject>::iterator it)
 {
-	m_Map.unOccupy(it->getTileX(), it->getTileY());
-	if(isSelectiveTileRenderingActive()) m_Map.markForRendering(it->getTileX(), it->getTileY());
-	if(it->isMarked())
+	if(it != m_MO.end())
 	{
-		m_MarkedMOs--;
+		m_Map.unOccupy(it->getTileX(), it->getTileY());
+		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(it->getTileX(), it->getTileY());
+		if(it->isMarked())
+		{
+			m_MarkedMOs--;
+		}
+		m_MO.erase(it);
+		// Make sure tiles are re-rendered after deleting MOs
+		setRenderAllTiles();
 	}
-	m_MO.erase(it);
-	// Make sure tiles are re-rendered after deleting MOs
-	setRenderAllTiles();
 }
 
 
 bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2)
 {
+	if(it == m_MO.end())
+	{
+		return false;
+	}
 	if(x < 0) x = randomN(x2 - x1) + x1;
 	if(y < 0) y = randomN(y2 - y1) + y1;
-	bool successful=false;
+	bool successful = false;
 
 	for(int q = 0; q < MGF_MOPOSITIONINGATTEMPTS; ++q)
 	{

@@ -22,7 +22,6 @@ MGMovingObject::MGMovingObject()
 
 MGMovingObject::~MGMovingObject()
 {
-	m_Path.clear();
 }
 
 void MGMovingObject::initialize()

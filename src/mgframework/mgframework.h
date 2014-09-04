@@ -298,7 +298,7 @@ class MGFramework :public MGComponent
 
 		// MO related
 		void deleteAllMO();
-		int addMO(int n); // Returns index of first MO added or -1 if there was an error.
+		void addMO(int n);
 		unsigned int getNumberOfMO(){ return (unsigned int)m_MO.size(); }
 		void deleteMO(std::list<MGMovingObject>::iterator it);		// Deletes an MO
 		bool setupMO(std::list<MGMovingObject>::iterator it, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2);		// Setups the MO with a specified index
