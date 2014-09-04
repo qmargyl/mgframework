@@ -26,12 +26,12 @@ enum eMGFPathType{
 class MGMap :public MGComponent
 {
 private:
-	int m_Width; // Number of tiles the map is wide.
-	int m_Height; // Number of tiles the map is high.
-	int m_TileWidth; // The width of each tile (in pixels).
+	int m_Width;      // Number of tiles the map is wide.
+	int m_Height;     // Number of tiles the map is high.
+	int m_TileWidth;  // The width of each tile (in pixels).
 	int m_TileHeight; // The height of each tile (in pixels).
-	int m_ScrollX; // Number of pixels from top left.
-	int m_ScrollY; // Number of pixels from top left.
+	int m_ScrollX;    // Number of pixels from top left.
+	int m_ScrollY;    // Number of pixels from top left.
 
 	unsigned int *m_TileProperty; // Allows for many unique properties (ex: water, sand, grass, walkable, non-walkable etc.)
 	int *m_Occupied;
@@ -65,13 +65,13 @@ public:
 	~MGMap();
 
 
-	int getWidth(){ return m_Width;}
-	int getHeight(){ return m_Height;}
-	int getTileWidth(){ return m_TileWidth;}
-	int getTileHeight(){ return m_TileHeight;}
+	int getWidth(){ return m_Width; }
+	int getHeight(){ return m_Height; }
+	int getTileWidth(){ return m_TileWidth; }
+	int getTileHeight(){ return m_TileHeight; }
 
-	int getScrollX(){ return m_ScrollX;}
-	int getScrollY(){ return m_ScrollY;}
+	int getScrollX(){ return m_ScrollX; }
+	int getScrollY(){ return m_ScrollY; }
 	void setScrollOffset(int px, int py);
 	void mouseScrollingRelease(int x, int y);
 	void mouseScrollingClick(int x, int y);
@@ -90,37 +90,37 @@ public:
 
 	void init(int w, int h, int tw, int th, int windowWidth, int windowHeight);
 	void reInit(int w, int h, int tw, int th);
-	void setTileProperty(int x, int y, unsigned int value){ m_TileProperty[y*getWidth()+x]=value;}
-	unsigned int getTileProperty(int x, int y){ return m_TileProperty[y*getWidth()+x];}
+	void setTileProperty(int x, int y, unsigned int value){ m_TileProperty[y * getWidth() + x]=value; }
+	unsigned int getTileProperty(int x, int y){ return m_TileProperty[y * getWidth() + x]; }
 
 	void occupy(int x, int y, int id)
 	{ 
-		m_Occupied[y*getWidth()+x]=id;
-		//markForRendering(x, y);
+		m_Occupied[y * getWidth() + x] = id;
+		//TODO: Should we also markForRendering(x, y); ???
 	}
 
 	void unOccupy(int x, int y)
 	{ 
-		m_Occupied[y*getWidth()+x]=0;
-		//markForRendering(x, y);
+		m_Occupied[y * getWidth() + x] = 0;
+		//TODO: Should we also markForRendering(x, y); ???
 	}
 
 	int occupant(int x, int y)
 	{ 
-		if(x<0) return 0; 
-		if(y<0) return 0; 
-		if(x>=getWidth()) return 0; 
-		if(x>=getHeight()) return 0; 
-		return m_Occupied[y*getWidth()+x];
+		if(x >= 0 && y >= 0 && x < getWidth() && y < getHeight())
+		{
+			return m_Occupied[y * getWidth() + x];
+		}
+		return 0;
 	}
 
 
 	int getTileIndex(int clickX, int clickY);
-	int getTileX(int index){ return index % getWidth();}
-	int getTileY(int index){ return (index - getTileX(index))/getWidth();}
+	int getTileX(int index){ return index % getWidth(); }
+	int getTileY(int index){ return (index - getTileX(index)) / getWidth(); }
 
-	int getWindowHeight(){ return m_WindowHeight;}
-	int getWindowWidth(){ return m_WindowWidth;}
+	int getWindowHeight(){ return m_WindowHeight; }
+	int getWindowWidth(){ return m_WindowWidth; }
 
 	void save(); // Not implemented yet
 
@@ -139,36 +139,31 @@ public:
 	// Rendering optimizations
 	void unmarkForRendering(int x, int y)
 	{
-		if(x<0) return; 
-		if(y<0) return; 
-		if(x>=getWidth()) return; 
-		if(x>=getHeight()) return; 
-		m_MarkedForRendering[y*getWidth()+x]=false; 
+		if(x >= 0 && y >= 0 && x < getWidth() && y < getHeight())
+		{
+			m_MarkedForRendering[y * getWidth() + x] = false;
+		}
 	}
 
 	void markForRendering(int x, int y)
 	{ 
-		if(x<0) return; 
-		if(y<0) return; 
-		if(x>=getWidth()) return; 
-		if(x>=getHeight()) return; 
-		m_MarkedForRendering[y*getWidth()+x]=true; 
+		if(x >= 0 && y >= 0 && x < getWidth() && y < getHeight())
+		{
+			m_MarkedForRendering[y * getWidth() + x] = true;
+		}
 	}
 
 	void markForRendering(int i)
 	{ 
-		if(i<0) return; 
-		if(i>=getHeight()*getWidth()) return; 
-		m_MarkedForRendering[i]=true; 
+		if(i >= 0 && i < getHeight() * getWidth())
+		{
+			m_MarkedForRendering[i] = true; 
+		}
 	}
 
 	bool isMarkedForRendering(int x, int y)
 	{
-		if(x<0) return false; 
-		if(y<0) return false; 
-		if(x>=getWidth()) return false; 
-		if(x>=getHeight()) return false; 
-		return m_MarkedForRendering[y*getWidth()+x]; 
+		return x >= 0 && y >= 0 && x < getWidth() && y < getHeight() && m_MarkedForRendering[y * getWidth() + x];
 	}
 
 };
