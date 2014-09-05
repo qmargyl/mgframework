@@ -1,6 +1,7 @@
 #include "mgframework.h"
 #include "mgstationaryobject.h"
 #include <iostream>
+#include <cstring>
 
 int MGStationaryObject::m_TileSize = 0;
 

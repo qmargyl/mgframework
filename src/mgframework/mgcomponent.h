@@ -44,6 +44,9 @@
 #endif
 
 typedef unsigned short      WORD;
+#ifndef DWORD
+typedef unsigned long int   DWORD;
+#endif
 
 #ifndef UNITTEST_LINUX
 enum eMGComponentConsoleCommand;
