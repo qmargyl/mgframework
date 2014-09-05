@@ -11,13 +11,13 @@ MGMovingObject::MGMovingObject()
 {
 	m_HistoryEnabled = false;
 	setTimeOfLastUpdate(MGF_GetExecTimeMS());
-	m_FinishingLastMove=false;
-	m_Marked=false;
-	m_TileX=0;
-	m_TileY=0;
-	m_NextTileX=0;
-	m_NextTileY=0;
-	m_CurrentState=MOStateCreated;
+	m_FinishingLastMove = false;
+	m_Marked = false;
+	m_TileX = 0;
+	m_TileY = 0;
+	m_NextTileX = 0;
+	m_NextTileY = 0;
+	m_CurrentState = MOStateCreated;
 	setOwner(MGF_NOPLAYER);
 }
 
@@ -29,12 +29,12 @@ MGMovingObject::~MGMovingObject()
 void MGMovingObject::initialize()
 {
 	setTimeOfLastUpdate(MGF_GetExecTimeMS());
-	m_FinishingLastMove=false;
-	m_Marked=false;
-	m_TileX=0;
-	m_TileY=0;
-	m_NextTileX=0;
-	m_NextTileY=0;
+	m_FinishingLastMove = false;
+	m_Marked = false;
+	m_TileX = 0;
+	m_TileY = 0;
+	m_NextTileX = 0;
+	m_NextTileY = 0;
 	setOwner(MGF_NOPLAYER);
 	if(!isCreated())
 	{
@@ -47,12 +47,12 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 {
 	world->m_Map.unOccupy(getTileX(), getTileY());
 	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
-	m_TileX=x;
-	m_TileY=y;
-	m_X=0.0;
-	m_Y=0.0;
-	m_FinishingLastMove=false;
-	if(getDestTileX()==getTileX() && getDestTileY()==getTileY() && isMoving() && m_Path.size()==1)
+	m_TileX = x;
+	m_TileY = y;
+	m_X = 0.0;
+	m_Y = 0.0;
+	m_FinishingLastMove = false;
+	if(getDestTileX() == getTileX() && getDestTileY() == getTileY() && isMoving() && m_Path.size() == 1)
 	{
 		// Final destination reached
 		addToHistory(	(std::string("FinalDestination: ") + MGComponent::toString(getTileX()) + 
@@ -98,20 +98,19 @@ void MGMovingObject::setDestTileXY(int x, int y)
 {
 	// If we are still finishing our last move, save current 
 	// destination to temp variable and then set new destination
-	if(m_X!=0.0 || m_Y!=0.0 || m_FinishingLastMove)
+	if(m_X != 0.0 || m_Y != 0.0 || m_FinishingLastMove)
 	{
-		m_TempDestTileX=m_DestTileX;
-		m_TempDestTileY=m_DestTileY;
-		m_FinishingLastMove=true;
+		m_TempDestTileX = m_DestTileX;
+		m_TempDestTileY = m_DestTileY;
+		m_FinishingLastMove = true;
 	}
-	m_DestTileX=x;
-	m_DestTileY=y;
+	m_DestTileX = x;
+	m_DestTileY = y;
 }
 
 
 void MGMovingObject::setPath(std::list<MGPathItem> p)
 {
-	m_Path.clear();
 	m_Path = p;
 	if(!m_Path.empty())
 	{
@@ -127,7 +126,7 @@ double MGMovingObject::getDistance(int wx, int wy)
 
 void MGMovingObject::setSpeed(double s, int tileSize)
 {
-	m_Speed=(double)tileSize / s;
+	m_Speed = (double)tileSize / s;
 	m_TileSize = tileSize;
 }
 
@@ -189,72 +188,72 @@ void MGMovingObject::update(MGFramework *w)
 				changeState(MOStateMoving);
 			}
 
-			if(getDestTileX()>getTileX() && getDestTileY()>getTileY())
+			if(getDestTileX() > getTileX() && getDestTileY() > getTileY())
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX()+1, getTileY()+1), 0, getID()))
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() + 1, getTileY() + 1), 0, getID()))
 				{
-					setNextXY(getTileX()+1, getTileY()+1, w);
+					setNextXY(getTileX() + 1, getTileY() + 1, w);
 					m_X += d;
 					m_Y += d;
 				}
 			}
-			else if(getDestTileX()<getTileX() && getDestTileY()<getTileY())
+			else if(getDestTileX() < getTileX() && getDestTileY() < getTileY())
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX()-1, getTileY()-1), 0, getID()))
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() - 1, getTileY() - 1), 0, getID()))
 				{
-					setNextXY(getTileX()-1, getTileY()-1, w);
+					setNextXY(getTileX() - 1, getTileY() - 1, w);
 					m_X -= d;
 					m_Y -= d;
 				}
 			}
-			else if(getDestTileX()>getTileX() && getDestTileY()<getTileY())
+			else if(getDestTileX() > getTileX() && getDestTileY() < getTileY())
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX()+1, getTileY()-1), 0, getID()))
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() + 1, getTileY() - 1), 0, getID()))
 				{
-					setNextXY(getTileX()+1, getTileY()-1, w);
+					setNextXY(getTileX() + 1, getTileY() - 1, w);
 					m_X += d;
 					m_Y -= d;
 				}
 			}
-			else if(getDestTileX()<getTileX() && getDestTileY()>getTileY())
+			else if(getDestTileX() < getTileX() && getDestTileY() > getTileY())
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX()-1, getTileY()+1), 0, getID()))
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() - 1, getTileY() + 1), 0, getID()))
 				{
-					setNextXY(getTileX()-1, getTileY()+1, w);
+					setNextXY(getTileX() - 1, getTileY() + 1, w);
 					m_X -= d;
 					m_Y += d;
 				}
 			}
-			else if(getDestTileX()>getTileX())
+			else if(getDestTileX() > getTileX())
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX()+1, getTileY()), 0, getID()))
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() + 1, getTileY()), 0, getID()))
 				{
-					setNextXY(getTileX()+1, getTileY(), w);
-					m_X += d*1.414;
+					setNextXY(getTileX() + 1, getTileY(), w);
+					m_X += d * 1.414;
 				}
 			}
-			else if(getDestTileX()<getTileX())
+			else if(getDestTileX() < getTileX())
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX()-1, getTileY()), 0, getID()))
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() - 1, getTileY()), 0, getID()))
 				{
-					setNextXY(getTileX()-1, getTileY(), w);
-					m_X -= d*1.414;
+					setNextXY(getTileX() - 1, getTileY(), w);
+					m_X -= d * 1.414;
 				}
 			}
-			else if(getDestTileY()>getTileY())
+			else if(getDestTileY() > getTileY())
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX(), getTileY()+1), 0, getID()))
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX(), getTileY() + 1), 0, getID()))
 				{
-					setNextXY(getTileX(), getTileY()+1, w);
-					m_Y += d*1.414;
+					setNextXY(getTileX(), getTileY() + 1, w);
+					m_Y += d * 1.414;
 				}
 			}
-			else if(getDestTileY()<getTileY())
+			else if(getDestTileY() < getTileY())
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX(), getTileY()-1), 0, getID()))
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX(), getTileY() - 1), 0, getID()))
 				{
-					setNextXY(getTileX(), getTileY()-1, w);
-					m_Y -= d*1.414;
+					setNextXY(getTileX(), getTileY() - 1, w);
+					m_Y -= d * 1.414;
 				}
 			}
 			else
@@ -263,37 +262,37 @@ void MGMovingObject::update(MGFramework *w)
 				setTileXY(getTileX(), getTileY(), w);
 			}
 
-			if(m_X>=getTileSize() && m_Y>=getTileSize())
+			if(m_X >= getTileSize() && m_Y >= getTileSize())
 			{
-				setTileXY(getTileX()+1, getTileY()+1, w);
+				setTileXY(getTileX() + 1, getTileY() + 1, w);
 			}
-			else if(m_X>=getTileSize() && m_Y==0)
+			else if(m_X >= getTileSize() && m_Y == 0)
 			{
-				setTileXY(getTileX()+1, getTileY(), w);
+				setTileXY(getTileX() + 1, getTileY(), w);
 			}
-			else if(-m_X>=getTileSize() && -m_Y>=getTileSize())
+			else if(-m_X >= getTileSize() && -m_Y >= getTileSize())
 			{
-				setTileXY(getTileX()-1, getTileY()-1, w);
+				setTileXY(getTileX() - 1, getTileY() - 1, w);
 			}
-			else if(-m_X>=getTileSize() && m_Y==0)
+			else if(-m_X >= getTileSize() && m_Y == 0)
 			{
-				setTileXY(getTileX()-1, getTileY(), w);
+				setTileXY(getTileX() - 1, getTileY(), w);
 			}
-			else if(m_X>=getTileSize() && -m_Y>=getTileSize())
+			else if(m_X >= getTileSize() && -m_Y >= getTileSize())
 			{
-				setTileXY(getTileX()+1, getTileY()-1, w);
+				setTileXY(getTileX() + 1, getTileY() - 1, w);
 			}
-			else if(m_Y>=getTileSize() && m_X==0)
+			else if(m_Y >= getTileSize() && m_X == 0)
 			{
-				setTileXY(getTileX(), getTileY()+1, w);
+				setTileXY(getTileX(), getTileY() + 1, w);
 			}
-			else if(-m_X>=getTileSize() && m_Y>=getTileSize())
+			else if(-m_X >= getTileSize() && m_Y >= getTileSize())
 			{
-				setTileXY(getTileX()-1, getTileY()+1, w);
+				setTileXY(getTileX() - 1, getTileY() + 1, w);
 			}
-			else if(-m_Y>=getTileSize() && m_X==0)
+			else if(-m_Y >= getTileSize() && m_X == 0)
 			{
-				setTileXY(getTileX(), getTileY()-1, w);
+				setTileXY(getTileX(), getTileY() - 1, w);
 			}
 
 			setTimeOfLastUpdate(MGF_GetExecTimeMS());
@@ -382,8 +381,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 		case MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT:
 		{
 			w->registerUsedCommand(MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT);
-			int lx=w->toInt(cmdvec[4], s);
-			int ly=w->toInt(cmdvec[5], s);
+			int lx = w->toInt(cmdvec[4], s);
+			int ly = w->toInt(cmdvec[5], s);
 			if(lx == getTileX() && ly == getTileY())
 			{
 				MGFLOG_INFO("Expected location confirmed: (" << lx << ", " << ly << ")");
@@ -426,8 +425,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 		case MGComponent_MO_INT_SETDESTINATION_INT_INT:
 		{
 			w->registerUsedCommand(MGComponent_MO_INT_SETDESTINATION_INT_INT);
-			int dx=w->toInt(cmdvec[3], s);
-			int dy=w->toInt(cmdvec[4], s);
+			int dx = w->toInt(cmdvec[3], s);
+			int dy = w->toInt(cmdvec[4], s);
 			addToHistory(	(std::string("CalculatePath: ") + MGComponent::toString(getTileX()) + 
 							 std::string(",") + MGComponent::toString(getTileY()) + std::string(" -> ") +
 							 MGComponent::toString(dx) + std::string(",") + MGComponent::toString(dy)).c_str());
@@ -483,56 +482,56 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 {
 	if(cmdvec.size() == 3)
 	{
-		if(cmdvec[2]=="help")
+		if(cmdvec[2] == "help")
 		{
 			return MGComponent_MO_INT_HELP;
 		}
-		else if(cmdvec[2]=="getspeed")
+		else if(cmdvec[2] == "getspeed")
 		{
 			return MGComponent_MO_INT_GETSPEED;
 		}
-		else if(cmdvec[2]=="getdestination")
+		else if(cmdvec[2] == "getdestination")
 		{
 			return MGComponent_MO_INT_GETDESTINATION;
 		}
-		else if(cmdvec[2]=="getlocation")
+		else if(cmdvec[2] == "getlocation")
 		{
 			return MGComponent_MO_INT_GETLOCATION;
 		}
-		else if(cmdvec[2]=="mark")
+		else if(cmdvec[2] == "mark")
 		{
 			return MGComponent_MO_INT_MARK;
 		}
-		else if(cmdvec[2]=="unmark")
+		else if(cmdvec[2] == "unmark")
 		{
 			return MGComponent_MO_INT_UNMARK;
 		}
 	}
 	else if(cmdvec.size() == 4)
 	{
-		if(cmdvec[0]=="mo" && cmdvec[2]=="logging" && cmdvec[3]=="on")
+		if(cmdvec[0] == "mo" && cmdvec[2] == "logging" && cmdvec[3] == "on")
 		{
 			return MGComponent_MO_INT_LOGGING_ON;
 		}
-		else if(cmdvec[0]=="mo" && cmdvec[2]=="logging" && cmdvec[3]=="off")
+		else if(cmdvec[0] == "mo" && cmdvec[2] == "logging" && cmdvec[3] == "off")
 		{
 			return MGComponent_MO_INT_LOGGING_OFF;
 		}
-		else if(cmdvec[0]=="mo" && cmdvec[2]=="history")
+		else if(cmdvec[0] == "mo" && cmdvec[2] == "history")
 		{
 			return MGComponent_MO_INT_HISTORY_BOOL;
 		}
 	}
 	else if(cmdvec.size() == 5)
 	{
-		if(cmdvec[2]=="setdestination")
+		if(cmdvec[2] == "setdestination")
 		{
 			return MGComponent_MO_INT_SETDESTINATION_INT_INT;
 		}
 	}
 	else if(cmdvec.size() == 6)
 	{
-		if(cmdvec[2]=="expect" && cmdvec[3]=="getlocation")
+		if(cmdvec[2] == "expect" && cmdvec[3] == "getlocation")
 		{
 			return MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT;
 		}
@@ -545,11 +544,11 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 void MGMovingObject::changeState(MOState toState)
 {
 	// XXX: This function should also update statistics counters?
-	if(toState==MOStateCreated)
+	if(toState == MOStateCreated)
 	{
 		MGFLOG_ERROR("MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", MOStateCreated should not be re-entered");
 	}
-	else if(getCurrentState()==MOStateCreated && toState==MOStateMoving)
+	else if(getCurrentState() == MOStateCreated && toState == MOStateMoving)
 	{
 		MGFLOG_ERROR("MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", expected MOStateIdle");
 	}
@@ -620,6 +619,6 @@ void MGMovingObject::addToHistory(const char *str)
 {
 	if(m_HistoryEnabled)
 	{
-		m_History.push_back(MGComponent::toString(0/*(int)MGF_GetExecTimeMS()*/) + string(": ") + string(str));
+		m_History.push_back(MGComponent::toString(m_History.size()) + string(": ") + string(str));
 	}
 }

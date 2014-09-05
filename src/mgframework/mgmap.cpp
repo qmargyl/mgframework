@@ -37,8 +37,6 @@ MGMap::~MGMap()
 	delete[] m_MarkedForRendering;
 }
 
-
-
 void MGMap::setScrollOffset(int px, int py)
 {
 	m_ScrollX = px;
@@ -51,9 +49,9 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 	if(m_Occupied) delete[] m_Occupied;
 	if(m_MarkedForRendering) delete[] m_MarkedForRendering;
 
-	m_TileProperty = new unsigned int[w*h];
-	m_Occupied = new int[w*h];
-	m_MarkedForRendering = new bool[w*h];
+	m_TileProperty = new unsigned int[w * h];
+	m_Occupied = new int[w * h];
+	m_MarkedForRendering = new bool[w * h];
 	m_Width = w;
 	m_Height = h;
 	m_TileWidth = tw;
@@ -66,9 +64,9 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 	// for example read in a level file, or set hard coded values.
 	// Here is just an example.
 
-	for (int x=0; x < getWidth(); x++)
+	for (int x = 0; x < getWidth(); x++)
 	{
-		for (int y=0; y < getHeight(); y++)
+		for (int y = 0; y < getHeight(); y++)
 		{
 			setTileProperty(x, y, MGMAP_TP_PROPERTY_1 | MGMAP_TP_NOOBSTACLE);
 			unOccupy(x, y);
@@ -77,18 +75,11 @@ void MGMap::init(int w, int h, int tw, int th, int windowWidth, int windowHeight
 	}
 }
 
-
 void MGMap::reInit(int w, int h, int tw, int th)
 {
 	init(w, h, tw, th, getWindowWidth(), getWindowHeight());
 }
 
-
-/***************************************************
- * int MGMap::getTileIndex(int clickX, int clickY)
- * Returns tile index of clicked tile. If click
- * was outside of the map then -1 will be returned.
- ***************************************************/
 int MGMap::getTileIndex(int clickX, int clickY)
 {
 	MGFLOG_INFO("MGMap::getTileIndex(" << clickX << ", " << clickY << ")");
@@ -104,10 +95,8 @@ int MGMap::getTileIndex(int clickX, int clickY)
 			return y * getWidth() + x;
 		}
 	}
-	return -1;
+	return -1; // Click outside of map
 }
-
-
 
 void MGMap::save()
 {
@@ -185,7 +174,6 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 			int y1 = w->toInt(cmdvec[3], s);
 			int x2 = w->toInt(cmdvec[4], s);
 			int y2 = w->toInt(cmdvec[5], s);
-
 			MGFLOG_INFO("Calculating closest path from (" << x1 << "," << y1 << ") to (" << x2 << "," << y2 << ").");
 			calculatePath(MGFBASICPATH1, x1, y1, x2, y2);
 			return true;
@@ -231,29 +219,29 @@ eMGComponentConsoleCommand MGMap::detectMGComponentConsoleCommand(const std::vec
 {
 	if(cmdvec.size() == 2)
 	{
-		if(cmdvec[1]=="help")
+		if(cmdvec[1] == "help")
 		{
 			return MGComponent_MAP_HELP;
 		}
 	}
 	else if(cmdvec.size() == 3)
 	{
-		if(cmdvec[1]=="logging" && cmdvec[2]=="on")
+		if(cmdvec[1] == "logging" && cmdvec[2] == "on")
 		{
 			return MGComponent_MAP_LOGGING_ON;
 		}
-		if(cmdvec[1]=="logging" && cmdvec[2]=="off")
+		if(cmdvec[1] == "logging" && cmdvec[2] == "off")
 		{
 			return MGComponent_MAP_LOGGING_OFF;
 		}
 	}
 	else if(cmdvec.size() == 6)
 	{
-		if(cmdvec[1]=="path")
+		if(cmdvec[1] == "path")
 		{
 			return MGComponent_MAP_PATH_INT_INT_INT_INT;
 		}
-		else if(cmdvec[1]=="setsize")
+		else if(cmdvec[1] == "setsize")
 		{
 			return MGComponent_MAP_SETSIZE_INT_INT_INT_INT;
 		}
@@ -282,49 +270,25 @@ std::list<MGPathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay
 
 	else if(pathType == MGFBASICPATH1)
 	{
-		int x=ax;
-		int y=ay;
+		int x = ax;
+		int y = ay;
 		std::list<MGPathItem> neighbors;
 		std::list<MGPathItem> evaluated;
 		MGPathItem *n;
 		MGPathItem *e;
 
-		double distanceToTarget = MGFramework::distance(ax, ay, bx, by);
-		MGPathItem *now = new MGPathItem(ax, ay, distanceToTarget);
+		MGPathItem *now = new MGPathItem(ax, ay, MGFramework::distance(ax, ay, bx, by));
 		path.push_back(*now);
 
-		while (x!=bx || y!=by)
+		while (x != bx || y != by)
 		{
 			if(occupant(bx, by) != 0)
 			{
 				// XXX: Here we should try to find a tile close to target instead of giving up.
 				//      - Set a new bx,by close to tagret and continue instead of breaking?
 				//      - Condition that the distance to target is not short?
-				distanceToTarget = MGFramework::distance(x, y, bx, by);
-				if(distanceToTarget > 3)
-				{
-					// Set new target.
-					bool found=false;
-					for(unsigned int i=0; i<20; ++i)
-					{
-						// Not implemented yet..
-					}
-					if(found)
-					{
-						// Do nothing = continue while loop
-					}
-					else
-					{
-						MGFLOG_INFO("MGMap::calculatePath target tile is occupied");
-						break;
-					}
-
-				}
-				else
-				{
-					MGFLOG_INFO("MGMap::calculatePath target tile is occupied");
-					break;
-				}
+				MGFLOG_INFO("MGMap::calculatePath target tile is occupied");
+				break;
 			}
 
 			MGFLOG_INFO("MGMap::calculatePath has current (x,y) = (" << x << ", " << y << ")");
@@ -529,7 +493,6 @@ std::list<MGPathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay
 					if(MGFramework::distance(x, y, bx, by) < 2 && occupant(bx,by) != 0)
 					{
 						// The tile we want to go to is occopied and we are one tile away
-
 					}
 					else
 					{
@@ -596,62 +559,54 @@ std::list<MGPathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay
 
 	}
 
-	else if(pathType==MGFSKYPATH)
+	else if(pathType == MGFSKYPATH)
 	{
-		int x=ax;
-		int y=ay;
+		int x = ax;
+		int y = ay;
 
-		while (x!=bx || y!=by)
+		while (x != bx || y != by)
 		{
-			if(x>bx && y>by)
+			if(x > bx && y > by)
 			{
 				x--;
 				y--;
 			}
-			else if(x<bx && y<by)
+			else if(x < bx && y < by)
 			{
 				x++;
 				y++;
 			}
-			else if(x>bx && y<by)
+			else if(x > bx && y < by)
 			{
 				x--;
 				y++;
 			}
-			else if(x<bx && y>by)
+			else if(x < bx && y > by)
 			{
 				x++;
 				y--;
 			}
-			else if(x<bx)
+			else if(x < bx)
 			{
 				x++;
 			}
-			else if(x>bx)
+			else if(x > bx)
 			{
 				x--;
 			}
-			else if(y<by)
+			else if(y < by)
 			{
 				y++;
 			}
-			else if(y>by)
+			else //if(y > by)
 			{
 				y--;
-			}
-			else
-			{
-				MGFLOG_ERROR("MGMap::calculatePath executed a case which should never happen");
-				MGFLOG_ERROR("Data: x=" << x << ", y=" << y << ", ax=" << ax << ", ay=" << ay << ", bx=" << bx << ", by=" << by);
-				path.clear();
 			}
 
 			MGPathItem *pI = new MGPathItem(x, y);
-			path.push_back(*pI);
+			path.push_back(*pI); //TODO: Call constructor without new as argument. 
 
 		}//while
-
-
 
 	}
 
