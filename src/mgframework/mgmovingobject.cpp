@@ -619,6 +619,6 @@ void MGMovingObject::addToHistory(const char *str)
 {
 	if(m_HistoryEnabled)
 	{
-		m_History.push_back(MGComponent::toString(m_History.size()) + string(": ") + string(str));
+		m_History.push_back(MGComponent::toString((int)0) + string(": ") + string(str));
 	}
 }
