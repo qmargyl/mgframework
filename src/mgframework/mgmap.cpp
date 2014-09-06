@@ -16,7 +16,13 @@ unsigned long int MGMap::m_SC_LongestCalculatedPath = 0;
 unsigned long int MGMap::m_SC_FailedPathCalculations = 0;
 
 MGMap::MGMap()
-:	m_TileProperty(NULL),
+:	m_Width(0),
+	m_Height(0),
+	m_TileWidth(0),
+	m_TileHeight(0),
+	m_ScrollX(0),
+	m_ScrollY(0),
+	m_TileProperty(NULL),
 	m_Occupied(NULL),
 	m_MouseScrollingOngoing(false),
 	m_MouseScrollingXClick(0),

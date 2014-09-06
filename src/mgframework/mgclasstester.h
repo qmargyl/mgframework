@@ -38,6 +38,8 @@ private:
 	static void test_MGMap_initialize();
 	static void test_MGAStarNode();
 	static void test_MGPathGenerator_calculatePathAStar();
+	static void test_MGFramework_createMO();
+	static void test_MGFramework_deleteMO();
 
 
 public:
@@ -47,6 +49,8 @@ public:
 		RUNTEST(test_MGMap_initialize);
 		RUNTEST(test_MGAStarNode);
 		RUNTEST(test_MGPathGenerator_calculatePathAStar);
+		RUNTEST(test_MGFramework_createMO);
+		RUNTEST(test_MGFramework_deleteMO);
 		FINISH_TESTSUITE();
 	}
 
