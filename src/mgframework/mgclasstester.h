@@ -7,8 +7,8 @@
 #define MGCLASSTESTER_LOGLINE_MAXLENGTH 1024
 
 #define ASSERT_NOT_EQUAL(x, y, msg)	do{ \
-		if(x != y){ \
-			std::cout << "[ASSERT] " << __FILE__ << ":" << __LINE__ << " MSG: " << msg << ", " << x << ", " << y << std::endl; \
+		if((x) != (y)){ \
+			std::cout << "[ASSERT] " << __FILE__ << ":" << __LINE__ << " MSG: " << msg << ", " << (x) << ", " << (y) << std::endl; \
 			return; \
 		} \
 	} while(0)
@@ -38,6 +38,11 @@ private:
 	static void test_MGMap_initialize();
 	static void test_MGAStarNode();
 	static void test_MGPathGenerator_calculatePathAStar();
+	static void test_MGFramework_createMO();
+	static void test_MGFramework_deleteMO();
+	static void test_MGFramework_setupMO();
+	static void test_MGFramework_resetupMO();
+	static void test_MGFramework_setupDeleteSetupMO();
 
 
 public:
@@ -47,6 +52,11 @@ public:
 		RUNTEST(test_MGMap_initialize);
 		RUNTEST(test_MGAStarNode);
 		RUNTEST(test_MGPathGenerator_calculatePathAStar);
+		RUNTEST(test_MGFramework_createMO);
+		RUNTEST(test_MGFramework_deleteMO);
+		RUNTEST(test_MGFramework_setupMO);
+		RUNTEST(test_MGFramework_resetupMO);
+		RUNTEST(test_MGFramework_setupDeleteSetupMO);
 		FINISH_TESTSUITE();
 	}
 
