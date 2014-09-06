@@ -14,6 +14,7 @@ class MGFrameworkStub : public MGFramework
 		bool init(int w, int h, int tw, int th);
 
 		// Hooks to MO related methods in MGFramework
+		MGMovingObject *_m_MO(){ return m_MO; }
 		void _deleteAllMO(){ deleteAllMO(); }
 		int _addMO(int n){ return addMO(n); }
 		int _getNumberOfMO(){ return getNumberOfMO(); }
