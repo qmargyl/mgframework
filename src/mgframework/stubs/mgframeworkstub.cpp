@@ -1,4 +1,5 @@
 #include "mgframeworkstub.h"
+#include "../mgpathitem.h"
 
 MGFrameworkStub::MGFrameworkStub()
 {

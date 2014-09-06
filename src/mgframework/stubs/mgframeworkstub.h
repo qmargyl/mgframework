@@ -14,14 +14,27 @@ class MGFrameworkStub : public MGFramework
 		bool init(int w, int h, int tw, int th);
 
 		// Hooks to MO related methods in MGFramework
-		MGMovingObject *_m_MO(){ return m_MO; }
+		std::list<MGMovingObject> _m_MO(){ return m_MO; }
 		void _deleteAllMO(){ deleteAllMO(); }
-		int _addMO(int n){ return addMO(n); }
+		void _addMO(int n){ addMO(n); }
 		int _getNumberOfMO(){ return getNumberOfMO(); }
-		void _deleteMO(int index){ deleteMO(index); }
-		bool _setupMO(int i, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2)
+		void _deleteMO(std::list<MGMovingObject>::iterator it){ deleteMO(it); }
+		bool _setupMO(std::list<MGMovingObject>::iterator it, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2)
 		{
-			return setupMO(i, x, y, owner, speed, x1, y1, x2, y2);
+			return setupMO(it, x, y, owner, speed, x1, y1, x2, y2);
+		}
+		std::list<MGMovingObject>::iterator nthMO(unsigned int i)
+		{
+			unsigned int n = 0;
+			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
+			{
+				if(n == i)
+				{
+					return it;
+				}
+				n++;
+			}
+			return m_MO.end();
 		}
 
 };

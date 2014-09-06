@@ -2,6 +2,7 @@
 #include "../mgclasstester.h"
 
 #include "../mgmap.h"
+#include "../mgpathitem.h"
 #include "../stubs/mgframeworkstub.h"
 
 void MGClassTester::test_MGMap_initialize()
