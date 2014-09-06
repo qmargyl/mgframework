@@ -43,6 +43,7 @@ private:
 	static void test_MGFramework_setupMO();
 	static void test_MGFramework_resetupMO();
 	static void test_MGFramework_setupDeleteSetupMO();
+	static void test_MGFramework_deletePerOwnerOfMO();
 
 
 public:
@@ -57,6 +58,7 @@ public:
 		RUNTEST(test_MGFramework_setupMO);
 		RUNTEST(test_MGFramework_resetupMO);
 		RUNTEST(test_MGFramework_setupDeleteSetupMO);
+		RUNTEST(test_MGFramework_deletePerOwnerOfMO);
 		FINISH_TESTSUITE();
 	}
 

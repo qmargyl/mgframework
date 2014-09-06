@@ -178,3 +178,32 @@ void MGClassTester::test_MGFramework_setupDeleteSetupMO()
 	ASSERT_NOT_EQUAL(mgf.nthMO(4)->getTileY(), 7, "MGF failed to setup MO y");
 	ASSERT_NOT_EQUAL(mgf.nthMO(4)->getOwner(), 7, "MGF failed to setup MO owner");
 }
+
+void MGClassTester::test_MGFramework_deletePerOwnerOfMO()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	mgf.init(16, 16, 32, 32);
+
+	mgf.runConsoleCommand("add mo 1 -owner 1", &mgf, NULL);
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 1, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 1, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getOwner(), 1, "MGF failed to setup MO owner");
+
+	mgf.runConsoleCommand("add mo 2 -owner 2", &mgf, NULL);
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 3, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 3, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getOwner(), 1, "MGF failed to setup MO owner");
+	ASSERT_NOT_EQUAL(mgf.nthMO(1)->getOwner(), 2, "MGF failed to setup MO owner");
+	ASSERT_NOT_EQUAL(mgf.nthMO(2)->getOwner(), 2, "MGF failed to setup MO owner");
+
+	mgf.runConsoleCommand("add mo 1 -owner 3", &mgf, NULL);
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 4, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 4, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getOwner(), 1, "MGF failed to setup MO owner");
+	ASSERT_NOT_EQUAL(mgf.nthMO(1)->getOwner(), 2, "MGF failed to setup MO owner");
+	ASSERT_NOT_EQUAL(mgf.nthMO(2)->getOwner(), 2, "MGF failed to setup MO owner");
+	ASSERT_NOT_EQUAL(mgf.nthMO(3)->getOwner(), 3, "MGF failed to setup MO owner");
+
+	// Trigger
+}
