@@ -40,12 +40,14 @@ private:
 	static void test_MGPathGenerator_calculatePathAStar();
 	static void test_MGFramework_createMO();
 	static void test_MGFramework_deleteMO();
+	static void test_MGFramework_deleteMOVerifyIterator();
 	static void test_MGFramework_deleteFewMO();
 	static void test_MGFramework_deleteAllMO();
 	static void test_MGFramework_setupMO();
 	static void test_MGFramework_resetupMO();
 	static void test_MGFramework_setupDeleteSetupMO();
 	static void test_MGFramework_deletePerOwnerOfMO();
+	static void test_MGFramework_deleteFirstMOPerOwner();
 
 
 public:
@@ -57,12 +59,14 @@ public:
 		RUNTEST(test_MGPathGenerator_calculatePathAStar);
 		RUNTEST(test_MGFramework_createMO);
 		RUNTEST(test_MGFramework_deleteMO);
+		RUNTEST(test_MGFramework_deleteMOVerifyIterator);
 		RUNTEST(test_MGFramework_deleteFewMO);
 		RUNTEST(test_MGFramework_deleteAllMO);
 		RUNTEST(test_MGFramework_setupMO);
 		RUNTEST(test_MGFramework_resetupMO);
 		RUNTEST(test_MGFramework_setupDeleteSetupMO);
 		RUNTEST(test_MGFramework_deletePerOwnerOfMO);
+		RUNTEST(test_MGFramework_deleteFirstMOPerOwner);
 		FINISH_TESTSUITE();
 	}
 

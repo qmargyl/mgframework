@@ -948,8 +948,16 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					if(it->getOwner() == owner)
 					{
 						MGFLOG_INFO("Deleting one out of " << m_MO.size() << " MOs");
-						deleteMO(it);
-						it--;
+						if(it == m_MO.begin())
+						{
+							deleteMO(it);
+							it = m_MO.begin();
+						}
+						else
+						{
+							deleteMO(it);
+							it--;
+						}
 					}
 					else
 					{
