@@ -37,6 +37,8 @@ class MGFrameworkStub : public MGFramework
 			return m_MO.end();
 		}
 
+
+
 };
 
 #endif

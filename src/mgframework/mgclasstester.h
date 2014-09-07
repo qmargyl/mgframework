@@ -48,6 +48,8 @@ private:
 	static void test_MGFramework_setupDeleteSetupMO();
 	static void test_MGFramework_deletePerOwnerOfMO();
 	static void test_MGFramework_deleteFirstMOPerOwner();
+	static void test_MGFramework_markMO();
+	static void test_MGFramework_markMOIndexInSymbolTable();
 
 
 public:
@@ -67,6 +69,8 @@ public:
 		RUNTEST(test_MGFramework_setupDeleteSetupMO);
 		RUNTEST(test_MGFramework_deletePerOwnerOfMO);
 		RUNTEST(test_MGFramework_deleteFirstMOPerOwner);
+		RUNTEST(test_MGFramework_markMO);
+		RUNTEST(test_MGFramework_markMOIndexInSymbolTable);
 		FINISH_TESTSUITE();
 	}
 
