@@ -949,6 +949,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					{
 						MGFLOG_INFO("Deleting one out of " << m_MO.size() << " MOs");
 						deleteMO(it);
+						it--;
 					}
 					else
 					{

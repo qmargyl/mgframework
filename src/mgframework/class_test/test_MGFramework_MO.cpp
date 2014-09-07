@@ -7,64 +7,121 @@ void MGClassTester::test_MGFramework_createMO()
 {
 	// Setup
 	MGFrameworkStub mgf;
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF created with MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF created with MO");
 	mgf._addMO(1);
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF created MOs without initializing the map");
 	mgf.init(16, 16, 32, 32);
 
 	// Trigger/Verify
 	mgf._addMO(0);
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF failed to create zero MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF failed to create zero MO");
 	mgf._addMO(1);
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 1, "MGF failed to create MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 1, "MGF failed to create MO");
 	mgf._addMO(3);
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 4, "MGF failed to create MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 4, "MGF failed to create MO");
 	mgf._addMO(1);
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 5, "MGF failed to create MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 5, "MGF failed to create MO");
 	mgf._addMO(15);
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 20, "MGF failed to create MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 20, "MGF failed to create MO");
 	mgf._addMO(0);
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 20, "MGF failed to create zero MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 20, "MGF failed to create zero MO");
 }
 
 void MGClassTester::test_MGFramework_deleteMO()
 {
 	// Setup
 	MGFrameworkStub mgf;
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF created with MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF created with MO");
 	mgf.init(16, 16, 32, 32);
 	mgf._addMO(15);
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 15, "MGF failed to create MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 15, "MGF failed to create MO");
 
 	// Trigger/Verify
 
 	// Delete first MO
 	mgf._deleteMO(mgf.nthMO(0));
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 14, "MGF failed to delete MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 14, "MGF failed to delete MO");
 	mgf._deleteMO(mgf.nthMO(0));
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 13, "MGF failed to delete MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 13, "MGF failed to delete MO");
 	mgf._deleteMO(mgf.nthMO(0));
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 12, "MGF failed to delete MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 12, "MGF failed to delete MO");
 
 	// Delete last MO
 	mgf._deleteMO(mgf.nthMO(11));
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 11, "MGF failed to delete MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 11, "MGF failed to delete MO");
 
 	// Delete arbitrary MO
 	mgf._deleteMO(mgf.nthMO(7));
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 10, "MGF failed to delete MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 10, "MGF failed to delete MO");
 
 	// Delete MO outside container
 	mgf._deleteMO(mgf.nthMO(17));
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 10, "MGF failed to delete zero MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 10, "MGF failed to delete zero MO");
 
 	// Delete all MO
 	mgf._deleteAllMO();
-	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF failed to delete MOs");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF failed to delete MO");
 
 	// Delete all MO when no MO exist
 	mgf._deleteAllMO();
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF failed to run deleteAllMO");
+}
+
+void MGClassTester::test_MGFramework_deleteFewMO()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	mgf.init(16, 16, 32, 32);
+
+	mgf.runConsoleCommand("add mo 1 -owner 1", &mgf, NULL);
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 1, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 1, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getOwner(), 1, "MGF failed to setup MO owner");
+
+	mgf.runConsoleCommand("add mo 2 -owner 2", &mgf, NULL);
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 3, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 3, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getOwner(), 1, "MGF failed to setup MO owner");
+	ASSERT_NOT_EQUAL(mgf.nthMO(1)->getOwner(), 2, "MGF failed to setup MO owner");
+	ASSERT_NOT_EQUAL(mgf.nthMO(2)->getOwner(), 2, "MGF failed to setup MO owner");
+
+	mgf.runConsoleCommand("add mo 1 -owner 3", &mgf, NULL);
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 4, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 4, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getOwner(), 1, "MGF failed to setup MO owner");
+	ASSERT_NOT_EQUAL(mgf.nthMO(1)->getOwner(), 2, "MGF failed to setup MO owner");
+	ASSERT_NOT_EQUAL(mgf.nthMO(2)->getOwner(), 2, "MGF failed to setup MO owner");
+	ASSERT_NOT_EQUAL(mgf.nthMO(3)->getOwner(), 3, "MGF failed to setup MO owner");
+
+	// Trigger - delete the two middle MO out of the four
+	mgf._deleteMO(mgf.nthMO(1));
+	mgf._deleteMO(mgf.nthMO(1));
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 2, "MGF failed to delete MO");
+	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 2, "MGF failed to delete MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getOwner(), 1, "MGF failed to setup MO owner");
+	ASSERT_NOT_EQUAL(mgf.nthMO(1)->getOwner(), 3, "MGF failed to setup MO owner");
+}
+
+void MGClassTester::test_MGFramework_deleteAllMO()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF created with MO");
+	mgf.init(16, 16, 32, 32);
+	mgf._addMO(15);
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 15, "MGF failed to create MO");
+
+	// Trigger
+	mgf.runConsoleCommand("delete all mo", &mgf, NULL);
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF failed to delete all MO");
+
+	// Delete all MO when no MO exist
+	mgf.runConsoleCommand("delete all mo", &mgf, NULL);
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF failed to delete all MO on empty MO list");
 }
 
 void MGClassTester::test_MGFramework_setupMO()
@@ -206,4 +263,11 @@ void MGClassTester::test_MGFramework_deletePerOwnerOfMO()
 	ASSERT_NOT_EQUAL(mgf.nthMO(3)->getOwner(), 3, "MGF failed to setup MO owner");
 
 	// Trigger
+	mgf.runConsoleCommand("delete all mo -owner 2", &mgf, NULL);
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 2, "MGF failed to delete MO");
+	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 2, "MGF failed to delete MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getOwner(), 1, "MGF failed to setup MO owner");
+	ASSERT_NOT_EQUAL(mgf.nthMO(1)->getOwner(), 3, "MGF failed to setup MO owner");
 }
