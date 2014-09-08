@@ -121,16 +121,16 @@ public:
 
 	// Utility functions
 	static std::string toString(bool b){ if(b) return std::string("true"); return std::string("false"); }
-	static int randomN(int upperLimit){ if(upperLimit == 0) return 0; return std::rand()%upperLimit; }
+	static int randomN(int upperLimit){ if(upperLimit == 0) return 0; return std::rand() % upperLimit; }
 	static void randomize(int seed){ std::srand(seed); }
 	static double distance(int x1, int y1, int x2, int y2){ return sqrt((double)(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))); }
 	static std::string toString(int number);
 	static std::vector<std::string> split(char *str, const char *c);
 	static std::vector<std::string> symbols(char *str);
-	static bool oneOf(int x, int a1, int a2){ if(x==a1) return true; if(x==a2) return true; return false; }
+	static bool oneOf(int x, int a1, int a2){ if(x == a1) return true; if(x == a2) return true; return false; }
 	static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
 	static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);
-	static float MGF_GetExecTimeS(){ return ((float)clock())/CLOCKS_PER_SEC; }
+	static float MGF_GetExecTimeS(){ return ((float)clock()) / CLOCKS_PER_SEC; }
 	static unsigned int MGF_GetExecTimeMS(){ return (unsigned int)(1000.0 * MGF_GetExecTimeS()); }
 };
 

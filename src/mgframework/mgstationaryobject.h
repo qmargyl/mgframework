@@ -12,7 +12,7 @@ private:
 	static int m_TileSize;
 
 	double getDistance(int wx, int wy);
-	int getTileSize(){ return m_TileSize;}
+	int getTileSize(){ return m_TileSize; }
 
 public:
 
@@ -28,11 +28,10 @@ public:
 	int getTileX(){ return m_TileX;}
 	int getTileY(){ return m_TileY;}
 
-	int getCenterX(){ return getTileX()*getTileSize() + (int)(0.5 *getTileSize());}
-	int getCenterY(){ return getTileY()*getTileSize() + (int)(0.5 *getTileSize());}
+	int getCenterX(){ return getTileX()*getTileSize() + (int)(0.5 * getTileSize()); }
+	int getCenterY(){ return getTileY()*getTileSize() + (int)(0.5 * getTileSize()); }
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
-
 };
 
 

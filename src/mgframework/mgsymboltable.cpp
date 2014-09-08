@@ -54,11 +54,6 @@ int MGSymbolTable::getValue(const std::string &s)
 	return 0;
 }
 
-void MGSymbolTable::delSymbol(const std::string &s)
-{
-
-}
-
 void MGSymbolTable::clear()
 {
 	table.clear();
