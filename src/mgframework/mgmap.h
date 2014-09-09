@@ -122,8 +122,6 @@ public:
 	int getWindowHeight(){ return m_WindowHeight; }
 	int getWindowWidth(){ return m_WindowWidth; }
 
-	void save(); // Not implemented yet
-
 	// Path related
 	std::list<MGPathItem> calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by); // Calculates the path from A to B
 

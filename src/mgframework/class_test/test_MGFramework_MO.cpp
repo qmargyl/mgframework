@@ -84,10 +84,19 @@ void MGClassTester::test_MGFramework_deleteMOVerifyIterator()
 
 	// Verify
 	ASSERT_NOT_EQUAL(mgf.nthMO(0) == it, false, "MGF failed to set iterator correctly when deleting MO");
-//	it--;
-	ASSERT_NOT_EQUAL(mgf.nthMO(0) == it, true, "MGF failed to set iterator correctly when deleting MO");
-
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 1, "MGF failed to delete MO");
+
+	// Setup - create another 3 MO
+	it = mgf.nthMO(0);
+	mgf._addMO(3);
+
+	// Trigger - delete first MO again
+	mgf._deleteMO(it);
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf.nthMO(0) == it, false, "MGF failed to set iterator correctly when deleting MO");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 3, "MGF failed to delete MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(1) == it, true, "MGF failed to set iterator correctly when deleting MO");
 }
 
 void MGClassTester::test_MGFramework_deleteFewMO()
