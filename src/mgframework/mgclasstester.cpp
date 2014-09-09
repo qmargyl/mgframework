@@ -13,11 +13,10 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 	int nWarnings = 0;
 	int nExitApp = 0;
 	int nAsserts = 0;
-	std::string execTimeMS("");
+	std::string execTimeMS("0");
 
 	// Error list for printing
 	std::vector<std::string> errors;
-	errors.clear();
 
 	if(lf == NULL)
 	{
@@ -45,7 +44,6 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 			}
 			else
 			{
-				// An error defined as a log line containing at least one "ERROR".
 				std::string line(logLine);
 
 				std::size_t foundErr = line.find(errSubstr);
@@ -85,7 +83,7 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 				std::size_t foundExecutionTime = line.find(exetimeSubstr);
 				if (foundExecutionTime != std::string::npos)
 				{
-					execTimeMS = line.substr(exetimeSubstr.size(), line.size() - exetimeSubstr.size() -1);
+					execTimeMS = line.substr(exetimeSubstr.size(), line.size() - exetimeSubstr.size() - 1);
 					//C++11: int execTimeMS = std::stoi(execTime);
 				}
 			}
@@ -279,19 +277,19 @@ std::string MGClassTester::filterLine(const char* line)
 	bool insideFilteredInt = false;
 	char c[2] = {0, 0};
 
-	for(unsigned int i=0; i < strlen(line); ++i)
+	for(unsigned int i = 0; i < strlen(line); ++i)
 	{
 		if(line[i] >= '0' && line[i] <= '9')
 		{
-			if(i>0 && !insideFilteredInt && (line[i-1]=='[' || line[i-1]==':' || line[i-1]=='.'))
+			if(i > 0 && !insideFilteredInt && (line[i - 1] == '[' || line[i - 1] == ':' || line[i - 1] == '.'))
 			{
-				c[0]='X';
+				c[0] = 'X';
 				lineRes += std::string(c);
 				insideFilteredInt=true;
 			}
-			if(i>1 && !insideFilteredInt && line[i-1]==' ' && line[i-2]==':')
+			if(i > 1 && !insideFilteredInt && line[i - 1] == ' ' && line[i - 2] == ':')
 			{
-				c[0]='X';
+				c[0] = 'X';
 				lineRes += std::string(c);
 				insideFilteredInt=true;
 			}
@@ -301,7 +299,7 @@ std::string MGClassTester::filterLine(const char* line)
 			}
 			else
 			{
-				c[0]=line[i];
+				c[0] = line[i];
 				lineRes += std::string(c);
 				insideFilteredInt=false;
 			}
@@ -312,7 +310,7 @@ std::string MGClassTester::filterLine(const char* line)
 		}
 		else
 		{
-			c[0]=line[i];
+			c[0] = line[i];
 			lineRes += std::string(c);
 			insideFilteredInt=false;
 		}
