@@ -37,6 +37,11 @@ private:
 	static void test_MGComponent();
 	static void test_MGMap_initialize();
 	static void test_MGAStarNode();
+	static void test_MGSymbolTable_addSymbol();
+	static void test_MGSymbolTable_setValue();
+	static void test_MGSymbolTable_clear();
+	static void test_MGSymbolTable_addSeveralSymbols();
+	static void test_MGSymbolTable_symbolNames();
 	static void test_MGPathGenerator_calculatePathAStar();
 	static void test_MGFramework_createMO();
 	static void test_MGFramework_deleteMO();
@@ -45,18 +50,44 @@ private:
 	static void test_MGFramework_setupDeleteSetupMO();
 
 
+	static void test_002_basic_MO_create_delete();
+	static void test_002_basic_MO_create_delete_with_owner();
+	static void test_002_basic_MO_create_with_area_square();
+	static void test_002_basic_MO_create_with_area_square_single_location();
+	static void test_002_basic_MO_mark_unmark();
+	static void test_002_basic_MO_verify_location();
+	static void test_002_basic_MO_ordering();
+	static void test_002_basic_MO_random_mo();
+	static void test_002_basic_MO_stressing();
+
 public:
 	static void runAll()
 	{
 		RUNTEST(test_MGComponent);
 		RUNTEST(test_MGMap_initialize);
 		RUNTEST(test_MGAStarNode);
+		RUNTEST(test_MGSymbolTable_addSymbol);
+		RUNTEST(test_MGSymbolTable_setValue);
+		RUNTEST(test_MGSymbolTable_clear);
+		RUNTEST(test_MGSymbolTable_addSeveralSymbols);
+		RUNTEST(test_MGSymbolTable_symbolNames);
 		RUNTEST(test_MGPathGenerator_calculatePathAStar);
 		RUNTEST(test_MGFramework_createMO);
 		RUNTEST(test_MGFramework_deleteMO);
 		RUNTEST(test_MGFramework_setupMO);
 		RUNTEST(test_MGFramework_resetupMO);
 		RUNTEST(test_MGFramework_setupDeleteSetupMO);
+
+		RUNTEST(test_002_basic_MO_create_delete);
+		RUNTEST(test_002_basic_MO_create_delete_with_owner);
+		RUNTEST(test_002_basic_MO_create_with_area_square);
+		RUNTEST(test_002_basic_MO_create_with_area_square_single_location);
+		RUNTEST(test_002_basic_MO_mark_unmark);
+		//RUNTEST(test_002_basic_MO_verify_location);
+		//RUNTEST(test_002_basic_MO_ordering);
+		RUNTEST(test_002_basic_MO_random_mo);
+		//RUNTEST(test_002_basic_MO_stressing);
+
 		FINISH_TESTSUITE();
 	}
 

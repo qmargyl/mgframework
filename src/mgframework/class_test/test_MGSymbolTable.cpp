@@ -56,7 +56,7 @@ void MGClassTester::test_MGSymbolTable_clear()
 	ASSERT_NOT_EQUAL(s.hasValue("s3"), false, "MGSymbolTable failed to remove symbol");
 }
 
-void MGClassTester::test_MGSymbolTable_addManySymbols()
+void MGClassTester::test_MGSymbolTable_addSeveralSymbols()
 {
 	// Setup
 	MGSymbolTable s;
@@ -140,4 +140,33 @@ void MGClassTester::test_MGSymbolTable_addManySymbols()
 	ASSERT_NOT_EQUAL(s.getValue("s17"), 27, "MGSymbolTable failed to set correct value");
 	ASSERT_NOT_EQUAL(s.getValue("s18"), 28, "MGSymbolTable failed to set correct value");
 	ASSERT_NOT_EQUAL(s.getValue("s19"), 29, "MGSymbolTable failed to set correct value");
+}
+
+void MGClassTester::test_MGSymbolTable_symbolNames()
+{
+	// Setup
+	MGSymbolTable s;
+
+	// Trigger
+	s.addSymbol("this is a valid symbol name", 43);
+	s.addSymbol("17", 44);
+	s.addSymbol("", 45);
+	s.addSymbol("-13", 46);
+	s.addSymbol(" ", 47);
+	s.addSymbol("  ", 48);
+
+	// Verify
+	ASSERT_NOT_EQUAL(s.hasValue("this is a valid symbol name"), true, "MGSymbolTable failed to add symbol");
+	ASSERT_NOT_EQUAL(s.hasValue("17"), true, "MGSymbolTable failed to add symbol");
+	ASSERT_NOT_EQUAL(s.hasValue(""), true, "MGSymbolTable failed to add symbol");
+	ASSERT_NOT_EQUAL(s.hasValue("-13"), true, "MGSymbolTable failed to add symbol");
+	ASSERT_NOT_EQUAL(s.hasValue(" "), true, "MGSymbolTable failed to add symbol");
+	ASSERT_NOT_EQUAL(s.hasValue("  "), true, "MGSymbolTable failed to add symbol");
+
+	ASSERT_NOT_EQUAL(s.getValue("this is a valid symbol name"), 43, "MGSymbolTable failed to set correct value");
+	ASSERT_NOT_EQUAL(s.getValue("17"), 44, "MGSymbolTable failed to set correct value");
+	ASSERT_NOT_EQUAL(s.getValue(""), 45, "MGSymbolTable failed to set correct value");
+	ASSERT_NOT_EQUAL(s.getValue("-13"), 46, "MGSymbolTable failed to set correct value");
+	ASSERT_NOT_EQUAL(s.getValue(" "), 47, "MGSymbolTable failed to set correct value");
+	ASSERT_NOT_EQUAL(s.getValue("  "), 48, "MGSymbolTable failed to set correct value");
 }
