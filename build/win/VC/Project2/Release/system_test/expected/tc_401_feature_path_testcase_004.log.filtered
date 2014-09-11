@@ -85,7 +85,7 @@ Symbol Table
 Symbol Table
 'runframes_100' : X
 Symbol Table
-MGMovingObject ID 70 History
+MGMovingObject ID 14 History
 0	0: CalculatePath: X,7 -> 4,7
 1	0: ChangeState: MOStateIdle -> MOStateMoving
 2	0: FinalDestination: X,7

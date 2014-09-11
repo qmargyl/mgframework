@@ -274,97 +274,91 @@ Symbol Table
 [X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
 [X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
 [X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
-[X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
 MGMovingObject ID 7 History
-0	0: CalculatePath: X,234 -> 133,374
+0	0: CalculatePath: X,234 -> 157,179
 MGMovingObject ID 8 History
-0	0: CalculatePath: X,102 -> 390,392
+0	0: CalculatePath: X,102 -> 292,56
 MGMovingObject ID 9 History
-0	0: CalculatePath: X,159 -> 341,356
+0	0: CalculatePath: X,159 -> 159,122
 MGMovingObject ID 10 History
-0	0: CalculatePath: X,282 -> 54,282
+0	0: CalculatePath: X,282 -> 230,134
 MGMovingObject ID 11 History
-0	0: CalculatePath: X,49 -> 124,418
+0	0: CalculatePath: X,49 -> 72,138
 MGMovingObject ID 12 History
-0	0: CalculatePath: X,368 -> 390,398
+0	0: CalculatePath: X,368 -> 123,323
 MGMovingObject ID 13 History
-0	0: CalculatePath: X,186 -> 76,63
+0	0: CalculatePath: X,186 -> 27,261
 MGMovingObject ID 14 History
-0	0: CalculatePath: X,403 -> 130,221
+0	0: CalculatePath: X,403 -> 121,113
 MGMovingObject ID 15 History
-0	0: CalculatePath: X,34 -> 383,76
+0	0: CalculatePath: X,34 -> 271,12
 MGMovingObject ID 16 History
-0	0: CalculatePath: X,106 -> 147,172
+0	0: CalculatePath: X,106 -> 198,373
 MGMovingObject ID 17 History
-0	0: CalculatePath: X,26 -> 26,32
+0	0: CalculatePath: X,26 -> 195,3
 MGMovingObject ID 18 History
-0	0: CalculatePath: X,104 -> 407,54
+0	0: CalculatePath: X,104 -> 391,106
 MGMovingObject ID 19 History
-0	0: CalculatePath: X,339 -> 28,259
+0	0: CalculatePath: X,339 -> 212,198
 MGMovingObject ID 20 History
-0	0: CalculatePath: X,384 -> 254,8
+0	0: CalculatePath: X,384 -> 288,325
 MGMovingObject ID 21 History
-0	0: CalculatePath: X,112 -> 161,82
+0	0: CalculatePath: X,112 -> 201,157
 MGMovingObject ID 22 History
-0	0: CalculatePath: X,389 -> 75,238
+0	0: CalculatePath: X,389 -> 22,297
 MGMovingObject ID 23 History
-0	0: CalculatePath: X,396 -> 13,439
+0	0: CalculatePath: X,396 -> 350,261
 MGMovingObject ID 24 History
-0	0: CalculatePath: X,65 -> 419,35
+0	0: CalculatePath: X,65 -> 442,92
 MGMovingObject ID 25 History
-0	0: CalculatePath: X,398 -> 165,238
+0	0: CalculatePath: X,398 -> 17,316
 MGMovingObject ID 26 History
-0	0: CalculatePath: X,126 -> 330,206
+0	0: CalculatePath: X,126 -> 71,83
 Symbol Table
 'testcase_mo' : X
 Symbol Table
 Symbol Table
 'testcase_mo' : X
-MGMovingObject ID 672408 History
-0	0: CalculatePath: X,42 -> 134,342
-MGMovingObject ID 672409 History
-0	0: CalculatePath: X,252 -> 397,445
-MGMovingObject ID 672410 History
-0	0: CalculatePath: X,97 -> 337,24
-MGMovingObject ID 672411 History
-0	0: CalculatePath: X,87 -> 293,158
-MGMovingObject ID 672412 History
-0	0: CalculatePath: X,360 -> 45,360
-MGMovingObject ID 672413 History
-0	0: CalculatePath: X,48 -> 156,40
-MGMovingObject ID 672414 History
-0	0: CalculatePath: X,219 -> 285,81
-MGMovingObject ID 672415 History
-0	0: CalculatePath: X,280 -> 111,374
-MGMovingObject ID 672416 History
-0	0: CalculatePath: X,170 -> 345,128
-MGMovingObject ID 672417 History
-0	0: CalculatePath: X,240 -> 133,319
-MGMovingObject ID 672418 History
-0	0: CalculatePath: X,83 -> 245,260
-MGMovingObject ID 672419 History
-0	0: CalculatePath: X,424 -> 348,328
-MGMovingObject ID 672420 History
-0	0: CalculatePath: X,92 -> 312,312
-MGMovingObject ID 672421 History
-0	0: CalculatePath: X,199 -> 423,432
-MGMovingObject ID 672422 History
-0	0: CalculatePath: X,330 -> 392,347
-MGMovingObject ID 672423 History
-0	0: CalculatePath: X,78 -> 402,8
-MGMovingObject ID 672424 History
-0	0: CalculatePath: X,71 -> 234,438
-MGMovingObject ID 672425 History
-0	0: CalculatePath: X,30 -> 117,247
-MGMovingObject ID 672426 History
-0	0: CalculatePath: X,213 -> 253,268
-MGMovingObject ID 672427 History
-0	0: CalculatePath: X,300 -> 323,278
+MGMovingObject ID 214008 History
+0	0: CalculatePath: X,42 -> 31,146
+MGMovingObject ID 214009 History
+0	0: CalculatePath: X,252 -> 51,205
+MGMovingObject ID 214010 History
+0	0: CalculatePath: X,97 -> 358,443
+MGMovingObject ID 214011 History
+0	0: CalculatePath: X,87 -> 36,272
+MGMovingObject ID 214012 History
+0	0: CalculatePath: X,360 -> 444,57
+MGMovingObject ID 214013 History
+0	0: CalculatePath: X,48 -> 222,73
+MGMovingObject ID 214014 History
+0	0: CalculatePath: X,219 -> 322,13
+MGMovingObject ID 214015 History
+0	0: CalculatePath: X,280 -> 371,136
+MGMovingObject ID 214016 History
+0	0: CalculatePath: X,170 -> 83,190
+MGMovingObject ID 214017 History
+0	0: CalculatePath: X,240 -> 223,11
+MGMovingObject ID 214018 History
+0	0: CalculatePath: X,83 -> 124,388
+MGMovingObject ID 214019 History
+0	0: CalculatePath: X,424 -> 439,305
+MGMovingObject ID 214020 History
+0	0: CalculatePath: X,92 -> 335,348
+MGMovingObject ID 214021 History
+0	0: CalculatePath: X,199 -> 369,64
+MGMovingObject ID 214022 History
+0	0: CalculatePath: X,330 -> 38,440
+MGMovingObject ID 214023 History
+0	0: CalculatePath: X,78 -> 419,46
+MGMovingObject ID 214024 History
+0	0: CalculatePath: X,71 -> 398,197
+MGMovingObject ID 214025 History
+0	0: CalculatePath: X,30 -> 67,4
+MGMovingObject ID 214026 History
+0	0: CalculatePath: X,213 -> 67,426
+MGMovingObject ID 214027 History
+0	0: CalculatePath: X,300 -> 290,44
 Symbol Table
 'testcase_mo' : X
 Symbol Table
