@@ -1,5 +1,5 @@
 #include "../mgclasstester.h"
-
+#include "../mgpathitem.h"
 #include "../stubs/mgframeworkstub.h"
 
 void MGClassTester::test_002_basic_MO_create_delete()
