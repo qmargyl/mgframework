@@ -403,7 +403,7 @@ class MGFramework :public MGComponent
 		void setPort(int p){ m_Port = p; }
 
 		// Program version
-		const char *getMGFrameworkVersion(){ return MGFRAMEWORKVERSION; }
+		std::string getMGFrameworkVersion(){ return std::string(MGFRAMEWORKVERSION); }
 
 		// Execute the framework
 		void run(const char *scriptFileName, bool runOneFrame = false);
