@@ -58,7 +58,7 @@ MGFramework::MGFramework():
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
 
-	// Setup the framework for automatic system level testing...
+	// Setup the framework for automated system level testing...
 
 	// At framework creation, no commands have been used..
 	for(unsigned int i = 0; i < MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
@@ -293,7 +293,7 @@ bool MGFramework::processEvents()
 int MGFramework::parse(const char *sFileName)
 {
 	int returnValue = 0;
-	if(sFileName==NULL)
+	if(sFileName == NULL)
 	{
 		//MGFLOG_INFO("MGFramework::parse was called with argument NULL, exiting function...");
 		return returnValue;
@@ -394,7 +394,7 @@ int MGFramework::parse(const char *sFileName)
 							MGFLOG_ERROR("MGFramework::parse found unexpected 'end'");
 							break;
 						}
-						else if(functionName!=NULL)
+						else if(functionName != NULL)
 						{
 							MGFLOG_INFO("MGFramework::parse found end of function");
 							break;
@@ -406,7 +406,7 @@ int MGFramework::parse(const char *sFileName)
 					}
 					else if(v_scriptLine.size() == 2 && v_scriptLine[0] == "return")
 					{
-						if(functionName!=NULL)
+						if(functionName != NULL)
 						{
 							MGFLOG_INFO("MGFramework::parse found return from function");
 							returnValue = toInt(v_scriptLine[1], symbols);
@@ -417,7 +417,7 @@ int MGFramework::parse(const char *sFileName)
 							MGFLOG_ERROR("MGFramework::parse found 'return' outside a function");
 						}						
 					}
-					else if(v_scriptLine.size()==4 && v_scriptLine[0] == "if")
+					else if(v_scriptLine.size() == 4 && v_scriptLine[0] == "if")
 					{
 						if(v_scriptLine[2] == "==")
 						{
@@ -515,14 +515,12 @@ int MGFramework::parse(const char *sFileName)
 					{
 						// function call..
 						//MGFLOG_INFO("Tokens: " << v_scriptLine.size());
-
 						if(v_scriptLine.size() > 1 && v_scriptLine[0]=="call")
 						{
 							// call filename:func -param paramvalue ... 
 							std::size_t fColon = v_scriptLine[1].find(string(":"));
 
 							// Loop through any parameters and save them to symbols?
-
 							for(unsigned int i = 2; i < v_scriptLine.size(); ++i)
 							{
 								if(i+1 >= v_scriptLine.size())
@@ -543,17 +541,16 @@ int MGFramework::parse(const char *sFileName)
 										char c[2] = {0, 0};
 										for(unsigned int n = 1; n < strlen(v_scriptLine[i].c_str()); ++n)
 										{
-											c[0]=v_scriptLine[i][n];
+											c[0] = v_scriptLine[i][n];
 											parameter += std::string(c);
 										}
 										if(parameter.length() < 1)
 										{
-											// ERROR
 											MGFLOG_ERROR("MGFramework::parse found bad function parameter name");
 										}
 										else
 										{
-											m_SymbolTableTransfer->addSymbol(parameter, toInt(v_scriptLine[i+1], symbols));
+											m_SymbolTableTransfer->addSymbol(parameter, toInt(v_scriptLine[i + 1], symbols));
 											i++;
 										}
 									}
@@ -586,15 +583,15 @@ int MGFramework::parse(const char *sFileName)
 						else
 						{
 							// Create a string of all tokens in the command
-							string cmd=string("");
-							for(unsigned int i=0; i<v_scriptLine.size(); ++i)
+							string cmd = std::string("");
+							for(unsigned int i = 0; i < v_scriptLine.size(); ++i)
 							{
-								if(v_scriptLine[i]!=string(""))
+								if(v_scriptLine[i] != std::string(""))
 								{
-									cmd+=v_scriptLine[i];
-									if(i<v_scriptLine.size()-1)
+									cmd += v_scriptLine[i];
+									if(i < v_scriptLine.size() - 1)
 									{
-										cmd+=string(" ");
+										cmd += std::string(" ");
 									}
 								}
 							}
@@ -615,9 +612,9 @@ int MGFramework::parse(const char *sFileName)
 						}
 					}
 				}
-				else if(functionName!=NULL && v_scriptLine.size()==2 && v_scriptLine[0]=="function" && v_scriptLine[1]==string(functionName))
+				else if(functionName != NULL && v_scriptLine.size() == 2 && v_scriptLine[0] == "function" && v_scriptLine[1] == std::string(functionName))
 				{
-					foundFunction=true;
+					foundFunction = true;
 				}
 			}
 		}
@@ -663,28 +660,22 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 		//and the counter is zero, activate the console.
 		if(frameCountdownEnabled())
 		{
-			static int sleepKPI = 0;
 			static int nFrames = 0;
 			if(getFrameNumber() == 0)
 			{
 				std::cout << "Frame countdown results: " << std::endl;
-				std::cout << "\tSum of frame sleep time: " << sleepKPI << std::endl;
 				std::cout << "\tNumber of frames executed: " << nFrames << std::endl;
-				std::cout << "\tAverage sleep time per frame: " << (double)sleepKPI / (double)nFrames << std::endl;
-				// XXX: Print warnings based on the KPIs?
-				sleepKPI = 0;
 				nFrames = 0;
 				if(!runOneFrame)activateConsole();
 			}
 			else if (getFrameNumber() > 0)
 			{
 				countdownFrame(1);
-				sleepKPI += m_DelayTime; // Add all delay times for the frames counted down as a KPI for performance.
 				nFrames ++;
 			}
 			else
 			{
-				MGFLOG_ERROR("Error in frame countdown feature");
+				MGFLOG_ERROR("getFrameNumber() returned a negative value");
 			}
 		}
 
@@ -702,7 +693,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 		}
 
 		// Sleep if there is time to spare..
-		m_DelayTime = (1000/getDesiredFPS()) - (MGF_GetExecTimeMS() - frameStartTime);
+		m_DelayTime = (1000 / getDesiredFPS()) - (MGF_GetExecTimeMS() - frameStartTime);
 		if(m_DelayTime > 0)
 		{
 			//TODO: Change to SDL sleep method but move it into MGWindow class to collect all SDL dependencies there.
@@ -740,7 +731,7 @@ void MGFramework::handleMGFGameLogics()
 	}
 
 	// Update all moving objects
-	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)//for(int i=0;i<getNumberOfMO();i++)
+	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 	{
 		it->update(this);
 	}
@@ -766,7 +757,7 @@ void MGFramework::activateConsole()
 {
 	disableFrameCountdown();
 	enableTyping();
-	string cLine;
+	std::string cLine;
 	do
 	{
 		std::cout << "mg> ";
@@ -882,7 +873,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_PE_ALL_X:
 		{
 			registerUsedCommand(MGComponent_PE_ALL_X);
-			for(int i=0; i<getNumberOfPE(); i++)
+			for(int i = 0; i < getNumberOfPE(); i++)
 			{
 				m_PE[i].runConsoleCommand(c, this, s);
 			}
@@ -892,7 +883,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_SO_INT_X:
 		{
 			registerUsedCommand(MGComponent_SO_INT_X);
-			int soIndex=toInt(cmdvec[1], s);
+			int soIndex = toInt(cmdvec[1], s);
 			if(soIndex >= 0 && soIndex < getNumberOfSO())
 			{
 				return m_SO[toInt(cmdvec[1], s)].runConsoleCommand(c, this, s);
@@ -925,7 +916,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			bool ownerParamSet=false;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
-				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
+				if(cmdvec[i] == "-owner" && cmdvec.size() > (i + 1))
 				{
 					owner = (unsigned int)toInt(cmdvec[i+1], s);
 					ownerParamSet = true;
@@ -983,9 +974,9 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			bool ownerParamSet=false;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
-				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
+				if(cmdvec[i] == "-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = toInt(cmdvec[i+1], s);
+					owner = toInt(cmdvec[i + 1], s);
 					ownerParamSet=true;
 					++i;
 				}
@@ -1026,7 +1017,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			bool ownerParamSet=false;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
-				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
+				if(cmdvec[i] == "-owner" && cmdvec.size() > (i + 1))
 				{
 					owner = toInt(cmdvec[i + 1], s);
 					ownerParamSet=true;
@@ -1077,12 +1068,12 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
-				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
+				if(cmdvec[i] == "-owner" && cmdvec.size() > (i + 1))
 				{
 					owner = toInt(cmdvec[i + 1], s);
 					++i;
 				}
-				else if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
+				else if(cmdvec[i] == "-x" && cmdvec.size() > (i + 1))
 				{
 					x = toInt(cmdvec[i + 1], s);
 					++i;
@@ -1093,7 +1084,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					}
 					
 				}
-				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
+				else if(cmdvec[i] == "-y" && cmdvec.size() > (i + 1))
 				{
 					y = toInt(cmdvec[i + 1], s);
 					++i;
@@ -1104,12 +1095,12 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					}
 					
 				}
-				else if(cmdvec[i]=="-speed" && cmdvec.size() > (i + 1))
+				else if(cmdvec[i] == "-speed" && cmdvec.size() > (i + 1))
 				{
 					speed = toInt(cmdvec[i + 1], s);
 					++i;
 				}
-				else if(cmdvec[i]=="-area_square" && cmdvec.size() > (i + 4))
+				else if(cmdvec[i] == "-area_square" && cmdvec.size() > (i + 4))
 				{
 					x1 = toInt(cmdvec[i + 1], s);
 					y1 = toInt(cmdvec[i + 2], s);
@@ -1164,7 +1155,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			int y = -1; // Invalid default value
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
-				if(cmdvec[i]=="-x" && cmdvec.size() > (i + 1))
+				if(cmdvec[i] == "-x" && cmdvec.size() > (i + 1))
 				{
 					x = toInt(cmdvec[i + 1], s);
 					++i;
@@ -1175,7 +1166,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					}
 					
 				}
-				else if(cmdvec[i]=="-y" && cmdvec.size() > (i + 1))
+				else if(cmdvec[i] == "-y" && cmdvec.size() > (i + 1))
 				{
 					y = toInt(cmdvec[i + 1], s);
 					++i;
@@ -1227,7 +1218,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			int owner = 0;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
-				if(cmdvec[i]=="-owner" && cmdvec.size() > (i + 1))
+				if(cmdvec[i] == "-owner" && cmdvec.size() > (i + 1))
 				{
 					owner = toInt(cmdvec[i+1], s);
 					++i;
@@ -1525,15 +1516,15 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 {
 	if(cmdvec.size() == 1)
 	{
-		if(cmdvec[0]=="exit")
+		if(cmdvec[0] == "exit")
 		{
 			return MGComponent_EXIT;
 		}
-		else if(cmdvec[0]=="help")
+		else if(cmdvec[0] == "help")
 		{
 			return MGComponent_HELP;
 		}
-		else if(cmdvec[0]=="runoneframe")
+		else if(cmdvec[0] == "runoneframe")
 		{
 			return MGComponent_RUNONEFRAME;
 		}
@@ -1545,123 +1536,122 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 	}
 	else if(cmdvec.size() == 2)
 	{
-		if(cmdvec[0]=="setfps")
+		if(cmdvec[0] == "setfps")
 		{
 			return MGComponent_SETFPS_INT;
 		}
-		else if(cmdvec[0]=="open" && cmdvec[1]=="terminalserver")
+		else if(cmdvec[0] == "open" && cmdvec[1] == "terminalserver")
 		{
 			return MGComponent_OPEN_TERMINALSERVER;
 		}
-		else if(cmdvec[0]=="close" && cmdvec[1]=="terminalserver")
+		else if(cmdvec[0] == "close" && cmdvec[1] == "terminalserver")
 		{
 			return MGComponent_CLOSE_TERMINALSERVER;
 		}
-		else if(cmdvec[0]=="logging")
+		else if(cmdvec[0] == "logging")
 		{
 			return MGComponent_LOGGING_BOOL;
 		}
-		else if(cmdvec[0]=="minimap")
+		else if(cmdvec[0] == "minimap")
 		{
 			return MGComponent_MINIMAP_BOOL;
 		}
-		else if(cmdvec[0]=="dynamicfps")
+		else if(cmdvec[0] == "dynamicfps")
 		{
 			return MGComponent_DYNAMICFPS_BOOL;
 		}
-		else if(cmdvec[0]=="runframes")
+		else if(cmdvec[0] == "runframes")
 		{
 			return MGComponent_RUNFRAMES_INT;
 		}
-		else if(cmdvec[0]=="exit" && cmdvec[1]=="application")
+		else if(cmdvec[0] == "exit" && cmdvec[1] == "application")
 		{
 			return MGComponent_EXIT_APPLICATION;
 		}
-		else if(cmdvec[0]=="input")
+		else if(cmdvec[0] == "input")
 		{
 			return MGComponent_INPUT_BOOL;
 		}
 	}
 	else if(cmdvec.size() > 2)
 	{
-		if(cmdvec[0]=="add" && cmdvec[1]=="mo")
+		if(cmdvec[0] == "add" && cmdvec[1] == "mo")
 		{
 			return MGComponent_ADD_MO_INT_PARAMLIST; // Zero or more parameters..
 		}
-		else if(cmdvec[0]=="add" && cmdvec[1]=="so")
+		else if(cmdvec[0] == "add" && cmdvec[1] == "so")
 		{
 			return MGComponent_ADD_SO_INT_PARAMLIST; // Zero or more parameters..
 		}
-		else if(cmdvec[0]=="add" && cmdvec[1]=="pe")
+		else if(cmdvec[0] == "add" && cmdvec[1] == "pe")
 		{
 			return MGComponent_ADD_PE_INT_PARAMLIST; // Zero or more parameters..
 		}
-		else if(cmdvec[0]=="mo" && cmdvec[1]=="marked")
+		else if(cmdvec[0] == "mo" && cmdvec[1] == "marked")
 		{
 			return MGComponent_MO_MARKED_X;
 		}
-		else if(cmdvec[0]=="mo" && cmdvec[1]=="all")
+		else if(cmdvec[0] == "mo" && cmdvec[1] == "all")
 		{
 			return MGComponent_MO_ALL_X;
 		}
-		else if(cmdvec[0]=="mo")
+		else if(cmdvec[0] == "mo")
 		{
 			return MGComponent_MO_INT_X;
 		}
-		else if(cmdvec[0]=="pe" && cmdvec[1]=="all")
+		else if(cmdvec[0] == "pe" && cmdvec[1] == "all")
 		{
 			return MGComponent_PE_ALL_X;
 		}
-		else if(cmdvec[0]=="pe")
+		else if(cmdvec[0] == "pe")
 		{
 			return MGComponent_PE_INT_X;
 		}
-		else if(cmdvec[0]=="delete" && cmdvec[1]=="all" && cmdvec[2]=="mo" )
+		else if(cmdvec[0] == "delete" && cmdvec[1] == "all" && cmdvec[2] == "mo" )
 		{
 			return MGComponent_DELETE_ALL_MO_PARAMLIST; // Zero or more parameters..
 		}
-		else if(cmdvec[0]=="delete" && cmdvec[1]=="all" && cmdvec[2]=="so" )
+		else if(cmdvec[0] == "delete" && cmdvec[1] == "all" && cmdvec[2] == "so" )
 		{
 			return MGComponent_DELETE_ALL_SO_PARAMLIST; // Zero or more parameters..
 		}
-		else if(cmdvec[0]=="delete" && cmdvec[1]=="all" && cmdvec[2]=="pe" )
+		else if(cmdvec[0] == "delete" && cmdvec[1] == "all" && cmdvec[2] == "pe" )
 		{
 			return MGComponent_DELETE_ALL_PE_PARAMLIST; // Zero or more parameters..
 		}
-		else if(cmdvec[0]=="expect")
+		else if(cmdvec[0] == "expect")
 		{
 			return MGComponent_EXPECT_INT_INT;
 		}
-		else if(cmdvec[0]=="delete" && cmdvec[1]=="mo")
+		else if(cmdvec[0] == "delete" && cmdvec[1] == "mo")
 		{
 			return MGComponent_DELETE_MO_INT;
 		}
-		else if(cmdvec[0]=="delete" && cmdvec[1]=="so")
+		else if(cmdvec[0] == "delete" && cmdvec[1] == "so")
 		{
 			return MGComponent_DELETE_SO_INT;
 		}
-		else if(cmdvec[0]=="so" && cmdvec[1]=="all")
+		else if(cmdvec[0] == "so" && cmdvec[1] == "all")
 		{
 			return MGComponent_SO_ALL_X;
 		}
-		else if(cmdvec[0]=="so")
+		else if(cmdvec[0] == "so")
 		{
 			return MGComponent_SO_INT_X;
 		}
-		else if(cmdvec[1]=="=" || cmdvec[1]=="assignto")
+		else if(cmdvec[1] == "=" || cmdvec[1] == "assignto")
 		{
 			return MGComponent_SYMBOL_ASSIGNTO_INT;
 		}
 	}
 
-
 	if(cmdvec.size() > 1)
 	{
-		if(cmdvec[0]=="map")
+		if(cmdvec[0] == "map")
 		{
 			return MGComponent_MAP_X;
 		}
-		else if(cmdvec[0]=="window")
+		else if(cmdvec[0] == "window")
 		{
 			return MGComponent_WINDOW_X;
 		}
@@ -1682,7 +1672,7 @@ unsigned int MGFramework::getFPS()
 
 	if(m_FrameTime > 0)
 	{
-		unsigned int result = (unsigned int)(1000/m_FrameTime);
+		unsigned int result = (unsigned int)(1000 / m_FrameTime);
 		if((result > 0) && (result < (2*getDesiredFPS())))
 		{
 			return result;
@@ -1825,9 +1815,9 @@ bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, 
 	// Find the first available (x,y) since the random placement failed.
 	if(!successful)
 	{
-		for(int t=0; t < m_Map.getWidth()*m_Map.getHeight(); ++t)
+		for(int t = 0; t < m_Map.getWidth() * m_Map.getHeight(); ++t)
 		{
-			if(m_Map.occupant(m_Map.getTileX(t), m_Map.getTileY(t))==0)
+			if(m_Map.occupant(m_Map.getTileX(t), m_Map.getTileY(t)) == 0)
 			{
 				x = m_Map.getTileX(t);
 				y = m_Map.getTileY(t);
@@ -1841,7 +1831,7 @@ bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, 
 	{
 		it->setTileXY(x, y, this);
 		it->setDestTileXY(it->getTileX(), it->getTileY());
-		it->setSpeed(1.0/(double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
+		it->setSpeed(1.0 / (double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
 		it->setOwner(owner);
 		m_Map.occupy(it->getTileX(), it->getTileY(), it->getID());
 		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(it->getTileX(), it->getTileY());
@@ -1869,7 +1859,7 @@ bool MGFramework::setupSO(int i, int x, int y)
 		if(y<0) y = randomN(m_Map.getHeight());
 		bool successful=false;
 
-		for(int q=0; q<MGF_SOPOSITIONINGATTEMPTS; ++q)
+		for(int q = 0; q<MGF_SOPOSITIONINGATTEMPTS; ++q)
 		{
 			if(m_Map.occupant(x,y) != 0)
 			{
@@ -1885,9 +1875,9 @@ bool MGFramework::setupSO(int i, int x, int y)
 		// Find the first available (x,y) since the random placement failed.
 		if(!successful)
 		{
-			for(int t=0; t < m_Map.getWidth()*m_Map.getHeight(); ++t)
+			for(int t = 0; t < m_Map.getWidth() * m_Map.getHeight(); ++t)
 			{
-				if(m_Map.occupant(m_Map.getTileX(t), m_Map.getTileY(t))==0)
+				if(m_Map.occupant(m_Map.getTileX(t), m_Map.getTileY(t)) == 0)
 				{
 					x = m_Map.getTileX(t);
 					y = m_Map.getTileY(t);
@@ -1926,16 +1916,16 @@ void MGFramework::deleteAllPE()
 void MGFramework::addPE(int n)
 {
 	MGPeriodicEvent *oldPE = new MGPeriodicEvent[getNumberOfPE()];
-	int nOld=getNumberOfPE();
-	for(int i=0; i<nOld; i++)
+	int nOld = getNumberOfPE();
+	for(int i = 0; i < nOld; i++)
 	{
 		oldPE[i].copy(&m_PE[i]);
 	}
 	if(m_PE) delete[] m_PE;
 	m_PE = NULL;
-	m_NPE=nOld+n;
+	m_NPE = nOld + n;
 	m_PE = new MGPeriodicEvent[getNumberOfPE()];
-	for(int i=0; i<nOld; i++)
+	for(int i = 0; i < nOld; i++)
 	{
 		m_PE[i].copy(&oldPE[i]);
 	}
@@ -1950,12 +1940,12 @@ void MGFramework::deletePE(int index)
 	}
 	else
 	{
-		for(int i=index; i<getNumberOfPE()-1; ++i)
+		for(int i = index; i < getNumberOfPE() - 1; ++i)
 		{
 			// Overwrite pe(i) with pe(i+1)
-			m_PE[i].copy(&m_PE[i+1]);
+			m_PE[i].copy(&m_PE[i + 1]);
 		}
-		m_NPE = getNumberOfPE()-1;
+		m_NPE = getNumberOfPE() - 1;
 	}
 }
 
@@ -2000,26 +1990,26 @@ void MGFramework::drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int ds
 
 bool MGFramework::isNumericalInt(const string &s)
 {
-	if(s.size()==0)
+	if(s.size() == 0)
 	{
 		return false;
 	}
-	else if(s.size()==1)
+	else if(s.size() == 1)
 	{
-		return s[0]>='0' && s[0]<='9';
+		return s[0] >= '0' && s[0] <= '9';
 	}
 	else
 	{
-		for(unsigned int i=1;i<s.size(); ++i)
+		for(unsigned int i = 1; i < s.size(); ++i)
 		{
-			if(s[i]<'0' || s[i]>'9')
+			if(s[i] < '0' || s[i] > '9')
 			{
 				return false;
 			}
 		}
-		if(s[0]<'0' || s[0]>'9')
+		if(s[0] < '0' || s[0] > '9')
 		{
-			if(s[0]!='-')
+			if(s[0] != '-')
 			{
 				return false;
 			}
@@ -2053,21 +2043,21 @@ int MGFramework::toInt(const string &s, MGSymbolTable *sym)
 	}
 	else
 	{
-		if(s == string("$cmd"))
+		if(s == std::string("$cmd"))
 		{
 			return m_CommandReturnVal;
 		}
-		else if(s == string("on"))
+		else if(s == std::string("on"))
 		{
 			return MGF_TRUE;
 		}
-		else if(s == string("off"))
+		else if(s == std::string("off"))
 		{
 			return MGF_FALSE;
 		}
-		else if(s == string("random_mo"))
+		else if(s == std::string("random_mo"))
 		{
-			if(getNumberOfMO()==0)
+			if(getNumberOfMO() == 0)
 			{
 				MGFLOG_ERROR("MGFramework::toInt was called with 'random_mo' when no MO existed");
 			}
@@ -2076,9 +2066,9 @@ int MGFramework::toInt(const string &s, MGSymbolTable *sym)
 				return randomN(getNumberOfMO());
 			}
 		}
-		else if(s == string("random_pe"))
+		else if(s == std::string("random_pe"))
 		{
-			if(getNumberOfPE()==0)
+			if(getNumberOfPE() == 0)
 			{
 				MGFLOG_ERROR("MGFramework::toInt was called with 'random_pe' when no PE existed");
 			}
@@ -2087,39 +2077,39 @@ int MGFramework::toInt(const string &s, MGSymbolTable *sym)
 				return randomN(getNumberOfPE());
 			}
 		}
-		else if(s == string("random_x"))
+		else if(s == std::string("random_x"))
 		{
 			return randomN(m_Map.getWidth());
 		}
-		else if(s == string("random_y"))
+		else if(s == std::string("random_y"))
 		{
 			return randomN(m_Map.getHeight());
 		}
-		else if(s == string("getnumberofmarkedmo"))
+		else if(s == std::string("getnumberofmarkedmo"))
 		{
 			return getNumberOfMarkedMO();
 		}
-		else if(s == string("getnumberofmo"))
+		else if(s == std::string("getnumberofmo"))
 		{
 			return getNumberOfMO();
 		}
-		else if(s == string("getnumberofso"))
+		else if(s == std::string("getnumberofso"))
 		{
 			return getNumberOfSO();
 		}
-		else if(s == string("getnumberofpe"))
+		else if(s == std::string("getnumberofpe"))
 		{
 			return getNumberOfPE();
 		}
-		else if(s == string("getnumberofcommands"))
+		else if(s == std::string("getnumberofcommands"))
 		{
 			return getNumberOfCommands();
 		}
-		else if(s == string("getnumberofusedcommands"))
+		else if(s == std::string("getnumberofusedcommands"))
 		{
 			return getNumberOfUsedCommands();
 		}
-		else if(s == string("getfps"))
+		else if(s == std::string("getfps"))
 		{
 			return getFPS();
 		}
@@ -2128,7 +2118,8 @@ int MGFramework::toInt(const string &s, MGSymbolTable *sym)
 			// First look in the symbol table of local variables..
 			if(sym)
 			{
-				for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it=sym->table.begin(); it != sym->table.end(); ++it)
+				// TODO: Access the symbol through public getters and not the table member (which should be made private)
+				for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it = sym->table.begin(); it != sym->table.end(); ++it)
 				{
 					if(it->symbol == s)
 					{
@@ -2137,7 +2128,8 @@ int MGFramework::toInt(const string &s, MGSymbolTable *sym)
 				}				
 			}
 			// Then the one of global..
-			for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it=m_SymbolTable->table.begin(); it != m_SymbolTable->table.end(); ++it)
+			// TODO: Access the symbol through public getters and not the table member (which should be made private)
+			for (std::deque<MGSymbolTable::MGSymbolTablePair>::iterator it = m_SymbolTable->table.begin(); it != m_SymbolTable->table.end(); ++it)
 			{
 				if(it->symbol == s)
 				{
@@ -2155,27 +2147,24 @@ int MGFramework::toInt(const string &s, MGSymbolTable *sym)
 }
 
 
-
-
-
 int MGFramework::initializeWinsock(WORD wVersionRequested)
 {
 #ifndef MGF_DISABLE_WINSOCK
 	WSADATA wsaData;
 	int err = WSAStartup(wVersionRequested, &wsaData);
 
-	if (err!=0) return 0; // Tell the user that we couldn't find a usable winsock.dll 
-	if (LOBYTE(wsaData.wVersion )!=1 || HIBYTE(wsaData.wVersion)!=1) return 0;
+	if (err != 0) return 0; // Tell the user that we couldn't find a usable winsock.dll 
+	if (LOBYTE(wsaData.wVersion ) != 1 || HIBYTE(wsaData.wVersion) != 1) return 0;
 	//Everything is fine: proceed
 #endif
 	return 1;
 }
 
 
-
 bool MGFramework::okMGFrameworkSyntax(const std::vector<std::string> &v_s)
 {
-	if(v_s.size()>0 && v_s[v_s.size()-1] != string(""))
+	// XXX: This function is just an embryo...
+	if(v_s.size() > 0 && v_s[v_s.size() - 1] != std::string(""))
 	{
 		return true;
 	}
@@ -2193,7 +2182,7 @@ void MGFramework::deleteAllSO()
 {
 	if(m_SO) 
 	{
-		for(int i=0; i<getNumberOfSO(); ++i)
+		for(int i = 0; i<getNumberOfSO(); ++i)
 		{
 			m_Map.unOccupy(m_SO[i].getTileX(), m_SO[i].getTileY());
 			if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_SO[i].getTileX(), m_SO[i].getTileY());
@@ -2211,15 +2200,15 @@ void MGFramework::addSO(int n)
 {
 	MGStationaryObject *oldSO = new MGStationaryObject[getNumberOfSO()];
 	int nOld=getNumberOfSO();
-	for(int i=0; i<nOld; i++)
+	for(int i = 0; i < nOld; i++)
 	{
 		oldSO[i].copy(&m_SO[i]);
 	}
 	if(m_SO) delete[] m_SO;
 	m_SO = NULL;
-	m_NSO=nOld+n;
+	m_NSO = nOld + n;
 	m_SO = new MGStationaryObject[getNumberOfSO()];
-	for(int i=0; i<nOld; i++)
+	for(int i = 0; i < nOld; i++)
 	{
 		m_SO[i].copy(&oldSO[i]);
 	}
@@ -2238,17 +2227,16 @@ void MGFramework::deleteSO(int index)
 		m_Map.unOccupy(m_SO[index].getTileX(), m_SO[index].getTileY());
 		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_SO[index].getTileX(), m_SO[index].getTileY());
 
-		for(int i=index; i<getNumberOfSO()-1; ++i)
+		for(int i = index; i < getNumberOfSO() - 1; ++i)
 		{
 			// Overwrite so(i) with so(i+1)
-			m_SO[i].copy(&m_SO[i+1]);
+			m_SO[i].copy(&m_SO[i + 1]);
 		}
-		m_NSO = getNumberOfSO()-1;
+		m_NSO = getNumberOfSO() - 1;
 	}
 	// Make sure tiles are re-rendered after deleting SOs
 	setRenderAllTiles();
 }
-
 
 
 int runMGFrameworkSocketTerminal(void *fm)
@@ -2258,12 +2246,12 @@ int runMGFrameworkSocketTerminal(void *fm)
 	int PORTNR = mgf->getPort();
 	mgf->logIfEnabled((std::string("Opening socket terminal... port ") + MGFramework::toString(mgf->getPort())).c_str());
 	
-	bool connectionOpen=true;
-	int nZerosInARow=0;
+	bool connectionOpen = true;
+	int nZerosInARow = 0;
 
 	while(mgf->socketTerminalOpen())
 	{
-		if (!mgf->initializeWinsock (MAKEWORD(1,1) ) ) 
+		if(!mgf->initializeWinsock (MAKEWORD(1, 1) ) ) 
 		{
 			mgf->logIfEnabled("Error initializing Winsock.");
 			return 1;
@@ -2272,7 +2260,7 @@ int runMGFrameworkSocketTerminal(void *fm)
 		SOCKET fd, fd_new; 	// "file" descriptors for the network sockets
 		SOCKADDR_IN saddr_me;
 
-		if ((fd=socket(AF_INET,SOCK_STREAM,0)) == INVALID_SOCKET)
+		if((fd=socket(AF_INET,SOCK_STREAM,0)) == INVALID_SOCKET)
 		{
 			mgf->logIfEnabled("Server: socket not connected ");
 			return 1;
@@ -2282,13 +2270,13 @@ int runMGFrameworkSocketTerminal(void *fm)
 		saddr_me.sin_addr.s_addr= htonl(INADDR_ANY);
 		saddr_me.sin_port = htons(PORTNR);
 
-		if (bind(fd, (LPSOCKADDR) &saddr_me, sizeof(saddr_me)) == SOCKET_ERROR)
+		if(bind(fd, (LPSOCKADDR) &saddr_me, sizeof(saddr_me)) == SOCKET_ERROR)
 		{
 			mgf->logIfEnabled("Server: bind failure ");
 			return 1;
 		}
 
-		if (listen(fd,1) == SOCKET_ERROR)
+		if(listen(fd, 1) == SOCKET_ERROR)
 		{
 			mgf->logIfEnabled("Server: listen failure ");
 			return 1;
@@ -2297,7 +2285,7 @@ int runMGFrameworkSocketTerminal(void *fm)
 		// the server is now started and ready to accept a command..
 		//mgf->logIfEnabled("Waiting for terminal command...");
 
-		if ( (fd_new=accept(fd, NULL, NULL)) == INVALID_SOCKET)
+		if( (fd_new=accept(fd, NULL, NULL)) == INVALID_SOCKET)
 		{
 			mgf->logIfEnabled("Server: accept failure ");
 			return 1;
@@ -2306,11 +2294,11 @@ int runMGFrameworkSocketTerminal(void *fm)
 		while(connectionOpen)
 		{
 			char buf[256];
-			for (int i=0; i < 256; i++)
+			for (int i = 0; i < 256; i++)
 			{
-				buf[i]=0;
+				buf[i] = 0;
 			}
-			if( recv(fd_new, buf, sizeof(buf), 0) == SOCKET_ERROR )
+			if(recv(fd_new, buf, sizeof(buf), 0) == SOCKET_ERROR )
 			{
 				mgf->logIfEnabled("Server: receiving failure ");
 				return 1;
@@ -2318,14 +2306,14 @@ int runMGFrameworkSocketTerminal(void *fm)
 
 			// Now buf contains the request string.
 
-			int lBuf=(int)strlen(buf);
-			if(lBuf==0)
+			int lBuf = (int)strlen(buf);
+			if(lBuf == 0)
 			{
 				nZerosInARow++;
 			}
 			else
 			{
-				nZerosInARow=0;
+				nZerosInARow = 0;
 				mgf->runConsoleCommand(buf, mgf, NULL);
 				if(send(fd_new, "ok\n\r", 4, 0) == SOCKET_ERROR)
 				{
@@ -2335,7 +2323,7 @@ int runMGFrameworkSocketTerminal(void *fm)
 			}
 			if(nZerosInARow>4)
 			{
-				connectionOpen=false;
+				connectionOpen = false;
 			}
 		}
 		WSACleanup();
