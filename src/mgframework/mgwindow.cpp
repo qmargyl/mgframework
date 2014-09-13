@@ -4,9 +4,9 @@
 #include <cstring>
 #include <iostream>
 #ifndef UNITTEST_LINUX
-#include <SDL/SDL_opengl.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
+	#include <SDL/SDL_opengl.h>
+	#include <GL/gl.h>
+	#include <GL/glu.h>
 #endif
 #include "mgframework.h"
 

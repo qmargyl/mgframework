@@ -19,7 +19,7 @@ bool Project2Server::init(int w, int h, int tw, int th)
 	if (windowPropertiesSet())
 	{
 		// Objcts such as the map are initialized here.
-		m_Map.init(w, h, tw, th, m_Window.getWidth(), m_Window.getHeight()); // width (in number of tiles), height, tile width (in pixels), tile height, resolution x and y.
+		m_Map.init(w, h, tw, th, getWindow()->getWidth(), getWindow()->getHeight()); // width (in number of tiles), height, tile width (in pixels), tile height, resolution x and y.
 
 
 		// Setup game logics..

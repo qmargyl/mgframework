@@ -689,7 +689,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 		if(getInstanceType() != MGFSERVERINSTANCE) 
 		{
 			draw();
-			m_Window.flipSurface();
+			getWindow()->flipSurface();
 		}
 
 		// Sleep if there is time to spare..
@@ -848,7 +848,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_WINDOW_X:
 		{
 			registerUsedCommand(MGComponent_WINDOW_X);
-			return m_Window.runConsoleCommand(c, this, s);
+			return getWindow()->runConsoleCommand(c, this, s);
 		}
 
 		case MGComponent_PE_INT_X:
@@ -1451,7 +1451,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			std::cout << "          over TCP/IP." << std::endl;
 
 			(void)m_Map.runConsoleCommand("map help", this, NULL);
-			(void)m_Window.runConsoleCommand("window help", this, NULL);
+			(void)getWindow()->runConsoleCommand("window help", this, NULL);
 			if(getNumberOfMO() > 0)(void)(m_MO.begin()->runConsoleCommand("mo 0 help", this, NULL));
 
 			return true;
@@ -1720,7 +1720,7 @@ unsigned int MGFramework::getDesiredFPS()
 
 bool MGFramework::setWindowProperties(int width, int height, int bpp, bool fullscreen, const string& title)
 {
-	m_Window.setProperties(width, height, bpp, fullscreen, title);
+	getWindow()->setProperties(width, height, bpp, fullscreen, title);
 	m_WindowPropertiesSet = true;
 	return true;
 }
@@ -1728,7 +1728,7 @@ bool MGFramework::setWindowProperties(int width, int height, int bpp, bool fulls
 
 bool MGFramework::setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const string& title)
 {
-	m_Window.setProperties(screenResolution, bpp, fullscreen, title);
+	getWindow()->setProperties(screenResolution, bpp, fullscreen, title);
 	m_WindowPropertiesSet = true;
 	return true;
 }
@@ -1976,7 +1976,7 @@ void MGFramework::quit()
 void MGFramework::drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH)
 {
 	increaseDrawnTilesCounter();
-	m_Window.drawSprite(imageSurface, srcX, srcY, dstX, dstY, tileW, tileH);
+	getWindow()->drawSprite(imageSurface, srcX, srcY, dstX, dstY, tileW, tileH);
 }
 #endif
 
@@ -1984,7 +1984,7 @@ void MGFramework::drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int ds
 void MGFramework::drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY)
 {
 	increaseDrawnTilesCounter();
-	m_Window.drawSprite(imageSurface, srcX, srcY, dstX, dstY, m_Map.getTileWidth(), m_Map.getTileHeight());
+	getWindow()->drawSprite(imageSurface, srcX, srcY, dstX, dstY, m_Map.getTileWidth(), m_Map.getTileHeight());
 }
 #endif
 

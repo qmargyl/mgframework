@@ -214,8 +214,11 @@ class MGFramework :public MGComponent
 		// Center on MO
 		unsigned int m_FeatureCenterOnMO;
 
-	protected:
 		MGWindow m_Window;				// The framework window
+
+	protected:
+		MGWindow *getWindow(){ return &m_Window; }
+
 		std::list<MGMovingObject> m_MO;
 		MGPeriodicEvent *m_PE;			// Periodic Events
 		MGStationaryObject *m_SO;		// Stationary Objects
