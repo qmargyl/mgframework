@@ -121,7 +121,7 @@ int main(int argc, char **argv)
 			p2 = new Project2();
 			p2->setWindowProperties(MGWindow_RES_800_600, 32, false, 
 				std::string("Project2 (single player test application) based on MGF ") + 
-							std::string(p2->getMGFrameworkVersion()));
+							p2->getMGFrameworkVersion());
 			break;
 		}
 		case MGFCLIENTINSTANCE:
@@ -129,7 +129,7 @@ int main(int argc, char **argv)
 			p2 = new Project2();
 			p2->setWindowProperties(640, 480, 32, false, 
 				std::string("Project2 (client test application) based on MGF ") + 
-							std::string(p2->getMGFrameworkVersion()));
+							p2->getMGFrameworkVersion());
 			break;
 		}
 		case MGFSERVERINSTANCE:
@@ -137,7 +137,7 @@ int main(int argc, char **argv)
 			p2 = new Project2Server();
 			p2->setWindowProperties(800, 600, 32, false, 
 				std::string("Project2 (server test application) based on MGF ") + 
-							std::string(p2->getMGFrameworkVersion()));
+							p2->getMGFrameworkVersion());
 			break;
 		}
 	}
