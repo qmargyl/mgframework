@@ -319,7 +319,7 @@ int MGFramework::parse(const char *sFileName)
 
 	strcpy(scriptFileName,sFileName);
 
-	std::size_t foundColon = string(scriptFileName).find(string(":"));
+	std::size_t foundColon = std::string(scriptFileName).find(std::string(":"));
 	if (foundColon!=std::string::npos && foundColon>0)
 	{
 		functionName = scriptFileName + foundColon + 1;
@@ -518,7 +518,7 @@ int MGFramework::parse(const char *sFileName)
 						if(v_scriptLine.size() > 1 && v_scriptLine[0]=="call")
 						{
 							// call filename:func -param paramvalue ... 
-							std::size_t fColon = v_scriptLine[1].find(string(":"));
+							std::size_t fColon = v_scriptLine[1].find(std::string(":"));
 
 							// Loop through any parameters and save them to symbols?
 							for(unsigned int i = 2; i < v_scriptLine.size(); ++i)
@@ -567,10 +567,10 @@ int MGFramework::parse(const char *sFileName)
 							}
 							else
 							{
-								MGFLOG_INFO("MGFramework::parse calling " << (string(scriptFileName)+string(":")+v_scriptLine[1]).c_str());
+								MGFLOG_INFO("MGFramework::parse calling " << (std::string(scriptFileName) + std::string(":") + v_scriptLine[1]).c_str());
 								symbols->printTable();
-								symbolAssignTo(	v_scriptLine[1], 
-												MGComponent::toString(parse((string(scriptFileName)+string(":")+v_scriptLine[1]).c_str())), 
+								symbolAssignTo(v_scriptLine[1], 
+									MGComponent::toString(parse((std::string(scriptFileName) + std::string(":") + v_scriptLine[1]).c_str())), 
 												symbols);
 							}
 							if(getQuitFlag())
@@ -583,7 +583,7 @@ int MGFramework::parse(const char *sFileName)
 						else
 						{
 							// Create a string of all tokens in the command
-							string cmd = std::string("");
+							std::string cmd = std::string("");
 							for(unsigned int i = 0; i < v_scriptLine.size(); ++i)
 							{
 								if(v_scriptLine[i] != std::string(""))
@@ -769,7 +769,7 @@ void MGFramework::activateConsole()
 
 
 
-void MGFramework::symbolAssignTo(string sym, string val, MGSymbolTable *s)
+void MGFramework::symbolAssignTo(std::string sym, std::string val, MGSymbolTable *s)
 {
 	if(s && s->hasValue(sym))
 	{
@@ -1718,7 +1718,7 @@ unsigned int MGFramework::getDesiredFPS()
 }
 
 
-bool MGFramework::setWindowProperties(int width, int height, int bpp, bool fullscreen, const string& title)
+bool MGFramework::setWindowProperties(int width, int height, int bpp, bool fullscreen, const std::string &title)
 {
 	getWindow()->setProperties(width, height, bpp, fullscreen, title);
 	m_WindowPropertiesSet = true;
@@ -1726,7 +1726,7 @@ bool MGFramework::setWindowProperties(int width, int height, int bpp, bool fulls
 }
 
 
-bool MGFramework::setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const string& title)
+bool MGFramework::setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title)
 {
 	getWindow()->setProperties(screenResolution, bpp, fullscreen, title);
 	m_WindowPropertiesSet = true;
@@ -1988,7 +1988,7 @@ void MGFramework::drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int ds
 }
 #endif
 
-bool MGFramework::isNumericalInt(const string &s)
+bool MGFramework::isNumericalInt(const std::string &s)
 {
 	if(s.size() == 0)
 	{
@@ -2019,7 +2019,7 @@ bool MGFramework::isNumericalInt(const string &s)
 	MGFLOG_STATIC_ERROR("MGFramework::isNumericalInt failed to parse string");
 }
 
-int MGFramework::staticToInt(const string &s)
+int MGFramework::staticToInt(const std::string &s)
 {
 	if(isNumericalInt(s))
 	{
@@ -2032,7 +2032,7 @@ int MGFramework::staticToInt(const string &s)
 	return 0;
 }
 
-int MGFramework::toInt(const string &s, MGSymbolTable *sym)
+int MGFramework::toInt(const std::string &s, MGSymbolTable *sym)
 {
 	if(isNumericalInt(s))
 	{

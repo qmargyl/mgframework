@@ -564,7 +564,7 @@ void MGMovingObject::changeState(MOState toState)
 			--m_MovingMOCounter;
 		}
 
-		addToHistory( (string("ChangeState: ") + toString(getCurrentState()) + string(" -> ") + toString(toState)).c_str());
+		addToHistory((std::string("ChangeState: ") + toString(getCurrentState()) + std::string(" -> ") + toString(toState)).c_str());
 		m_CurrentState = toState;
 
 	}
@@ -618,6 +618,6 @@ void MGMovingObject::addToHistory(const char *str)
 {
 	if(m_HistoryEnabled)
 	{
-		m_History.push_back(MGComponent::toString((int)0) + string(": ") + string(str));
+		m_History.push_back(MGComponent::toString((int)0) + std::string(": ") + std::string(str));
 	}
 }

@@ -2,6 +2,7 @@
 #define _MG_WINDOW_H
 
 #include "mgcomponent.h"
+#include "imgwindow.h"
 
 #ifndef UNITTEST_LINUX
 // SDL
@@ -13,17 +14,7 @@
   #endif
 #endif
 
-using std::string;
-
-enum eMGWindowScreenResolution{
-	// Wide screen resolutions (16:9)
-	MGWindow_RES_1920_1080 = 0,
-	MGWindow_RES_1600_900,
-	// Normal screen resolutions (4:3)
-	MGWindow_RES_1024_768,
-	MGWindow_RES_800_600,
-	MGWindow_RES_640_480
-};
+//using std::string;
 
 class MGWindow :public MGComponent
 {
@@ -32,7 +23,7 @@ class MGWindow :public MGComponent
 		int m_Height;
 		int m_Bpp;
 		bool m_Fullscreen;
-		string m_Title;
+		std::string m_Title;
 #ifndef UNITTEST_LINUX
 		SDL_Surface * m_Screen;
 		// Font
@@ -52,8 +43,8 @@ class MGWindow :public MGComponent
 			
 		bool createWindow();
 
-		bool setProperties(int width, int height, int bpp, bool fullscreen, const string& title);
-		bool setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const string& title);
+		bool setProperties(int width, int height, int bpp, bool fullscreen, const std::string &title);
+		bool setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title);
 
 		void setSize(int width, int height){ m_Height = height; m_Width = width; }
 		int getHeight(){ return m_Height; }

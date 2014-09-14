@@ -69,7 +69,7 @@ bool MGWindow::createWindow()
 	return true;
 }
 
-bool MGWindow::setProperties(int width, int height, int bpp, bool fullscreen, const string& title)
+bool MGWindow::setProperties(int width, int height, int bpp, bool fullscreen, const std::string &title)
 {
 	setSize(width, height);
 	m_Title = title;
@@ -81,7 +81,7 @@ bool MGWindow::setProperties(int width, int height, int bpp, bool fullscreen, co
 	return true;
 }
 
-bool MGWindow::setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const string& title)
+bool MGWindow::setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title)
 {
 	switch(screenResolution)
 	{

@@ -198,7 +198,7 @@ class MGFramework :public MGComponent
 
 		// Symbol related
 		int m_CommandReturnVal;
-		void symbolAssignTo(string sym, string val, MGSymbolTable *s);
+		void symbolAssignTo(std::string sym, std::string val, MGSymbolTable *s);
 		void symbolAssignTo(const std::vector<std::string> &cmdvec, MGSymbolTable *s);
 
 		// Command queue related
@@ -381,8 +381,8 @@ class MGFramework :public MGComponent
 
 		// Initialization
 		virtual bool init(int w, int h, int tw, int th) = 0;	// Force a derived sub-class to implement this as it is not framework related.
-		bool setWindowProperties(int width, int height, int bpp, bool fullscreen, const string& title);
-		bool setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const string& title);
+		bool setWindowProperties(int width, int height, int bpp, bool fullscreen, const std::string &title);
+		bool setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title);
 		void unsetWindowProperties(){ m_WindowPropertiesSet = false; }
 		bool windowPropertiesSet(){ return m_WindowPropertiesSet; }
 
@@ -393,9 +393,9 @@ class MGFramework :public MGComponent
 		// Console command handling
 		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
-		static bool isNumericalInt(const string &s); // returns true if the argument contains only numbers.
-		static int staticToInt(const string &s); // returns an int converted from either a constant or a symbol.
-		int toInt(const string &s, MGSymbolTable *sym); // returns an int converted from either a constant or a symbol.
+		static bool isNumericalInt(const std::string &s); // returns true if the argument contains only numbers.
+		static int staticToInt(const std::string &s); // returns an int converted from either a constant or a symbol.
+		int toInt(const std::string &s, MGSymbolTable *sym); // returns an int converted from either a constant or a symbol.
 		bool okMGFrameworkSyntax(const std::vector<std::string> &v_s);
 
 		//Socket terminal related
