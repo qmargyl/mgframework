@@ -6,11 +6,18 @@
 class MGFrameworkStub : public MGFramework
 {
 	private:
-		void handleGameLogics(){}
-		void draw(){}
+		unsigned int m_handleGameLogicsCounter;
+		unsigned int m_drawCounter;
+	
+		// MGFramework
+		void handleGameLogics(){ m_handleGameLogicsCounter++; }
+		void draw(){ m_drawCounter++; }
 
 	public:
-		MGFrameworkStub();
+		MGFrameworkStub()
+		:	m_handleGameLogicsCounter(0),
+			m_drawCounter(0)
+		{}
 		bool init(int w, int h, int tw, int th);
 
 		// Hooks to MO related methods in MGFramework
@@ -37,6 +44,9 @@ class MGFrameworkStub : public MGFramework
 			return m_MO.end();
 		}
 
+		// Call counter getters
+		unsigned int getHandleGameLogicsCounter(){ return m_handleGameLogicsCounter; }
+		unsigned int getDrawCounter(){ return m_drawCounter; }
 
 
 };
