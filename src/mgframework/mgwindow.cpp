@@ -32,7 +32,7 @@ MGWindow::~MGWindow()
 	SDL_Quit();
 #endif
 }
-	
+
 bool MGWindow::createWindow()
 {
 #ifndef UNITTEST_LINUX
@@ -133,8 +133,8 @@ void MGWindow::flipSurface()
 
 void MGWindow::activateFullscreen()
 {
-#ifndef UNITTEST_LINUX
 	m_Fullscreen = true;
+#ifndef UNITTEST_LINUX
 	setFlags(SDL_FULLSCREEN | SDL_DOUBLEBUF | SDL_HWSURFACE);
 	m_Screen = SDL_SetVideoMode(m_Width, m_Height, m_Bpp, getFlags());
 #endif
@@ -142,8 +142,8 @@ void MGWindow::activateFullscreen()
 
 void MGWindow::deactivateFullscreen()
 {
-#ifndef UNITTEST_LINUX
 	m_Fullscreen = false;
+#ifndef UNITTEST_LINUX
 	setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
 	m_Screen = SDL_SetVideoMode(m_Width, m_Height, m_Bpp, getFlags());
 #endif
@@ -152,7 +152,6 @@ void MGWindow::deactivateFullscreen()
 #ifndef UNITTEST_LINUX
 void MGWindow::drawSprite(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {
-	
 	SDL_Rect srcRect;
 	srcRect.x = srcX;
 	srcRect.y = srcY;
@@ -187,10 +186,10 @@ void MGWindow::drawText(const char* string, int size, int x, int y, int fR, int 
 {
 #ifndef MGF_DISABLE_TTF
 	m_Font = TTF_OpenFont("ARIAL.TTF", size);
-	SDL_Color foregroundColor = { fR, fG, fB };
-	SDL_Color backgroundColor = { bR, bG, bB };
+	SDL_Color foregroundColor = {fR, fG, fB};
+	SDL_Color backgroundColor = {bR, bG, bB};
 	SDL_Surface* textSurface = TTF_RenderText_Shaded(m_Font, string, foregroundColor, backgroundColor);
-	SDL_Rect textLocation = { x, y, 0, 0 };
+	SDL_Rect textLocation = {x, y, 0, 0};
 	SDL_BlitSurface(textSurface, NULL, m_Screen, &textLocation);
 	SDL_FreeSurface(textSurface);
 	TTF_CloseFont(m_Font);

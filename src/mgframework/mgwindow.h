@@ -14,8 +14,6 @@
   #endif
 #endif
 
-//using std::string;
-
 class MGWindow :public MGComponent
 {
 	private:
@@ -26,7 +24,6 @@ class MGWindow :public MGComponent
 		std::string m_Title;
 #ifndef UNITTEST_LINUX
 		SDL_Surface * m_Screen;
-		// Font
   #ifndef MGF_DISABLE_TTF
 		TTF_Font* m_Font;
   #endif
@@ -42,23 +39,20 @@ class MGWindow :public MGComponent
 		~MGWindow();
 			
 		bool createWindow();
-
 		bool setProperties(int width, int height, int bpp, bool fullscreen, const std::string &title);
 		bool setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title);
-
 		void setSize(int width, int height){ m_Height = height; m_Width = width; }
 		int getHeight(){ return m_Height; }
 		int getWidth(){ return m_Width; }
-
-		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
-		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
-#ifndef UNITTEST_LINUX
-		SDL_Surface *getSurface();
-#endif
 		void flipSurface();
 		void activateFullscreen();
 		void deactivateFullscreen();
+
+		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
+		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
+
 #ifndef UNITTEST_LINUX
+		SDL_Surface *getSurface();
 		void drawSprite(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		SDL_Surface *loadBMPImage( std::string filename );
 		void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
