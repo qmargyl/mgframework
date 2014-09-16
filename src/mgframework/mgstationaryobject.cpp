@@ -7,8 +7,8 @@ int MGStationaryObject::m_TileSize = 0;
 
 MGStationaryObject::MGStationaryObject()
 {
-	m_TileX=0;
-	m_TileY=0;
+	m_TileX = 0;
+	m_TileY = 0;
 	setOwner(MGF_NOPLAYER);
 }
 
@@ -19,8 +19,8 @@ MGStationaryObject::~MGStationaryObject()
 
 void MGStationaryObject::initialize()
 {
-	m_TileX=0;
-	m_TileY=0;
+	m_TileX = 0;
+	m_TileY = 0;
 	setOwner(MGF_NOPLAYER);
 }
 
@@ -28,8 +28,8 @@ void MGStationaryObject::setTileXY(int x, int y, MGFramework *world)
 {
 	world->m_Map.unOccupy(getTileX(), getTileY());
 	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
-	m_TileX=x;
-	m_TileY=y;
+	m_TileX = x;
+	m_TileY = y;
 	world->m_Map.occupy(getTileX(), getTileY(), getID());
 	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
 }
@@ -123,30 +123,30 @@ eMGComponentConsoleCommand MGStationaryObject::detectMGComponentConsoleCommand(c
 
 	if(cmdvec.size() == 3)
 	{
-		if(cmdvec[2]=="getlocation")
+		if(cmdvec[2] == "getlocation")
 		{
 			return MGComponent_SO_INT_GETLOCATION;
 		}
-		if(cmdvec[2]=="help")
+		if(cmdvec[2] == "help")
 		{
 			return MGComponent_SO_INT_HELP;
 		}
 	}
 	else if(cmdvec.size() == 4)
 	{
-		if(cmdvec[1]=="all" && cmdvec[2]=="logging" && cmdvec[3]=="on")
+		if(cmdvec[1] == "all" && cmdvec[2] == "logging" && cmdvec[3] == "on")
 		{
 			return MGComponent_SO_ALL_LOGGING_ON;
 		}
-		else if(cmdvec[2]=="logging" && cmdvec[3]=="on")
+		else if(cmdvec[2] == "logging" && cmdvec[3] == "on")
 		{
 			return MGComponent_SO_INT_LOGGING_ON;
 		}	
-		else if(cmdvec[1]=="all" && cmdvec[2]=="logging" && cmdvec[3]=="off")
+		else if(cmdvec[1] == "all" && cmdvec[2] == "logging" && cmdvec[3] == "off")
 		{
 			return MGComponent_SO_ALL_LOGGING_OFF;
 		}
-		else if(cmdvec[2]=="logging" && cmdvec[3]=="off")
+		else if(cmdvec[2] == "logging" && cmdvec[3] == "off")
 		{
 			return MGComponent_SO_INT_LOGGING_OFF;
 		}	
@@ -154,5 +154,3 @@ eMGComponentConsoleCommand MGStationaryObject::detectMGComponentConsoleCommand(c
 
 	return MGComponent_UNDEFINED;
 }
-
-
