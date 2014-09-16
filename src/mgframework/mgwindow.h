@@ -56,6 +56,8 @@ class MGWindow :public MGComponent
 		SDL_Surface *getSurface();
 #endif
 		void flipSurface();
+		void activateFullscreen();
+		void deactivateFullscreen();
 #ifndef UNITTEST_LINUX
 		void drawSprite(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		SDL_Surface *loadBMPImage( std::string filename );

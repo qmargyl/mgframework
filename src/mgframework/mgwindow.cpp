@@ -131,6 +131,24 @@ void MGWindow::flipSurface()
 #endif
 }
 
+void MGWindow::activateFullscreen()
+{
+#ifndef UNITTEST_LINUX
+	m_Fullscreen = true;
+	setFlags(SDL_FULLSCREEN | SDL_DOUBLEBUF | SDL_HWSURFACE);
+	m_Screen = SDL_SetVideoMode(m_Width, m_Height, m_Bpp, getFlags());
+#endif
+}
+
+void MGWindow::deactivateFullscreen()
+{
+#ifndef UNITTEST_LINUX
+	m_Fullscreen = false;
+	setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
+	m_Screen = SDL_SetVideoMode(m_Width, m_Height, m_Bpp, getFlags());
+#endif
+}
+
 #ifndef UNITTEST_LINUX
 void MGWindow::drawSprite(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {
@@ -312,22 +330,14 @@ bool MGWindow::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s
 		case MGComponent_WINDOW_FULLSCREEN_ON:
 		{
 			w->registerUsedCommand(MGComponent_WINDOW_FULLSCREEN_ON);
-			m_Fullscreen = true;
-#ifndef UNITTEST_LINUX
-			setFlags(SDL_FULLSCREEN | SDL_DOUBLEBUF | SDL_HWSURFACE);
-			m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, getFlags() );
-#endif
+			activateFullscreen();
 			return false; // Deactivate console
 		}
 
 		case MGComponent_WINDOW_FULLSCREEN_OFF:
 		{
 			w->registerUsedCommand(MGComponent_WINDOW_FULLSCREEN_OFF);
-			m_Fullscreen = false;
-#ifndef UNITTEST_LINUX
-			setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
-			m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, getFlags() );
-#endif
+			deactivateFullscreen();
 			return true;
 		}
 

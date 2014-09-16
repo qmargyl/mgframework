@@ -21,6 +21,8 @@ class IMGWindow
 		virtual int getHeight() = 0;
 		virtual int getWidth() = 0;
 		virtual void flipSurface() = 0;
+		virtual void activateFullscreen() = 0;
+		virtual void deactivateFullscreen() = 0;
 };
 
 #endif

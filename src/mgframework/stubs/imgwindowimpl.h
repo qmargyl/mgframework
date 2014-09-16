@@ -10,7 +10,11 @@ class IMGWindowImpl : public IMGWindowImpl
 		bool setProperties(int width, int height, int bpp, bool fullscreen, const std::string &title){ return true; }
 		bool setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title){ return true; }
 		void setSize(int width, int height){}
-		int getHeight(){ return 0; }
-		int getWidth(){ return 0; }
+		int getHeight(){ return 768; }
+		int getWidth(){ return 1024; }
 		void flipSurface(){}
+		void activateFullscreen(){}
+		void deactivateFullscreen(){}
 };
+
+#endif
