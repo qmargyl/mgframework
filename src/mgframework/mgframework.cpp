@@ -1972,21 +1972,21 @@ void MGFramework::quit()
 	std::cout << "Execution time: " << MGF_GetExecTimeMS() << std::endl;
 }
 
-#ifndef UNITTEST_LINUX
-void MGFramework::drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH)
+
+void MGFramework::drawTile(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH)
 {
 	increaseDrawnTilesCounter();
 	getWindow()->drawSprite(imageSurface, srcX, srcY, dstX, dstY, tileW, tileH);
 }
-#endif
 
-#ifndef UNITTEST_LINUX
-void MGFramework::drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY)
+
+
+void MGFramework::drawTile(void* imageSurface, int srcX, int srcY, int dstX, int dstY)
 {
 	increaseDrawnTilesCounter();
 	getWindow()->drawSprite(imageSurface, srcX, srcY, dstX, dstY, m_Map.getTileWidth(), m_Map.getTileHeight());
 }
-#endif
+
 
 bool MGFramework::isNumericalInt(const std::string &s)
 {

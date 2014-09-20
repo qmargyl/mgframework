@@ -342,13 +342,9 @@ class MGFramework :public MGComponent
 		inline void disableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = false; }
 		inline bool featureOnlySelectOwnedMOEnabled(){ return m_OnlySelectOwnedMO; }
 
-
-		// Graphics related, based on SDL
-#ifndef UNITTEST_LINUX
-		// TODO: Shouldn't these be moved to MGWindow??????
-		void drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY);
-		void drawTile(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
-#endif
+		// Graphics wrapper
+		void drawTile(void* imageSurface, int srcX, int srcY, int dstX, int dstY);
+		void drawTile(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
 
 		// Controlling game speed and execution
 		inline unsigned int getFPS();

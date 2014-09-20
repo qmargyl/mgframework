@@ -117,13 +117,6 @@ bool MGWindow::setProperties(eMGWindowScreenResolution screenResolution, int bpp
 }
 
 
-#ifndef UNITTEST_LINUX
-SDL_Surface *MGWindow::getSurface()
-{
-	return m_Screen;
-}
-#endif
-
 void MGWindow::flipSurface()
 {
 #ifndef UNITTEST_LINUX
@@ -149,9 +142,10 @@ void MGWindow::deactivateFullscreen()
 #endif
 }
 
-#ifndef UNITTEST_LINUX
-void MGWindow::drawSprite(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)
+
+void MGWindow::drawSprite(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {
+#ifndef UNITTEST_LINUX
 	SDL_Rect srcRect;
 	srcRect.x = srcX;
 	srcRect.y = srcY;
@@ -162,9 +156,10 @@ void MGWindow::drawSprite(SDL_Surface* imageSurface, int srcX, int srcY, int dst
 	dstRect.y = dstY;
 	dstRect.w = width;
 	dstRect.h = height;
-	SDL_BlitSurface(imageSurface, &srcRect, m_Screen, &dstRect);
-}
+	SDL_BlitSurface(static_cast<SDL_Surface*>(imageSurface), &srcRect, m_Screen, &dstRect);
 #endif
+}
+
 
 #ifndef UNITTEST_LINUX
 SDL_Surface *MGWindow::loadBMPImage( std::string filename ) 

@@ -51,10 +51,10 @@ class MGWindow :public MGComponent
 		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
+
+		void drawSprite(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
 #ifndef UNITTEST_LINUX
-		SDL_Surface *getSurface();
-		void drawSprite(SDL_Surface* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
-		SDL_Surface *loadBMPImage( std::string filename );
+		SDL_Surface *loadBMPImage(std::string filename);
 		void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
 		void putPixel32(int x, int y, Uint32 pixel);
 		Uint32 getPixel32(int x, int y);
