@@ -161,9 +161,10 @@ void MGWindow::drawSprite(void* imageSurface, int srcX, int srcY, int dstX, int 
 }
 
 
-#ifndef UNITTEST_LINUX
-SDL_Surface *MGWindow::loadBMPImage( std::string filename ) 
+
+void* MGWindow::loadBMPImage( std::string filename ) 
 {
+#ifndef UNITTEST_LINUX
 	SDL_Surface* loadedImage = NULL;
 	SDL_Surface* optimizedImage = NULL;
 	loadedImage = SDL_LoadBMP( filename.c_str() );
@@ -172,9 +173,10 @@ SDL_Surface *MGWindow::loadBMPImage( std::string filename )
 		optimizedImage = SDL_DisplayFormat( loadedImage );
 		SDL_FreeSurface( loadedImage );
 	}
-	return optimizedImage;
-}
+	return (void*)optimizedImage;
 #endif
+}
+
 
 #ifndef UNITTEST_LINUX
 void MGWindow::drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB)
@@ -192,25 +194,30 @@ void MGWindow::drawText(const char* string, int size, int x, int y, int fR, int 
 }
 #endif
 
-#ifndef UNITTEST_LINUX
-void MGWindow::putPixel32(int x, int y, Uint32 pixel)
-{
-	Uint32 *pixels = (Uint32 *)m_Screen->pixels;
-	pixels[ ( y * m_Screen->w ) + x ] = pixel;
-}
-#endif
 
-#ifndef UNITTEST_LINUX
-Uint32 MGWindow::getPixel32(int x, int y)
+void MGWindow::putPixel32(int x, int y, unsigned int pixel)
 {
+#ifndef UNITTEST_LINUX
 	Uint32 *pixels = (Uint32 *)m_Screen->pixels;
-	return pixels[ ( y * m_Screen->w ) + x ];
-}
+	pixels[ ( y * m_Screen->w ) + x ] = (Uint32)pixel;
 #endif
+}
 
-#ifndef UNITTEST_LINUX
-void MGWindow::drawCircle32(int n_cx, int n_cy, int radius, Uint32 pixel)
+
+
+unsigned int MGWindow::getPixel32(int x, int y)
 {
+#ifndef UNITTEST_LINUX
+	Uint32 *pixels = (Uint32 *)m_Screen->pixels;
+	return (unsigned int)pixels[ ( y * m_Screen->w ) + x ];
+#endif
+}
+
+
+
+void MGWindow::drawCircle32(int n_cx, int n_cy, int radius, unsigned int pixel)
+{
+#ifndef UNITTEST_LINUX
     // if the first pixel in the screen is represented by (0,0) (which is in sdl)
     // remember that the beginning of the circle is not in the middle of the pixel
     // but to the left-top from it:
@@ -223,25 +230,25 @@ void MGWindow::drawCircle32(int n_cx, int n_cy, int radius, Uint32 pixel)
  
     while (x >= y)
     {
-        putPixel32((int)(cx + x), (int)(cy + y), pixel);
-        putPixel32((int)(cx + y), (int)(cy + x), pixel);
+        putPixel32((int)(cx + x), (int)(cy + y), (Uint32)pixel);
+        putPixel32((int)(cx + y), (int)(cy + x), (Uint32)pixel);
  
         if (x != 0)
         {
-            putPixel32((int)(cx - x), (int)(cy + y), pixel);
-            putPixel32((int)(cx + y), (int)(cy - x), pixel);
+            putPixel32((int)(cx - x), (int)(cy + y), (Uint32)pixel);
+            putPixel32((int)(cx + y), (int)(cy - x), (Uint32)pixel);
         }
  
         if (y != 0)
         {
-            putPixel32((int)(cx + x), (int)(cy - y), pixel);
-            putPixel32((int)(cx - y), (int)(cy + x), pixel);
+            putPixel32((int)(cx + x), (int)(cy - y), (Uint32)pixel);
+            putPixel32((int)(cx - y), (int)(cy + x), (Uint32)pixel);
         }
  
         if (x != 0 && y != 0)
         {
-            putPixel32((int)(cx - x), (int)(cy - y), pixel);
-            putPixel32((int)(cx - y), (int)(cy - x), pixel);
+            putPixel32((int)(cx - x), (int)(cy - y), (Uint32)pixel);
+            putPixel32((int)(cx - y), (int)(cy - x), (Uint32)pixel);
         }
  
         error += y;
@@ -255,12 +262,14 @@ void MGWindow::drawCircle32(int n_cx, int n_cy, int radius, Uint32 pixel)
             error -= x;
         }
     }
-}
 #endif
+}
 
-#ifndef UNITTEST_LINUX
-void MGWindow::drawFillCircle32(int cx, int cy, int radius, Uint32 pixel)
+
+
+void MGWindow::drawFillCircle32(int cx, int cy, int radius, unsigned int pixel)
 {
+#ifndef UNITTEST_LINUX
     static const int BPP = 4;
     double r = (double)radius;
     for (double dy = 1; dy <= r; dy += 1.0)
@@ -274,34 +283,33 @@ void MGWindow::drawFillCircle32(int cx, int cy, int radius, Uint32 pixel)
  
         for (; x <= cx + dx; x++)
         {
-            *(Uint32 *)target_pixel_a = pixel;
-            *(Uint32 *)target_pixel_b = pixel;
+            *(Uint32 *)target_pixel_a = (Uint32)pixel;
+            *(Uint32 *)target_pixel_b = (Uint32)pixel;
             target_pixel_a += BPP;
             target_pixel_b += BPP;
         }
     }
-}
 #endif
+}
 
-#ifndef UNITTEST_LINUX
-void MGWindow::vLine32(int x, int y, int length, Uint32 pixel)
+
+void MGWindow::vLine32(int x, int y, int length, unsigned int pixel)
 {
 	for(int i=y; i<y+length; i++)
 	{
 		putPixel32(x, i, pixel);
 	}
 }
-#endif
 
-#ifndef UNITTEST_LINUX
-void MGWindow::hLine32(int x, int y, int length, Uint32 pixel)
+
+void MGWindow::hLine32(int x, int y, int length, unsigned int pixel)
 {
 	for(int i=x; i<x+length; i++)
 	{
 		putPixel32(i, y, pixel);
 	}
 }
-#endif
+
 
 bool MGWindow::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {

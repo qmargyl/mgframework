@@ -22,10 +22,10 @@ bool Project2::init(int w, int h, int tw, int th)
 		}
 
 		// All graphics should be loaded here.
-		m_Floor = getWindow()->loadBMPImage("tileset.bmp");
-		m_MovingObject = getWindow()->loadBMPImage("movingobject.bmp");
-		m_StationaryObject = getWindow()->loadBMPImage("stationaryobject.bmp");
-		m_Mark = getWindow()->loadBMPImage("mark.bmp");
+		m_Floor = static_cast<SDL_Surface*>(getWindow()->loadBMPImage("tileset.bmp"));
+		m_MovingObject = static_cast<SDL_Surface*>(getWindow()->loadBMPImage("movingobject.bmp"));
+		m_StationaryObject = static_cast<SDL_Surface*>(getWindow()->loadBMPImage("stationaryobject.bmp"));
+		m_Mark = static_cast<SDL_Surface*>(getWindow()->loadBMPImage("mark.bmp"));
 		SDL_SetColorKey(m_MovingObject, SDL_SRCCOLORKEY, 0);
 		SDL_SetColorKey(m_StationaryObject, SDL_SRCCOLORKEY, 0);
 		SDL_SetColorKey(m_Mark, SDL_SRCCOLORKEY, 0);
