@@ -275,6 +275,10 @@
 				Name="stubs"
 				>
 				<File
+					RelativePath="..\..\..\..\src\mgframework\stubs\imgwindowimpl.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\..\src\mgframework\stubs\mgcomponentimpl.h"
 					>
 				</File>

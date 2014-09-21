@@ -14,7 +14,7 @@
   #endif
 #endif
 
-class MGWindow
+class MGWindow : public IMGWindow
 {
 	private:
 		int m_Width;

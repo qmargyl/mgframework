@@ -210,7 +210,7 @@ class MGFramework :public MGComponent
 		MGWindow m_Window;				// The framework window
 
 	protected:
-		MGWindow *getWindow(){ return &m_Window; }
+		IMGWindow *getWindow(){ return static_cast<IMGWindow*>(&m_Window); }
 
 		std::list<MGMovingObject> m_MO;
 		MGPeriodicEvent *m_PE;			// Periodic Events
