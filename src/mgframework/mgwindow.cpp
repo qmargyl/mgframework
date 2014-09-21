@@ -102,7 +102,7 @@ bool MGWindow::setProperties(eMGWindowScreenResolution screenResolution, int bpp
 			break;
 
 		default:
-			MGFLOG_ERROR("MGWindow::setProperties was given unsupported screen resolution"); 
+			std::cout << "ERROR: MGWindow::setProperties was given unsupported screen resolution" << std::endl; 
 			return false;
 
 	}
@@ -308,93 +308,4 @@ void MGWindow::hLine32(int x, int y, int length, unsigned int pixel)
 	{
 		putPixel32(i, y, pixel);
 	}
-}
-
-
-bool MGWindow::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
-{
-	char cmd[MGF_SCRIPTLINE_MAXLENGTH];
-	strcpy(cmd, c);
-	std::vector<std::string> cmdvec = MGFramework::split(cmd, " ");
-
-	switch(detectMGComponentConsoleCommand(cmdvec))
-	{
-		case MGComponent_UNDEFINED:
-			MGFLOG_ERROR("MGWindow::runConsoleCommand received MGComponent_UNDEFINED from MGWindow::detectMGComponentConsoleCommand"); 
-			break;
-
-		case MGComponent_WINDOW_HELP:
-		{
-			w->registerUsedCommand(MGComponent_WINDOW_HELP);
-			return true;
-		}
-
-		case MGComponent_WINDOW_FULLSCREEN_ON:
-		{
-			w->registerUsedCommand(MGComponent_WINDOW_FULLSCREEN_ON);
-			activateFullscreen();
-			return false; // Deactivate console
-		}
-
-		case MGComponent_WINDOW_FULLSCREEN_OFF:
-		{
-			w->registerUsedCommand(MGComponent_WINDOW_FULLSCREEN_OFF);
-			deactivateFullscreen();
-			return true;
-		}
-
-		case MGComponent_WINDOW_LOGGING_ON:
-		{
-			w->registerUsedCommand(MGComponent_WINDOW_LOGGING_ON);
-			enableLogging();
-			MGFLOG_INFO("Logging enabled.");
-			return true;
-		}
-
-		case MGComponent_WINDOW_LOGGING_OFF:
-		{
-			w->registerUsedCommand(MGComponent_WINDOW_LOGGING_OFF);
-			MGFLOG_INFO("Logging disabled.");
-			disableLogging();
-			return true;
-		}
-
-		default:
-			MGFLOG_ERROR("MGWindow::detectComponentConsoleCommand returned a bad value"); 
-			return true;
-	}
-
-	std::cout << "Unknown command" << std::endl;
-	return true;
-}
-
-eMGComponentConsoleCommand MGWindow::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
-{
-	if(cmdvec.size() == 2)
-	{
-		if(cmdvec[1]=="help")
-		{
-			return MGComponent_WINDOW_HELP;
-		}
-	}
-	else if(cmdvec.size() == 3)
-	{
-		if(cmdvec[1]=="fullscreen" && cmdvec[2]=="on")
-		{
-			return MGComponent_WINDOW_FULLSCREEN_ON;
-		}
-		if(cmdvec[1]=="fullscreen" && cmdvec[2]=="off")
-		{
-			return MGComponent_WINDOW_FULLSCREEN_OFF;
-		}
-		else if(cmdvec[1]=="logging" && cmdvec[2]=="on")
-		{
-			return MGComponent_WINDOW_LOGGING_ON;
-		}
-		else if(cmdvec[1]=="logging" && cmdvec[2]=="off")
-		{
-			return MGComponent_WINDOW_LOGGING_OFF;
-		}
-	}
-	return MGComponent_UNDEFINED;
 }

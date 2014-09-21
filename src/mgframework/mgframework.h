@@ -105,15 +105,8 @@ enum eMGComponentConsoleCommand : unsigned int
 	MGComponent_MAP_LOGGING_ON,
 	MGComponent_MAP_LOGGING_OFF,
 
-	//MGWindow forward flags
-	MGComponent_WINDOW_X,
-
-	//MGWindow commands
-	MGComponent_WINDOW_HELP,
-	MGComponent_WINDOW_FULLSCREEN_ON,
-	MGComponent_WINDOW_FULLSCREEN_OFF,
-	MGComponent_WINDOW_LOGGING_OFF,
-	MGComponent_WINDOW_LOGGING_ON,
+	//MGWindow related (implemented in MGFramework)
+	MGComponent_WINDOW_FULLSCREEN_BOOL,
 
 	// MGStationaryObject forward flags
 	MGComponent_SO_INT_X,

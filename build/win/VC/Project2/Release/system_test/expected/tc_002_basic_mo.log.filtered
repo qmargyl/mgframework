@@ -67,16 +67,17 @@ mo <i> getdistance - Returns the distance to the destination of the MO with ID <
 [X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 6028
 [X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 3706
 [X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 221
-[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 3246
-[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 945
-[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 219
-[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 1273
-[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 6643
-[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 6697
-[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 6660
-[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 3155
-[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 6156
-[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 1072
-[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 4452
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 3544
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 1135
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 6414
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 5065
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 1524
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 812
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 3967
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 1483
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 108
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 7321
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 2170
+[X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) WARNING: Console command was not forwarded to MO 1477
 Exiting application...
 Execution time: X

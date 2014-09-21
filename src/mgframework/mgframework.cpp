@@ -845,11 +845,23 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			return m_Map.runConsoleCommand(c, this, s);
 		}
 
-		case MGComponent_WINDOW_X:
+
+		case MGComponent_WINDOW_FULLSCREEN_BOOL:
 		{
-			registerUsedCommand(MGComponent_WINDOW_X);
-			return getWindow()->runConsoleCommand(c, this, s);
+			w->registerUsedCommand(MGComponent_WINDOW_FULLSCREEN_BOOL);
+			int onOrOff = toInt(cmdvec[2], s);
+			if(onOrOff == MGF_FALSE)
+			{
+				getWindow()->deactivateFullscreen();
+				return true;
+			}
+			else
+			{
+				getWindow()->activateFullscreen();
+				return false; // Deactivate console
+			}
 		}
+
 
 		case MGComponent_PE_INT_X:
 		case MGComponent_PE_INT_HELP:
@@ -1451,7 +1463,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			std::cout << "          over TCP/IP." << std::endl;
 
 			(void)m_Map.runConsoleCommand("map help", this, NULL);
-			(void)getWindow()->runConsoleCommand("window help", this, NULL);
 			if(getNumberOfMO() > 0)(void)(m_MO.begin()->runConsoleCommand("mo 0 help", this, NULL));
 
 			return true;
@@ -1643,6 +1654,10 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		{
 			return MGComponent_SYMBOL_ASSIGNTO_INT;
 		}
+		else if(cmdvec[0] == "window" && cmdvec[1] == "fullscreen")
+		{
+			return MGComponent_WINDOW_FULLSCREEN_BOOL;
+		}
 	}
 
 	if(cmdvec.size() > 1)
@@ -1650,10 +1665,6 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		if(cmdvec[0] == "map")
 		{
 			return MGComponent_MAP_X;
-		}
-		else if(cmdvec[0] == "window")
-		{
-			return MGComponent_WINDOW_X;
 		}
 	}
 

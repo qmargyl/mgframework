@@ -177,11 +177,8 @@ end
 
 // Window
 function testcoverage_window
-  window logging on
   window fullscreen on
-  window help
   window fullscreen off
-  window logging off
 end
 
 

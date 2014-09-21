@@ -1,12 +1,6 @@
  
-
-window logging on
 window fullscreen on
-window help
 window fullscreen off
-window logging off
-
-
 
 
 // Exiting application when all tests have run

@@ -14,7 +14,7 @@
   #endif
 #endif
 
-class MGWindow :public MGComponent
+class MGWindow
 {
 	private:
 		int m_Width;
@@ -47,9 +47,6 @@ class MGWindow :public MGComponent
 		void flipSurface();
 		void activateFullscreen();
 		void deactivateFullscreen();
-
-		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
-		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
 		void drawSprite(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		void* loadBMPImage(std::string filename);
