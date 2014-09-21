@@ -1729,19 +1729,29 @@ unsigned int MGFramework::getDesiredFPS()
 }
 
 
-bool MGFramework::setWindowProperties(int width, int height, int bpp, bool fullscreen, const std::string &title)
+bool MGFramework::setWindowProperties(int width, int height, int bpp, bool fullscreen, const std::string &title, IMGWindow *win)
 {
-	getWindow()->setProperties(width, height, bpp, fullscreen, title);
-	m_WindowPropertiesSet = true;
-	return true;
+	m_Window = win;
+	if(m_Window != NULL)
+	{
+		getWindow()->setProperties(width, height, bpp, fullscreen, title);
+		m_WindowPropertiesSet = true;
+		return true;
+	}
+	return false;
 }
 
 
-bool MGFramework::setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title)
+bool MGFramework::setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title, IMGWindow *win)
 {
-	getWindow()->setProperties(screenResolution, bpp, fullscreen, title);
-	m_WindowPropertiesSet = true;
-	return true;
+	m_Window = win;
+	if(m_Window != NULL)
+	{
+		getWindow()->setProperties(screenResolution, bpp, fullscreen, title);
+		m_WindowPropertiesSet = true;
+		return true;
+	}
+	return false;
 }
 
 

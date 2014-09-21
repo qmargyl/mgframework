@@ -4,11 +4,13 @@
 #endif
 #include "mgframework/mgframework.h"
 #include "mgframework/mgclasstester.h"
+#include "mgframework/mgwindow.h"
 #include <string>
 
 int main(int argc, char **argv)
 {
-	MGFramework* p2 = 0;
+	MGFramework *p2 = 0;
+	MGWindow window;
 
 	eMGFInstanceType instanceType = MGFSINGLEPLAYERINSTANCE;
 	bool loggingOn = false;
@@ -120,24 +122,27 @@ int main(int argc, char **argv)
 		{
 			p2 = new Project2();
 			p2->setWindowProperties(MGWindow_RES_800_600, 32, false, 
-				std::string("Project2 (single player test application) based on MGF ") + 
-							p2->getMGFrameworkVersion());
+									std::string("Project2 (single player test application) based on MGF ") + 
+												p2->getMGFrameworkVersion(),
+									&window);
 			break;
 		}
 		case MGFCLIENTINSTANCE:
 		{
 			p2 = new Project2();
 			p2->setWindowProperties(640, 480, 32, false, 
-				std::string("Project2 (client test application) based on MGF ") + 
-							p2->getMGFrameworkVersion());
+									std::string("Project2 (client test application) based on MGF ") + 
+												p2->getMGFrameworkVersion(),
+									&window);
 			break;
 		}
 		case MGFSERVERINSTANCE:
 		{
 			p2 = new Project2Server();
 			p2->setWindowProperties(800, 600, 32, false, 
-				std::string("Project2 (server test application) based on MGF ") + 
-							p2->getMGFrameworkVersion());
+									std::string("Project2 (server test application) based on MGF ") + 
+												p2->getMGFrameworkVersion(),
+									&window);
 			break;
 		}
 	}

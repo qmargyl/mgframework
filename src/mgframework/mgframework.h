@@ -207,10 +207,13 @@ class MGFramework :public MGComponent
 		// Center on MO
 		unsigned int m_FeatureCenterOnMO;
 
-		MGWindow m_Window;				// The framework window
+		IMGWindow *m_Window;
 
 	protected:
-		IMGWindow *getWindow(){ return static_cast<IMGWindow*>(&m_Window); }
+		IMGWindow *getWindow()
+		{
+			return m_Window;
+		}
 
 		std::list<MGMovingObject> m_MO;
 		MGPeriodicEvent *m_PE;			// Periodic Events
@@ -370,9 +373,9 @@ class MGFramework :public MGComponent
 
 		// Initialization
 		virtual bool init(int w, int h, int tw, int th) = 0;	// Force a derived sub-class to implement this as it is not framework related.
-		bool setWindowProperties(int width, int height, int bpp, bool fullscreen, const std::string &title);
-		bool setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title);
-		void unsetWindowProperties(){ m_WindowPropertiesSet = false; }
+		bool setWindowProperties(int width, int height, int bpp, bool fullscreen, const std::string &title, IMGWindow *win);
+		bool setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title, IMGWindow *win);
+		void unsetWindowProperties(){ m_WindowPropertiesSet = false; m_Window = NULL; }
 		bool windowPropertiesSet(){ return m_WindowPropertiesSet; }
 
 		// Client/Server

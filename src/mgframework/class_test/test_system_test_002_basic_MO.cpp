@@ -1,6 +1,7 @@
 #include "../mgclasstester.h"
 #include "../mgpathitem.h"
 #include "../stubs/mgframeworkstub.h"
+#include "../stubs/imgwindowimpl.h"
 
 void MGClassTester::test_002_basic_MO_create_delete()
 {
@@ -140,6 +141,8 @@ void MGClassTester::test_002_basic_MO_mark_unmark()
 void MGClassTester::test_002_basic_MO_verify_location()
 {
 	MGFrameworkStub mgf;
+	IMGWindowImpl win;
+	mgf.setWindowProperties(1024, 768, 32, false, std::string("test"), &win);
 	mgf.init(128, 128, 32, 32);
 
 	// Verify location
@@ -164,6 +167,8 @@ void MGClassTester::test_002_basic_MO_verify_location()
 void MGClassTester::test_002_basic_MO_ordering()
 {
 	MGFrameworkStub mgf;
+	IMGWindowImpl win;
+	mgf.setWindowProperties(1024, 768, 32, false, std::string("test"), &win);
 	mgf.init(128, 128, 32, 32);
 	
 	// Ordering
@@ -237,6 +242,8 @@ void MGClassTester::test_002_basic_MO_ordering()
 void MGClassTester::test_002_basic_MO_random_mo()
 {
 	MGFrameworkStub mgf;
+	IMGWindowImpl win;
+	mgf.setWindowProperties(1024, 768, 32, false, std::string("test"), &win);
 	mgf.init(128, 128, 32, 32);
 
 	// Random mo test
@@ -254,6 +261,8 @@ void MGClassTester::test_002_basic_MO_random_mo()
 void MGClassTester::test_002_basic_MO_stressing()
 {
 	MGFrameworkStub mgf;
+	IMGWindowImpl win;
+	mgf.setWindowProperties(1024, 768, 32, false, std::string("test"), &win);
 	mgf.init(16, 16, 32, 32);
 
 	// Stressing

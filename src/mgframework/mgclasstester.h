@@ -104,7 +104,7 @@ public:
 		RUNTEST(test_MGPathGenerator_calculatePathAStar);
 
 		// test_MGFramework_misc
-		//RUNTEST(test_MGFramework_runOneFrame);
+		RUNTEST(test_MGFramework_runOneFrame);
 
 		// test_MGFramework_MO
 		RUNTEST(test_MGFramework_createMO);
@@ -126,10 +126,10 @@ public:
 		RUNTEST(test_002_basic_MO_create_with_area_square);
 		RUNTEST(test_002_basic_MO_create_with_area_square_single_location);
 		RUNTEST(test_002_basic_MO_mark_unmark);
-		//RUNTEST(test_002_basic_MO_verify_location);
-		//RUNTEST(test_002_basic_MO_ordering);
+		RUNTEST(test_002_basic_MO_verify_location);
+		RUNTEST(test_002_basic_MO_ordering);
 		RUNTEST(test_002_basic_MO_random_mo);
-		//RUNTEST(test_002_basic_MO_stressing);
+		RUNTEST(test_002_basic_MO_stressing);
 
 		FINISH_TESTSUITE();
 	}
