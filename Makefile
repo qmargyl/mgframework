@@ -15,8 +15,12 @@ OBJS := \
 $(OBJDIR)/main.o \
 $(OBJDIR)/test_MGAStarNode.o \
 $(OBJDIR)/test_MGComponent.o \
+$(OBJDIR)/test_MGFramework_MO.o \
+$(OBJDIR)/test_MGFramework_misc.o \
 $(OBJDIR)/test_MGMap_initialize.o \
 $(OBJDIR)/test_MGPathGenerator_calculatePathAStar.o \
+$(OBJDIR)/test_MGSymbolTable.o \
+$(OBJDIR)/test_system_test_002_basic_MO.o \
 $(OBJDIR)/mgclasstester.o \
 $(OBJDIR)/mgcomponent.o \
 $(OBJDIR)/mgframework.o \
@@ -27,15 +31,18 @@ $(OBJDIR)/mgpathitem.o \
 $(OBJDIR)/mgperiodicevent.o \
 $(OBJDIR)/mgstationaryobject.o \
 $(OBJDIR)/mgsymboltable.o \
-$(OBJDIR)/mgwindow.o \
 $(OBJDIR)/mgframeworkstub.o \
 
 CC_DEPS := \
 $(OBJDIR)/main.d \
 $(OBJDIR)/mgframework/class_test/test_MGAStarNode.d \
 $(OBJDIR)/mgframework/class_test/test_MGComponent.d \
+$(OBJDIR)/mgframework/class_test/test_MGFramework_MO.d \
+$(OBJDIR)/mgframework/class_test/test_MGFramework_misc.d \
 $(OBJDIR)/mgframework/class_test/test_MGMap_initialize.d \
 $(OBJDIR)/mgframework/class_test/test_MGPathGenerator_calculatePathAStar.d \
+$(OBJDIR)/mgframework/class_test/test_MGSymbolTable.o \
+$(OBJDIR)/mgframework/class_test/test_system_test_002_basic_MO.o \
 $(OBJDIR)/mgframework/mgclasstester.d \
 $(OBJDIR)/mgframework/mgcomponent.d \
 $(OBJDIR)/mgframework/mgframework.d \
@@ -46,7 +53,6 @@ $(OBJDIR)/mgframework/mgpathitem.d \
 $(OBJDIR)/mgframework/mgperiodicevent.d \
 $(OBJDIR)/mgframework/mgstationaryobject.d \
 $(OBJDIR)/mgframework/mgsymboltable.d \
-$(OBJDIR)/mgframework/mgwindow.d \
 $(OBJDIR)/mgframework/stubs/mgframeworkstub.d \
 
 GCC_C++_FLAGS := -D__GNUC__=4 -DUNITTEST -DUNITTEST_LINUX $(INCLUDE_DIRS) -O0 -g3 -Wall -m32 -fmessage-length=0 -mfpmath=sse -msse2 -fno-builtin -std=c++0x -pedantic -Wall -Wno-long-long -gdwarf-2 -MMD -MP
@@ -83,6 +89,20 @@ $(OBJDIR)/test_MGComponent.o: ./src/mgframework/class_test/test_MGComponent.cpp 
 	@echo 'Finished building: $<'
 	@echo ' '
 
+$(OBJDIR)/test_MGFramework_MO.o: ./src/mgframework/class_test/test_MGFramework_MO.cpp | $(OBJDIR)
+	@echo 'Building file: $<'
+	@echo 'Invoking: GCC C++ Compiler'
+	$(GCC_C++_BUILD) -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+$(OBJDIR)/test_MGFramework_misc.o: ./src/mgframework/class_test/test_MGFramework_misc.cpp | $(OBJDIR)
+	@echo 'Building file: $<'
+	@echo 'Invoking: GCC C++ Compiler'
+	$(GCC_C++_BUILD) -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
 $(OBJDIR)/test_MGMap_initialize.o: ./src/mgframework/class_test/test_MGMap_initialize.cpp | $(OBJDIR)
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
@@ -91,6 +111,20 @@ $(OBJDIR)/test_MGMap_initialize.o: ./src/mgframework/class_test/test_MGMap_initi
 	@echo ' '
 
 $(OBJDIR)/test_MGPathGenerator_calculatePathAStar.o: ./src/mgframework/class_test/test_MGPathGenerator_calculatePathAStar.cpp | $(OBJDIR)
+	@echo 'Building file: $<'
+	@echo 'Invoking: GCC C++ Compiler'
+	$(GCC_C++_BUILD) -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+$(OBJDIR)/test_MGSymbolTable.o: ./src/mgframework/class_test/test_MGSymbolTable.cpp | $(OBJDIR)
+	@echo 'Building file: $<'
+	@echo 'Invoking: GCC C++ Compiler'
+	$(GCC_C++_BUILD) -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	@echo 'Finished building: $<'
+	@echo ' '
+
+$(OBJDIR)/test_system_test_002_basic_MO.o: ./src/mgframework/class_test/test_system_test_002_basic_MO.cpp | $(OBJDIR)
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
 	$(GCC_C++_BUILD) -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
@@ -167,12 +201,12 @@ $(OBJDIR)/mgsymboltable.o: ./src/mgframework/mgsymboltable.cpp | $(OBJDIR)
 	@echo 'Finished building: $<'
 	@echo ' '
 
-$(OBJDIR)/mgwindow.o: ./src/mgframework/mgwindow.cpp | $(OBJDIR)
-	@echo 'Building file: $<'
-	@echo 'Invoking: GCC C++ Compiler'
-	$(GCC_C++_BUILD) -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
-	@echo 'Finished building: $<'
-	@echo ' '
+#$(OBJDIR)/mgwindow.o: ./src/mgframework/mgwindow.cpp | $(OBJDIR)
+#	@echo 'Building file: $<'
+#	@echo 'Invoking: GCC C++ Compiler'
+#	$(GCC_C++_BUILD) -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+#	@echo 'Finished building: $<'
+#	@echo ' '
 
 $(OBJDIR)/mgframeworkstub.o: ./src/mgframework/stubs/mgframeworkstub.cpp | $(OBJDIR)
 	@echo 'Building file: $<'

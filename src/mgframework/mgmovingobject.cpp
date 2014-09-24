@@ -125,8 +125,16 @@ double MGMovingObject::getDistance(int wx, int wy)
 
 void MGMovingObject::setSpeed(double s, int tileSize)
 {
-	m_Speed = (double)tileSize / s;
-	m_TileSize = tileSize;
+	if(s > (double)0 && tileSize > 0)
+	{
+		m_Speed = (double)tileSize / s;
+		m_TileSize = tileSize;
+	}
+	else
+	{
+		m_Speed = (double)0;
+		m_TileSize = 0;
+	}
 }
 
 void MGMovingObject::update(MGFramework *w)

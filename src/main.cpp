@@ -10,7 +10,9 @@
 int main(int argc, char **argv)
 {
 	MGFramework *p2 = 0;
+#ifndef UNITTEST_LINUX
 	MGWindow window;
+#endif
 
 	eMGFInstanceType instanceType = MGFSINGLEPLAYERINSTANCE;
 	bool loggingOn = false;

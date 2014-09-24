@@ -27,7 +27,7 @@ private:
 	
 
 	double getDistance(int wx, int wy);
-	int getTileSize(){ return m_TileSize;} //TODO: Make this static
+	static int getTileSize(){ return m_TileSize;}
 	double getSpeed(){ return m_Speed;}
 
 	//Marking related
@@ -64,7 +64,7 @@ public:
 	void setDestTileXY(int x, int y);
 	void setPath(std::list<MGPathItem> p);
 
-	void setSpeed(double s, int tileSize); // Seconds, Distance to next tile (pixels)
+	void setSpeed(double s, int tileSize); // Seconds, Tile size in pixels
 	void update(MGFramework *w);
 	void copy(MGMovingObject *src);
 
