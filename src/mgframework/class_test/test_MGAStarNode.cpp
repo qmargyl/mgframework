@@ -1,8 +1,7 @@
-
-#include "../mgclasstester.h"
+#include "../../project2_test.h"
 #include "../mgastarnode.h"
 
-void MGClassTester::test_MGAStarNode()
+void Project2Test::test_MGAStarNode()
 {
 	// Construct node 1
 	MGAStarNode node1(3, 4, 2.0);

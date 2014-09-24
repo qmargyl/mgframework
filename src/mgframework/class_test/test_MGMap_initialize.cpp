@@ -1,11 +1,9 @@
-
-#include "../mgclasstester.h"
-
+#include "../../project2_test.h"
 #include "../mgmap.h"
 #include "../mgpathitem.h"
 #include "../stubs/mgframeworkstub.h"
 
-void MGClassTester::test_MGMap_initialize()
+void Project2Test::test_MGMap_initialize()
 {
 	MGMap map;
 	MGFrameworkStub mgf;

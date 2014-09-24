@@ -1,7 +1,7 @@
-#include "../mgclasstester.h"
+#include "../../project2_test.h"
 #include "../stubs/mgcomponentimpl.h"
 
-void MGClassTester::test_MGComponent()
+void Project2Test::test_MGComponent()
 {
 	MGComponentImpl comp1;
 	MGComponentImpl comp2;

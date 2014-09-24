@@ -235,9 +235,17 @@
 				RelativePath="..\..\..\..\src\project2_server.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\..\src\project2_test.cpp"
+				>
+			</File>
 			<Filter
 				Name="class_test"
 				>
+				<File
+					RelativePath="..\..\..\..\src\mgframework\class_test\runAll.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGAStarNode.cpp"
 					>
@@ -359,6 +367,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\src\project2_server.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\src\project2_test.h"
 				>
 			</File>
 		</Filter>

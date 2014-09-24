@@ -1,9 +1,9 @@
-#include "../mgclasstester.h"
+#include "../../project2_test.h"
 #include "../mgpathitem.h"
 #include "../stubs/mgframeworkstub.h"
 #include "../stubs/imgwindowimpl.h"
 
-void MGClassTester::test_002_basic_MO_create_delete()
+void Project2Test::test_002_basic_MO_create_delete()
 {
 	MGFrameworkStub mgf;
 	mgf.init(128, 128, 32, 32);
@@ -31,7 +31,7 @@ void MGClassTester::test_002_basic_MO_create_delete()
 	mgf.runConsoleCommand("expect getnumberofmo 0", &mgf, NULL);
 }
 
-void MGClassTester::test_002_basic_MO_create_delete_with_owner()
+void Project2Test::test_002_basic_MO_create_delete_with_owner()
 {
 	MGFrameworkStub mgf;
 	mgf.init(128, 128, 32, 32);
@@ -74,7 +74,7 @@ void MGClassTester::test_002_basic_MO_create_delete_with_owner()
 	mgf.runConsoleCommand("expect getnumberofmo 0", &mgf, NULL);
 }
 
-void MGClassTester::test_002_basic_MO_create_with_area_square()
+void Project2Test::test_002_basic_MO_create_with_area_square()
 {
 	MGFrameworkStub mgf;
 	mgf.init(128, 128, 32, 32);
@@ -86,7 +86,7 @@ void MGClassTester::test_002_basic_MO_create_with_area_square()
 	mgf.runConsoleCommand("expect getnumberofmo 0", &mgf, NULL);
 }
 
-void MGClassTester::test_002_basic_MO_create_with_area_square_single_location()
+void Project2Test::test_002_basic_MO_create_with_area_square_single_location()
 {
 	MGFrameworkStub mgf;
 	mgf.init(128, 128, 32, 32);
@@ -99,7 +99,7 @@ void MGClassTester::test_002_basic_MO_create_with_area_square_single_location()
 	mgf.runConsoleCommand("expect getnumberofmo 0", &mgf, NULL);
 }
 
-void MGClassTester::test_002_basic_MO_mark_unmark()
+void Project2Test::test_002_basic_MO_mark_unmark()
 {
 	MGFrameworkStub mgf;
 	mgf.init(128, 128, 32, 32);
@@ -138,7 +138,7 @@ void MGClassTester::test_002_basic_MO_mark_unmark()
 	mgf.runConsoleCommand("expect getnumberofmo 0", &mgf, NULL);
 }
 
-void MGClassTester::test_002_basic_MO_verify_location()
+void Project2Test::test_002_basic_MO_verify_location()
 {
 	MGFrameworkStub mgf;
 	IMGWindowImpl win;
@@ -164,7 +164,7 @@ void MGClassTester::test_002_basic_MO_verify_location()
 	mgf.runConsoleCommand("expect getnumberofmo 0", &mgf, NULL);
 }
 
-void MGClassTester::test_002_basic_MO_ordering()
+void Project2Test::test_002_basic_MO_ordering()
 {
 	MGFrameworkStub mgf;
 	IMGWindowImpl win;
@@ -239,7 +239,7 @@ void MGClassTester::test_002_basic_MO_ordering()
 	mgf.runConsoleCommand("expect getnumberofmo 0", &mgf, NULL);
 }
 
-void MGClassTester::test_002_basic_MO_random_mo()
+void Project2Test::test_002_basic_MO_random_mo()
 {
 	MGFrameworkStub mgf;
 	IMGWindowImpl win;
@@ -258,7 +258,7 @@ void MGClassTester::test_002_basic_MO_random_mo()
 	mgf.runConsoleCommand("expect getnumberofmo 0", &mgf, NULL);
 }
 
-void MGClassTester::test_002_basic_MO_stressing()
+void Project2Test::test_002_basic_MO_stressing()
 {
 	MGFrameworkStub mgf;
 	IMGWindowImpl win;

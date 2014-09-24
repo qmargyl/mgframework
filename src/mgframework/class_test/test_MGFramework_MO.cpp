@@ -1,10 +1,10 @@
-#include "../mgclasstester.h"
+#include "../../project2_test.h"
 #include "../mgpathitem.h"
 #include "../mgsymboltable.h"
 #include "../stubs/mgframeworkstub.h"
 
 
-void MGClassTester::test_MGFramework_createMO()
+void Project2Test::test_MGFramework_createMO()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -28,7 +28,7 @@ void MGClassTester::test_MGFramework_createMO()
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 20, "MGF failed to create zero MO");
 }
 
-void MGClassTester::test_MGFramework_deleteMO()
+void Project2Test::test_MGFramework_deleteMO()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -68,7 +68,7 @@ void MGClassTester::test_MGFramework_deleteMO()
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF failed to run deleteAllMO");
 }
 
-void MGClassTester::test_MGFramework_deleteMOVerifyIterator()
+void Project2Test::test_MGFramework_deleteMOVerifyIterator()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -99,7 +99,7 @@ void MGClassTester::test_MGFramework_deleteMOVerifyIterator()
 	ASSERT_NOT_EQUAL(mgf.nthMO(1) == it, true, "MGF failed to set iterator correctly when deleting MO");
 }
 
-void MGClassTester::test_MGFramework_deleteFewMO()
+void Project2Test::test_MGFramework_deleteFewMO()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -136,7 +136,7 @@ void MGClassTester::test_MGFramework_deleteFewMO()
 	ASSERT_NOT_EQUAL(mgf.nthMO(1)->getOwner(), 3, "MGF failed to setup MO owner");
 }
 
-void MGClassTester::test_MGFramework_deleteAllMO()
+void Project2Test::test_MGFramework_deleteAllMO()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -156,7 +156,7 @@ void MGClassTester::test_MGFramework_deleteAllMO()
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF failed to delete all MO on empty MO list");
 }
 
-void MGClassTester::test_MGFramework_setupMO()
+void Project2Test::test_MGFramework_setupMO()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -174,7 +174,7 @@ void MGClassTester::test_MGFramework_setupMO()
 	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getOwner(), 2, "MGF failed to setup MO owner");
 }
 
-void MGClassTester::test_MGFramework_resetupMO()
+void Project2Test::test_MGFramework_resetupMO()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -204,7 +204,7 @@ void MGClassTester::test_MGFramework_resetupMO()
 	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getOwner(), 2, "MGF failed to setup MO owner");
 }
 
-void MGClassTester::test_MGFramework_setupDeleteSetupMO()
+void Project2Test::test_MGFramework_setupDeleteSetupMO()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -268,7 +268,7 @@ void MGClassTester::test_MGFramework_setupDeleteSetupMO()
 	ASSERT_NOT_EQUAL(mgf.nthMO(4)->getOwner(), 7, "MGF failed to setup MO owner");
 }
 
-void MGClassTester::test_MGFramework_deletePerOwnerOfMO()
+void Project2Test::test_MGFramework_deletePerOwnerOfMO()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -304,7 +304,7 @@ void MGClassTester::test_MGFramework_deletePerOwnerOfMO()
 	ASSERT_NOT_EQUAL(mgf.nthMO(1)->getOwner(), 3, "MGF failed to setup MO owner");
 }
 
-void MGClassTester::test_MGFramework_deleteFirstMOPerOwner()
+void Project2Test::test_MGFramework_deleteFirstMOPerOwner()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -332,7 +332,7 @@ void MGClassTester::test_MGFramework_deleteFirstMOPerOwner()
 	ASSERT_NOT_EQUAL(mgf.nthMO(1)->getOwner(), 2, "MGF failed to setup MO owner");
 }
 
-void MGClassTester::test_MGFramework_markMO()
+void Project2Test::test_MGFramework_markMO()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -349,7 +349,7 @@ void MGClassTester::test_MGFramework_markMO()
 	ASSERT_NOT_EQUAL(mgf.getNumberOfMarkedMO(), 1, "MGF failed to mark MO");
 }
 
-void MGClassTester::test_MGFramework_markMOIndexInSymbolTable()
+void Project2Test::test_MGFramework_markMOIndexInSymbolTable()
 {
 	// Setup
 	MGFrameworkStub mgf;

@@ -1,11 +1,10 @@
-
-#include "../mgclasstester.h"
+#include "../../project2_test.h"
 #include "../mgpathgenerator.h"
 #include "../mgpathitem.h"
 #include "../mgmap.h"
 #include <list>
 
-void MGClassTester::test_MGPathGenerator_calculatePathAStar()
+void Project2Test::test_MGPathGenerator_calculatePathAStar()
 {
 	std::list<MGPathItem> path;
 	MGMap map;

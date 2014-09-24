@@ -2,6 +2,7 @@
 #include "project2.h"
 #include "project2_server.h"
 #endif
+#include "project2_test.h"
 #include "mgframework/mgframework.h"
 #include "mgframework/mgclasstester.h"
 #include "mgframework/mgwindow.h"
@@ -112,7 +113,8 @@ int main(int argc, char **argv)
 	if(classTest)
 	{
 		// Run configured class tests and then exit
-		MGClassTester::runAll();
+		Project2Test classTester;
+		classTester.runAll();
 		goto EXIT_MAIN_RIGHT_AWAY;
 	}
 

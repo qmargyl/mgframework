@@ -1,10 +1,10 @@
-#include "../mgclasstester.h"
+#include "../../project2_test.h"
 #include "../mgpathitem.h"
 #include "../stubs/mgframeworkstub.h"
 #include "../stubs/imgwindowimpl.h"
 
 
-void MGClassTester::test_MGFramework_runOneFrame()
+void Project2Test::test_MGFramework_runOneFrame()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -21,7 +21,7 @@ void MGClassTester::test_MGFramework_runOneFrame()
 	ASSERT_NOT_EQUAL(win.getFlipSurfaceCounter(), 3, "Wrong number of rendered frames");
 }
 
-void MGClassTester::test_MGFramework_fullscreen()
+void Project2Test::test_MGFramework_fullscreen()
 {
 	// Setup
 	MGFrameworkStub mgf;

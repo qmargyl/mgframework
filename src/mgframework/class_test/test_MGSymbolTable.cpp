@@ -1,8 +1,7 @@
-#include "../mgclasstester.h"
-
+#include "../../project2_test.h"
 #include "../mgsymboltable.h"
 
-void MGClassTester::test_MGSymbolTable_addSymbol()
+void Project2Test::test_MGSymbolTable_addSymbol()
 {
 	// Setup
 	MGSymbolTable s;
@@ -16,7 +15,7 @@ void MGClassTester::test_MGSymbolTable_addSymbol()
 	ASSERT_NOT_EQUAL(s.getValue("s1"), 17, "MGSymbolTable failed to give symbol correct value");
 }
 
-void MGClassTester::test_MGSymbolTable_setValue()
+void Project2Test::test_MGSymbolTable_setValue()
 {
 	// Setup
 	MGSymbolTable s;
@@ -33,7 +32,7 @@ void MGClassTester::test_MGSymbolTable_setValue()
 	ASSERT_NOT_EQUAL(s.getValue("s1"), 18, "MGSymbolTable failed to give symbol correct value");
 }
 
-void MGClassTester::test_MGSymbolTable_clear()
+void Project2Test::test_MGSymbolTable_clear()
 {
 	// Setup
 	MGSymbolTable s;
@@ -56,7 +55,7 @@ void MGClassTester::test_MGSymbolTable_clear()
 	ASSERT_NOT_EQUAL(s.hasValue("s3"), false, "MGSymbolTable failed to remove symbol");
 }
 
-void MGClassTester::test_MGSymbolTable_addSeveralSymbols()
+void Project2Test::test_MGSymbolTable_addSeveralSymbols()
 {
 	// Setup
 	MGSymbolTable s;
@@ -142,7 +141,7 @@ void MGClassTester::test_MGSymbolTable_addSeveralSymbols()
 	ASSERT_NOT_EQUAL(s.getValue("s19"), 29, "MGSymbolTable failed to set correct value");
 }
 
-void MGClassTester::test_MGSymbolTable_symbolNames()
+void Project2Test::test_MGSymbolTable_symbolNames()
 {
 	// Setup
 	MGSymbolTable s;
