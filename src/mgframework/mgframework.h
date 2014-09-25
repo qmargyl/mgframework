@@ -205,7 +205,7 @@ class MGFramework :public MGComponent
 		inline void increaseDrawnTilesCounter(){ ++m_NDrawnTiles; }
 
 		// Center on MO
-		unsigned int m_FeatureCenterOnMO;
+		int m_FeatureCenterOnMO;
 
 		IMGWindow *m_Window;
 

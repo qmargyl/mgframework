@@ -3,11 +3,9 @@
 #include <string>
 #include <cstring>
 #include <iostream>
-#ifndef UNITTEST_LINUX
-	#include <SDL/SDL_opengl.h>
-	#include <GL/gl.h>
-	#include <GL/glu.h>
-#endif
+#include <SDL/SDL_opengl.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include "mgframework.h"
 
 
@@ -16,11 +14,9 @@ MGWindow::MGWindow():
 	m_Height(0),
 	m_Bpp(0),
 	m_Fullscreen(false),
-#ifndef UNITTEST_LINUX
 	m_Screen(NULL),
-  #ifndef MGF_DISABLE_TTF
+#ifndef MGF_DISABLE_TTF
 	m_Font(0),
-  #endif
 #endif
 	m_Flags(0)
 {
@@ -28,14 +24,11 @@ MGWindow::MGWindow():
 
 MGWindow::~MGWindow()
 {
-#ifndef UNITTEST_LINUX
 	SDL_Quit();
-#endif
 }
 
 bool MGWindow::createWindow()
 {
-#ifndef UNITTEST_LINUX
 	if( SDL_Init( SDL_INIT_VIDEO ) != 0 ) 
 	{		
 		return false;
@@ -65,7 +58,7 @@ bool MGWindow::createWindow()
 	{
 		return false;
 	}
-#endif	
+
 	return true;
 }
 
@@ -75,9 +68,7 @@ bool MGWindow::setProperties(int width, int height, int bpp, bool fullscreen, co
 	m_Title = title;
 	m_Fullscreen = fullscreen;
 	m_Bpp = bpp;
-#ifndef UNITTEST_LINUX
 	setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
-#endif
 	return true;
 }
 
@@ -110,42 +101,33 @@ bool MGWindow::setProperties(eMGWindowScreenResolution screenResolution, int bpp
 	m_Title = title;
 	m_Fullscreen = fullscreen;
 	m_Bpp = bpp;
-#ifndef UNITTEST_LINUX
 	setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
-#endif
 	return true;
 }
 
 
 void MGWindow::flipSurface()
 {
-#ifndef UNITTEST_LINUX
 	SDL_Flip(m_Screen);
-#endif
 }
 
 void MGWindow::activateFullscreen()
 {
 	m_Fullscreen = true;
-#ifndef UNITTEST_LINUX
 	setFlags(SDL_FULLSCREEN | SDL_DOUBLEBUF | SDL_HWSURFACE);
 	m_Screen = SDL_SetVideoMode(m_Width, m_Height, m_Bpp, getFlags());
-#endif
 }
 
 void MGWindow::deactivateFullscreen()
 {
 	m_Fullscreen = false;
-#ifndef UNITTEST_LINUX
 	setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
 	m_Screen = SDL_SetVideoMode(m_Width, m_Height, m_Bpp, getFlags());
-#endif
 }
 
 
 void MGWindow::drawSprite(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {
-#ifndef UNITTEST_LINUX
 	SDL_Rect srcRect;
 	srcRect.x = srcX;
 	srcRect.y = srcY;
@@ -157,14 +139,12 @@ void MGWindow::drawSprite(void* imageSurface, int srcX, int srcY, int dstX, int 
 	dstRect.w = width;
 	dstRect.h = height;
 	SDL_BlitSurface(static_cast<SDL_Surface*>(imageSurface), &srcRect, m_Screen, &dstRect);
-#endif
 }
 
 
 
 void* MGWindow::loadBMPImage( std::string filename ) 
 {
-#ifndef UNITTEST_LINUX
 	SDL_Surface* loadedImage = NULL;
 	SDL_Surface* optimizedImage = NULL;
 	loadedImage = SDL_LoadBMP( filename.c_str() );
@@ -174,11 +154,9 @@ void* MGWindow::loadBMPImage( std::string filename )
 		SDL_FreeSurface( loadedImage );
 	}
 	return (void*)optimizedImage;
-#endif
 }
 
 
-#ifndef UNITTEST_LINUX
 void MGWindow::drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB)
 {
 #ifndef MGF_DISABLE_TTF
@@ -192,32 +170,26 @@ void MGWindow::drawText(const char* string, int size, int x, int y, int fR, int 
 	TTF_CloseFont(m_Font);
 #endif
 }
-#endif
 
 
 void MGWindow::putPixel32(int x, int y, unsigned int pixel)
 {
-#ifndef UNITTEST_LINUX
 	Uint32 *pixels = (Uint32 *)m_Screen->pixels;
 	pixels[ ( y * m_Screen->w ) + x ] = (Uint32)pixel;
-#endif
 }
 
 
 
 unsigned int MGWindow::getPixel32(int x, int y)
 {
-#ifndef UNITTEST_LINUX
 	Uint32 *pixels = (Uint32 *)m_Screen->pixels;
 	return (unsigned int)pixels[ ( y * m_Screen->w ) + x ];
-#endif
 }
 
 
 
 void MGWindow::drawCircle32(int n_cx, int n_cy, int radius, unsigned int pixel)
 {
-#ifndef UNITTEST_LINUX
     // if the first pixel in the screen is represented by (0,0) (which is in sdl)
     // remember that the beginning of the circle is not in the middle of the pixel
     // but to the left-top from it:
@@ -262,14 +234,12 @@ void MGWindow::drawCircle32(int n_cx, int n_cy, int radius, unsigned int pixel)
             error -= x;
         }
     }
-#endif
 }
 
 
 
 void MGWindow::drawFillCircle32(int cx, int cy, int radius, unsigned int pixel)
 {
-#ifndef UNITTEST_LINUX
     static const int BPP = 4;
     double r = (double)radius;
     for (double dy = 1; dy <= r; dy += 1.0)
@@ -289,7 +259,6 @@ void MGWindow::drawFillCircle32(int cx, int cy, int radius, unsigned int pixel)
             target_pixel_b += BPP;
         }
     }
-#endif
 }
 
 

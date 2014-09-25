@@ -983,13 +983,13 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		{
 			registerUsedCommand(MGComponent_DELETE_ALL_PE_PARAMLIST);
 			int owner = 0;
-			bool ownerParamSet=false;
+			bool ownerParamSet = false;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i] == "-owner" && cmdvec.size() > (i + 1))
 				{
 					owner = toInt(cmdvec[i + 1], s);
-					ownerParamSet=true;
+					ownerParamSet = true;
 					++i;
 				}
 				else
@@ -1026,13 +1026,13 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		{
 			registerUsedCommand(MGComponent_DELETE_ALL_SO_PARAMLIST);
 			int owner = 0;
-			bool ownerParamSet=false;
+			bool ownerParamSet = false;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i] == "-owner" && cmdvec.size() > (i + 1))
 				{
 					owner = toInt(cmdvec[i + 1], s);
-					ownerParamSet=true;
+					ownerParamSet = true;
 					++i;
 				}
 				else

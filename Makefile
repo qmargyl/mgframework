@@ -201,13 +201,6 @@ $(OBJDIR)/mgsymboltable.o: ./src/mgframework/mgsymboltable.cpp | $(OBJDIR)
 	@echo 'Finished building: $<'
 	@echo ' '
 
-#$(OBJDIR)/mgwindow.o: ./src/mgframework/mgwindow.cpp | $(OBJDIR)
-#	@echo 'Building file: $<'
-#	@echo 'Invoking: GCC C++ Compiler'
-#	$(GCC_C++_BUILD) -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
-#	@echo 'Finished building: $<'
-#	@echo ' '
-
 $(OBJDIR)/mgframeworkstub.o: ./src/mgframework/stubs/mgframeworkstub.cpp | $(OBJDIR)
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'

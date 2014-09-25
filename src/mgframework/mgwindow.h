@@ -5,10 +5,8 @@
 #include "imgwindow.h"
 
 #ifndef UNITTEST_LINUX
-// SDL
   #include <SDL/SDL.h>
   #include <SDL/SDL_thread.h>
-
   #ifndef MGF_DISABLE_TTF
     #include "SDL_ttf.h"
   #endif
