@@ -31,7 +31,7 @@ bool Project2Server::init(int w, int h, int tw, int th)
 		runConsoleCommand("delete all pe", this, NULL);
 		runConsoleCommand("add pe 1", this, NULL);
 
-		if(getNumberOfPE()>0)
+		if(getNumberOfPE() > 0)
 		{
 			m_PE[0].setupTimer(4000);
 			m_PE[0].activate();
@@ -48,14 +48,14 @@ bool Project2Server::init(int w, int h, int tw, int th)
 void Project2Server::handleGameLogics()
 {
 	// Update periodic event to trigger rare events
-	if(getNumberOfPE()>0)
+	if(getNumberOfPE() > 0)
 	{
 		if(m_PE[0].update())
 		{
 			// Set all moving objects destination coordinate.
 			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 			{
-				(*it).setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
+				it->setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
 			}
 		}
 	}
@@ -63,7 +63,7 @@ void Project2Server::handleGameLogics()
 	// Update all moving objects
 	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 	{
-		(*it).update(this);
+		it->update(this);
 	}
 
 }

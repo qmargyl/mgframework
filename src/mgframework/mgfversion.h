@@ -2,6 +2,6 @@
 #define _MG_FRAMEWORKVERSION_H
 
 // Version format is <major release>.<minor release>.<LSV>
-#define MGFRAMEWORKVERSION "1.1.2"
+#define MGFRAMEWORKVERSION "1.1.3"
 
 #endif
