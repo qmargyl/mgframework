@@ -259,7 +259,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGMovingObject.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGPathGenerator_calculatePathAStar.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGPathItem.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGPeriodicEvent.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGStationaryObject.cpp"
 					>
 				</File>
 				<File
