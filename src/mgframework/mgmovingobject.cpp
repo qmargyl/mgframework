@@ -15,8 +15,12 @@ MGMovingObject::MGMovingObject()
 	m_Marked = false;
 	m_TileX = 0;
 	m_TileY = 0;
+	m_DestTileX = 0;
+	m_DestTileY = 0;
 	m_NextTileX = 0;
 	m_NextTileY = 0;
+	m_X = 0.0;
+	m_Y = 0.0;
 	m_CurrentState = MOStateCreated;
 	setOwner(MGF_NOPLAYER);
 }
@@ -32,8 +36,12 @@ void MGMovingObject::initialize()
 	m_Marked = false;
 	m_TileX = 0;
 	m_TileY = 0;
+	m_DestTileX = 0;
+	m_DestTileY = 0;
 	m_NextTileX = 0;
 	m_NextTileY = 0;
+	m_X = 0.0;
+	m_Y = 0.0;
 	setOwner(MGF_NOPLAYER);
 	if(!isCreated())
 	{

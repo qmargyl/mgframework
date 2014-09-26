@@ -8,6 +8,10 @@ class Project2Test : public MGClassTester
 private:
 	// test_MGComponent
 	static void test_MGComponent();
+	
+	// test_MGMovingObject
+	static void test_MGMovingObject_initialize();
+	static void test_MGMovingObject_mark();
 
 	// test_MGMap_initialize
 	static void test_MGMap_initialize();
@@ -60,6 +64,10 @@ public:
 		// test_MGComponent
 		RUNTEST(test_MGComponent);
 
+		// test_MGMovingObject
+		RUNTEST(test_MGMovingObject_initialize);
+		RUNTEST(test_MGMovingObject_mark);
+	
 		// test_MGMap_initialize
 		RUNTEST(test_MGMap_initialize);
 
