@@ -17,6 +17,8 @@ public:
 
 	// Calculate path from @(x1,y1) to @(x2,y2) on @map and store it in @path
 	static void calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &map, std::list<MGPathItem> &path);
+	static void calculatePathBasic(int x1, int y1, int x2, int y2, MGMap &map, std::list<MGPathItem> &path);
+
 
 	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec){ return MGComponent_UNDEFINED; }
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s){ return false; }
