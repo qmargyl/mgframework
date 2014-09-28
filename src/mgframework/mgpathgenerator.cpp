@@ -221,262 +221,260 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 
 void MGPathGenerator::calculatePathBasic(int x1, int y1, int x2, int y2, MGMap &map, std::list<MGPathItem> &path)
 {
-		int x = x1;
-		int y = y1;
-		std::list<MGPathItem> neighbors;
-		std::list<MGPathItem> evaluated;
-		MGPathItem *n;
-		MGPathItem *e;
+	int x = x1;
+	int y = y1;
+	std::list<MGPathItem> neighbors;
+	std::list<MGPathItem> evaluated;
 
-		MGPathItem *now = new MGPathItem(x, y, MGFramework::distance(x, y, x2, y2));
-		path.push_back(*now);
+	MGPathItem now(x, y, MGFramework::distance(x, y, x2, y2));
+	path.push_back(now);
 
-		while (x != x2 || y != y2)
+	while (x != x2 || y != y2)
+	{
+		if(map.occupant(x2, y2) != 0)
 		{
-			if(map.occupant(x2, y2) != 0)
-			{
-				// XXX: Here we should try to find a tile close to target instead of giving up.
-				//      - Set a new bx,by close to tagret and continue instead of breaking?
-				//      - Condition that the distance to target is not short?
-				break;
-			}
+			// XXX: Here we should try to find a tile close to target instead of giving up.
+			//      - Set a new bx,by close to tagret and continue instead of breaking?
+			//      - Condition that the distance to target is not short?
+			break;
+		}
 
-			if(x + 1 < map.getWidth() && y + 1 < map.getHeight() && !map.occupant(x + 1, y + 1))
+		if(x + 1 < map.getWidth() && y + 1 < map.getHeight() && !map.occupant(x + 1, y + 1))
+		{
+			MGPathItem n(x + 1, y + 1, distance(x + 1, y + 1, x2, y2));
+			bool skip = false;
+			for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
 			{
-				n = new MGPathItem(x + 1, y + 1, distance(x + 1, y + 1, x2, y2));
-				bool skip = false;
-				for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
+				if(n.equalCoordinate(&(*it)))
 				{
-					if(n->equalCoordinate(&(*it)))
-					{
-						skip = true;
-					}
+					skip = true;
 				}
-				if(!skip) neighbors.push_front(*n);
 			}
-			if(x - 1 >= 0 && y - 1 >= 0 && !map.occupant(x - 1, y - 1))
+			if(!skip) neighbors.push_front(n);
+		}
+		if(x - 1 >= 0 && y - 1 >= 0 && !map.occupant(x - 1, y - 1))
+		{
+			MGPathItem n(x - 1, y - 1, distance(x - 1, y - 1, x2, y2));
+			bool skip = false;
+			for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
 			{
-				n = new MGPathItem(x - 1, y - 1, distance(x - 1, y - 1, x2, y2));
-				bool skip = false;
-				for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
+				if(n.equalCoordinate(&(*it)))
 				{
-					if(n->equalCoordinate(&(*it)))
-					{
-						skip = true;
-					}
+					skip = true;
 				}
-				if(!skip) neighbors.push_front(*n);
 			}
-			if(x + 1 < map.getWidth() && y - 1 >= 0 && !map.occupant(x + 1, y - 1))
+			if(!skip) neighbors.push_front(n);
+		}
+		if(x + 1 < map.getWidth() && y - 1 >= 0 && !map.occupant(x + 1, y - 1))
+		{
+			MGPathItem n(x + 1, y - 1, distance(x + 1, y - 1, x2, y2));
+			bool skip = false;
+			for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
 			{
-				n = new MGPathItem(x + 1, y - 1, distance(x + 1, y - 1, x2, y2));
-				bool skip = false;
-				for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
+				if(n.equalCoordinate(&(*it)))
 				{
-					if(n->equalCoordinate(&(*it)))
-					{
-						skip = true;
-					}
+					skip = true;
 				}
-				if(!skip) neighbors.push_front(*n);
 			}
-			if(x - 1 >= 0 && y + 1 < map.getHeight() && !map.occupant(x - 1, y + 1))
+			if(!skip) neighbors.push_front(n);
+		}
+		if(x - 1 >= 0 && y + 1 < map.getHeight() && !map.occupant(x - 1, y + 1))
+		{
+			MGPathItem n(x - 1, y + 1, distance(x - 1, y + 1, x2, y2));
+			bool skip = false;
+			for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
 			{
-				n = new MGPathItem(x - 1, y + 1, distance(x - 1, y + 1, x2, y2));
-				bool skip = false;
-				for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
+				if(n.equalCoordinate(&(*it)))
 				{
-					if(n->equalCoordinate(&(*it)))
-					{
-						skip = true;
-					}
+					skip = true;
 				}
-				if(!skip) neighbors.push_front(*n);
 			}
-			if(y + 1 < map.getHeight() && !map.occupant(x, y + 1))
+			if(!skip) neighbors.push_front(n);
+		}
+		if(y + 1 < map.getHeight() && !map.occupant(x, y + 1))
+		{
+			MGPathItem n(x, y + 1, distance(x, y + 1, x2, y2));
+			bool skip = false;
+			for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
 			{
-				n = new MGPathItem(x, y + 1, distance(x, y + 1, x2, y2));
-				bool skip = false;
-				for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
+				if(n.equalCoordinate(&(*it)))
 				{
-					if(n->equalCoordinate(&(*it)))
-					{
-						skip = true;
-					}
+					skip = true;
 				}
-				if(!skip) neighbors.push_front(*n);
 			}
-			if(y - 1 >= 0 && !map.occupant(x, y - 1))
+			if(!skip) neighbors.push_front(n);
+		}
+		if(y - 1 >= 0 && !map.occupant(x, y - 1))
+		{
+			MGPathItem n(x, y - 1, distance(x, y - 1, x2, y2));
+			bool skip = false;
+			for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
 			{
-				n = new MGPathItem(x, y - 1, distance(x, y - 1, x2, y2));
-				bool skip = false;
-				for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
+				if(n.equalCoordinate(&(*it)))
 				{
-					if(n->equalCoordinate(&(*it)))
-					{
-						skip = true;
-					}
+					skip = true;
 				}
-				if(!skip) neighbors.push_front(*n);
 			}
-			if(x + 1 < map.getWidth() && !map.occupant(x + 1, y))
+			if(!skip) neighbors.push_front(n);
+		}
+		if(x + 1 < map.getWidth() && !map.occupant(x + 1, y))
+		{
+			MGPathItem n(x + 1, y, distance(x + 1, y, x2, y2));
+			bool skip = false;
+			for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
 			{
-				n = new MGPathItem(x + 1, y, distance(x + 1, y, x2, y2));
-				bool skip = false;
-				for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
+				if(n.equalCoordinate(&(*it)))
 				{
-					if(n->equalCoordinate(&(*it)))
-					{
-						skip = true;
-					}
+					skip = true;
 				}
-				if(!skip) neighbors.push_front(*n);
 			}
-			if(x - 1 >= 0 && !map.occupant(x - 1, y))
+			if(!skip) neighbors.push_front(n);
+		}
+		if(x - 1 >= 0 && !map.occupant(x - 1, y))
+		{
+			MGPathItem n(x - 1, y, distance(x - 1, y, x2, y2));
+			bool skip = false;
+			for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
 			{
-				n = new MGPathItem(x - 1, y, distance(x - 1, y, x2, y2));
-				bool skip = false;
-				for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
+				if(n.equalCoordinate(&(*it)))
 				{
-					if(n->equalCoordinate(&(*it)))
-					{
-						skip = true;
-					}
+					skip = true;
 				}
-				if(!skip) neighbors.push_front(*n);
 			}
+			if(!skip) neighbors.push_front(n);
+		}
 
-			if(!neighbors.empty())
-			{
-				int bestx = 0;
-				int besty = 0;
-				double besth = distance(0, 0, map.getWidth(), map.getHeight());
-				bool found = false;
+		if(!neighbors.empty())
+		{
+			int bestx = 0;
+			int besty = 0;
+			double besth = distance(0, 0, map.getWidth(), map.getHeight());
+			bool found = false;
 
-				// XXX: Set a limit for how many neighbors we will consider at the most, in each step. 
-				for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
+			// XXX: Set a limit for how many neighbors we will consider at the most, in each step. 
+			for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
+			{
+				if((*it).getH()<besth)
 				{
-					if((*it).getH()<besth)
+					// First we check if the found tile has already been evaluated.
+					bool alreadyEvaluated = false;
+					for (std::list<MGPathItem>::iterator ae = evaluated.begin(); ae != evaluated.end(); ++ae)
 					{
-						// First we check if the found tile has already been evaluated.
-						bool alreadyEvaluated = false;
-						for (std::list<MGPathItem>::iterator ae = evaluated.begin(); ae != evaluated.end(); ++ae)
+						if((*ae).equalCoordinate(&(*it)))
 						{
-							if((*ae).equalCoordinate(&(*it)))
-							{
-								alreadyEvaluated = true;
-							}
+							alreadyEvaluated = true;
 						}
+					}
 
-						if(!alreadyEvaluated)
+					if(!alreadyEvaluated)
+					{
+						// Add the current (x,y) to list of evaluated coordinates..
+						MGPathItem e(x, y, MGFramework::distance(x, y, x2, y2));
+						evaluated.push_back(e);
+
+						while(x < (*it).getX() - 1 || x > (*it).getX() + 1 || y < (*it).getY() - 1 || y > (*it).getY() + 1)
 						{
-							// Add the current (x,y) to list of evaluated coordinates..
-							e = new MGPathItem(x, y, MGFramework::distance(x, y, x2, y2));
-							evaluated.push_back(*e);
+							// The found tile is not a neighbor of {x,y}
+							// Set H to a large number to not try this neighbor again.
+							// Back-track.
+							(*it).setH(map.getWidth() + map.getHeight());
 
-							while(x < (*it).getX() - 1 || x > (*it).getX() + 1 || y < (*it).getY() - 1 || y > (*it).getY() + 1)
+							if(it != neighbors.begin())
 							{
-								// The found tile is not a neighbor of {x,y}
-								// Set H to a large number to not try this neighbor again.
-								// Back-track.
-								(*it).setH(map.getWidth() + map.getHeight());
-
-								if(it != neighbors.begin())
+								--it;
+								if(path.size() > 0)
 								{
-									--it;
-									if(path.size() > 0)
-									{
-										path.pop_back();
+									path.pop_back();
 
-										if(!path.empty())
-										{
-											x = path.back().getX();
-											y = path.back().getY();
-										}
-										else
-										{
-											break;
-										}
+									if(!path.empty())
+									{
+										x = path.back().getX();
+										y = path.back().getY();
+									}
+									else
+									{
+										break;
 									}
 								}
-								else
-								{
-									break;
-								}
 							}
-
-							bestx = (*it).getX();
-							besty = (*it).getY();
-							besth = (*it).getH();
-							found = !(x < bestx - 1 || x > bestx + 1 || y < besty - 1 || y > besty + 1);
+							else
+							{
+								break;
+							}
 						}
+
+						bestx = (*it).getX();
+						besty = (*it).getY();
+						besth = (*it).getH();
+						found = !(x < bestx - 1 || x > bestx + 1 || y < besty - 1 || y > besty + 1);
 					}
 				}
+			}
 
-				if(found)
+			if(found)
+			{
+				if(x < bestx - 1 || x > bestx + 1 || y < besty - 1 || y > besty + 1)
 				{
-					if(x < bestx - 1 || x > bestx + 1 || y < besty - 1 || y > besty + 1)
-					{
-						// XXX: Is this really necessary?
-						MGFLOG_STATIC_ERROR("MGMap::calculatePath suggested a non-neighbor as next step in path");
-						path.clear();
-						break;
-					}
-					MGPathItem *pI = new MGPathItem(bestx, besty, MGFramework::distance(bestx, besty, x2, y2));
-					path.push_back(*pI);
-					x = bestx;
-					y = besty;
-				}
-				else
-				{
-					// XXX: Should we really give up here? What about back tracking?
-					//      Yes i think so. We have already tried to back-track...
-
-					// XXX: Why is this only ok one tile away from target? What if a cluster of tiles is occupied?
-					if(MGFramework::distance(x, y, x2, y2) < 2 && map.occupant(x2, y2) != 0)
-					{
-						// The tile we want to go to is occopied and we are one tile away
-					}
-					else
-					{
-
-					}
+					// XXX: Is this really necessary?
+					MGFLOG_STATIC_ERROR("MGMap::calculatePath suggested a non-neighbor as next step in path");
+					path.clear();
 					break;
 				}
+				MGPathItem pI(bestx, besty, MGFramework::distance(bestx, besty, x2, y2));
+				path.push_back(pI);
+				x = bestx;
+				y = besty;
 			}
 			else
 			{
-				//MGFLOG_WARNING("MGMap::calculatePath was not able to find a path as there are no available neighbor tiles to evaluate");
-				if( (x + 1 < map.getWidth() && y + 1 < map.getHeight() && !map.occupant(x + 1, y + 1)) ||
-					(x - 1 >= 0 && y - 1 >= 0 && !map.occupant(x - 1, y - 1)) ||
-					(x + 1 < map.getWidth() && y - 1 >= 0 && !map.occupant(x + 1, y - 1)) ||
-					(x - 1 >= 0 && y + 1 < map.getHeight() && !map.occupant(x - 1, y + 1)) ||
-					(y + 1 < map.getHeight() && !map.occupant(x, y + 1)) ||
-					(y - 1 >= 0 && !map.occupant(x, y - 1)) ||
-					(x + 1 < map.getWidth() && !map.occupant(x + 1, y)) ||
-					(x - 1 >= 0 && !map.occupant(x - 1, y)) )
-				{
-					MGFLOG_STATIC_ERROR("MGMap::calculatePath stopped calculation without valid reason");
-				}
-				break;
-			}
+				// XXX: Should we really give up here? What about back tracking?
+				//      Yes i think so. We have already tried to back-track...
 
-			// Some additional checks..
-			if(neighbors.size() > 100)
-			{
-				// Purging when "too" many neighbors
-				size_t nToPurge = neighbors.size() / 2;
-				for(int i = 0; i < (int)nToPurge; ++i)
+				// XXX: Why is this only ok one tile away from target? What if a cluster of tiles is occupied?
+				if(MGFramework::distance(x, y, x2, y2) < 2 && map.occupant(x2, y2) != 0)
 				{
-					neighbors.pop_back();
+					// The tile we want to go to is occopied and we are one tile away
 				}
-			}
-			if(path.size() > 1000)
-			{
-				// XXX: This is not necessarily an error but keep it like that for now so it stands out more...
-				MGFLOG_STATIC_ERROR("MGMap::calculatePath created a too long path, aborting");
-				path.clear();
+				else
+				{
+
+				}
 				break;
 			}
-		}//while
+		}
+		else
+		{
+			//MGFLOG_WARNING("MGMap::calculatePath was not able to find a path as there are no available neighbor tiles to evaluate");
+			if( (x + 1 < map.getWidth() && y + 1 < map.getHeight() && !map.occupant(x + 1, y + 1)) ||
+				(x - 1 >= 0 && y - 1 >= 0 && !map.occupant(x - 1, y - 1)) ||
+				(x + 1 < map.getWidth() && y - 1 >= 0 && !map.occupant(x + 1, y - 1)) ||
+				(x - 1 >= 0 && y + 1 < map.getHeight() && !map.occupant(x - 1, y + 1)) ||
+				(y + 1 < map.getHeight() && !map.occupant(x, y + 1)) ||
+				(y - 1 >= 0 && !map.occupant(x, y - 1)) ||
+				(x + 1 < map.getWidth() && !map.occupant(x + 1, y)) ||
+				(x - 1 >= 0 && !map.occupant(x - 1, y)) )
+			{
+				MGFLOG_STATIC_ERROR("MGMap::calculatePath stopped calculation without valid reason");
+			}
+			break;
+		}
+
+		// Some additional checks..
+		if(neighbors.size() > 100)
+		{
+			// Purging when "too" many neighbors
+			size_t nToPurge = neighbors.size() / 2;
+			for(int i = 0; i < (int)nToPurge; ++i)
+			{
+				neighbors.pop_back();
+			}
+		}
+		if(path.size() > 1000)
+		{
+			// XXX: This is not necessarily an error but keep it like that for now so it stands out more...
+			MGFLOG_STATIC_ERROR("MGMap::calculatePath created a too long path, aborting");
+			path.clear();
+			break;
+		}
+	}//while
 }
