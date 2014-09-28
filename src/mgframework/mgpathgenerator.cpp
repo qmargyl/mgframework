@@ -354,13 +354,13 @@ void MGPathGenerator::calculatePathBasic(int x1, int y1, int x2, int y2, MGMap &
 			// XXX: Set a limit for how many neighbors we will consider at the most, in each step. 
 			for (std::list<MGPathItem>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
 			{
-				if((*it).getH()<besth)
+				if(it->getH() < besth)
 				{
 					// First we check if the found tile has already been evaluated.
 					bool alreadyEvaluated = false;
 					for (std::list<MGPathItem>::iterator ae = evaluated.begin(); ae != evaluated.end(); ++ae)
 					{
-						if((*ae).equalCoordinate(&(*it)))
+						if(ae->equalCoordinate(&(*it)))
 						{
 							alreadyEvaluated = true;
 						}
@@ -372,7 +372,7 @@ void MGPathGenerator::calculatePathBasic(int x1, int y1, int x2, int y2, MGMap &
 						MGPathItem e(x, y, MGFramework::distance(x, y, x2, y2));
 						evaluated.push_back(e);
 
-						while(x < (*it).getX() - 1 || x > (*it).getX() + 1 || y < (*it).getY() - 1 || y > (*it).getY() + 1)
+						while(x < it->getX() - 1 || x > it->getX() + 1 || y < it->getY() - 1 || y > it->getY() + 1)
 						{
 							// The found tile is not a neighbor of {x,y}
 							// Set H to a large number to not try this neighbor again.
@@ -403,9 +403,9 @@ void MGPathGenerator::calculatePathBasic(int x1, int y1, int x2, int y2, MGMap &
 							}
 						}
 
-						bestx = (*it).getX();
-						besty = (*it).getY();
-						besth = (*it).getH();
+						bestx = it->getX();
+						besty = it->getY();
+						besth = it->getH();
 						found = !(x < bestx - 1 || x > bestx + 1 || y < besty - 1 || y > besty + 1);
 					}
 				}
