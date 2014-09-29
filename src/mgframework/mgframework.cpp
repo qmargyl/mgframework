@@ -295,7 +295,6 @@ int MGFramework::parse(const char *sFileName)
 	int returnValue = 0;
 	if(sFileName == NULL)
 	{
-		//MGFLOG_INFO("MGFramework::parse was called with argument NULL, exiting function...");
 		return returnValue;
 	}
 
@@ -317,13 +316,13 @@ int MGFramework::parse(const char *sFileName)
 	}
 	m_SymbolTableTransfer->clear();
 
-	strcpy(scriptFileName,sFileName);
+	strcpy(scriptFileName, sFileName);
 
 	std::size_t foundColon = std::string(scriptFileName).find(std::string(":"));
-	if (foundColon!=std::string::npos && foundColon>0)
+	if (foundColon != std::string::npos && foundColon > 0)
 	{
 		functionName = scriptFileName + foundColon + 1;
-		scriptFileName[foundColon]='\0';
+		scriptFileName[foundColon] = '\0';
 		MGFLOG_INFO("MGFramework::parse will parse file " << scriptFileName << ", function " << functionName);
 		globalScope = false;
 	}
@@ -342,13 +341,13 @@ int MGFramework::parse(const char *sFileName)
 		char scriptLine[MGF_SCRIPTLINE_MAXLENGTH] = "";
 		char *neof = NULL;
 		MGFLOG_INFO("MGFramework::parse starting to parse script file " << scriptFileName);
-		if(functionName!=NULL)
+		if(functionName != NULL)
 		{
 			MGFLOG_INFO("MGFramework::parse starting to execute function " << functionName);
 		}
 		else
 		{
-			foundFunction=true;
+			foundFunction = true;
 		}
 
 		// No input during file parsing. Turn back on after parsing, and if it was enabled in the first place.
@@ -560,7 +559,7 @@ int MGFramework::parse(const char *sFileName)
 							if (fColon!=std::string::npos)
 							{
 								MGFLOG_INFO("MGFramework::parse calling " << v_scriptLine[1].c_str());
-								symbols->printTable();
+								symbols->printTable(); // TODO: Remove this print
 								symbolAssignTo(	v_scriptLine[1], 
 												MGComponent::toString(parse(v_scriptLine[1].c_str())), 
 												symbols);
@@ -568,9 +567,9 @@ int MGFramework::parse(const char *sFileName)
 							else
 							{
 								MGFLOG_INFO("MGFramework::parse calling " << (std::string(scriptFileName) + std::string(":") + v_scriptLine[1]).c_str());
-								symbols->printTable();
-								symbolAssignTo(v_scriptLine[1], 
-									MGComponent::toString(parse((std::string(scriptFileName) + std::string(":") + v_scriptLine[1]).c_str())), 
+								symbols->printTable(); // TODO: Remove this print
+								symbolAssignTo(	v_scriptLine[1], 
+												MGComponent::toString(parse((std::string(scriptFileName) + std::string(":") + v_scriptLine[1]).c_str())), 
 												symbols);
 							}
 							if(getQuitFlag())
@@ -643,7 +642,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 	unsigned int frameStartTime = 0; 
 	if(!runOneFrame) m_DelayTime = 0;
 	// Assume an initial value of m_FrameTime of 1000/getDesiredFPS().
-	unsigned int lastFrameTime = MGF_GetExecTimeMS()-(1000/getDesiredFPS()); // MGF_GetExecTimeMS() - lastFrameTime cannot be zero.
+	unsigned int lastFrameTime = MGF_GetExecTimeMS() - (1000 / getDesiredFPS()); // MGF_GetExecTimeMS() - lastFrameTime cannot be zero.
 
 	// Frame loop (processEvents, handleGameLogics, draw)
 	while(processEvents())
@@ -760,7 +759,7 @@ void MGFramework::activateConsole()
 	std::string cLine;
 	do
 	{
-		std::cout << "mg> ";
+		std::cout << "mgf> ";
 		std::getline(std::cin, cLine);
 	}
 	while(runConsoleCommand(cLine.c_str(), this, NULL));
@@ -930,7 +929,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				if(cmdvec[i] == "-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = (unsigned int)toInt(cmdvec[i+1], s);
+					owner = (unsigned int)toInt(cmdvec[i + 1], s);
 					ownerParamSet = true;
 					++i;
 				}
@@ -1207,7 +1206,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 			if(m_SO != NULL)
 			{
-				for(int i=nBefore; i<getNumberOfSO(); i++)
+				for(int i = nBefore; i < getNumberOfSO(); i++)
 				{
 					// If setup fails we must setup the same index again 
 					// since the failing SO has been deleted.
@@ -1232,7 +1231,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			{
 				if(cmdvec[i] == "-owner" && cmdvec.size() > (i + 1))
 				{
-					owner = toInt(cmdvec[i+1], s);
+					owner = toInt(cmdvec[i + 1], s);
 					++i;
 				}
 				else
@@ -1684,7 +1683,7 @@ unsigned int MGFramework::getFPS()
 	if(m_FrameTime > 0)
 	{
 		unsigned int result = (unsigned int)(1000 / m_FrameTime);
-		if((result > 0) && (result < (2*getDesiredFPS())))
+		if((result > 0) && (result < (2 * getDesiredFPS())))
 		{
 			return result;
 		}
@@ -1761,11 +1760,14 @@ void MGFramework::deleteAllMO()
 	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 	{
 		m_Map.unOccupy(it->getTileX(), it->getTileY());
-		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(it->getTileX(), it->getTileY());
+		if(isSelectiveTileRenderingActive())
+		{
+			m_Map.markForRendering(it->getTileX(), it->getTileY());
+		}
 	}
+	
 	m_MO.clear();
 	m_MarkedMOs = 0;
-	// Make sure tiles are re-rendered after deleting MOs
 	setRenderAllTiles();
 }
 
@@ -1788,7 +1790,6 @@ void MGFramework::addMO(int n)
 		m_MO.push_back(mo);
 	}
 
-	// Make sure tiles are re-rendered after creating MOs
 	setRenderAllTiles();
 }
 
@@ -1804,7 +1805,6 @@ void MGFramework::deleteMO(std::list<MGMovingObject>::iterator it)
 			m_MarkedMOs--;
 		}
 		m_MO.erase(it);
-		// Make sure tiles are re-rendered after deleting MOs
 		setRenderAllTiles();
 	}
 }
@@ -1876,11 +1876,17 @@ bool MGFramework::setupSO(int i, int x, int y)
 	}
 	else
 	{
-		if(x<0) x = randomN(m_Map.getWidth());
-		if(y<0) y = randomN(m_Map.getHeight());
+		if(x < 0)
+		{
+			x = randomN(m_Map.getWidth());
+		}
+		if(y < 0)
+		{
+			y = randomN(m_Map.getHeight());
+		}
 		bool successful=false;
 
-		for(int q = 0; q<MGF_SOPOSITIONINGATTEMPTS; ++q)
+		for(int q = 0; q < MGF_SOPOSITIONINGATTEMPTS; ++q)
 		{
 			if(m_Map.occupant(x,y) != 0)
 			{
@@ -1970,7 +1976,7 @@ void MGFramework::deletePE(int index)
 	}
 }
 
-
+// TODO: Remove this method which was only added to alow testing.
 int MGFramework::getNumberOfUsedCommands()
 {
 	int n = 0;
@@ -2174,8 +2180,14 @@ int MGFramework::initializeWinsock(WORD wVersionRequested)
 	WSADATA wsaData;
 	int err = WSAStartup(wVersionRequested, &wsaData);
 
-	if (err != 0) return 0; // Tell the user that we couldn't find a usable winsock.dll 
-	if (LOBYTE(wsaData.wVersion ) != 1 || HIBYTE(wsaData.wVersion) != 1) return 0;
+	if(err != 0)
+	{
+		return 0; // Tell the user that we couldn't find a usable winsock.dll 
+	}
+	if(LOBYTE(wsaData.wVersion ) != 1 || HIBYTE(wsaData.wVersion) != 1)
+	{
+		return 0;
+	}
 	//Everything is fine: proceed
 #endif
 	return 1;
