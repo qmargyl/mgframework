@@ -255,7 +255,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGMap_initialize.cpp"
+					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGMap.cpp"
 					>
 				</File>
 				<File

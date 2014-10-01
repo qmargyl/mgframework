@@ -32,3 +32,30 @@ void Project2Test::test_MGMap_initialize()
 	ASSERT_NOT_EQUAL(map.getWindowWidth(), 640, "Map was created with wrong window width");
 	ASSERT_NOT_EQUAL(map.getWindowHeight(), 480, "Map was created with wrong window height");
 }
+
+void Project2Test::test_MGMap_calculateOneStepPath()
+{
+	// Setup
+	MGMap map;
+	map.init(10, 10, 16, 16, 640, 480);
+
+	// Trigger
+	std::list<MGPathItem> path = map.calculatePath(MGFBASICPATH1, 3, 3, 4, 4);
+
+	// Verify
+	ASSERT_NOT_EQUAL(path.size(), 2, "Path of incorrect length was created with basic algorithm");
+	ASSERT_NOT_EQUAL(path.front().getX(), 3, "Basic algorithm path content is incorrect");
+	ASSERT_NOT_EQUAL(path.front().getY(), 3, "Basic algorithm path content is incorrect");
+	ASSERT_NOT_EQUAL(path.back().getX(), 4, "Basic algorithm path content is incorrect");
+	ASSERT_NOT_EQUAL(path.back().getY(), 4, "Basic algorithm path content is incorrect");
+
+	// Trigger
+	path = map.calculatePath(MGFASTARLIST, 3, 3, 4, 4);
+
+	// Verify
+	ASSERT_NOT_EQUAL(path.size(), 2, "Path of incorrect length was created with A* algorithm");
+	ASSERT_NOT_EQUAL(path.front().getX(), 3, "A* algorithm path content is incorrect");
+	ASSERT_NOT_EQUAL(path.front().getY(), 3, "A* algorithm path content is incorrect");
+	ASSERT_NOT_EQUAL(path.back().getX(), 4, "A* algorithm path content is incorrect");
+	ASSERT_NOT_EQUAL(path.back().getY(), 4, "A* algorithm path content is incorrect");
+}

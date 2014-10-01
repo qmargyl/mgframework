@@ -12,9 +12,11 @@ private:
 	// test_MGMovingObject
 	static void test_MGMovingObject_initialize();
 	static void test_MGMovingObject_mark();
+	static void test_MGMovingObject_setPathSingleStep();
 
-	// test_MGMap_initialize
+	// test_MGMap
 	static void test_MGMap_initialize();
+	static void test_MGMap_calculateOneStepPath();
 
 	// test_MGAstarNode
 	static void test_MGAStarNode();
@@ -67,9 +69,11 @@ public:
 		// test_MGMovingObject
 		RUNTEST(test_MGMovingObject_initialize);
 		RUNTEST(test_MGMovingObject_mark);
+		RUNTEST(test_MGMovingObject_setPathSingleStep);
 	
-		// test_MGMap_initialize
+		// test_MGMap
 		RUNTEST(test_MGMap_initialize);
+		RUNTEST(test_MGMap_calculateOneStepPath);
 
 		// test_MGAstarNode
 		RUNTEST(test_MGAStarNode);

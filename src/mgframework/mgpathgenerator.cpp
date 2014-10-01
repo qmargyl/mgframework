@@ -59,8 +59,6 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 		MGAStarNode nodeCurrent(*nodeCurrentIt);
 		openDeletions++;
 		open.erase(nodeCurrentIt);
-		
-		// Step 6 done!!
 
 		if(nodeCurrent == nodeGoal)
 		{
@@ -102,6 +100,7 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 					closed.pop_back();
 					pathEnt = MGPathItem(closed.back().getX(), closed.back().getY());
 				}
+				path.push_front(MGPathItem(nodeStart.getX(), nodeStart.getY()));
 			}
 			
 			// TODO: Remove printf
