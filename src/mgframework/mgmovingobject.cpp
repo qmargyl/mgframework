@@ -21,6 +21,7 @@ MGMovingObject::MGMovingObject()
 	m_NextTileY = 0;
 	m_X = 0.0;
 	m_Y = 0.0;
+	m_Speed = 0.0;
 	m_CurrentState = MOStateCreated;
 	setOwner(MGF_NOPLAYER);
 }

@@ -32,6 +32,7 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 		std::string warnSubstr("WARNING");
 		std::string exitSubstr("Exiting application...");
 		std::string tcSubstr("[TC]");
+		bool firstTC = true;
 		std::string assertSubstr("[ASSERT]");
 
 		while(true)
@@ -70,13 +71,34 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 
 				if (foundTC != std::string::npos)
 				{
-					std::cout << "<br>" << line.c_str() << std::endl;
+					if(firstTC)
+					{
+						std::cout << "<br>";
+						firstTC = false;
+					}
+					std::cout << line.c_str() << "<br>" << std::endl;
+					if(!errors.empty())
+					{
+						// Print errors for each TC
+						for(unsigned int i = 0; i < errors.size(); ++i)
+						{
+							if(negativeTest)
+							{
+								std::cout << "<font color=purple>" << errors[i].c_str() << "</font><br>" << std::endl;
+							}
+							else
+							{
+								std::cout << "<font color=red>" << errors[i].c_str() << "</font><br>" << std::endl;
+							}
+						}
+						errors.clear();
+					}
 				}
 
 				if (foundAssert != std::string::npos)
 				{
 					nAsserts++;
-					std::cout << "<br><font color=red>" << line.c_str() << "</font>" << std::endl;
+					std::cout << "<font color=red>" << line.c_str() << "</font><br>" << std::endl;
 				}
 
 				std::string exetimeSubstr("Execution time: ");
