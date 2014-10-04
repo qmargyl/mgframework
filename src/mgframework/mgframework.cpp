@@ -1452,6 +1452,8 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_SYMBOL_ASSIGNTO_INT:
 		{
+			// TODO: Why is this not ok?
+			// setCommandReturnValue(toInt(cmdvec[2], s));
 			symbolAssignTo(cmdvec, s);
 			return true;
 		}
