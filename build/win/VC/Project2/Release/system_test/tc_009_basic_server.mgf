@@ -8,22 +8,7 @@ runoneframe
 runoneframe
 runoneframe
 
-call .\\system_test\\tc_999_basic_testcoverage.mgf:testcoverage_mo
-
-call .\\system_test\\tc_999_basic_testcoverage.mgf:testcoverage_map
-
-call .\\system_test\\tc_999_basic_testcoverage.mgf:testcoverage_pe
-
-call .\\system_test\\tc_999_basic_testcoverage.mgf:testcoverage_fw
-
-call .\\system_test\\tc_999_basic_testcoverage.mgf:testcoverage_window
-
-call .\\system_test\\tc_999_basic_testcoverage.mgf:testcoverage_so
-
-call .\\system_test\\tc_999_basic_testcoverage.mgf:testcoverage_sym
-
-call .\\system_test\\tc_999_basic_testcoverage.mgf:testcoverage_evalandexit
-
+call .\\system_test\\tc_008_basic_script.mgf:test_if_3
 
 delete all mo
 delete all pe

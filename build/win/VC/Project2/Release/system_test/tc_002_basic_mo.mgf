@@ -145,7 +145,6 @@ mo 0 mark
 expect getnumberofmarkedmo 1
 mo 0 unmark
 expect getnumberofmo 1
-mo 0 getdestination
 mo 0 getspeed
 mo 0 help
 mo 0 setdestination 0 0
@@ -213,7 +212,6 @@ add mo 5
 mo random_mo mark
 expect getnumberofmarkedmo 1
 mo random_mo setdestination random_x random_y
-mo random_mo getdestination
 mo random_mo getspeed
 delete all mo
 expect getnumberofmo 0

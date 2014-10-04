@@ -1,4 +1,3 @@
-Symbol Table
 [X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
 [X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
 [X] ..\..\..\..\src\mgframework\mgmovingobject.cpp:X (ID:X) WARNING: MGMovingObject::setNextXY tried to leave a tile not occupied by MO
@@ -314,8 +313,5 @@ MGMovingObject ID 24 History
 0	0: CalculatePath: X,398 -> 17,316
 MGMovingObject ID 25 History
 0	0: CalculatePath: X,126 -> 71,83
-Symbol Table
-'testcase_mo' : X
-Symbol Table
 Exiting application...
 Execution time: X

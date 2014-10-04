@@ -83,7 +83,6 @@ enum eMGComponentConsoleCommand : unsigned int
 	MGComponent_MO_INT_MARK,
 	MGComponent_MO_INT_UNMARK,
 	MGComponent_MO_INT_GETLOCATION,
-	MGComponent_MO_INT_GETDESTINATION,
 	MGComponent_MO_INT_GETSPEED,
 	MGComponent_MO_INT_HELP,
 	MGComponent_MO_INT_SETDESTINATION_INT_INT,
@@ -114,16 +113,10 @@ enum eMGComponentConsoleCommand : unsigned int
 
 	// MGStationaryObject commands
 	MGComponent_SO_INT_GETLOCATION,
-	MGComponent_SO_INT_HELP,
 	MGComponent_SO_INT_LOGGING_ON,
 	MGComponent_SO_INT_LOGGING_OFF,
 	MGComponent_SO_ALL_LOGGING_ON,
 	MGComponent_SO_ALL_LOGGING_OFF,
-
-
-	//Counter for number of command identifiers, not an actual command.
-	MGComponent_NUMBEROFCOMMANDIDENTIFIERS
-
 };
 
 
@@ -134,9 +127,6 @@ int runMGFrameworkSocketTerminal(void *fm);
 class MGFramework :public MGComponent
 {
 	private:
-		// Test framework functionality
-		bool m_UsedCommands[MGComponent_NUMBEROFCOMMANDIDENTIFIERS];
-
 		// Enable/disable input functionality
 		bool m_InputEnabled;
 
@@ -194,9 +184,6 @@ class MGFramework :public MGComponent
 		void symbolAssignTo(std::string sym, std::string val, MGSymbolTable *s);
 		void symbolAssignTo(const std::vector<std::string> &cmdvec, MGSymbolTable *s);
 
-		// Command queue related
-		std::vector<std::string> m_CommandQueue;
-
 		// Selective Tile Rendering
 		bool m_SelectiveTileRendering;
 		bool m_RenderAll;
@@ -220,10 +207,6 @@ class MGFramework :public MGComponent
 		MGStationaryObject *m_SO;		// Stationary Objects
 		MGSymbolTable *m_SymbolTable;	// Symbols
 		MGSymbolTable *m_SymbolTableTransfer;	// Symbols transferred during a function call
-
-		// Test framework functionality
-		int getNumberOfUsedCommands();
-		int getNumberOfCommands(){ return (int) MGComponent_NUMBEROFCOMMANDIDENTIFIERS; }
 
 		// Enable/disable input functionality
 		void enableInput(){ m_InputEnabled = true;}
@@ -388,6 +371,7 @@ class MGFramework :public MGComponent
 		static bool isNumericalInt(const std::string &s); // returns true if the argument contains only numbers.
 		static int staticToInt(const std::string &s); // returns an int converted from either a constant or a symbol.
 		int toInt(const std::string &s, MGSymbolTable *sym); // returns an int converted from either a constant or a symbol.
+		void setCommandReturnValue(int v){ m_CommandReturnVal = v; }
 		bool okMGFrameworkSyntax(const std::vector<std::string> &v_s);
 
 		//Socket terminal related
@@ -405,13 +389,6 @@ class MGFramework :public MGComponent
 
 		// Parsing script files containing mgf commands
 		int parse(const char *sFileName);
-
-		// Test coverage related
-		void registerUsedCommand(eMGComponentConsoleCommand c, int returnValue = 0)
-		{
-			m_CommandReturnVal = returnValue;
-			m_UsedCommands[(int)c] = true; 
-		}
 
 // ***	// Feature Mini map
 		void enableFeatureMiniMap(){ m_MiniMapEnabled = true; }

@@ -8,6 +8,8 @@
 
 void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &map, std::list<MGPathItem> &path)
 {
+	path.clear();
+
 	// Goal == Start
 	if(x1 == x2 && y1 == y2)
 	{
@@ -37,7 +39,6 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 	int successorLookups = 0;
 
 	bool pathWasFound = false;
-	path.clear();
 
 	while(!open.empty())
 	{
@@ -54,7 +55,7 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 			}
 		}
 
-		printf("Best open = (%d, %d): %f\n", (*nodeCurrentIt).getX(), (*nodeCurrentIt).getY(), (*nodeCurrentIt).getF());
+		//printf("Best open = (%d, %d): %f\n", (*nodeCurrentIt).getX(), (*nodeCurrentIt).getY(), (*nodeCurrentIt).getF());
 
 		MGAStarNode nodeCurrent(*nodeCurrentIt);
 		openDeletions++;
@@ -66,7 +67,7 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 			closedAdditions++;
 			closed.push_back(nodeCurrent);
 
-			// TODO: Remove printf
+			/*
 			printf(	"Path found (%d,%d) -> (%d,%d) in %d passes\n"
 					"%d open deletions, %d closed deletions, %d successor deletions, "
 					"%d open additions, %d closed additions, %d successor additions, "
@@ -80,7 +81,7 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 				printf("(%d,%d) <- (%d,%d), ", (*nodeIt).getX(), (*nodeIt).getY(), (*nodeIt).getParentX(), (*nodeIt).getParentY());
 			}
 			printf("DONE\n");
-
+			*/
 
 			//Now, save the actual path in @path. Start from $closed(last) and follow it to @nodeStart
 			if(!closed.empty())
@@ -103,17 +104,16 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 				path.push_front(MGPathItem(nodeStart.getX(), nodeStart.getY()));
 			}
 			
-			// TODO: Remove printf
+			/*
 			printf("Result:\n");
 			for(std::list<MGPathItem>::iterator nodeIt = path.begin(); nodeIt != path.end(); nodeIt++)
 			{
 				printf("(%d,%d)\n", (*nodeIt).getX(), (*nodeIt).getY());
 			}
+			*/
 			
 			break;
 		}
-		
-		// Step 7 done!!
 		
 		// Generate successors (neighbors)
 		std::list<MGAStarNode> potentialSuccessors;
@@ -143,8 +143,6 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 				successorAdditions++;
 			}
 		}
-
-		// Step 8 (and 11) done!!
 
 		for(std::list<MGAStarNode>::iterator nodeSuccessor = successors.begin(); nodeSuccessor != successors.end(); )
 		{
@@ -186,12 +184,7 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 				}
 			}
 			
-			// Step 15 done!!
-			
 			(*nodeSuccessor).setParent(nodeCurrent);
-
-			// Step 17 done!!
-			printf("\tAdding successor (%d, %d): %f\n", (*nodeSuccessor).getX(), (*nodeSuccessor).getY(), (*nodeSuccessor).getF());
 			open.push_front(*nodeSuccessor); // push_front allows the algorithm to find the most recently added neighbor first
 			openAdditions++;
 			
@@ -201,10 +194,9 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 		closed.push_back(nodeCurrent);
 		closedAdditions++;
 	}
-	
+	/*
 	if(!pathWasFound)
 	{
-		// TODO: Remove printf
 		printf(	"Path not found (%d,%d) -> (%d,%d) in %d passes\n"
 				"%d open deletions, %d closed deletions, %d successor deletions, "
 				"%d open additions, %d closed additions, %d successor additions, "
@@ -214,6 +206,7 @@ void MGPathGenerator::calculatePathAStar(int x1, int y1, int x2, int y2, MGMap &
 				openAdditions, closedAdditions, successorAdditions,
 				openLookups, closedLookups, successorLookups);
 	}
+	*/
 
 }
 

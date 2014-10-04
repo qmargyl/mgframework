@@ -65,20 +65,12 @@ bool MGStationaryObject::runConsoleCommand(const char *c, MGFramework *w, MGSymb
 
 		case MGComponent_SO_INT_GETLOCATION:
 		{
-			w->registerUsedCommand(MGComponent_SO_INT_GETLOCATION);
 			std::cout << "{" << getTileX() << "," << getTileY() << "}" << std::endl;
-			return true;
-		}
-
-		case MGComponent_SO_INT_HELP:
-		{
-			w->registerUsedCommand(MGComponent_SO_INT_HELP);
 			return true;
 		}
 
 		case MGComponent_SO_INT_LOGGING_ON:
 		{
-			w->registerUsedCommand(MGComponent_SO_INT_LOGGING_ON);
 			enableLogging();
 			MGFLOG_INFO("Logging enabled.");
 			return true;
@@ -86,7 +78,6 @@ bool MGStationaryObject::runConsoleCommand(const char *c, MGFramework *w, MGSymb
 
 		case MGComponent_SO_INT_LOGGING_OFF:
 		{
-			w->registerUsedCommand(MGComponent_SO_INT_LOGGING_OFF);
 			MGFLOG_INFO("Logging disabled.");
 			disableLogging();
 			return true;
@@ -94,7 +85,6 @@ bool MGStationaryObject::runConsoleCommand(const char *c, MGFramework *w, MGSymb
 
 		case MGComponent_SO_ALL_LOGGING_ON:
 		{
-			w->registerUsedCommand(MGComponent_SO_ALL_LOGGING_ON);
 			enableLogging();
 			MGFLOG_INFO("Logging enabled.");
 			return true;
@@ -102,7 +92,6 @@ bool MGStationaryObject::runConsoleCommand(const char *c, MGFramework *w, MGSymb
 
 		case MGComponent_SO_ALL_LOGGING_OFF:
 		{
-			w->registerUsedCommand(MGComponent_SO_ALL_LOGGING_OFF);
 			MGFLOG_INFO("Logging disabled.");
 			disableLogging();
 			return true;
@@ -126,10 +115,6 @@ eMGComponentConsoleCommand MGStationaryObject::detectMGComponentConsoleCommand(c
 		if(cmdvec[2] == "getlocation")
 		{
 			return MGComponent_SO_INT_GETLOCATION;
-		}
-		if(cmdvec[2] == "help")
-		{
-			return MGComponent_SO_INT_HELP;
 		}
 	}
 	else if(cmdvec.size() == 4)

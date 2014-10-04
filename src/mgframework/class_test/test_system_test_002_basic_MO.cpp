@@ -179,7 +179,6 @@ void Project2Test::test_002_basic_MO_ordering()
 	mgf.runConsoleCommand("expect getnumberofmarkedmo 1", &mgf, NULL);
 	mgf.runConsoleCommand("mo 0 unmark", &mgf, NULL);
 	mgf.runConsoleCommand("expect getnumberofmo 1", &mgf, NULL);
-	mgf.runConsoleCommand("mo 0 getdestination", &mgf, NULL);
 	mgf.runConsoleCommand("mo 0 getspeed", &mgf, NULL);
 	mgf.runConsoleCommand("mo 0 help", &mgf, NULL);
 	mgf.runConsoleCommand("mo 0 setdestination 0 0", &mgf, NULL);
@@ -252,7 +251,6 @@ void Project2Test::test_002_basic_MO_random_mo()
 	mgf.runConsoleCommand("mo random_mo mark", &mgf, NULL);
 	mgf.runConsoleCommand("expect getnumberofmarkedmo 1", &mgf, NULL);
 	mgf.runConsoleCommand("mo random_mo setdestination random_x random_y", &mgf, NULL);
-	mgf.runConsoleCommand("mo random_mo getdestination", &mgf, NULL);
 	mgf.runConsoleCommand("mo random_mo getspeed", &mgf, NULL);
 	mgf.runConsoleCommand("delete all mo", &mgf, NULL);
 	mgf.runConsoleCommand("expect getnumberofmo 0", &mgf, NULL);

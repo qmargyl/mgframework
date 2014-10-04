@@ -12,7 +12,8 @@ private:
 	// test_MGMovingObject
 	static void test_MGMovingObject_initialize();
 	static void test_MGMovingObject_mark();
-	static void test_MGMovingObject_setPathStartMoving();
+	static void test_MGMovingObject_setBasicPathStartMoving();
+	static void test_MGMovingObject_setAStarPathStartMoving();
 
 	// test_MGMap
 	static void test_MGMap_initialize();
@@ -69,7 +70,8 @@ public:
 		// test_MGMovingObject
 		RUNTEST(test_MGMovingObject_initialize);
 		RUNTEST(test_MGMovingObject_mark);
-		RUNTEST(test_MGMovingObject_setPathStartMoving);
+		RUNTEST(test_MGMovingObject_setBasicPathStartMoving);
+		RUNTEST(test_MGMovingObject_setAStarPathStartMoving);
 	
 		// test_MGMap
 		RUNTEST(test_MGMap_initialize);

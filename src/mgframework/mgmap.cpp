@@ -160,7 +160,6 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 
 		case MGComponent_MAP_HELP:
 		{
-			w->registerUsedCommand(MGComponent_MAP_HELP);
 			std::cout << "-----------------------------------------------------------------------------" << std::endl << std::endl;
 			std::cout << "map help - Displays help information for console commands implemented in the" << std::endl;
 			std::cout << "           map object." << std::endl;
@@ -169,7 +168,6 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 
 		case MGComponent_MAP_PATH_INT_INT_INT_INT:
 		{
-			w->registerUsedCommand(MGComponent_MAP_PATH_INT_INT_INT_INT);
 			int x1 = w->toInt(cmdvec[2], s);
 			int y1 = w->toInt(cmdvec[3], s);
 			int x2 = w->toInt(cmdvec[4], s);
@@ -181,7 +179,6 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 
 		case MGComponent_MAP_SETSIZE_INT_INT_INT_INT:
 		{
-			w->registerUsedCommand(MGComponent_MAP_SETSIZE_INT_INT_INT_INT);
 			int x = w->toInt(cmdvec[2], s);
 			int y = w->toInt(cmdvec[3], s);
 			int tx = w->toInt(cmdvec[4], s);
@@ -192,7 +189,6 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 
 		case MGComponent_MAP_LOGGING_ON:
 		{
-			w->registerUsedCommand(MGComponent_MAP_LOGGING_ON);
 			enableLogging();
 			MGFLOG_INFO("Logging enabled.");
 			return true;
@@ -200,7 +196,6 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 
 		case MGComponent_MAP_LOGGING_OFF:
 		{
-			w->registerUsedCommand(MGComponent_MAP_LOGGING_OFF);
 			disableLogging();
 			MGFLOG_INFO("Logging disabled.");
 			return true;

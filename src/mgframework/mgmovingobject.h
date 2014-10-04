@@ -21,7 +21,6 @@ private:
 	bool m_FinishingLastMove;
 	int m_TempDestTileX;
 	int m_TempDestTileY;
-
 	int m_NextTileX;
 	int m_NextTileY;
 	
@@ -51,6 +50,8 @@ private:
 	std::vector<std::string> m_History;
 	bool m_HistoryEnabled;
 
+	void addToHistory(const char *str);
+
 public:
 
 	MGMovingObject();
@@ -70,13 +71,14 @@ public:
 
 	inline const int getTileX(){ return m_TileX; }
 	inline const int getTileY(){ return m_TileY; }
-	inline const int getDestTileX(){	if(m_FinishingLastMove) return m_TempDestTileX;	return m_DestTileX;	}
-	inline const int getDestTileY(){	if(m_FinishingLastMove)	return m_TempDestTileY;	return m_DestTileY;	}
-
+	inline const int getDestTileX(){ if(m_FinishingLastMove) return m_TempDestTileX; return m_DestTileX;	}
+	inline const int getDestTileY(){ if(m_FinishingLastMove) return m_TempDestTileY; return m_DestTileY;	}
 	inline const int getXOffset(){ return (int)(m_X + 0.5); } // Difference between actual coordinate and tile coordinate
 	inline const int getYOffset(){ return (int)(m_Y + 0.5); }
 	inline const int getCenterX(){ return getTileX() * getTileSize() + (int)(0.5 * getTileSize()); }
 	inline const int getCenterY(){ return getTileY() * getTileSize() + (int)(0.5 * getTileSize()); }
+
+	// MGComponent
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 
@@ -101,8 +103,6 @@ public:
 	void enableHistory(){ if(!m_HistoryEnabled) m_HistoryEnabled = true; }
 	void disableHistory(){ if(m_HistoryEnabled) m_History.clear(); m_HistoryEnabled = false; }
 	void printHistory();
-	void addToHistory(const char *str); //TODO: Make this private?
-
 };
 
 #endif

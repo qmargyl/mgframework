@@ -28,6 +28,10 @@ MGMovingObject::MGMovingObject()
 
 MGMovingObject::~MGMovingObject()
 {
+	if(isMoving())
+	{
+		m_MovingMOCounter--;
+	}
 }
 
 void MGMovingObject::initialize()
@@ -367,7 +371,6 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 
 		case MGComponent_MO_INT_MARK:
 		{
-			w->registerUsedCommand(MGComponent_MO_INT_MARK);
 			if(!isMarked())
 			{
 				mark();
@@ -378,7 +381,6 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 
 		case MGComponent_MO_INT_UNMARK:
 		{
-			w->registerUsedCommand(MGComponent_MO_INT_UNMARK);
 			if(isMarked())
 			{
 				unMark();
@@ -389,14 +391,12 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 
 		case MGComponent_MO_INT_GETLOCATION:
 		{
-			w->registerUsedCommand(MGComponent_MO_INT_GETLOCATION);
 			MGFLOG_INFO("{" << getTileX() << "," << getTileY() << "}");
 			return true;
 		}
 
 		case MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT:
 		{
-			w->registerUsedCommand(MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT);
 			int lx = w->toInt(cmdvec[4], s);
 			int ly = w->toInt(cmdvec[5], s);
 			if(lx == getTileX() && ly == getTileY())
@@ -409,24 +409,15 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			}
 		}
 
-		case MGComponent_MO_INT_GETDESTINATION:
-		{
-			// XXX: This is not really relevant anymore since paths are used now instead..
-			w->registerUsedCommand(MGComponent_MO_INT_GETDESTINATION);
-			MGFLOG_INFO("{" << getDestTileX() << "," << getDestTileY() << "}");
-			return true;
-		}
-
 		case MGComponent_MO_INT_GETSPEED:
 		{
-			w->registerUsedCommand(MGComponent_MO_INT_GETSPEED, (int)getSpeed());
+			w->setCommandReturnValue((int)getSpeed());
 			std::cout << "" << (int)getSpeed() << std::endl;
 			return true;
 		}
 
 		case MGComponent_MO_INT_HELP:
 		{
-			w->registerUsedCommand(MGComponent_MO_INT_HELP);
 			std::cout << std::endl << "mo <i> help - Displays help information for console commands implemented" << std::endl;
 			std::cout << "          in MGMovingObject. <i> is the ID of the MO." << std::endl;
 			std::cout << "mo <i> getspeed - Returns the speed of the MO with ID <i>, in pixels per" << std::endl;
@@ -440,7 +431,6 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 
 		case MGComponent_MO_INT_SETDESTINATION_INT_INT:
 		{
-			w->registerUsedCommand(MGComponent_MO_INT_SETDESTINATION_INT_INT);
 			int dx = w->toInt(cmdvec[3], s);
 			int dy = w->toInt(cmdvec[4], s);
 			addToHistory(	(std::string("CalculatePath: ") + MGComponent::toString(getTileX()) + 
@@ -453,7 +443,6 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 
 		case MGComponent_MO_INT_LOGGING_ON:
 		{
-			w->registerUsedCommand(MGComponent_MO_INT_LOGGING_ON);
 			enableLogging();
 			MGFLOG_INFO("Logging enabled.");
 			addToHistory("Logging enabled.");
@@ -462,7 +451,6 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 
 		case MGComponent_MO_INT_LOGGING_OFF:
 		{
-			w->registerUsedCommand(MGComponent_MO_INT_LOGGING_OFF);
 			MGFLOG_INFO("Logging disabled.");
 			addToHistory("Logging disabled.");
 			disableLogging();
@@ -471,7 +459,6 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 
 		case MGComponent_MO_INT_HISTORY_BOOL:
 		{
-			w->registerUsedCommand(MGComponent_MO_INT_HISTORY_BOOL);
 			int inputOn = w->toInt(cmdvec[3], s);
 			if(inputOn == MGF_TRUE)
 			{
@@ -505,10 +492,6 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 		else if(cmdvec[2] == "getspeed")
 		{
 			return MGComponent_MO_INT_GETSPEED;
-		}
-		else if(cmdvec[2] == "getdestination")
-		{
-			return MGComponent_MO_INT_GETDESTINATION;
 		}
 		else if(cmdvec[2] == "getlocation")
 		{

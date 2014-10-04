@@ -58,24 +58,8 @@ MGFramework::MGFramework():
 	setDesiredFPS(20);
 	std::srand((int)std::time(0));
 
-	// Setup the framework for automated system level testing...
-
-	// At framework creation, no commands have been used..
-	for(unsigned int i = 0; i < MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
-	{
-		m_UsedCommands[i] = false;
-	}
-	// MGComponent_UNDEFINED does not represent a command or forwarding a command
-	m_UsedCommands[MGComponent_UNDEFINED] = true;
-
-	// MGComponent_EXIT_APPLICATION is impossible to call before evaluating the 
-	// number of used commands as it will terminate execution of the application
-	m_UsedCommands[MGComponent_EXIT_APPLICATION] = true;
-
 	m_SymbolTable = new MGSymbolTable();
 	m_SymbolTableTransfer = new MGSymbolTable();
-
-	m_CommandQueue.clear();
 }
 
 MGFramework::~MGFramework()
@@ -559,7 +543,6 @@ int MGFramework::parse(const char *sFileName)
 							if (fColon!=std::string::npos)
 							{
 								MGFLOG_INFO("MGFramework::parse calling " << v_scriptLine[1].c_str());
-								symbols->printTable(); // TODO: Remove this print
 								symbolAssignTo(	v_scriptLine[1], 
 												MGComponent::toString(parse(v_scriptLine[1].c_str())), 
 												symbols);
@@ -567,7 +550,6 @@ int MGFramework::parse(const char *sFileName)
 							else
 							{
 								MGFLOG_INFO("MGFramework::parse calling " << (std::string(scriptFileName) + std::string(":") + v_scriptLine[1]).c_str());
-								symbols->printTable(); // TODO: Remove this print
 								symbolAssignTo(	v_scriptLine[1], 
 												MGComponent::toString(parse((std::string(scriptFileName) + std::string(":") + v_scriptLine[1]).c_str())), 
 												symbols);
@@ -786,12 +768,6 @@ void MGFramework::symbolAssignTo(std::string sym, std::string val, MGSymbolTable
 	{
 		m_SymbolTable->addSymbol(sym, toInt(val, s));
 	}
-
-	if(s)
-	{
-		s->printTable();
-	}
-	m_SymbolTable->printTable();
 }
 
 void MGFramework::symbolAssignTo(const std::vector<std::string> &cmdvec, MGSymbolTable *s)
@@ -833,21 +809,18 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_RUNONEFRAME:
 		{
-			registerUsedCommand(MGComponent_RUNONEFRAME);
 			run(NULL, true);
 			return true;
 		}
 
 		case MGComponent_MAP_X:
 		{
-			registerUsedCommand(MGComponent_MAP_X);
 			return m_Map.runConsoleCommand(c, this, s);
 		}
 
 
 		case MGComponent_WINDOW_FULLSCREEN_BOOL:
 		{
-			w->registerUsedCommand(MGComponent_WINDOW_FULLSCREEN_BOOL);
 			int onOrOff = toInt(cmdvec[2], s);
 			if(onOrOff == MGF_FALSE)
 			{
@@ -871,7 +844,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_PE_INT_LOGGING_OFF:
 		case MGComponent_PE_INT_STOREFILENAME_FILENAME:
 		{
-			registerUsedCommand(MGComponent_PE_INT_X);
 			int peIndex=toInt(cmdvec[1], s);
 			if(peIndex >= 0 && peIndex < getNumberOfPE())
 			{
@@ -883,7 +855,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_PE_ALL_X:
 		{
-			registerUsedCommand(MGComponent_PE_ALL_X);
 			for(int i = 0; i < getNumberOfPE(); i++)
 			{
 				m_PE[i].runConsoleCommand(c, this, s);
@@ -893,7 +864,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_SO_INT_X:
 		{
-			registerUsedCommand(MGComponent_SO_INT_X);
 			int soIndex = toInt(cmdvec[1], s);
 			if(soIndex >= 0 && soIndex < getNumberOfSO())
 			{
@@ -905,7 +875,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_SO_ALL_X:
 		{
-			registerUsedCommand(MGComponent_SO_ALL_X);
 			for(int i = 0; i < getNumberOfSO(); i++)
 			{
 				m_SO[i].runConsoleCommand(c, this, s);
@@ -915,14 +884,12 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_SETFPS_INT:
 		{
-			registerUsedCommand(MGComponent_SETFPS_INT);
 			setDesiredFPS(toInt(cmdvec[1], s));
 			return true;
 		}
 
 		case MGComponent_DELETE_ALL_MO_PARAMLIST:
 		{
-			registerUsedCommand(MGComponent_DELETE_ALL_MO_PARAMLIST);
 			unsigned int owner = 0;
 			bool ownerParamSet=false;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
@@ -980,7 +947,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_DELETE_ALL_PE_PARAMLIST:
 		{
-			registerUsedCommand(MGComponent_DELETE_ALL_PE_PARAMLIST);
 			int owner = 0;
 			bool ownerParamSet = false;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
@@ -1023,7 +989,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_DELETE_ALL_SO_PARAMLIST:
 		{
-			registerUsedCommand(MGComponent_DELETE_ALL_SO_PARAMLIST);
 			int owner = 0;
 			bool ownerParamSet = false;
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
@@ -1065,7 +1030,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_ADD_MO_INT_PARAMLIST:
 		{
-			registerUsedCommand(MGComponent_ADD_MO_INT_PARAMLIST);
 			int nBefore=getNumberOfMO();
 			int n = toInt(cmdvec[2], s);
 			int owner = 0;
@@ -1159,7 +1123,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_ADD_SO_INT_PARAMLIST:
 		{
-			registerUsedCommand(MGComponent_ADD_SO_INT_PARAMLIST);
 			int nBefore=getNumberOfSO();
 			int n = toInt(cmdvec[2], s);
 			int x = -1; // Invalid default value
@@ -1223,7 +1186,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_ADD_PE_INT_PARAMLIST:
 		{
-			registerUsedCommand(MGComponent_ADD_PE_INT_PARAMLIST);
 			int nBefore = getNumberOfPE();
 			int n = toInt(cmdvec[2], s);
 			int owner = 0;
@@ -1266,7 +1228,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_OPEN_TERMINALSERVER:
 		{
-			registerUsedCommand(MGComponent_OPEN_TERMINALSERVER);
 			MGFLOG_INFO("Opening terminal server...");
 #ifndef MGF_DISABLE_WINSOCK
 			openSocketTerminal();
@@ -1277,7 +1238,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_CLOSE_TERMINALSERVER:
 		{
-			registerUsedCommand(MGComponent_CLOSE_TERMINALSERVER);
 			MGFLOG_INFO("Closing terminal server...");
 #ifndef MGF_DISABLE_WINSOCK
 			if(socketTerminalOpen())
@@ -1292,7 +1252,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_MO_INT_X:
 		case MGComponent_MO_INT_MARK:
 		{
-			registerUsedCommand(MGComponent_MO_INT_X);
 			unsigned int moIndex = (unsigned int)toInt(cmdvec[1], s);
 			if(moIndex >= 0 && moIndex < getNumberOfMO())
 			{
@@ -1315,7 +1274,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_MO_MARKED_X:
 		{
-			registerUsedCommand(MGComponent_MO_MARKED_X);
 			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 			{
 				if(it->isMarked())
@@ -1328,7 +1286,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_MO_ALL_X:
 		{
-			registerUsedCommand(MGComponent_MO_ALL_X);
 			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 			{
 				it->runConsoleCommand(c, this, s);
@@ -1338,7 +1295,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_DELETE_MO_INT:
 		{
-			registerUsedCommand(MGComponent_DELETE_MO_INT);
 			unsigned int moIndex = (unsigned int)toInt(cmdvec[2], s);
 			if(moIndex < getNumberOfMO())
 			{
@@ -1354,7 +1310,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_DELETE_SO_INT:
 		{
-			registerUsedCommand(MGComponent_DELETE_SO_INT);
 			int soIndex=toInt(cmdvec[2], s);
 			if(m_SO != NULL && soIndex >= 0 && soIndex < getNumberOfSO())
 			{
@@ -1369,7 +1324,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_LOGGING_BOOL:
 		{
-			registerUsedCommand(MGComponent_LOGGING_BOOL);
 			int logOn = toInt(cmdvec[1], s);
 			if(logOn == MGF_TRUE)
 			{
@@ -1386,7 +1340,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_MINIMAP_BOOL:
 		{
-			registerUsedCommand(MGComponent_MINIMAP_BOOL);
 			int miniOn = toInt(cmdvec[1], s);
 			if(miniOn == MGF_TRUE)
 			{
@@ -1403,7 +1356,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_DYNAMICFPS_BOOL:
 		{
-			registerUsedCommand(MGComponent_DYNAMICFPS_BOOL);
 			int dynOn = toInt(cmdvec[1], s);
 			if(dynOn == MGF_TRUE)
 			{
@@ -1420,7 +1372,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_RUNFRAMES_INT:
 		{
-			registerUsedCommand(MGComponent_RUNFRAMES_INT);
 			enableFrameCountdown();
 			setFrameNumber(toInt(cmdvec[1], s));
 			return false;
@@ -1428,14 +1379,12 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_EXIT:
 		{
-			registerUsedCommand(MGComponent_EXIT);
 			std::cout << "Exiting console..." << std::endl;
 			return false;
 		}
 
 		case MGComponent_EXIT_APPLICATION:
 		{
-			registerUsedCommand(MGComponent_EXIT_APPLICATION);
 			std::cout << "Exiting application..." << std::endl;
 			quit();
 			return false;
@@ -1443,7 +1392,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_HELP:
 		{
-			registerUsedCommand(MGComponent_HELP);
 			std::cout << "Command help" << std::endl;
 			std::cout << "[<object> [<object identifier>]] <command> [<parameter 1> ... <parameter n>]" << std::endl;
 			std::cout << "-----------------------------------------------------------------------------" << std::endl << std::endl;
@@ -1469,7 +1417,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_INPUT_BOOL:
 		{
-			registerUsedCommand(MGComponent_INPUT_BOOL);
 			int inputOn = toInt(cmdvec[1], s);
 			if(inputOn == MGF_TRUE)
 			{
@@ -1484,7 +1431,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_EXPECT_INT_INT:
 		{
-			registerUsedCommand(MGComponent_EXPECT_INT_INT, m_CommandReturnVal);
 			int exp = toInt(cmdvec[2], s);
 			int act = toInt(cmdvec[1], s);
 			if(act == exp)
@@ -1500,14 +1446,12 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_INT:
 		{
-			registerUsedCommand(MGComponent_INT);
 			MGFLOG_INFO("" << toInt(cmdvec[0], s));
 			return true;
 		}
 
 		case MGComponent_SYMBOL_ASSIGNTO_INT:
 		{
-			registerUsedCommand(MGComponent_SYMBOL_ASSIGNTO_INT, toInt(cmdvec[2], s));
 			symbolAssignTo(cmdvec, s);
 			return true;
 		}
@@ -1976,21 +1920,6 @@ void MGFramework::deletePE(int index)
 	}
 }
 
-// TODO: Remove this method which was only added to alow testing.
-int MGFramework::getNumberOfUsedCommands()
-{
-	int n = 0;
-	for(unsigned int i = MGComponent_UNDEFINED; i < MGComponent_NUMBEROFCOMMANDIDENTIFIERS; ++i)
-	{
-		if(m_UsedCommands[i])
-		{
-			n++;
-		}
-		MGFLOG_INFO("" << i << ": " << toString(m_UsedCommands[i]).c_str());
-	}
-	return n;
-}
-
 
 void MGFramework::quit()
 { 
@@ -2005,7 +1934,6 @@ void MGFramework::drawTile(void* imageSurface, int srcX, int srcY, int dstX, int
 	increaseDrawnTilesCounter();
 	getWindow()->drawSprite(imageSurface, srcX, srcY, dstX, dstY, tileW, tileH);
 }
-
 
 
 void MGFramework::drawTile(void* imageSurface, int srcX, int srcY, int dstX, int dstY)
@@ -2127,14 +2055,6 @@ int MGFramework::toInt(const std::string &s, MGSymbolTable *sym)
 		else if(s == std::string("getnumberofpe"))
 		{
 			return getNumberOfPE();
-		}
-		else if(s == std::string("getnumberofcommands"))
-		{
-			return getNumberOfCommands();
-		}
-		else if(s == std::string("getnumberofusedcommands"))
-		{
-			return getNumberOfUsedCommands();
 		}
 		else if(s == std::string("getfps"))
 		{

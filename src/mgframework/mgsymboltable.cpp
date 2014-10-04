@@ -62,9 +62,9 @@ void MGSymbolTable::clear()
 void MGSymbolTable::printTable()
 {
 	std::cout << "Symbol Table" << std::endl;
-	for (std::deque<MGSymbolTablePair>::iterator it=table.begin(); it != table.end(); ++it)
+	for (std::deque<MGSymbolTablePair>::iterator it = table.begin(); it != table.end(); ++it)
 	{
-		std::cout << "'" << ((*it).symbol).c_str() << "' : " << (*it).value << std::endl;
+		std::cout << "'" << (it->symbol).c_str() << "' : " << it->value << std::endl;
 	}
 }
 
