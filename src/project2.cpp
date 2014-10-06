@@ -102,26 +102,26 @@ void Project2::draw()
 		int oX,oY;
 		for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 		{
-			oX = (*it).getTileX() * m_Map.getTileWidth() + m_Map.getScrollX() + (*it).getXOffset();
-			oY = (*it).getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + (*it).getYOffset();
+			oX = it->getTileX() * m_Map.getTileWidth() + m_Map.getScrollX() + it->getXOffset();
+			oY = it->getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + it->getYOffset();
 			// Only draw visible moving objects...
 			if(detectCollisionRectangle(oX, oY, oX + m_Map.getTileWidth(), oY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
 			{
 				drawTile(m_MovingObject, 0, 0, oX, oY);
-				if(isSelectiveTileRenderingActive())
+				if(!it->isIdle() && isSelectiveTileRenderingActive())
 				{
-					m_Map.markForRendering((*it).getTileX(), (*it).getTileY());
-					m_Map.markForRendering((*it).getTileX() + 1, (*it).getTileY() + 1);
-					m_Map.markForRendering((*it).getTileX() - 1, (*it).getTileY() - 1);
-					m_Map.markForRendering((*it).getTileX() + 1, (*it).getTileY() - 1);
-					m_Map.markForRendering((*it).getTileX() - 1, (*it).getTileY() + 1);
-					m_Map.markForRendering((*it).getTileX() + 1, (*it).getTileY());
-					m_Map.markForRendering((*it).getTileX() - 1, (*it).getTileY());
-					m_Map.markForRendering((*it).getTileX(), (*it).getTileY() + 1);
-					m_Map.markForRendering((*it).getTileX(), (*it).getTileY() - 1);
+					m_Map.markForRendering(it->getTileX(), it->getTileY());
+					m_Map.markForRendering(it->getTileX() + 1, it->getTileY() + 1);
+					m_Map.markForRendering(it->getTileX() - 1, it->getTileY() - 1);
+					m_Map.markForRendering(it->getTileX() + 1, it->getTileY() - 1);
+					m_Map.markForRendering(it->getTileX() - 1, it->getTileY() + 1);
+					m_Map.markForRendering(it->getTileX() + 1, it->getTileY());
+					m_Map.markForRendering(it->getTileX() - 1, it->getTileY());
+					m_Map.markForRendering(it->getTileX(), it->getTileY() + 1);
+					m_Map.markForRendering(it->getTileX(), it->getTileY() - 1);
 				}
 
-				if((*it).isMarked())
+				if(it->isMarked())
 				{
 					drawTile(m_Mark, 0, 0, oX, oY);
 				}
@@ -130,14 +130,14 @@ void Project2::draw()
 
 		// Draw all stationary objects...
 		int sX,sY;
-		for(int i=0;i<getNumberOfSO();i++)
+		for(int i = 0; i < getNumberOfSO(); i++)
 		{
 			if(m_SO != NULL)
 			{
-				sX=m_SO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX();
-				sY=m_SO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY()-16;
+				sX = m_SO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX();
+				sY = m_SO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() - 16;
 				// Only draw visible stationary objects...
-				if(detectCollisionRectangle(sX, sY, sX+m_Map.getTileWidth(), sY+m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
+				if(detectCollisionRectangle(sX, sY, sX + m_Map.getTileWidth(), sY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
 				{
 					drawTile(static_cast<void*>(m_StationaryObject), 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight()+16);
 				}
@@ -145,18 +145,18 @@ void Project2::draw()
 		}
 
 		// Draw a frame around the edge of the map
-		getWindow()->vLine32(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight()-m_Map.getBottomEdge()-m_Map.getTopEdge(), 0x000000FF);
-		getWindow()->vLine32(m_Map.getWindowWidth()-m_Map.getRightEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight()-m_Map.getBottomEdge()-m_Map.getTopEdge(), 0x000000FF);
-		getWindow()->hLine32(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowWidth()-m_Map.getLeftEdge()-m_Map.getRightEdge(), 0x000000FF);
-		getWindow()->hLine32(m_Map.getLeftEdge(), m_Map.getWindowHeight()-m_Map.getBottomEdge(), m_Map.getWindowWidth()-m_Map.getLeftEdge()-m_Map.getRightEdge(), 0x000000FF);
+		getWindow()->vLine32(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge() - m_Map.getTopEdge(), 0x000000FF);
+		getWindow()->vLine32(m_Map.getWindowWidth() - m_Map.getRightEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge() - m_Map.getTopEdge(), 0x000000FF);
+		getWindow()->hLine32(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge() - m_Map.getRightEdge(), 0x000000FF);
+		getWindow()->hLine32(m_Map.getLeftEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge() - m_Map.getRightEdge(), 0x000000FF);
 
 
 		// Draw the mini map if enabled. Also draw all objects on it...
 		if(featureMiniMapEnabled())
 		{
-			for (int x=0; x < m_Map.getWidth(); x++)
+			for(int x = 0; x < m_Map.getWidth(); x++)
 			{
-				for ( int y=0; y < m_Map.getHeight(); y++)
+				for(int y = 0; y < m_Map.getHeight(); y++)
 				{
 					// Only draw the tiles actually visible in the window...
 					if(  ((x * m_Map.getTileWidth() + m_Map.getScrollX()) <= getWindow()->getWidth()) &&
