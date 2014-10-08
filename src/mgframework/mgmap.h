@@ -13,15 +13,7 @@
 #define MGMAP_TP_PROPERTY_5  32
 
 class MGPathItem;
-
-enum eMGFPathType{
-	MGFSTRAIGHTLINE = 0,
-	MGFSKYPATH = 1,
-	MGFGROUNDPATH = 2,
-	MGFBASICPATH1 = 3,
-	MGFASTARLIST = 4
-};
-
+enum eMGFPathType;
 
 class MGMap :public MGComponent
 {

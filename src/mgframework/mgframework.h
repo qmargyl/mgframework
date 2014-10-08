@@ -85,7 +85,7 @@ enum eMGComponentConsoleCommand : unsigned int
 	MGComponent_MO_INT_GETLOCATION,
 	MGComponent_MO_INT_GETSPEED,
 	MGComponent_MO_INT_HELP,
-	MGComponent_MO_INT_SETDESTINATION_INT_INT,
+	MGComponent_MO_INT_SETDESTINATION_INT_INT_PARAMLIST,
 	MGComponent_MO_INT_LOGGING_OFF,
 	MGComponent_MO_INT_LOGGING_ON,
 	MGComponent_MO_INT_HISTORY_BOOL,

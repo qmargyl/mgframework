@@ -23,6 +23,7 @@ MGMovingObject::MGMovingObject()
 	m_Y = 0.0;
 	m_Speed = 0.0;
 	m_CurrentState = MOStateCreated;
+	m_PathFindingAlgorithm = MGFBASICPATH1;
 	setOwner(MGF_NOPLAYER);
 }
 
@@ -47,6 +48,7 @@ void MGMovingObject::initialize()
 	m_NextTileY = 0;
 	m_X = 0.0;
 	m_Y = 0.0;
+	m_PathFindingAlgorithm = MGFBASICPATH1;
 	setOwner(MGF_NOPLAYER);
 	if(!isCreated())
 	{
@@ -173,14 +175,14 @@ void MGMovingObject::update(MGFramework *w)
 			if(!isStuck()/* || (isStuck() && timeSinceLastUpdate > 5000)*/)
 			{
 				//MGFLOG_WARNING("MGMovingObject::update concluded that the path is blocked. Will try to find a new Path...");
-				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
+				setPath(w->m_Map.calculatePath(m_PathFindingAlgorithm, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
 				setTimeOfLastUpdate(MGF_GetExecTimeMS());
 				changeState(MOStateStuck);
 				return;
 			}
 			else if(isStuck() && timeSinceLastUpdate > 10000)
 			{
-				setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
+				setPath(w->m_Map.calculatePath(m_PathFindingAlgorithm, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
 				setTimeOfLastUpdate(MGF_GetExecTimeMS());
 				addToHistory("Stuck for too long");
 				MGFLOG_WARNING("MGMovingObject::update: MO stuck for too long");
@@ -429,14 +431,33 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			return true;
 		}
 
-		case MGComponent_MO_INT_SETDESTINATION_INT_INT:
+		case MGComponent_MO_INT_SETDESTINATION_INT_INT_PARAMLIST:
 		{
 			int dx = w->toInt(cmdvec[3], s);
 			int dy = w->toInt(cmdvec[4], s);
+
+			for(unsigned int i = 5; i < cmdvec.size(); ++i)
+			{
+				if(cmdvec[i] == "-astar")
+				{
+					m_PathFindingAlgorithm = MGFASTARLIST;
+					++i;
+				}
+				else if(cmdvec[i] == "-basicpath")
+				{
+					m_PathFindingAlgorithm = MGFBASICPATH1;
+					++i;
+				}
+				else
+				{
+					MGFLOG_ERROR("Error in command (mo <int> setdestination <int> <int>), bad parameter list");
+				}
+			}
+
 			addToHistory(	(std::string("CalculatePath: ") + MGComponent::toString(getTileX()) + 
 							 std::string(",") + MGComponent::toString(getTileY()) + std::string(" -> ") +
 							 MGComponent::toString(dx) + std::string(",") + MGComponent::toString(dy)).c_str());
-			setPath(w->m_Map.calculatePath(MGFBASICPATH1, getTileX(), getTileY(), dx, dy));
+			setPath(w->m_Map.calculatePath(m_PathFindingAlgorithm, getTileX(), getTileY(), dx, dy));
 			MGFLOG_INFO("Path length: " << m_Path.size());
 			return true;
 		}
@@ -521,16 +542,13 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 			return MGComponent_MO_INT_HISTORY_BOOL;
 		}
 	}
-	else if(cmdvec.size() == 5)
+	else if(cmdvec.size() >= 5)
 	{
 		if(cmdvec[2] == "setdestination")
 		{
-			return MGComponent_MO_INT_SETDESTINATION_INT_INT;
+			return MGComponent_MO_INT_SETDESTINATION_INT_INT_PARAMLIST;
 		}
-	}
-	else if(cmdvec.size() == 6)
-	{
-		if(cmdvec[2] == "expect" && cmdvec[3] == "getlocation")
+		else if(cmdvec[2] == "expect" && cmdvec[3] == "getlocation")
 		{
 			return MGComponent_MO_INT_EXPECT_GETLOCATION_INT_INT;
 		}

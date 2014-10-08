@@ -5,6 +5,7 @@
 
 class MGFramework;
 class MGPathItem;
+enum eMGFPathType;
 
 class MGMovingObject :public MGComponent
 {
@@ -23,6 +24,7 @@ private:
 	int m_TempDestTileY;
 	int m_NextTileX;
 	int m_NextTileY;
+	eMGFPathType m_PathFindingAlgorithm;
 	
 
 	double getDistance(int wx, int wy);

@@ -164,6 +164,7 @@ bool MGFramework::processEvents()
 							{
 								it++;
 							}
+							// TODO: Invent a way so that path finding algorithm can be configured also for center on MO feature
 							it->setPath(m_Map.calculatePath(MGFBASICPATH1, it->getTileX(), it->getTileY(), xClick, yClick));
 						}
 					}
@@ -237,7 +238,8 @@ bool MGFramework::processEvents()
 							int xClick = m_Map.getTileX(iClick);
 							int yClick = m_Map.getTileY(iClick);
 							char c[64];
-							sprintf(c, "mo marked setdestination %d %d", xClick, yClick);
+							// TODO: Make it possible to configure path finding algorithm to be used in the framework as well
+							sprintf(c, "mo marked setdestination %d %d -basicpath", xClick, yClick);
 							runConsoleCommand(c, this, NULL);
 						}
 					}
