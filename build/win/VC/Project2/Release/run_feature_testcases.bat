@@ -64,8 +64,23 @@ project2.exe -log_eval .\system_test\result\tc_401_feature_path_testcase_005.log
 echo|set /p="}<br>"
 echo|set /p="</td></tr></p>"
 
+echo|set /p="<tr><td><p>"
+echo|set /p="Test case .\system_test\tc_401_feature_path.mgf:ext_testcase_006 (005 with A*)<br>"
+echo|set /p="{<br>Running ... "
+project2.exe -logging -script .\system_test\tc_401_feature_path.mgf:ext_testcase_006	>	.\system_test\result\tc_401_feature_path_testcase_006.log
+echo|set /p="<b>DONE</b><br>"
+project2.exe -log_eval .\system_test\result\tc_401_feature_path_testcase_006.log -log_compare .\system_test\expected\tc_401_feature_path_testcase_006.log.filtered
+echo|set /p="}<br>"
+echo|set /p="</td></tr></p>"
 
-
+echo|set /p="<tr><td><p>"
+echo|set /p="Test case .\system_test\tc_401_feature_path.mgf:ext_testcase_007 (002 with A*)<br>"
+echo|set /p="{<br>Running ... "
+project2.exe -logging -script .\system_test\tc_401_feature_path.mgf:ext_testcase_007	>	.\system_test\result\tc_401_feature_path_testcase_007.log
+echo|set /p="<b>DONE</b><br>"
+project2.exe -log_eval .\system_test\result\tc_401_feature_path_testcase_007.log -log_compare .\system_test\expected\tc_401_feature_path_testcase_007.log.filtered
+echo|set /p="}<br>"
+echo|set /p="</td></tr></p>"
 
 :: Symbol test cases
 :: ===============

@@ -99,11 +99,12 @@ std::vector<std::string> MGComponent::symbols(char *str)
 		{
 			if(sym!=std::string(""))
 			{
-				if( splitLine.empty() && 
-					( sym == std::string("call") || 
-					  sym == std::string("add") || 
-					  sym == std::string("pe") || 
-					  sym == std::string("delete")))
+				if(splitLine.empty() && 
+				  (	sym == std::string("call") ||
+					sym == std::string("add") ||
+					sym == std::string("pe") ||
+					sym == std::string("mo") ||
+					sym == std::string("delete")))
 				{
 					lineSupportingParameters = true;
 				}
@@ -116,11 +117,12 @@ std::vector<std::string> MGComponent::symbols(char *str)
 		{
 			if(sym!=std::string(""))
 			{
-				if( splitLine.empty() && 
-					( sym == std::string("call") || 
-					  sym == std::string("add") || 
-					  sym == std::string("pe") || 
-					  sym == std::string("delete")))
+				if(splitLine.empty() && 
+				  ( sym == std::string("call") ||
+					sym == std::string("add") ||
+					sym == std::string("pe") ||
+					sym == std::string("mo") ||
+					sym == std::string("delete")))
 				{
 					lineSupportingParameters = true;
 				}
@@ -167,11 +169,12 @@ std::vector<std::string> MGComponent::symbols(char *str)
 	if(sym!=std::string(""))
 	{
 		// XXX: Is this really necessary?
-		if( splitLine.empty() && 
-			( sym == std::string("call") || 
-			  sym == std::string("add") || 
-			  sym == std::string("pe") || 
-			  sym == std::string("delete")))
+		if(splitLine.empty() && 
+		  ( sym == std::string("call") ||
+			sym == std::string("add") ||
+			sym == std::string("pe") ||
+			sym == std::string("mo") ||
+			sym == std::string("delete")))
 		{
 			lineSupportingParameters = true;
 		}

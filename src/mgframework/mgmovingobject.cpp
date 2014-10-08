@@ -357,6 +357,7 @@ void MGMovingObject::copy(MGMovingObject *src)
 	m_LoggingEnabled = src->m_LoggingEnabled;
 	m_CurrentState = src->m_CurrentState;
 	m_Path = src->m_Path;
+	m_PathFindingAlgorithm = src->m_PathFindingAlgorithm;
 }
 
 bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
@@ -438,15 +439,14 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 
 			for(unsigned int i = 5; i < cmdvec.size(); ++i)
 			{
+				MGFLOG_INFO("Set destination (param): " << cmdvec[i] );
 				if(cmdvec[i] == "-astar")
 				{
 					m_PathFindingAlgorithm = MGFASTARLIST;
-					++i;
 				}
 				else if(cmdvec[i] == "-basicpath")
 				{
 					m_PathFindingAlgorithm = MGFBASICPATH1;
-					++i;
 				}
 				else
 				{
