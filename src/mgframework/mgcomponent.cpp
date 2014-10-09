@@ -80,10 +80,10 @@ std::vector<std::string> MGComponent::symbols(char *str)
 
 	for(unsigned int i = 0; i < strlen(str); ++i)
 	{
-		if(i < strlen(str)-1)
+		if(i < strlen(str) - 1)
 		{
 			s[0] = str[i];
-			s[1] = str[i+1];
+			s[1] = str[i + 1];
 		}
 		else
 		{
@@ -91,13 +91,13 @@ std::vector<std::string> MGComponent::symbols(char *str)
 			s[1] = 0;
 		}
 
-		if(str[i]=='"')
+		if(str[i] == '"')
 		{
 			insideString = !insideString;
 		}
-		else if(!insideString && std::string(s)=="//")
+		else if(!insideString && std::string(s) == "//")
 		{
-			if(sym!=std::string(""))
+			if(sym != std::string(""))
 			{
 				if(splitLine.empty() && 
 				  (	sym == std::string("call") ||
@@ -109,13 +109,13 @@ std::vector<std::string> MGComponent::symbols(char *str)
 					lineSupportingParameters = true;
 				}
 				splitLine.push_back(sym);
-				sym=std::string("");
+				sym = std::string("");
 			}
 			break;
 		}
-		else if(!insideString && (str[i]==' ' || str[i]=='\t'))
+		else if(!insideString && (str[i] == ' ' || str[i] == '\t'))
 		{
-			if(sym!=std::string(""))
+			if(sym != std::string(""))
 			{
 				if(splitLine.empty() && 
 				  ( sym == std::string("call") ||
@@ -127,33 +127,33 @@ std::vector<std::string> MGComponent::symbols(char *str)
 					lineSupportingParameters = true;
 				}
 				splitLine.push_back(sym);
-				sym=std::string("");
+				sym = std::string("");
 			}
 		}
-		else if(!insideString && (std::string(s)=="==" || std::string(s)=="<=" || std::string(s)==">=" || 
-				std::string(s)=="++" || std::string(s)=="--" || std::string(s)=="!=" || 
-				std::string(s)==">>" || std::string(s)=="<<"))
+		else if(!insideString && (std::string(s) == "==" || std::string(s) == "<=" || std::string(s) == ">=" || 
+				std::string(s) == "++" || std::string(s) == "--" || std::string(s) == "!=" || 
+				std::string(s) == ">>" || std::string(s) == "<<"))
 		{
-			if(sym!=std::string(""))
+			if(sym != std::string(""))
 			{
 				splitLine.push_back(sym);
-				sym=std::string("");
+				sym = std::string("");
 			}
 			splitLine.push_back(std::string(s));
 			i++;
 		}
 		else if(!insideString && 
 				!lineSupportingParameters &&
-				(str[i]=='=' || str[i]=='(' || str[i]==')' || str[i]=='+' || str[i]=='-' || 
-				 str[i]=='*' || str[i]=='/' || str[i]=='|' || str[i]=='&' || str[i]=='<' || 
-				 str[i]=='>'))
+				(str[i] == '=' || str[i] == '(' || str[i] == ')' || str[i] == '+' || str[i] == '-' || 
+				 str[i] == '*' || str[i] == '/' || str[i] == '|' || str[i] == '&' || str[i] == '<' || 
+				 str[i] == '>'))
 		{
 			if(sym!=std::string(""))
 			{
 				splitLine.push_back(sym);
-				sym=std::string("");
+				sym = std::string("");
 			}
-			c[0]=str[i];
+			c[0] = str[i];
 			splitLine.push_back(std::string(c));
 		}
 		else if(str[i] < 32)
@@ -162,11 +162,11 @@ std::vector<std::string> MGComponent::symbols(char *str)
 		}
 		else
 		{
-			c[0]=str[i];
+			c[0] = str[i];
 			sym += std::string(c);
 		}
 	}
-	if(sym!=std::string(""))
+	if(sym != std::string(""))
 	{
 		// XXX: Is this really necessary?
 		if(splitLine.empty() && 

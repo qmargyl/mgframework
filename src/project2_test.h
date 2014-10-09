@@ -35,6 +35,9 @@ private:
 	// test_MGFramework_misc
 	static void test_MGFramework_runOneFrame();
 	static void test_MGFramework_fullscreen();
+	static void test_MGFramework_toIntFromConstant();
+	static void test_MGFramework_toIntFromSymbol();
+	static void test_MGFramework_toBoolFromConstant();
 
 	// test_MGFramework_MO
 	static void test_MGFramework_createMO();
@@ -93,6 +96,9 @@ public:
 		// test_MGFramework_misc
 		RUNTEST(test_MGFramework_runOneFrame);
 		RUNTEST(test_MGFramework_fullscreen);
+		RUNTEST(test_MGFramework_toIntFromConstant);
+		RUNTEST(test_MGFramework_toIntFromSymbol);
+		RUNTEST(test_MGFramework_toBoolFromConstant);
 
 		// test_MGFramework_MO
 		RUNTEST(test_MGFramework_createMO);

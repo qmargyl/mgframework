@@ -12,6 +12,7 @@
 #define MGF_DISABLE_WINSOCK
 
 // Macros...
+// TODO: Remove MGF_TRUE and MGF_FALSE
 #define MGF_TRUE 1
 #define MGF_FALSE 0
 

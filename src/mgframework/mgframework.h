@@ -46,16 +46,19 @@ enum eMGComponentConsoleCommand : unsigned int
 	MGComponent_DELETE_SO_INT,
 	MGComponent_RUNFRAMES_INT,
 	MGComponent_RUNONEFRAME,
-	MGComponent_SETFPS_INT,
 	MGComponent_OPEN_TERMINALSERVER,
 	MGComponent_CLOSE_TERMINALSERVER,
 
 	// Settings
+	MGComponent_SETFPS_INT,
 	MGComponent_LOGGING_BOOL,
 	MGComponent_MINIMAP_BOOL,
 	MGComponent_INPUT_BOOL,
 	MGComponent_DYNAMICFPS_BOOL,
 	MGComponent_WINDOW_FULLSCREEN_BOOL,
+	// TODO: Implement this to replace all settings commands:
+	// MGComponent_CONFIGURE_PARAMLIST,
+	// configure -pathfinding <astar/basic> -fullscreen <on/off> -dynamicfps <on/off> -fps <int> -input <on/off> -logging <on/off> -minimap <on/off>
 
 	// Operators
 	MGComponent_SYMBOL_ASSIGNTO_INT,						//var1 = 32, var2 = getnumberofmo, etc
@@ -368,6 +371,7 @@ class MGFramework :public MGComponent
 		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
 		static bool isNumericalInt(const std::string &s); // returns true if the argument contains only numbers.
 		static int staticToInt(const std::string &s); // returns an int converted from either a constant or a symbol.
+		bool toBool(const std::string &s, MGSymbolTable *sym); // returns a bool converted from either a constant or a symbol.
 		int toInt(const std::string &s, MGSymbolTable *sym); // returns an int converted from either a constant or a symbol.
 		void setCommandReturnValue(int v){ m_CommandReturnVal = v; }
 		bool okMGFrameworkSyntax(const std::vector<std::string> &v_s);

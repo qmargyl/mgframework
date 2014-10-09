@@ -823,8 +823,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_WINDOW_FULLSCREEN_BOOL:
 		{
-			int onOrOff = toInt(cmdvec[2], s);
-			if(onOrOff == MGF_FALSE)
+			if(!toBool(cmdvec[2], s))
 			{
 				getWindow()->deactivateFullscreen();
 				return true;
@@ -1326,8 +1325,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_LOGGING_BOOL:
 		{
-			int logOn = toInt(cmdvec[1], s);
-			if(logOn == MGF_TRUE)
+			if(toBool(cmdvec[1], s))
 			{
 				enableLogging();
 				MGFLOG_INFO("Logging enabled.");
@@ -1342,8 +1340,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_MINIMAP_BOOL:
 		{
-			int miniOn = toInt(cmdvec[1], s);
-			if(miniOn == MGF_TRUE)
+			if(toBool(cmdvec[1], s))
 			{
 				enableFeatureMiniMap();
 				MGFLOG_INFO("Mini map enabled.");
@@ -1358,8 +1355,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_DYNAMICFPS_BOOL:
 		{
-			int dynOn = toInt(cmdvec[1], s);
-			if(dynOn == MGF_TRUE)
+			if(toBool(cmdvec[1], s))
 			{
 				setDynamicFPSEnabled(true);
 				MGFLOG_INFO("Dynamic FPS enabled.");
@@ -1419,8 +1415,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_INPUT_BOOL:
 		{
-			int inputOn = toInt(cmdvec[1], s);
-			if(inputOn == MGF_TRUE)
+			if(toBool(cmdvec[1], s))
 			{
 				enableInput();
 			}
@@ -1989,6 +1984,26 @@ int MGFramework::staticToInt(const std::string &s)
 	}
 	MGFLOG_STATIC_ERROR("MGFramework::toInt failed to convert string to integer: " << s);
 	return 0;
+}
+
+bool MGFramework::toBool(const std::string &s, MGSymbolTable *sym)
+{
+	if(s == std::string("on"))
+	{
+		return true;
+	}
+	else if(s == std::string("off"))
+	{
+		return false;
+	}
+	else if(toInt(s, sym) != 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 int MGFramework::toInt(const std::string &s, MGSymbolTable *sym)
