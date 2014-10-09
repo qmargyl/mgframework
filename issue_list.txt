@@ -1,8 +1,6 @@
 MG Framework list of known issues to be fixed/investigated
 ======================================================================
 
-* MOs sometimes (very rarely) move outside the map.
-
 * MOs sometimes move on top of another MO.
 
 * Creating large amounts of MOs can cause a crash.
@@ -16,3 +14,5 @@ MG Framework list of known issues to be fixed/investigated
   not seen and the application crashes if you try to control the graphical
   window while in console mode.
 
+* After running console command "input off" and clicking in the graphical
+  window, the application will crash (not responding).

@@ -24,18 +24,18 @@ enum eMGComponentConsoleCommand : unsigned int
 {
 	MGComponent_UNDEFINED = 0,
 
-	//MGFramework basic commands
 	MGComponent_HELP,										//help (Prints help information to console)
 	MGComponent_EXIT,										//exit (Exits console, resumes graphics execution) 
 	MGComponent_EXIT_APPLICATION,							//exit application (Terminates application)
 
-	//General getter
+	// General getter
 	MGComponent_INT,
 
-	//Expect function for testing and generating errors
+	// Expect function for testing and generating errors (this is only added for testing
+	// purposes and should be removed when the design allows it)
 	MGComponent_EXPECT_INT_INT,
 
-	//MGFramework commands
+	// MGFramework commands
 	MGComponent_ADD_MO_INT_PARAMLIST,
 	MGComponent_ADD_PE_INT_PARAMLIST,
 	MGComponent_ADD_SO_INT_PARAMLIST,
@@ -50,20 +50,21 @@ enum eMGComponentConsoleCommand : unsigned int
 	MGComponent_OPEN_TERMINALSERVER,
 	MGComponent_CLOSE_TERMINALSERVER,
 
-	//Settings
+	// Settings
 	MGComponent_LOGGING_BOOL,
 	MGComponent_MINIMAP_BOOL,
 	MGComponent_INPUT_BOOL,
 	MGComponent_DYNAMICFPS_BOOL,
+	MGComponent_WINDOW_FULLSCREEN_BOOL,
 
-	//Operators
+	// Operators
 	MGComponent_SYMBOL_ASSIGNTO_INT,						//var1 = 32, var2 = getnumberofmo, etc
 
-	//MGPeriodicEvent forward flags
+	// MGPeriodicEvent forward flags
 	MGComponent_PE_INT_X,
 	MGComponent_PE_ALL_X,
 
-	//MGPeriodicEvent commands
+	// MGPeriodicEvent commands
 	MGComponent_PE_INT_HELP,
 	MGComponent_PE_INT_ACTIVATE,
 	MGComponent_PE_ALL_ACTIVATE_PARAMLIST,
@@ -74,12 +75,12 @@ enum eMGComponentConsoleCommand : unsigned int
 	MGComponent_PE_INT_LOGGING_OFF,
 	MGComponent_PE_INT_STOREFILENAME_FILENAME,				//pe <int> << | storefilename <file> (Stores the file name of the script file to be executed periodically)
 
-	//MGMovingObject forward flags
+	// MGMovingObject forward flags
 	MGComponent_MO_INT_X,									//mo <int> ... (Forwards any MO command to an MO)
 	MGComponent_MO_MARKED_X,								//mo marked ... (Forwards any MO command to all marked MOs)
 	MGComponent_MO_ALL_X,									//mo all ... (Forwards any MO command to all MOs)
 
-	//MGMovingObject commands
+	// MGMovingObject commands
 	MGComponent_MO_INT_MARK,
 	MGComponent_MO_INT_UNMARK,
 	MGComponent_MO_INT_GETLOCATION,
@@ -94,18 +95,15 @@ enum eMGComponentConsoleCommand : unsigned int
 	// MGComponent_MO_INT_SETSPEED_INT,
 	// MGComponent_MO_INT_EXPECT_GETSPEED_INT,
 
-	//MGMap forward flags
+	// MGMap forward flags
 	MGComponent_MAP_X,
 
-	//MGMap commands
+	// MGMap commands
 	MGComponent_MAP_HELP,
 	MGComponent_MAP_PATH_INT_INT_INT_INT,
 	MGComponent_MAP_SETSIZE_INT_INT_INT_INT,				//map setsize <x> <y> <tx> <ty> (Sets the size of the map to x*y tiles, each tx*ty pixels big)
 	MGComponent_MAP_LOGGING_ON,
 	MGComponent_MAP_LOGGING_OFF,
-
-	//MGWindow related (implemented in MGFramework)
-	MGComponent_WINDOW_FULLSCREEN_BOOL,
 
 	// MGStationaryObject forward flags
 	MGComponent_SO_INT_X,
