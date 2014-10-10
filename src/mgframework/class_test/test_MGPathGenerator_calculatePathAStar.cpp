@@ -6,9 +6,9 @@
 
 void Project2Test::test_MGPathGenerator_calculatePathAStar()
 {
+	// Setup
 	std::list<MGPathItem> path;
 	MGMap map;
-
 	map.init(10, 10, 16, 16, 640, 480);
 
 	// Diagonal
@@ -79,4 +79,52 @@ void Project2Test::test_MGPathGenerator_calculatePathAStar()
 	ASSERT_NOT_EQUAL(path.size(), 89, "Long path in open terrain has incorrect length");
 	path.clear();
 	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+}
+
+void Project2Test::test_MGPathGenerator_calculatePathAStarAroundObstacle()
+{
+	// Setup
+	std::list<MGPathItem> path;
+	MGMap map;
+	map.init(10, 10, 16, 16, 640, 480);
+	map.occupy(5, 1, 17);
+	map.occupy(5, 2, 17);
+	map.occupy(5, 3, 17);
+	map.occupy(5, 4, 17);
+	map.occupy(5, 5, 17);
+	map.occupy(5, 6, 17);
+	map.occupy(5, 7, 17);
+	map.occupy(5, 8, 17);
+
+	// Trigger
+	MGPathGenerator::calculatePathAStar(3, 5, 8, 5, map, path);
+
+	// Verify
+	ASSERT_NOT_EQUAL(path.front().getX(), 3, "Incorrect path content");
+	ASSERT_NOT_EQUAL(path.front().getY(), 5, "Incorrect path content");
+	ASSERT_NOT_EQUAL(path.back().getX(), 8, "Incorrect path content");
+	ASSERT_NOT_EQUAL(path.back().getY(), 5, "Incorrect path content");
+	ASSERT_NOT_EQUAL(path.size() > 7, true, "Path is corrupt");
+}
+
+void Project2Test::test_MGPathGenerator_calculatePathAStarUnreachable()
+{
+	// Setup
+	std::list<MGPathItem> path;
+	MGMap map;
+	map.init(10, 10, 16, 16, 640, 480);
+	map.occupy(2, 2, 17);
+	map.occupy(3, 2, 17);
+	map.occupy(4, 2, 17);
+	map.occupy(2, 3, 17);
+	map.occupy(4, 3, 17);
+	map.occupy(2, 4, 17);
+	map.occupy(3, 4, 17);
+	map.occupy(4, 4, 17);
+
+	// Trigger
+	MGPathGenerator::calculatePathAStar(7, 7, 3, 3, map, path);
+
+	// Verify
+	ASSERT_NOT_EQUAL(path.size(), 0, "Path to unreachable tile is non-empty");
 }

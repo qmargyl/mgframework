@@ -36,6 +36,8 @@ private:
 
 	// test_MGPathGenerator_calculatePathAStar
 	static void test_MGPathGenerator_calculatePathAStar();
+	static void test_MGPathGenerator_calculatePathAStarAroundObstacle();
+	static void test_MGPathGenerator_calculatePathAStarUnreachable();
 
 	// test_MGFramework_misc
 	static void test_MGFramework_runOneFrame();
@@ -107,6 +109,8 @@ public:
 
 		// test_MGPathGenerator_calculatePathAStar
 		RUNTEST(test_MGPathGenerator_calculatePathAStar);
+		RUNTEST(test_MGPathGenerator_calculatePathAStarAroundObstacle);
+		RUNTEST(test_MGPathGenerator_calculatePathAStarUnreachable);
 
 		// test_MGFramework_misc
 		RUNTEST(test_MGFramework_runOneFrame);

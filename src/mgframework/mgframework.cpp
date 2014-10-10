@@ -1254,12 +1254,12 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_MO_INT_MARK:
 		{
 			unsigned int moIndex = (unsigned int)toInt(cmdvec[1], s);
-			if(moIndex >= 0 && moIndex < getNumberOfMO())
+			unsigned int i = 0;
+			if(moIndex < getNumberOfMO())
 			{
-				int i = 0;
 				for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 				{
-					if(i == toInt(cmdvec[1], s))
+					if(i == moIndex)
 					{
 						return it->runConsoleCommand(c, this, s);
 					}
@@ -1269,7 +1269,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					}
 				}
 			}
-			MGFLOG_WARNING("Console command was not forwarded to MO " << moIndex); 
+			MGFLOG_WARNING("Console command was not forwarded to MO, MOIndex:" << moIndex << ", NumberOfMO:" << getNumberOfMO() << ", i:" << i); 
 			return true;
 		}
 
