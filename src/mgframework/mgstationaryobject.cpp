@@ -3,8 +3,6 @@
 #include <iostream>
 #include <cstring>
 
-int MGStationaryObject::m_TileSize = 0;
-
 MGStationaryObject::MGStationaryObject()
 {
 	m_TileX = 0;
@@ -33,13 +31,6 @@ void MGStationaryObject::setTileXY(int x, int y, MGFramework *world)
 	world->m_Map.occupy(getTileX(), getTileY(), getID());
 	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
 }
-
-double MGStationaryObject::getDistance(int wx, int wy)
-{ 
-	return MGFramework::distance(getTileX(), getTileY(), wx, wy);
-}
-
-
 
 void MGStationaryObject::copy(MGStationaryObject *src)
 {
