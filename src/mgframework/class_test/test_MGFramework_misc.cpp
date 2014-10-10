@@ -89,6 +89,9 @@ void Project2Test::test_MGFramework_toIntFromSymbol()
 	ASSERT_NOT_EQUAL(mgf.toInt(std::string("s1"), &symbols), 93, "Integer symbol not converted properly");
 	ASSERT_NOT_EQUAL(mgf.toInt(std::string("s2"), &symbols), -94, "Integer symbol not converted properly");
 	ASSERT_NOT_EQUAL(mgf.toInt(std::string("This is a valid symbol name in MGSymbolTable"), &symbols), 666, "Integer symbol not converted properly");
+
+	// Also test a non-existing symbol
+	ASSERT_NOT_EQUAL(mgf.toInt(std::string("this symbol does not exist"), &symbols), 0, "Non-existing integer symbol not converted properly");
 }
 
 void Project2Test::test_MGFramework_toBoolFromConstant()
@@ -108,4 +111,13 @@ void Project2Test::test_MGFramework_toBoolFromConstant()
 	ASSERT_NOT_EQUAL(mgf.toBool(std::string("off"), NULL), false, "Bool constant not converted properly");
 	ASSERT_NOT_EQUAL(mgf.toBool(std::string("0"), NULL), false, "Bool constant not converted properly");
 	ASSERT_NOT_EQUAL(mgf.toBool(std::string("1"), NULL), true, "Bool constant not converted properly");
+
+	// Trigger
+	mgf.runConsoleCommand("delete all mo", &mgf, NULL);
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf.toBool(std::string("getnumberofmo"), NULL), false, "Bool macro not converted properly");
+
+	// Also test a non-existing symbol
+	ASSERT_NOT_EQUAL(mgf.toBool(std::string("this symbol does not exist"), NULL), false, "Bool macro not converted properly");
 }
