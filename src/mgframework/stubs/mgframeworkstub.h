@@ -30,6 +30,11 @@ class MGFrameworkStub : public MGFramework
 		{
 			return setupMO(it, x, y, owner, speed, x1, y1, x2, y2);
 		}
+		unsigned int _getNumberOfMarkedMO(){ return getNumberOfMarkedMO(); }
+		void _countMark(){ countMark(); }
+		void _countUnMark(){ countUnMark(); }
+
+		// Helper functions
 		std::list<MGMovingObject>::iterator nthMO(unsigned int i)
 		{
 			unsigned int n = 0;

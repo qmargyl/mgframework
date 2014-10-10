@@ -2144,12 +2144,6 @@ bool MGFramework::okMGFrameworkSyntax(const std::vector<std::string> &v_s)
 }
 
 
-void MGFramework::addConsoleCommandToQueue(const char *c)
-{
-
-}
-
-
 void MGFramework::deleteAllSO()
 {
 	if(m_SO) 
@@ -2210,6 +2204,17 @@ void MGFramework::deleteSO(int index)
 	setRenderAllTiles();
 }
 
+void MGFramework::countUnMark()
+{
+	if(m_MarkedMOs != 0)
+	{
+		m_MarkedMOs--;
+	}
+	else
+	{
+		MGFLOG_ERROR("MGFramework::countUnMark decreased number of marked MO below zero");
+	}
+}
 
 int runMGFrameworkSocketTerminal(void *fm)
 {

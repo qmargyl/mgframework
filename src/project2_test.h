@@ -21,6 +21,11 @@ private:
 
 	// test_MGAstarNode
 	static void test_MGAStarNode();
+	
+	// test_MGStationaryObject
+	static void test_MGStationaryObject_initialize();
+	static void test_MGStationaryObject_setTileXY();
+	static void test_MGStationaryObject_copy();
 
 	// test_MGSymbolTable
 	static void test_MGSymbolTable_addSymbol();
@@ -38,6 +43,11 @@ private:
 	static void test_MGFramework_toIntFromConstant();
 	static void test_MGFramework_toIntFromSymbol();
 	static void test_MGFramework_toBoolFromConstant();
+	static void test_MGFramework_toBoolFromSymbol();
+	static void test_MGFramework_unsetWindowProperties();
+	static void test_MGFramework_setPort();
+	static void test_MGFramework_enableFeatureMiniMap();
+	static void test_MGFramework_countMark();
 
 	// test_MGFramework_MO
 	static void test_MGFramework_createMO();
@@ -82,6 +92,11 @@ public:
 
 		// test_MGAstarNode
 		RUNTEST(test_MGAStarNode);
+		
+		// test_MGStationaryObject
+		RUNTEST(test_MGStationaryObject_initialize);
+		RUNTEST(test_MGStationaryObject_setTileXY);
+		RUNTEST(test_MGStationaryObject_copy);
 
 		// test_MGSymbolTable
 		RUNTEST(test_MGSymbolTable_addSymbol);
@@ -99,6 +114,11 @@ public:
 		RUNTEST(test_MGFramework_toIntFromConstant);
 		RUNTEST(test_MGFramework_toIntFromSymbol);
 		RUNTEST(test_MGFramework_toBoolFromConstant);
+		RUNTEST(test_MGFramework_toBoolFromSymbol);
+		RUNTEST(test_MGFramework_unsetWindowProperties);
+		RUNTEST(test_MGFramework_setPort);
+		RUNTEST(test_MGFramework_enableFeatureMiniMap);
+		RUNTEST(test_MGFramework_countMark);
 
 		// test_MGFramework_MO
 		RUNTEST(test_MGFramework_createMO);

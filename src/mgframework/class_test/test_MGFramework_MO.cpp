@@ -340,13 +340,13 @@ void Project2Test::test_MGFramework_markMO()
 	mgf.runConsoleCommand("add mo 1", &mgf, NULL);
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 1, "MGF failed to create MO");
 	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 1, "MGF failed to create MO");
-	ASSERT_NOT_EQUAL(mgf.getNumberOfMarkedMO(), 0, "MGF created marked MO");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMarkedMO(), 0, "MGF created marked MO");
 
 	// Trigger
 	mgf.runConsoleCommand("mo 0 mark", &mgf, NULL);
 
 	// Verify
-	ASSERT_NOT_EQUAL(mgf.getNumberOfMarkedMO(), 1, "MGF failed to mark MO");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMarkedMO(), 1, "MGF failed to mark MO");
 }
 
 void Project2Test::test_MGFramework_markMOIndexInSymbolTable()
@@ -357,7 +357,7 @@ void Project2Test::test_MGFramework_markMOIndexInSymbolTable()
 	mgf.runConsoleCommand("add mo 2", &mgf, NULL);
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 2, "MGF failed to create MO");
 	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 2, "MGF failed to create MO");
-	ASSERT_NOT_EQUAL(mgf.getNumberOfMarkedMO(), 0, "MGF created marked MO");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMarkedMO(), 0, "MGF created marked MO");
 
 	MGSymbolTable s;
 	s.addSymbol("moIndex", 1);
@@ -368,5 +368,5 @@ void Project2Test::test_MGFramework_markMOIndexInSymbolTable()
 	mgf.runConsoleCommand("mo moIndex mark", &mgf, &s);
 
 	// Verify
-	ASSERT_NOT_EQUAL(mgf.getNumberOfMarkedMO(), 1, "MGF failed to mark MO");
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMarkedMO(), 1, "MGF failed to mark MO");
 }

@@ -118,6 +118,119 @@ void Project2Test::test_MGFramework_toBoolFromConstant()
 	// Verify
 	ASSERT_NOT_EQUAL(mgf.toBool(std::string("getnumberofmo"), NULL), false, "Bool macro not converted properly");
 
+	// Also test a non-existing constant
+	ASSERT_NOT_EQUAL(mgf.toBool(std::string("this symbol does not exist"), NULL), false, "Bool constant not converted properly");
+}
+
+void Project2Test::test_MGFramework_toBoolFromSymbol()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	IMGWindowImpl win;
+	MGSymbolTable symbols;
+	mgf.setWindowProperties(1024, 768, 32, false, std::string("test"), &win);
+	mgf.init(16, 16, 32, 32);
+	symbols.addSymbol(std::string("b1"), 47);
+	symbols.addSymbol(std::string("b2"), -39);
+	symbols.addSymbol(std::string("b3"), 1);
+	symbols.addSymbol(std::string("b4"), 0);
+	symbols.addSymbol(std::string("-5"), 0); // -5 as an integer is evaluated before the symbol -5
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf.toBool(std::string("b1"), &symbols), true, "Integer symbol not converted to bool properly");
+	ASSERT_NOT_EQUAL(mgf.toBool(std::string("b2"), &symbols), true, "Integer symbol not converted to bool properly");
+	ASSERT_NOT_EQUAL(mgf.toBool(std::string("b3"), &symbols), true, "Integer symbol not converted to bool properly");
+	ASSERT_NOT_EQUAL(mgf.toBool(std::string("b4"), &symbols), false, "Integer symbol not converted to bool properly");
+	ASSERT_NOT_EQUAL(mgf.toBool(std::string("-5"), &symbols), true, "Integer constant did not have presidence over symbol");
+
 	// Also test a non-existing symbol
-	ASSERT_NOT_EQUAL(mgf.toBool(std::string("this symbol does not exist"), NULL), false, "Bool macro not converted properly");
+	ASSERT_NOT_EQUAL(mgf.toInt(std::string("b0"), &symbols), false, "Non-existing integer symbol not converted to bool properly");
+}
+
+void Project2Test::test_MGFramework_unsetWindowProperties()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	IMGWindowImpl win;
+	ASSERT_NOT_EQUAL(mgf.windowPropertiesSet(), false, "Window properties were not initialized correctly");
+	mgf.setWindowProperties(1024, 768, 32, false, std::string("test"), &win);
+	mgf.init(16, 16, 32, 32);
+	ASSERT_NOT_EQUAL(mgf.windowPropertiesSet(), true, "Window properties were not set correctly");
+	
+	// Trigger
+	mgf.unsetWindowProperties();
+	
+	// Verify
+	ASSERT_NOT_EQUAL(mgf.windowPropertiesSet(), false, "Window properties were not unset correctly");
+}
+
+void Project2Test::test_MGFramework_setPort()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	ASSERT_NOT_EQUAL(mgf.getPort(), 0, "Terminal server port not set correctly");
+
+	// Trigger
+	mgf.setPort(123);
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf.getPort(), 123, "Terminal server port not set correctly");
+
+	// Trigger
+	mgf.setPort(127);
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf.getPort(), 127, "Terminal server port not set correctly");
+}
+
+void Project2Test::test_MGFramework_enableFeatureMiniMap()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	ASSERT_NOT_EQUAL(mgf.featureMiniMapEnabled(), true, "MiniMap feature not initialized correctly");
+
+	// Trigger
+	mgf.disableFeatureMiniMap();
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf.featureMiniMapEnabled(), false, "MiniMap feature not disabled correctly");
+
+	// Trigger
+	mgf.enableFeatureMiniMap();
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf.featureMiniMapEnabled(), true, "MiniMap feature not enabled correctly");
+}
+
+void Project2Test::test_MGFramework_countMark()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	IMGWindowImpl win;
+	mgf.setWindowProperties(1024, 768, 32, false, std::string("test"), &win);
+	mgf.init(16, 16, 32, 32);
+	mgf.runConsoleCommand("add mo 6", &mgf, NULL);
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMarkedMO(), 0, "Marked MO not initialized correctly");
+
+	// Trigger
+	mgf._countMark();
+	mgf._countMark();
+	mgf._countMark();
+	
+	// Verify
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMarkedMO(), 3, "Marked MO not counted correctly");
+
+	// Trigger
+	mgf._countUnMark();
+	mgf._countUnMark();
+	mgf._countUnMark();
+	
+	// Verify
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMarkedMO(), 0, "Marked MO not counted correctly");
+	
+	// Also test to count below zero MO, resulting in an error trace
+	mgf._countUnMark();
+	
+	// Verify
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMarkedMO(), 0, "Marked MO not counted correctly");
 }

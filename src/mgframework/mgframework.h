@@ -286,6 +286,12 @@ class MGFramework :public MGComponent
 		void deleteMO(std::list<MGMovingObject>::iterator it);		// Deletes an MO
 		bool setupMO(std::list<MGMovingObject>::iterator it, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2);		// Setups the MO with a specified index
 
+		// MO selection related
+		int getNumberOfMarkedMO()
+		{ 
+			return std::min(m_MarkedMOs, getNumberOfMO());
+		}
+
 		// PE related
 		void deleteAllPE();
 		void addPE(int n);
@@ -362,6 +368,10 @@ class MGFramework :public MGComponent
 		void unsetWindowProperties(){ m_WindowPropertiesSet = false; m_Window = NULL; }
 		bool windowPropertiesSet(){ return m_WindowPropertiesSet; }
 
+		// MO selection related (used by MO)
+		void countMark(){ m_MarkedMOs++; }
+		void countUnMark();
+
 		// Client/Server
 		void setInstanceType(eMGFInstanceType it){ m_MGFInstanceType = it; }
 		eMGFInstanceType getInstanceType(){ return m_MGFInstanceType; }
@@ -373,13 +383,12 @@ class MGFramework :public MGComponent
 		static int staticToInt(const std::string &s); // returns an int converted from either a constant or a symbol.
 		bool toBool(const std::string &s, MGSymbolTable *sym); // returns a bool converted from either a constant or a symbol.
 		int toInt(const std::string &s, MGSymbolTable *sym); // returns an int converted from either a constant or a symbol.
-		void setCommandReturnValue(int v){ m_CommandReturnVal = v; }
-		bool okMGFrameworkSyntax(const std::vector<std::string> &v_s);
+		void setCommandReturnValue(int v){ m_CommandReturnVal = v; } // TODO: Make this private?
+		bool okMGFrameworkSyntax(const std::vector<std::string> &v_s); // TODO: Make this private?
 
 		//Socket terminal related
-		bool socketTerminalOpen(){return m_KeepSocketTerminalOpen;}
+		bool socketTerminalOpen(){ return m_KeepSocketTerminalOpen; }
 		void logIfEnabled(const char *log){}//{MGFLOG_INFO("" << log)}
-		void addConsoleCommandToQueue(const char *c);
 		int getPort(){ return m_Port; }
 		void setPort(int p){ m_Port = p; }
 
@@ -396,15 +405,6 @@ class MGFramework :public MGComponent
 		void enableFeatureMiniMap(){ m_MiniMapEnabled = true; }
 		void disableFeatureMiniMap(){ m_MiniMapEnabled = false; }
 		bool featureMiniMapEnabled(){ return m_MiniMapEnabled; }
-
-		// MO selection related
-		void countMark(){ m_MarkedMOs++; }
-		void countUnMark(){ m_MarkedMOs--; }
-		
-		int getNumberOfMarkedMO()
-		{ 
-			return std::min(m_MarkedMOs, getNumberOfMO());
-		}
 
 		// Rendering optimizations related
 		bool isSelectiveTileRenderingActive(){ return m_SelectiveTileRendering; }

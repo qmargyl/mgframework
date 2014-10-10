@@ -30,8 +30,7 @@ bool Project2::init(int w, int h, int tw, int th)
 		SDL_SetColorKey(m_StationaryObject, SDL_SRCCOLORKEY, 0);
 		SDL_SetColorKey(m_Mark, SDL_SRCCOLORKEY, 0);
 
-
-		// Objcts such as the map are initialized here.
+		// Objects such as the map are initialized here.
 		m_Map.init(w, h, tw, th, getWindow()->getWidth(), getWindow()->getHeight()); // width (in number of tiles), height, tile width (in pixels), tile height, resolution x and y.
 
 		// Setup the edge around the screen to allow scrolling to see the entire map.
@@ -44,11 +43,8 @@ bool Project2::init(int w, int h, int tw, int th)
 		enableFeatureSelectiveTileRendering();
 		enableFeatureMouseScrolling();
 		disableFeatureCenterOnMO();
-		//disableFeatureMouseScrolling();
-		//enableFeatureCenterOnMO(0);
 
 		// Setup application specific game logics..
-
 		runConsoleCommand("open terminalserver", this, NULL);
 		runConsoleCommand("logging off", this, NULL); // Turn on logging for the MGFramework class
 		runConsoleCommand("map logging off", this, NULL); // Turn on logging for the MGMap class
@@ -74,9 +70,9 @@ void Project2::draw()
 	if(!noRenderingNeeded)
 	{
 		// Draw all tiles visible in the window...
-		for (int x=0; x < m_Map.getWidth(); x++)
+		for(int x = 0; x < m_Map.getWidth(); x++)
 		{
-			for ( int y=0; y < m_Map.getHeight(); y++)
+			for(int y = 0; y < m_Map.getHeight(); y++)
 			{
 				// Only draw the tiles actually visible (+1 to draw partly visible tiles) in the window...
 				if(  ((x * m_Map.getTileWidth() + m_Map.getScrollX()) <= getWindow()->getWidth() + m_Map.getTileWidth()) &&
@@ -184,7 +180,7 @@ void Project2::draw()
 			// Draw all moving objects on the mini map..
 			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 			{
-				getWindow()->putPixel32((*it).getTileX() + getWindow()->getWidth() - m_Map.getWidth() - 16, (*it).getTileY() + 16, 0x00FF0000);
+				getWindow()->putPixel32(it->getTileX() + getWindow()->getWidth() - m_Map.getWidth() - 16, it->getTileY() + 16, 0x00FF0000);
 			}
 		}
 	}

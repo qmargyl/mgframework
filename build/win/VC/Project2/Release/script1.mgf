@@ -1,5 +1,5 @@
-create mo 5 -owner 1
-create pe 1
+add mo 5 -owner 1
+add pe 1
 pe 0 setuptimer 2000
 pe 0 activate
 pe 0 logging on

@@ -76,23 +76,23 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 						std::cout << "<br>";
 						firstTC = false;
 					}
-					std::cout << line.c_str() << "<br>" << std::endl;
-					if(!errors.empty())
+					
+					// Flush any errors to log before evaluating a new TC
+					for(unsigned int i = 0; i < errors.size(); ++i)
 					{
-						// Print errors for each TC
-						for(unsigned int i = 0; i < errors.size(); ++i)
+						if(negativeTest)
 						{
-							if(negativeTest)
-							{
-								std::cout << "<font color=purple>" << errors[i].c_str() << "</font><br>" << std::endl;
-							}
-							else
-							{
-								std::cout << "<font color=red>" << errors[i].c_str() << "</font><br>" << std::endl;
-							}
+							std::cout << "<font color=purple>" << errors[i].c_str() << "</font><br>" << std::endl;
 						}
-						errors.clear();
+						else
+						{
+							std::cout << "<font color=red>" << errors[i].c_str() << "</font><br>" << std::endl;
+						}
 					}
+					errors.clear();
+					
+					// Print TC header to log
+					std::cout << line.c_str() << "<br>" << std::endl;
 				}
 
 				if (foundAssert != std::string::npos)
@@ -106,7 +106,6 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 				if (foundExecutionTime != std::string::npos)
 				{
 					execTimeMS = line.substr(exetimeSubstr.size(), line.size() - exetimeSubstr.size() - 1);
-					//C++11: int execTimeMS = std::stoi(execTime);
 				}
 			}
 		}
