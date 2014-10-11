@@ -22,13 +22,10 @@ bool Project2::init(int w, int h, int tw, int th)
 		}
 
 		// All graphics should be loaded here.
-		m_Floor = static_cast<SDL_Surface*>(getWindow()->loadBMPImage("tileset.bmp"));
-		m_MovingObject = static_cast<SDL_Surface*>(getWindow()->loadBMPImage("movingobject.bmp"));
-		m_StationaryObject = static_cast<SDL_Surface*>(getWindow()->loadBMPImage("stationaryobject.bmp"));
-		m_Mark = static_cast<SDL_Surface*>(getWindow()->loadBMPImage("mark.bmp"));
-		SDL_SetColorKey(m_MovingObject, SDL_SRCCOLORKEY, 0);
-		SDL_SetColorKey(m_StationaryObject, SDL_SRCCOLORKEY, 0);
-		SDL_SetColorKey(m_Mark, SDL_SRCCOLORKEY, 0);
+		m_Floor = static_cast<SDL_Texture*>(getWindow()->loadBMPImage("tileset.bmp", false));
+		m_MovingObject = static_cast<SDL_Texture*>(getWindow()->loadBMPImage("movingobject.bmp", true));
+		m_StationaryObject = static_cast<SDL_Texture*>(getWindow()->loadBMPImage("stationaryobject.bmp", true));
+		m_Mark = static_cast<SDL_Texture*>(getWindow()->loadBMPImage("mark.bmp", true));
 
 		// Objects such as the map are initialized here.
 		m_Map.init(w, h, tw, th, getWindow()->getWidth(), getWindow()->getHeight()); // width (in number of tiles), height, tile width (in pixels), tile height, resolution x and y.
@@ -135,16 +132,16 @@ void Project2::draw()
 				// Only draw visible stationary objects...
 				if(detectCollisionRectangle(sX, sY, sX + m_Map.getTileWidth(), sY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
 				{
-					drawTile(static_cast<void*>(m_StationaryObject), 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight()+16);
+					drawTile(static_cast<void*>(m_StationaryObject), 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight() + 16);
 				}
 			}
 		}
 
 		// Draw a frame around the edge of the map
-		getWindow()->vLine32(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge() - m_Map.getTopEdge(), 0x000000FF);
-		getWindow()->vLine32(m_Map.getWindowWidth() - m_Map.getRightEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge() - m_Map.getTopEdge(), 0x000000FF);
-		getWindow()->hLine32(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge() - m_Map.getRightEdge(), 0x000000FF);
-		getWindow()->hLine32(m_Map.getLeftEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge() - m_Map.getRightEdge(), 0x000000FF);
+		getWindow()->vLineRGB(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge() - m_Map.getTopEdge(), 0x00, 0x00, 0xFF);
+		getWindow()->vLineRGB(m_Map.getWindowWidth() - m_Map.getRightEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge() - m_Map.getTopEdge(), 0x00, 0x00, 0xFF);
+		getWindow()->hLineRGB(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge() - m_Map.getRightEdge(), 0x00, 0x00, 0xFF);
+		getWindow()->hLineRGB(m_Map.getLeftEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge() - m_Map.getRightEdge(), 0x00, 0x00, 0xFF);
 
 
 		// Draw the mini map if enabled. Also draw all objects on it...
@@ -163,24 +160,24 @@ void Project2::draw()
 						// Different color for different tile property of each tile...
 						if(m_Map.getTileProperty(x, y)  & MGMAP_TP_PROPERTY_1)
 						{
-							getWindow()->putPixel32(x + getWindow()->getWidth() - m_Map.getWidth() - 16, y + 16, 0x3F3F3F3F);
+							getWindow()->putPixelRGB(x + getWindow()->getWidth() - m_Map.getWidth() - 16, y + 16, 0x3F, 0x3F, 0x3F);
 						}
 						else if(m_Map.getTileProperty(x, y)  & MGMAP_TP_PROPERTY_2)
 						{
-							getWindow()->putPixel32(x + getWindow()->getWidth() - m_Map.getWidth() - 16, y + 16, 0xFFFFFFFF);
+							getWindow()->putPixelRGB(x + getWindow()->getWidth() - m_Map.getWidth() - 16, y + 16, 0xFF, 0xFF, 0xFF);
 						}
 					}
 					else
 					{
 						// Draw it black..
-						getWindow()->putPixel32(x + getWindow()->getWidth() - m_Map.getWidth() - 16, y + 16, 0x00000000);
+						getWindow()->putPixelRGB(x + getWindow()->getWidth() - m_Map.getWidth() - 16, y + 16, 0x00, 0x00, 0x00);
 					}
 				}
 			}
 			// Draw all moving objects on the mini map..
 			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 			{
-				getWindow()->putPixel32(it->getTileX() + getWindow()->getWidth() - m_Map.getWidth() - 16, it->getTileY() + 16, 0x00FF0000);
+				getWindow()->putPixelRGB(it->getTileX() + getWindow()->getWidth() - m_Map.getWidth() - 16, it->getTileY() + 16, 0xFF, 0x00, 0x00);
 			}
 		}
 	}
@@ -206,10 +203,10 @@ void Project2::draw()
 			int uLY = std::min(getFrameStartY(), getFrameEndY());
 			int xL = abs(getFrameStartX() - getFrameEndX());
 			int yL = abs(getFrameStartY() - getFrameEndY());
-			getWindow()->hLine32(uLX, uLY, xL, 0x00FF0000);
-			getWindow()->hLine32(uLX, uLY + yL, xL, 0x00FF0000);
-			getWindow()->vLine32(uLX, uLY, yL, 0x00FF0000);
-			getWindow()->vLine32(uLX + xL, uLY, yL, 0x00FF0000);
+			getWindow()->hLineRGB(uLX, uLY, xL, 0xFF, 0x00, 0x00);
+			getWindow()->hLineRGB(uLX, uLY + yL, xL, 0xFF, 0x00, 0x00);
+			getWindow()->vLineRGB(uLX, uLY, yL, 0xFF, 0x00, 0x00);
+			getWindow()->vLineRGB(uLX + xL, uLY, yL, 0xFF, 0x00, 0x00);
 		}
 	}
 

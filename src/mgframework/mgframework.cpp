@@ -103,7 +103,7 @@ bool MGFramework::processEvents()
 			{
 				if(!typingEnabled())
 				{
-					SDLKey sym = event.key.keysym.sym;
+					SDL_Keycode sym = event.key.keysym.sym;
 					if(sym == SDLK_ESCAPE) //Enable typing in the console if ESC is pressed..
 					{
 						activateConsole();
@@ -117,7 +117,7 @@ bool MGFramework::processEvents()
 			{
 				if(!typingEnabled())
 				{
-					SDLKey sym = event.key.keysym.sym;
+					SDL_Keycode sym = event.key.keysym.sym;
 					MGFLOG_INFO("SDL_KEYUP" << std::endl << "  " << SDL_GetKeyName(sym))
 					m_Keys[sym] = 0;
 				}

@@ -3,7 +3,7 @@
 #include <string>
 #include <cstring>
 #include <iostream>
-#include <SDL/SDL_opengl.h>
+#include "SDL_opengl.h"
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "mgframework.h"
@@ -14,16 +14,21 @@ MGWindow::MGWindow():
 	m_Height(0),
 	m_Bpp(0),
 	m_Fullscreen(false),
-	m_Screen(NULL),
 #ifndef MGF_DISABLE_TTF
 	m_Font(0),
 #endif
-	m_Flags(0)
+	m_Screen(NULL)
 {
 }
 
 MGWindow::~MGWindow()
 {
+    SDL_DestroyRenderer(m_Renderer);
+    SDL_DestroyWindow(m_Screen);
+#ifndef MGF_DISABLE_TTF
+	TTF_CloseFont(m_Font);
+	TTF_Quit();
+#endif
 	SDL_Quit();
 }
 
@@ -38,26 +43,27 @@ bool MGWindow::createWindow()
 	TTF_Init(); // To debug all TTF references must be commented out.
 #endif
 
-	// Set the title.
-	SDL_WM_SetCaption(m_Title.c_str(), m_Title.c_str());
-
-	// Flags tell SDL about the type of window we are creating.
 	if(m_Fullscreen == true)
 	{
-		setFlags(SDL_FULLSCREEN | SDL_DOUBLEBUF | SDL_HWSURFACE);
+		m_Screen = SDL_CreateWindow(m_Title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_Width, m_Height, SDL_WINDOW_FULLSCREEN);
 	}
 	else
 	{
-		setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
+		m_Screen = SDL_CreateWindow(m_Title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, m_Width, m_Height, 0);
 	}
 
 	// Create the window
-	m_Screen = SDL_SetVideoMode( m_Width, m_Height, m_Bpp, getFlags() );
+	m_Renderer = SDL_CreateRenderer(m_Screen, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	SDL_SetRenderDrawColor(m_Renderer, 255, 0, 0, 255);
 		
 	if(m_Screen == 0)
 	{
 		return false;
 	}
+
+#ifndef MGF_DISABLE_TTF
+	m_Font = TTF_OpenFont("ARIAL.TTF", 16);
+#endif
 
 	return true;
 }
@@ -68,7 +74,6 @@ bool MGWindow::setProperties(int width, int height, int bpp, bool fullscreen, co
 	m_Title = title;
 	m_Fullscreen = fullscreen;
 	m_Bpp = bpp;
-	setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
 	return true;
 }
 
@@ -95,34 +100,30 @@ bool MGWindow::setProperties(eMGWindowScreenResolution screenResolution, int bpp
 		default:
 			std::cout << "ERROR: MGWindow::setProperties was given unsupported screen resolution" << std::endl; 
 			return false;
-
 	}
 
 	m_Title = title;
 	m_Fullscreen = fullscreen;
 	m_Bpp = bpp;
-	setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
 	return true;
 }
 
 
 void MGWindow::flipSurface()
 {
-	SDL_Flip(m_Screen);
+	SDL_RenderPresent(m_Renderer);
 }
 
 void MGWindow::activateFullscreen()
 {
 	m_Fullscreen = true;
-	setFlags(SDL_FULLSCREEN | SDL_DOUBLEBUF | SDL_HWSURFACE);
-	m_Screen = SDL_SetVideoMode(m_Width, m_Height, m_Bpp, getFlags());
+	SDL_SetWindowFullscreen(m_Screen, SDL_WINDOW_FULLSCREEN);
 }
 
 void MGWindow::deactivateFullscreen()
 {
 	m_Fullscreen = false;
-	setFlags(SDL_DOUBLEBUF | SDL_HWSURFACE);
-	m_Screen = SDL_SetVideoMode(m_Width, m_Height, m_Bpp, getFlags());
+	SDL_SetWindowFullscreen(m_Screen, 0);
 }
 
 
@@ -138,20 +139,24 @@ void MGWindow::drawSprite(void* imageSurface, int srcX, int srcY, int dstX, int 
 	dstRect.y = dstY;
 	dstRect.w = width;
 	dstRect.h = height;
-	SDL_BlitSurface(static_cast<SDL_Surface*>(imageSurface), &srcRect, m_Screen, &dstRect);
+	SDL_RenderCopy(m_Renderer, static_cast<SDL_Texture*>(imageSurface), &srcRect, &dstRect);
 }
 
 
 
-void* MGWindow::loadBMPImage( std::string filename ) 
+void* MGWindow::loadBMPImage(std::string filename, bool transparent) 
 {
 	SDL_Surface* loadedImage = NULL;
-	SDL_Surface* optimizedImage = NULL;
-	loadedImage = SDL_LoadBMP( filename.c_str() );
-	if( loadedImage != NULL )
+	SDL_Texture* optimizedImage = NULL;
+	loadedImage = SDL_LoadBMP(filename.c_str());
+	if(loadedImage != NULL)
 	{
-		optimizedImage = SDL_DisplayFormat( loadedImage );
-		SDL_FreeSurface( loadedImage );
+		if(transparent)
+		{
+			SDL_SetColorKey(loadedImage, SDL_TRUE, 0);
+		}
+		optimizedImage = SDL_CreateTextureFromSurface(m_Renderer, loadedImage);
+		SDL_FreeSurface(loadedImage);
 	}
 	return (void*)optimizedImage;
 }
@@ -160,121 +165,41 @@ void* MGWindow::loadBMPImage( std::string filename )
 void MGWindow::drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB)
 {
 #ifndef MGF_DISABLE_TTF
-	m_Font = TTF_OpenFont("ARIAL.TTF", size);
 	SDL_Color foregroundColor = {fR, fG, fB};
 	SDL_Color backgroundColor = {bR, bG, bB};
 	SDL_Surface* textSurface = TTF_RenderText_Shaded(m_Font, string, foregroundColor, backgroundColor);
-	SDL_Rect textLocation = {x, y, 0, 0};
-	SDL_BlitSurface(textSurface, NULL, m_Screen, &textLocation);
+	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(m_Renderer, textSurface);
+	int texW = 0;
+	int texH = 0;
+	SDL_QueryTexture(textTexture, NULL, NULL, &texW, &texH);
+	SDL_Rect textLocation = {x, y, texW, texH};
+	SDL_RenderCopy(m_Renderer, textTexture, NULL, &textLocation);
 	SDL_FreeSurface(textSurface);
-	TTF_CloseFont(m_Font);
+	SDL_DestroyTexture(textTexture);
 #endif
 }
 
 
-void MGWindow::putPixel32(int x, int y, unsigned int pixel)
+void MGWindow::putPixelRGB(int x, int y, unsigned char r, unsigned char g, unsigned char b)
 {
-	Uint32 *pixels = (Uint32 *)m_Screen->pixels;
-	pixels[ ( y * m_Screen->w ) + x ] = (Uint32)pixel;
+	SDL_SetRenderDrawColor(m_Renderer, (Uint8)r, (Uint8)g, (Uint8)b, 255);
+	SDL_RenderDrawPoint(m_Renderer, x, y);
 }
 
 
-
-unsigned int MGWindow::getPixel32(int x, int y)
+void MGWindow::vLineRGB(int x, int y, int length, unsigned char r, unsigned char g, unsigned char b)
 {
-	Uint32 *pixels = (Uint32 *)m_Screen->pixels;
-	return (unsigned int)pixels[ ( y * m_Screen->w ) + x ];
-}
-
-
-
-void MGWindow::drawCircle32(int n_cx, int n_cy, int radius, unsigned int pixel)
-{
-    // if the first pixel in the screen is represented by (0,0) (which is in sdl)
-    // remember that the beginning of the circle is not in the middle of the pixel
-    // but to the left-top from it:
- 
-    double error = (double)-radius;
-    double x = (double)radius -0.5;
-    double y = (double)0.5;
-    double cx = n_cx - 0.5;
-    double cy = n_cy - 0.5;
- 
-    while (x >= y)
-    {
-        putPixel32((int)(cx + x), (int)(cy + y), (Uint32)pixel);
-        putPixel32((int)(cx + y), (int)(cy + x), (Uint32)pixel);
- 
-        if (x != 0)
-        {
-            putPixel32((int)(cx - x), (int)(cy + y), (Uint32)pixel);
-            putPixel32((int)(cx + y), (int)(cy - x), (Uint32)pixel);
-        }
- 
-        if (y != 0)
-        {
-            putPixel32((int)(cx + x), (int)(cy - y), (Uint32)pixel);
-            putPixel32((int)(cx - y), (int)(cy + x), (Uint32)pixel);
-        }
- 
-        if (x != 0 && y != 0)
-        {
-            putPixel32((int)(cx - x), (int)(cy - y), (Uint32)pixel);
-            putPixel32((int)(cx - y), (int)(cy - x), (Uint32)pixel);
-        }
- 
-        error += y;
-        ++y;
-        error += y;
- 
-        if (error >= 0)
-        {
-            --x;
-            error -= x;
-            error -= x;
-        }
-    }
-}
-
-
-
-void MGWindow::drawFillCircle32(int cx, int cy, int radius, unsigned int pixel)
-{
-    static const int BPP = 4;
-    double r = (double)radius;
-    for (double dy = 1; dy <= r; dy += 1.0)
-    {
-        double dx = floor(sqrt((2.0 * r * dy) - (dy * dy)));
-        int x = cx - (int)dx;
- 
-        // Grab a pointer to the left-most pixel for each half of the circle
-        Uint8 *target_pixel_a = (Uint8 *)m_Screen->pixels + ((int)(cy + r - dy)) * m_Screen->pitch + x * BPP;
-        Uint8 *target_pixel_b = (Uint8 *)m_Screen->pixels + ((int)(cy - r + dy)) * m_Screen->pitch + x * BPP;
- 
-        for (; x <= cx + dx; x++)
-        {
-            *(Uint32 *)target_pixel_a = (Uint32)pixel;
-            *(Uint32 *)target_pixel_b = (Uint32)pixel;
-            target_pixel_a += BPP;
-            target_pixel_b += BPP;
-        }
-    }
-}
-
-
-void MGWindow::vLine32(int x, int y, int length, unsigned int pixel)
-{
-	for(int i=y; i<y+length; i++)
+	for(int i = y; i < y + length; i++)
 	{
-		putPixel32(x, i, pixel);
+		putPixelRGB(x, i, r, g, b);
 	}
 }
 
 
-void MGWindow::hLine32(int x, int y, int length, unsigned int pixel)
+void MGWindow::hLineRGB(int x, int y, int length, unsigned char r, unsigned char g, unsigned char b)
 {
-	for(int i=x; i<x+length; i++)
+	for(int i = x; i < x + length; i++)
 	{
-		putPixel32(i, y, pixel);
+		putPixelRGB(i, y, r, g, b);
 	}
 }

@@ -308,7 +308,7 @@ class MGFramework :public MGComponent
 
 		// Event related
 #ifndef UNITTEST_LINUX
-		unsigned int m_Keys[SDLK_LAST];	// Stores keys that are pressed
+		unsigned int m_Keys[SDL_NUM_SCANCODES];	// Stores keys that are pressed
 #endif
 		virtual bool processEvents();
 

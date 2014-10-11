@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\..\..\..\..\download_sdl\SDL_ttf-2.0.11\include&quot;;&quot;..\..\..\..\..\..\download_sdl\SDL-devel-1.2.14-VC8\SDL-1.2.14\include&quot;"
+				AdditionalIncludeDirectories="C:\git_repos\mgframework\src\sdl2\include;C:\git_repos\mgframework\src\sdl2_ttf\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -137,9 +137,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="opengl32.lib glu32.lib sdl.lib sdlmain.lib sdl_ttf.lib wsock32.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib wsock32.lib SDL2.lib SDL2main.lib SDL2_ttf.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;..\..\..\..\..\..\download_sdl\SDL_ttf-2.0.11\lib\x86&quot;"
+				AdditionalLibraryDirectories="C:\git_repos\mgframework\src\sdl2\lib\x86;C:\git_repos\mgframework\src\sdl2_ttf\lib\x86"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

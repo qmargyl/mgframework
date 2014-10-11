@@ -5,8 +5,8 @@
 #include "imgwindow.h"
 
 #ifndef UNITTEST_LINUX
-  #include <SDL/SDL.h>
-  #include <SDL/SDL_thread.h>
+  #include "SDL.h"
+  #include "SDL_thread.h"
   #ifndef MGF_DISABLE_TTF
     #include "SDL_ttf.h"
   #endif
@@ -21,16 +21,13 @@ class MGWindow : public IMGWindow
 		bool m_Fullscreen;
 		std::string m_Title;
 #ifndef UNITTEST_LINUX
-		SDL_Surface * m_Screen;
+		SDL_Window* m_Screen;
+		SDL_Renderer* m_Renderer;
   #ifndef MGF_DISABLE_TTF
 		TTF_Font* m_Font;
   #endif
 #endif
-		int m_Flags;
 
-		void setFlags(int flags){ m_Flags = flags; }
-		int getFlags(){ return m_Flags; }
-			
 	public:
 
 		MGWindow();
@@ -47,14 +44,11 @@ class MGWindow : public IMGWindow
 		void deactivateFullscreen();
 
 		void drawSprite(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
-		void* loadBMPImage(std::string filename);
+		void* loadBMPImage(std::string filename, bool transparent);
 		void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
-		void putPixel32(int x, int y, unsigned int pixel);
-		unsigned int getPixel32(int x, int y);
-		void drawCircle32(int n_cx, int n_cy, int radius, unsigned int pixel);
-		void drawFillCircle32(int cx, int cy, int radius, unsigned int pixel);
-		void vLine32(int x, int y, int length, unsigned int pixel);
-		void hLine32(int x, int y, int length, unsigned int pixel);
+		void putPixelRGB(int x, int y, unsigned char r, unsigned char g, unsigned char b);
+		void vLineRGB(int x, int y, int length, unsigned char r, unsigned char g, unsigned char b);
+		void hLineRGB(int x, int y, int length, unsigned char r, unsigned char g, unsigned char b);
 
 };
 
