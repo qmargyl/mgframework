@@ -9,6 +9,8 @@ void Project2Test::test_MGFramework_createMO()
 	// Setup
 	MGFrameworkStub mgf;
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF created with MO");
+
+	EXPECT_ERROR("MGFramework::addMO cannot create 1 MO on a 0 by 0 map");
 	mgf._addMO(1);
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF created MOs without initializing the map");
 	mgf.init(16, 16, 32, 32);

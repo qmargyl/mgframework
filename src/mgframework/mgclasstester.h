@@ -29,6 +29,9 @@
 		std::cout << "Exiting application..." << std::endl; \
 	} while(0)
 
+#define EXPECT_ERROR(f) do{ \
+		std::cout << "[EE]" << f << std::endl; \
+	} while(0)
 
 class MGClassTester
 {

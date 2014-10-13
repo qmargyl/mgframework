@@ -32,7 +32,10 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 		std::string warnSubstr("WARNING");
 		std::string exitSubstr("Exiting application...");
 		std::string tcSubstr("[TC]");
+		std::string expErrSubstr("[EE]");
 		bool firstTC = true;
+		bool expectingError = false;
+		std::string expectedError;
 		std::string assertSubstr("[ASSERT]");
 
 		while(true)
@@ -51,12 +54,29 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 				std::size_t foundWarn = line.find(warnSubstr);
 				std::size_t foundExit = line.find(exitSubstr);
 				std::size_t foundTC = line.find(tcSubstr);
+				std::size_t foundEE = line.find(expErrSubstr);
 				std::size_t foundAssert = line.find(assertSubstr);
 
 				if (foundErr != std::string::npos)
 				{
 					nErrors++;
-					errors.push_back(line);
+					if(!expectingError)
+					{
+						errors.push_back(line);
+					}
+					else
+					{
+						if(line.find(expectedError) != std::string::npos)
+						{
+							// The expected error string was found in the actual error string
+							std::cout << "<font color=green>" << line << "</font><br>" << std::endl;
+						}
+						else
+						{
+							errors.push_back(line);
+						}
+						expectingError = false;
+					}
 				}
 
 				if (foundWarn != std::string::npos)
@@ -95,6 +115,15 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 					std::cout << line.c_str() << "<br>" << std::endl;
 				}
 
+				if (foundEE != std::string::npos)
+				{
+					if(line.length() > 4)
+					{
+						line.erase(0, 4);
+						expectedError = line;
+					}
+					expectingError = true;
+				}
 				if (foundAssert != std::string::npos)
 				{
 					nAsserts++;
@@ -121,6 +150,10 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 		else if(nAsserts != 0)
 		{
 			std::cout << "<br><b><font color=red>FAIL</font></b> (" << nAsserts << " asserts, " << nWarnings << " warnings)";
+		}
+		else if(expectingError)
+		{
+			std::cout << "<b><font color=red>FAIL</font></b> (expected error missing: " << expectedError << ")";
 		}
 		else
 		{
