@@ -68,7 +68,7 @@ void Project2Test::test_MGFramework_deleteMO()
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 0, "MGF failed to run deleteAllMO");
 }
 
-void Project2Test::test_MGFramework_deleteMOVerifyIterator()
+void Project2Test::test_MGFramework_deleteFirstMO()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -78,25 +78,32 @@ void Project2Test::test_MGFramework_deleteMOVerifyIterator()
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 2, "MGF failed to create MO");
 
 	std::list<MGMovingObject>::iterator it = mgf.nthMO(0);
+	mgf.nthMO(0)->setOwner(0);
+	mgf.nthMO(1)->setOwner(1);
 
 	// Trigger - delete first MO
 	mgf._deleteMO(it);
 
 	// Verify
-	ASSERT_NOT_EQUAL(mgf.nthMO(0) == it, false, "MGF failed to set iterator correctly when deleting MO");
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 1, "MGF failed to delete MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getOwner(), 1, "MGF did not delete the right MO");
 
 	// Setup - create another 3 MO
 	it = mgf.nthMO(0);
 	mgf._addMO(3);
+	mgf.nthMO(0)->setOwner(0);
+	mgf.nthMO(1)->setOwner(1);
+	mgf.nthMO(2)->setOwner(2);
+	mgf.nthMO(3)->setOwner(3);
 
 	// Trigger - delete first MO again
 	mgf._deleteMO(it);
 
 	// Verify
-	ASSERT_NOT_EQUAL(mgf.nthMO(0) == it, false, "MGF failed to set iterator correctly when deleting MO");
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 3, "MGF failed to delete MO");
-	ASSERT_NOT_EQUAL(mgf.nthMO(1) == it, true, "MGF failed to set iterator correctly when deleting MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getOwner(), 1, "MGF did not delete the right MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(1)->getOwner(), 2, "MGF did not delete the right MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(2)->getOwner(), 3, "MGF did not delete the right MO");
 }
 
 void Project2Test::test_MGFramework_deleteFewMO()

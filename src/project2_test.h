@@ -54,7 +54,7 @@ private:
 	// test_MGFramework_MO
 	static void test_MGFramework_createMO();
 	static void test_MGFramework_deleteMO();
-	static void test_MGFramework_deleteMOVerifyIterator();
+	static void test_MGFramework_deleteFirstMO();
 	static void test_MGFramework_deleteFewMO();
 	static void test_MGFramework_deleteAllMO();
 	static void test_MGFramework_setupMO();
@@ -127,7 +127,7 @@ public:
 		// test_MGFramework_MO
 		RUNTEST(test_MGFramework_createMO);
 		RUNTEST(test_MGFramework_deleteMO);
-		RUNTEST(test_MGFramework_deleteMOVerifyIterator);
+		RUNTEST(test_MGFramework_deleteFirstMO);
 		RUNTEST(test_MGFramework_deleteFewMO);
 		RUNTEST(test_MGFramework_deleteAllMO);
 		RUNTEST(test_MGFramework_setupMO);
