@@ -24,12 +24,13 @@ class IMGWindow
 		virtual void activateFullscreen() = 0;
 		virtual void deactivateFullscreen() = 0;
 
-		virtual void drawSprite(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height) = 0;
+		virtual void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height) = 0;
 		virtual void* loadBMPImage(std::string filename, bool transparent) = 0;
 		virtual void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB) = 0;
 		virtual void putPixelRGB(int x, int y, unsigned char r, unsigned char g, unsigned char b) = 0;
 		virtual void vLineRGB(int x, int y, int length, unsigned char r, unsigned char g, unsigned char b) = 0;
 		virtual void hLineRGB(int x, int y, int length, unsigned char r, unsigned char g, unsigned char b) = 0;
+		virtual void filledRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b) = 0;
 };
 
 #endif

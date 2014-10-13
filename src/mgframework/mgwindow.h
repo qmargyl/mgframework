@@ -43,12 +43,13 @@ class MGWindow : public IMGWindow
 		void activateFullscreen();
 		void deactivateFullscreen();
 
-		void drawSprite(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height);
+		void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		void* loadBMPImage(std::string filename, bool transparent);
 		void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);
 		void putPixelRGB(int x, int y, unsigned char r, unsigned char g, unsigned char b);
 		void vLineRGB(int x, int y, int length, unsigned char r, unsigned char g, unsigned char b);
 		void hLineRGB(int x, int y, int length, unsigned char r, unsigned char g, unsigned char b);
+		void filledRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b);
 
 };
 

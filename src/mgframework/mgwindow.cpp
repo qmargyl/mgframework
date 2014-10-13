@@ -127,7 +127,7 @@ void MGWindow::deactivateFullscreen()
 }
 
 
-void MGWindow::drawSprite(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int width, int height)
+void MGWindow::drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {
 	SDL_Rect srcRect;
 	srcRect.x = srcX;
@@ -139,7 +139,7 @@ void MGWindow::drawSprite(void* imageSurface, int srcX, int srcY, int dstX, int 
 	dstRect.y = dstY;
 	dstRect.w = width;
 	dstRect.h = height;
-	SDL_RenderCopy(m_Renderer, static_cast<SDL_Texture*>(imageSurface), &srcRect, &dstRect);
+	SDL_RenderCopy(m_Renderer, static_cast<SDL_Texture*>(imageTexture), &srcRect, &dstRect);
 }
 
 
@@ -189,17 +189,24 @@ void MGWindow::putPixelRGB(int x, int y, unsigned char r, unsigned char g, unsig
 
 void MGWindow::vLineRGB(int x, int y, int length, unsigned char r, unsigned char g, unsigned char b)
 {
-	for(int i = y; i < y + length; i++)
-	{
-		putPixelRGB(x, i, r, g, b);
-	}
+	SDL_SetRenderDrawColor(m_Renderer, r, g, b, 255);
+	SDL_RenderDrawLine(m_Renderer, x, y, x, y + length);
 }
 
 
 void MGWindow::hLineRGB(int x, int y, int length, unsigned char r, unsigned char g, unsigned char b)
 {
-	for(int i = x; i < x + length; i++)
-	{
-		putPixelRGB(i, y, r, g, b);
-	}
+	SDL_SetRenderDrawColor(m_Renderer, r, g, b, 255);
+	SDL_RenderDrawLine(m_Renderer, x, y, x + length, y);
+}
+
+void MGWindow::filledRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b)
+{
+	SDL_Rect dstRect;
+	dstRect.x = x1;
+	dstRect.y = y1;
+	dstRect.w = x2 - x1;
+	dstRect.h = y2 - y1;
+	SDL_SetRenderDrawColor(m_Renderer, r, g, b, 255);
+	SDL_RenderFillRect(m_Renderer, &dstRect);
 }
