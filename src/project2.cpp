@@ -138,16 +138,12 @@ void Project2::draw()
 		}
 
 		// Draw a frame around the edge of the map
-		getWindow()->vLineRGB(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge() - m_Map.getTopEdge(), 0x00, 0x00, 0xFF);
-		getWindow()->vLineRGB(m_Map.getWindowWidth() - m_Map.getRightEdge(), m_Map.getTopEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge() - m_Map.getTopEdge(), 0x00, 0x00, 0xFF);
-		getWindow()->hLineRGB(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge() - m_Map.getRightEdge(), 0x00, 0x00, 0xFF);
-		getWindow()->hLineRGB(m_Map.getLeftEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge() - m_Map.getRightEdge(), 0x00, 0x00, 0xFF);
-
+		getWindow()->drawRectangleRGB(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge(),  0x00, 0x00, 0xFF);
 
 		// Draw the mini map if enabled. Also draw all objects on it...
 		if(featureMiniMapEnabled())
 		{
-			getWindow()->filledRectangleRGB(getWindow()->getWidth() - m_Map.getWidth() - 16, 16, getWindow()->getWidth() - 16, m_Map.getHeight() + 16, 0x00, 0x00, 0x00);
+			getWindow()->drawFilledRectangleRGB(getWindow()->getWidth() - m_Map.getWidth() - 16, 16, getWindow()->getWidth() - 16, m_Map.getHeight() + 16, 0x00, 0x00, 0x00);
 			for(int x = 0; x < m_Map.getWidth(); x++)
 			{
 				for(int y = 0; y < m_Map.getHeight(); y++)
@@ -195,14 +191,7 @@ void Project2::draw()
 	{
 		if(isFramingOngoing())
 		{
-			int uLX = std::min(getFrameStartX(), getFrameEndX());
-			int uLY = std::min(getFrameStartY(), getFrameEndY());
-			int xL = abs(getFrameStartX() - getFrameEndX());
-			int yL = abs(getFrameStartY() - getFrameEndY());
-			getWindow()->hLineRGB(uLX, uLY, xL, 0xFF, 0x00, 0x00);
-			getWindow()->hLineRGB(uLX, uLY + yL, xL, 0xFF, 0x00, 0x00);
-			getWindow()->vLineRGB(uLX, uLY, yL, 0xFF, 0x00, 0x00);
-			getWindow()->vLineRGB(uLX + xL, uLY, yL, 0xFF, 0x00, 0x00);
+			getWindow()->drawRectangleRGB(getFrameStartX(), getFrameStartY(), getFrameEndX(), getFrameEndY(),  0xFF, 0x00, 0x00);
 		}
 	}
 

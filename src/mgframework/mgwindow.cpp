@@ -186,21 +186,18 @@ void MGWindow::putPixelRGB(int x, int y, unsigned char r, unsigned char g, unsig
 	SDL_RenderDrawPoint(m_Renderer, x, y);
 }
 
-
-void MGWindow::vLineRGB(int x, int y, int length, unsigned char r, unsigned char g, unsigned char b)
+void MGWindow::drawRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b)
 {
+	SDL_Rect dstRect;
+	dstRect.x = x1;
+	dstRect.y = y1;
+	dstRect.w = x2 - x1;
+	dstRect.h = y2 - y1;
 	SDL_SetRenderDrawColor(m_Renderer, r, g, b, 255);
-	SDL_RenderDrawLine(m_Renderer, x, y, x, y + length);
+	SDL_RenderDrawRect(m_Renderer, &dstRect);
 }
 
-
-void MGWindow::hLineRGB(int x, int y, int length, unsigned char r, unsigned char g, unsigned char b)
-{
-	SDL_SetRenderDrawColor(m_Renderer, r, g, b, 255);
-	SDL_RenderDrawLine(m_Renderer, x, y, x + length, y);
-}
-
-void MGWindow::filledRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b)
+void MGWindow::drawFilledRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b)
 {
 	SDL_Rect dstRect;
 	dstRect.x = x1;
