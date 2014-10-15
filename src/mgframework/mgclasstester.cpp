@@ -5,7 +5,7 @@
 #include <cstring>
 #include <cstdio>
 
-void MGClassTester::logEval(std::string logFileName, bool negativeTest)
+void MGClassTester::logEval(std::string logFileName)
 {
 	FILE *lf = fopen(logFileName.c_str(), "rt");
 
@@ -14,8 +14,6 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 	int nExitApp = 0;
 	int nAsserts = 0;
 	std::string execTimeMS("0");
-
-	// Error list for printing
 	std::vector<std::string> errors;
 
 	if(lf == NULL)
@@ -102,14 +100,7 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 					// Flush any errors to log before evaluating a new TC
 					for(unsigned int i = 0; i < errors.size(); ++i)
 					{
-						if(negativeTest)
-						{
-							std::cout << "<font color=purple>" << errors[i].c_str() << "</font><br>" << std::endl;
-						}
-						else
-						{
-							std::cout << "<font color=red>" << errors[i].c_str() << "</font><br>" << std::endl;
-						}
+						std::cout << "<font color=red>" << errors[i].c_str() << "</font><br>" << std::endl;
 					}
 					errors.clear();
 					
@@ -141,7 +132,7 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 			}
 		}
 
-		if(nErrors != 0 && !negativeTest)
+		if(nErrors != 0)
 		{
 			std::cout << "<b><font color=red>FAIL</font></b> (" << nErrors << " errors, " << nWarnings << " warnings)";
 		}
@@ -159,17 +150,7 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 		}
 		else
 		{
-			std::cout << "<b><font color=green>PASS</font></b>";
-			// Also handle PASS for negative tests - count errors
-			if(nWarnings > 0 || nErrors > 0)
-			{
-				std::cout << " (";
-				if(nErrors != 0 && negativeTest)
-				{
-					std::cout << nErrors << " expected errors, ";
-				}
-				std::cout << nWarnings << " warnings)";
-			}
+			std::cout << "<b><font color=green>PASS</font></b> (" << nWarnings << " warnings)";
 		}
 		std::cout << ", " << execTimeMS.c_str() << " ms<br>" << std::endl;
 
@@ -177,14 +158,7 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 		{
 			for(unsigned int i = 0; i < errors.size(); ++i)
 			{
-				if(negativeTest)
-				{
-					std::cout << "<font color=purple>" << errors[i].c_str() << "</font><br>" << std::endl;
-				}
-				else
-				{
-					std::cout << "<font color=red>" << errors[i].c_str() << "</font><br>" << std::endl;
-				}
+				std::cout << "<font color=red>" << errors[i].c_str() << "</font><br>" << std::endl;
 			}
 		}
 

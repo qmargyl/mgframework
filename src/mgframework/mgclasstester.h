@@ -41,7 +41,7 @@ public:
 	virtual void runAll() = 0;
 
 	// Log filtering/comparing/evaluation
-	static void logEval(std::string logFileName, bool negativeTest);
+	static void logEval(std::string logFileName);
 	static std::string filterLine(const char* line);
 	static void logFilter(std::string logFileName);
 	static void logCompare(std::string logFileName1, std::string logFileName2);

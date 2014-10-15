@@ -159,7 +159,7 @@ echo|set /p="Test case .\system_test\tc_014_basic_negative.mgf<br>"
 echo|set /p="{<br>Running ... "
 project2.exe -logging -no_random -script .\system_test\tc_014_basic_negative.mgf	>	.\system_test\result\tc_014_basic_negative.log
 echo|set /p="<b>DONE</b><br>"
-project2.exe -log_eval_negative .\system_test\result\tc_014_basic_negative.log -log_compare .\system_test\expected\tc_014_basic_negative.log.filtered
+project2.exe -log_eval .\system_test\result\tc_014_basic_negative.log -log_compare .\system_test\expected\tc_014_basic_negative.log.filtered
 echo|set /p="}<br>"
 echo|set /p="</td></tr></p>"
 

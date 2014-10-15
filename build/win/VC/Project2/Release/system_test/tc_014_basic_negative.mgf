@@ -10,6 +10,7 @@ call main_tc
 
 function main_tc
   print "Test case 1"
+  print "[EE]parse found unexpected end of file"
   call test_nonexisting_function_1
 
   print "Test case 2"
@@ -48,6 +49,7 @@ function test_expect_mo_1
   print "******************************************************"
   delete all mo
   add mo 1
+  print "[EE]detectComponentConsoleCommand did not find the expected value (0 != 1)"
   expect getnumberofmo 0
   delete all mo
 end
@@ -59,6 +61,7 @@ function test_expect_so_1
   print "******************************************************"
   delete all so
   add so 1
+  print "[EE]detectComponentConsoleCommand did not find the expected value (0 != 1)"
   expect getnumberofso 0
   delete all so
 end
@@ -70,6 +73,7 @@ function test_expect_pe_1
   print "******************************************************"
   delete all pe
   add pe 1
+  print "[EE]detectComponentConsoleCommand did not find the expected value (0 != 1)"
   expect getnumberofpe 0
   delete all pe
 end
@@ -79,6 +83,7 @@ function test_script_syntax_1
   print "******************************************************"
   print "Unexpected end of function"
   print "******************************************************"
+  print "[EE]parse found unexpected 'end'"
   var1 = 4
   if var1 == 4
   // Unexpected end of function
@@ -89,6 +94,7 @@ function test_script_syntax_2
   print "******************************************************"
   print "Unexpected endif"
   print "******************************************************"
+  print "[EE]Unexpected 'endif'"
   var1 = 4
   // Unexpected endif
   endif
@@ -99,6 +105,7 @@ function test_script_syntax_3
   print "******************************************************"
   print "Assignment operator in if construction"
   print "******************************************************"
+  print "[EE]Unsupported operator"
   var1 = 1
   if var1 = 4
     var1 = 5

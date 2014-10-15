@@ -17,7 +17,6 @@ int main(int argc, char **argv)
 
 	eMGFInstanceType instanceType = MGFSINGLEPLAYERINSTANCE;
 	bool loggingOn = false;
-	bool logEvalNegative = false;
 	bool noRandom = false;
 	bool classTest = false;
 	std::string scriptFileName;
@@ -61,19 +60,6 @@ int main(int argc, char **argv)
 				else
 				{
 					logEvalFileName = std::string(argv[++i]);
-					instanceType = MGFSERVERINSTANCE;
-				}
-			}
-			else if(std::string(argv[i]) == std::string("-log_eval_negative"))
-			{
-				if(i + 1 == argc)
-				{
-					goto EXIT_MAIN_RIGHT_AWAY;
-				}
-				else
-				{
-					logEvalFileName = std::string(argv[++i]);
-					logEvalNegative = true;
 					instanceType = MGFSERVERINSTANCE;
 				}
 			}
@@ -158,9 +144,9 @@ int main(int argc, char **argv)
 	if(logEvalFileName != std::string(""))
 	{
 		// In case of using the framework for log evaluation, don't init and run.
-		// Create filtered logs first, then run evaluation..
+		// Create filtered logs first, then run evaluate..
 		MGClassTester::logFilter(logEvalFileName.c_str());
-		MGClassTester::logEval(logEvalFileName.c_str(), logEvalNegative);
+		MGClassTester::logEval(logEvalFileName.c_str());
 		if(logCompareFileName != std::string(""))
 		{
 			// Compares logEvalFileName.filtered to logCompareFileName 

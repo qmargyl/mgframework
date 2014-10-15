@@ -1,31 +1,38 @@
 Test case 1
+[EE]parse found unexpected end of file
 Calling a non-existing function
 [X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::parse found unexpected end of file
 Test case 2
 ******************************************************
 Expecting wrong number of MO
 ******************************************************
+[EE]detectComponentConsoleCommand did not find the expected value (0 != 1)
 [X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (0 != 1)
 ******************************************************
 Expecting wrong number of SO
 ******************************************************
+[EE]detectComponentConsoleCommand did not find the expected value (0 != 1)
 [X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (0 != 1)
 ******************************************************
 Expecting wrong number of PE
 ******************************************************
+[EE]detectComponentConsoleCommand did not find the expected value (0 != 1)
 [X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::detectComponentConsoleCommand did not find the expected value (0 != 1)
 Test case 3
 ******************************************************
 Unexpected end of function
 ******************************************************
+[EE]parse found unexpected 'end'
 [X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: MGFramework::parse found unexpected 'end'
 ******************************************************
 Unexpected endif
 ******************************************************
+[EE]Unexpected 'endif'
 [X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: Unexpected 'endif'
 ******************************************************
 Assignment operator in if construction
 ******************************************************
+[EE]Unsupported operator
 [X] ..\..\..\..\src\mgframework\mgframework.cpp:X (ID:X) ERROR: Unsupported operator
 Exiting application...
 Execution time: X
