@@ -30,6 +30,7 @@ class IMGWindow
 		virtual void putPixelRGB(int x, int y, unsigned char r, unsigned char g, unsigned char b) = 0;
 		virtual void drawRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b) = 0;
 		virtual void drawFilledRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b) = 0;
+		virtual void drawFilledRectangleRGBA(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b, unsigned char a) = 0;
 };
 
 #endif

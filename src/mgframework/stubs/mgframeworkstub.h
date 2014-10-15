@@ -33,6 +33,13 @@ class MGFrameworkStub : public MGFramework
 		unsigned int _getNumberOfMarkedMO(){ return getNumberOfMarkedMO(); }
 		void _countMark(){ countMark(); }
 		void _countUnMark(){ countUnMark(); }
+		int _getFrameStartX(){ return getFrameStartX(); }
+		int _getFrameStartY(){ return getFrameStartY(); }
+		int _getFrameEndX(){ return getFrameEndX(); }
+		int _getFrameEndY(){ return getFrameEndY(); }
+		void _activateFraming(int x, int y){ activateFraming(x, y); }
+		void _deactivateFraming(){ deactivateFraming(); }
+		void _updateFraming(int x, int y){ updateFraming(x, y); }
 
 		// Helper functions
 		std::list<MGMovingObject>::iterator nthMO(unsigned int i)

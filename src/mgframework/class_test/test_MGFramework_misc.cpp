@@ -91,6 +91,7 @@ void Project2Test::test_MGFramework_toIntFromSymbol()
 	ASSERT_NOT_EQUAL(mgf.toInt(std::string("This is a valid symbol name in MGSymbolTable"), &symbols), 666, "Integer symbol not converted properly");
 
 	// Also test a non-existing symbol
+	EXPECT_ERROR("MGFramework::toInt failed to convert string to integer: this symbol does not exist");
 	ASSERT_NOT_EQUAL(mgf.toInt(std::string("this symbol does not exist"), &symbols), 0, "Non-existing integer symbol not converted properly");
 }
 
@@ -119,6 +120,7 @@ void Project2Test::test_MGFramework_toBoolFromConstant()
 	ASSERT_NOT_EQUAL(mgf.toBool(std::string("getnumberofmo"), NULL), false, "Bool macro not converted properly");
 
 	// Also test a non-existing constant
+	EXPECT_ERROR("MGFramework::toInt failed to convert string to integer: this symbol does not exist");
 	ASSERT_NOT_EQUAL(mgf.toBool(std::string("this symbol does not exist"), NULL), false, "Bool constant not converted properly");
 }
 
@@ -144,6 +146,7 @@ void Project2Test::test_MGFramework_toBoolFromSymbol()
 	ASSERT_NOT_EQUAL(mgf.toBool(std::string("-5"), &symbols), true, "Integer constant did not have presidence over symbol");
 
 	// Also test a non-existing symbol
+	EXPECT_ERROR("MGFramework::toInt failed to convert string to integer: b0");
 	ASSERT_NOT_EQUAL(mgf.toInt(std::string("b0"), &symbols), false, "Non-existing integer symbol not converted to bool properly");
 }
 
@@ -229,8 +232,30 @@ void Project2Test::test_MGFramework_countMark()
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMarkedMO(), 0, "Marked MO not counted correctly");
 	
 	// Also test to count below zero MO, resulting in an error trace
+	EXPECT_ERROR("MGFramework::countUnMark decreased number of marked MO below zero");
 	mgf._countUnMark();
 	
 	// Verify
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMarkedMO(), 0, "Marked MO not counted correctly");
+}
+
+void Project2Test::test_MGFramework_updateFramingBasicCase()
+{
+	// Setup
+	MGFrameworkStub mgf;
+
+	// Trigger
+	mgf._activateFraming(17, 19);
+	mgf._updateFraming(96, 32);
+	mgf._updateFraming(70, 12);
+	mgf._updateFraming(64, 90);
+	mgf._updateFraming(13, 43);
+	mgf._updateFraming(99, 71);
+	mgf._deactivateFraming();
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf._getFrameStartX(), 17, "Incorrect frame start x");
+	ASSERT_NOT_EQUAL(mgf._getFrameStartY(), 19, "Incorrect frame start y");
+	ASSERT_NOT_EQUAL(mgf._getFrameEndX(), 99, "Incorrect frame end x");
+	ASSERT_NOT_EQUAL(mgf._getFrameEndY(), 71, "Incorrect frame end y");
 }

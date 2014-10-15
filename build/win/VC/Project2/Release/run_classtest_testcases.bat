@@ -24,6 +24,6 @@ echo|set /p="Test suite: All test cases<br>"
 echo|set /p="{<br>Running ... "
 project2.exe -logging -classtest all	>	.\class_test\result\tc_101_all_testcases.log
 echo|set /p="<b>DONE</b><br>"
-project2.exe -log_eval_negative .\class_test\result\tc_101_all_testcases.log
+project2.exe -log_eval .\class_test\result\tc_101_all_testcases.log
 echo|set /p="}<br>"
 echo|set /p="</td></tr></p>"

@@ -50,6 +50,7 @@ private:
 	static void test_MGFramework_setPort();
 	static void test_MGFramework_enableFeatureMiniMap();
 	static void test_MGFramework_countMark();
+	static void test_MGFramework_updateFramingBasicCase();
 
 	// test_MGFramework_MO
 	static void test_MGFramework_createMO();
@@ -123,6 +124,7 @@ public:
 		RUNTEST(test_MGFramework_setPort);
 		RUNTEST(test_MGFramework_enableFeatureMiniMap);
 		RUNTEST(test_MGFramework_countMark);
+		RUNTEST(test_MGFramework_updateFramingBasicCase);
 
 		// test_MGFramework_MO
 		RUNTEST(test_MGFramework_createMO);

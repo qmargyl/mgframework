@@ -143,7 +143,7 @@ void Project2::draw()
 		// Draw the mini map if enabled. Also draw all objects on it...
 		if(featureMiniMapEnabled())
 		{
-			getWindow()->drawFilledRectangleRGB(getWindow()->getWidth() - m_Map.getWidth() - 16, 16, getWindow()->getWidth() - 16, m_Map.getHeight() + 16, 0x00, 0x00, 0x00);
+			getWindow()->drawFilledRectangleRGBA(getWindow()->getWidth() - m_Map.getWidth() - 16, 16, getWindow()->getWidth() - 16, m_Map.getHeight() + 16, 0x00, 0x00, 0x00, 60);
 			for(int x = 0; x < m_Map.getWidth(); x++)
 			{
 				for(int y = 0; y < m_Map.getHeight(); y++)

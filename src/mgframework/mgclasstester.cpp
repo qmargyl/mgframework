@@ -69,6 +69,8 @@ void MGClassTester::logEval(std::string logFileName, bool negativeTest)
 						if(line.find(expectedError) != std::string::npos)
 						{
 							// The expected error string was found in the actual error string
+							// Undo counting the error
+							nErrors--;
 							std::cout << "<font color=green>" << line << "</font><br>" << std::endl;
 						}
 						else

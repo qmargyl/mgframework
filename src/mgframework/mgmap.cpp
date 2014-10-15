@@ -127,7 +127,7 @@ bool MGMap::mouseScrollingUpdate(int x, int y)
 		{
 			setY = getTopEdge();
 		}
-		if(setY < getWindowHeight() - getHeight() * getTileHeight() - getBottomEdge())
+		else if(setY < getWindowHeight() - getHeight() * getTileHeight() - getBottomEdge())
 		{
 			setY = getWindowHeight() - getHeight() * getTileHeight() - getBottomEdge();
 		}
@@ -136,7 +136,7 @@ bool MGMap::mouseScrollingUpdate(int x, int y)
 		{
 			setX = getLeftEdge();
 		}
-		if(setX < getWindowWidth() - getWidth() * getTileWidth() - getRightEdge())
+		else if(setX < getWindowWidth() - getWidth() * getTileWidth() - getRightEdge())
 		{
 			setX = getWindowWidth() - getWidth() * getTileWidth() - getRightEdge();
 		}

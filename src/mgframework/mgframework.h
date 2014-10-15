@@ -249,21 +249,26 @@ class MGFramework :public MGComponent
 		void closeSocketTerminal(){m_KeepSocketTerminalOpen = false; }
 
 		// Frame selection related (click drag and release)
-		inline void setFrameStartX(int x){ m_XFrameStart=x; }
-		inline void setFrameStartY(int y){ m_YFrameStart=y; }
-		inline void setFrameEndX(int x){ m_XFrameEnd=x; }
-		inline void setFrameEndY(int y){ m_YFrameEnd=y; }
+		inline bool isFramingOngoing(){ return m_FramingOngoing; }
+		inline int getFrameStartX(){ return m_XFrameStart; }
+		inline int getFrameStartY(){ return m_YFrameStart; }
+		inline int getFrameEndX(){ return m_XFrameEnd; }
+		inline int getFrameEndY(){ return m_YFrameEnd; }
+		inline void setFrameStartX(int x){ m_XFrameStart = x; }
+		inline void setFrameStartY(int y){ m_YFrameStart = y; }
+		inline void setFrameEndX(int x){ m_XFrameEnd = x; }
+		inline void setFrameEndY(int y){ m_YFrameEnd = y; }
 
-		inline void activateFraming(int x, int y)
+		void activateFraming(int x, int y)
 		{
 			setFrameStartX(x); 
 			setFrameStartY(y); 
 			setFrameEndX(x); 
 			setFrameEndY(y); 
-			m_FramingOngoing=true;
+			m_FramingOngoing = true;
 		}
 
-		inline void deactivateFraming()
+		void deactivateFraming()
 		{ 
 			m_FramingOngoing = false;
 			setRenderAllTiles();
@@ -315,13 +320,6 @@ class MGFramework :public MGComponent
 		// Force a derived sub-class to implement this as it is not framework related.
 		virtual void draw() = 0;
 		virtual void handleGameLogics() = 0;
-
-		// Frame selection related (click drag and release)
-		inline bool isFramingOngoing(){ return m_FramingOngoing; }
-		inline int getFrameStartX(){ return m_XFrameStart; }
-		inline int getFrameStartY(){ return m_YFrameStart; }
-		inline int getFrameEndX(){ return m_XFrameEnd; }
-		inline int getFrameEndY(){ return m_YFrameEnd; }
 
 // ***	// Feature Selective MO slection
 		inline void enableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = true; }

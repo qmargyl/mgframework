@@ -207,3 +207,14 @@ void MGWindow::drawFilledRectangleRGB(int x1, int y1, int x2, int y2, unsigned c
 	SDL_SetRenderDrawColor(m_Renderer, r, g, b, 255);
 	SDL_RenderFillRect(m_Renderer, &dstRect);
 }
+
+void MGWindow::drawFilledRectangleRGBA(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+	SDL_Rect dstRect;
+	dstRect.x = x1;
+	dstRect.y = y1;
+	dstRect.w = x2 - x1;
+	dstRect.h = y2 - y1;
+	SDL_SetRenderDrawColor(m_Renderer, r, g, b, a);
+	SDL_RenderFillRect(m_Renderer, &dstRect);
+}

@@ -128,12 +128,12 @@ bool MGFramework::processEvents()
 			{
 				// Calculate index, x and y for the tile that was clicked in the map.
 				int iClick = m_Map.getTileIndex(event.button.x, event.button.y);
-				if (iClick >= 0)
+				if(iClick >= 0)
 				{
 					int xClick = m_Map.getTileX(iClick);
 					int yClick = m_Map.getTileY(iClick);
 					
-					if (((int) event.button.button) == 1)
+					if(((int) event.button.button) == 1)
 					{
 
 						// Unmark all MO..
@@ -149,7 +149,7 @@ bool MGFramework::processEvents()
 						activateFraming(event.button.x, event.button.y);
 						MGFLOG_INFO("Map (left click): index = " << iClick << ", x = " << xClick << ", y = " << yClick)
 					}
-					else if (((int) event.button.button) == 3)
+					else if(((int) event.button.button) == 3)
 					{
 						// Right button
 						MGFLOG_INFO("Map (right click): index = " << iClick << ", x = " << xClick << ", y = " << yClick)
@@ -191,15 +191,15 @@ bool MGFramework::processEvents()
 			case SDL_MOUSEBUTTONUP:
 			{
 				MGFLOG_INFO("SDL_MOUSEBUTTONUP: Button " << (int) event.button.button << " at (" << event.button.x << "," << event.button.y << ")")
-				if (((int) event.button.button) == 1)
+				if(((int) event.button.button) == 1)
 				{
 					int endClickX = m_Map.getTileX(m_Map.getTileIndex(getFrameEndX(), getFrameEndY()));
 					int endClickY = m_Map.getTileY(m_Map.getTileIndex(getFrameEndX(), getFrameEndY()));
 					int startClickX = m_Map.getTileX(m_Map.getTileIndex(getFrameStartX(), getFrameStartY()));
 					int startClickY = m_Map.getTileY(m_Map.getTileIndex(getFrameStartX(), getFrameStartY()));
-					for(int x=std::min(startClickX, endClickX); x<=std::max(startClickX, endClickX); x++)
+					for(int x = std::min(startClickX, endClickX); x <= std::max(startClickX, endClickX); x++)
 					{
-						for(int y=std::min(startClickY, endClickY); y<=std::max(startClickY, endClickY); y++)
+						for(int y = std::min(startClickY, endClickY); y <= std::max(startClickY, endClickY); y++)
 						{
 							for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 							{
@@ -227,7 +227,7 @@ bool MGFramework::processEvents()
 					}
 					deactivateFraming();
 				}
-				else if (((int) event.button.button) == 3)
+				else if(((int) event.button.button) == 3)
 				{
 					// Order marked MOs to go to mouse location
 					if(getNumberOfMarkedMO() > 0)
