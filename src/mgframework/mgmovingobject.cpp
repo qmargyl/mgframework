@@ -126,10 +126,12 @@ void MGMovingObject::setDestTileXY(int x, int y)
 void MGMovingObject::setPath(std::list<MGPathItem> p)
 {
 	m_Path = p;
+	/*
 	if(!m_Path.empty())
 	{
 		setDestTileXY(m_Path.front().getX(), m_Path.front().getY());
 	}
+	*/
 }
 
 
@@ -269,6 +271,14 @@ void MGMovingObject::update(MGFramework *w)
 			if((dx != 0 && dy != 0) || (dy != 0 && m_X == 0) || (dx != 0 && m_Y == 0))
 			{
 				setTileXY(getTileX() + dx, getTileY() + dy, w);
+			}
+			else if(dx != 0)
+			{
+				m_X = dx * getTileSize();
+			}
+			else if(dy != 0)
+			{
+				m_Y = dy * getTileSize();
 			}
 			setTimeOfLastUpdate(MGF_GetExecTimeMS());
 		}
