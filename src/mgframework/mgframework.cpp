@@ -1,5 +1,6 @@
 #include "mgframework.h"
 #include <iostream>
+#include <fstream>
 #include <algorithm> 
 #include <cmath>
 #include <sstream>
@@ -826,6 +827,12 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			return true;
 		}
 
+		case MGComponent_DUMP:
+		{
+			dump();
+			return true;
+		}
+
 		case MGComponent_MAP_X:
 		{
 			return m_Map.runConsoleCommand(c, this, s);
@@ -1491,6 +1498,10 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		else if(cmdvec[0] == "runoneframe")
 		{
 			return MGComponent_RUNONEFRAME;
+		}
+		else if(cmdvec[0] == "dump")
+		{
+			return MGComponent_DUMP;
 		}
 		else
 		{
@@ -2225,6 +2236,30 @@ void MGFramework::countUnMark()
 	{
 		MGFLOG_ERROR("MGFramework::countUnMark decreased number of marked MO below zero");
 	}
+}
+
+void MGFramework::dump()
+{
+	std::string fileName = "dump_" + toString(MGF_GetExecTimeMS()) + ".html";
+	std::ofstream outFile;
+	outFile.open(fileName.c_str(), std::ios_base::out);
+
+	outFile << "<html><head><link rel=stylesheet href=mgf.css type=text/css><title>MG Framework dump</title></head><body>" << std::endl;
+	outFile << "<h2>List of currently existing Moving Objects</h2>" << std::endl;
+	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
+	{
+		outFile << "<p>";
+		outFile << "[MO] ";
+		outFile << "ID: " << it->getID();
+		outFile << ", State: " << it->toString();
+		outFile << ", TileX: " << it->getTileX();
+		outFile << ", TileY: " << it->getTileY();
+		outFile << ", Xoff: " << it->getXOffset();
+		outFile << ", Yoff: " << it->getYOffset();
+		outFile << "</p>" << std::endl;
+	}
+
+	outFile << "</body></html>" << std::endl;
 }
 
 int runMGFrameworkSocketTerminal(void *fm)

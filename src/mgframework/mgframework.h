@@ -48,6 +48,7 @@ enum eMGComponentConsoleCommand : unsigned int
 	MGComponent_RUNONEFRAME,
 	MGComponent_OPEN_TERMINALSERVER,
 	MGComponent_CLOSE_TERMINALSERVER,
+	MGComponent_DUMP,
 
 	// Settings
 	MGComponent_SETFPS_INT,
@@ -352,6 +353,9 @@ class MGFramework :public MGComponent
 		// Instance related
 		void setClientPlayer(int id){ m_PlayerNumber = id; }
 		int getClientPlayer(){ return m_PlayerNumber; }
+
+		// Dumping information to file for debugging purposes
+		void dump();
 
 	public:
 		MGFramework();

@@ -60,6 +60,7 @@ public:
 	~MGMovingObject();
 
 	void initialize();
+	std::string toString(){ return std::string(toString(getCurrentState())); }
 
 	void setTileXY(int x, int y, MGFramework *world);
 	void setNextXY(int x, int y, MGFramework *world);

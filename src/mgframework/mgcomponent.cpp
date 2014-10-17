@@ -51,6 +51,13 @@ std::string MGComponent::toString(int number)
 	return ss.str();
 }
 
+std::string MGComponent::toString(unsigned int number)
+{
+	std::stringstream ss;
+	ss << number;
+	return ss.str();
+}
+
 std::vector<std::string> MGComponent::split(char *str, const char *c)
 {
 	// XXX: Add support for new data type, string
