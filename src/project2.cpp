@@ -138,7 +138,7 @@ void Project2::draw()
 		}
 
 		// Draw a frame around the edge of the map
-		getWindow()->drawRectangleRGB(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge(),  0x00, 0x00, 0xFF);
+		getWindow()->drawRectangleRGB(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge() - m_Map.getRightEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge() - m_Map.getTopEdge(),  0x00, 0x00, 0xFF);
 
 		// Draw the mini map if enabled. Also draw all objects on it...
 		if(featureMiniMapEnabled())

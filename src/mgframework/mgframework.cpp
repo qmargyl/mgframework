@@ -147,7 +147,9 @@ bool MGFramework::processEvents()
 						}
 
 						activateFraming(event.button.x, event.button.y);
-						MGFLOG_INFO("Map (left click): index = " << iClick << ", x = " << xClick << ", y = " << yClick)
+						MGFLOG_INFO("\nFraming activated: index = " 
+							<< iClick << ", x = " << xClick << ", y = " << yClick
+							<< ", FrameStartX = " << getFrameStartX() << ", FrameStartY = " << getFrameStartY())
 					}
 					else if(((int) event.button.button) == 3)
 					{
@@ -197,34 +199,43 @@ bool MGFramework::processEvents()
 					int endClickY = m_Map.getTileY(m_Map.getTileIndex(getFrameEndX(), getFrameEndY()));
 					int startClickX = m_Map.getTileX(m_Map.getTileIndex(getFrameStartX(), getFrameStartY()));
 					int startClickY = m_Map.getTileY(m_Map.getTileIndex(getFrameStartX(), getFrameStartY()));
-					for(int x = std::min(startClickX, endClickX); x <= std::max(startClickX, endClickX); x++)
+					// TODO: When implementing support for too large frames, this has to be changed as it aborts on negative indexes now.
+					if(endClickX > 0 && endClickY > 0 && startClickX > 0 && startClickY > 0)
 					{
-						for(int y = std::min(startClickY, endClickY); y <= std::max(startClickY, endClickY); y++)
+						for(int x = std::min(startClickX, endClickX); x <= std::max(startClickX, endClickX); x++)
 						{
-							for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
+							for(int y = std::min(startClickY, endClickY); y <= std::max(startClickY, endClickY); y++)
 							{
-								if(it->getTileX() == x && it->getTileY() == y)
+								for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 								{
-									if(!it->isMarked())
+									if(it->getTileX() == x && it->getTileY() == y)
 									{
-										if(featureOnlySelectOwnedMOEnabled())
+										if(!it->isMarked())
 										{
-											if(it->getOwner() == getClientPlayer())
+											if(featureOnlySelectOwnedMOEnabled())
+											{
+												if(it->getOwner() == getClientPlayer())
+												{
+													it->mark();
+													countMark();
+												}
+											}
+											else
 											{
 												it->mark();
 												countMark();
 											}
-										}
-										else
-										{
-											it->mark();
-											countMark();
 										}
 									}
 								}
 							}
 						}
 					}
+					MGFLOG_INFO("\nFraming will be deactivated: " 
+						<< "fx1 = " << startClickX << ", fy1 = " << startClickY
+						<< ", fx2 = " << endClickX << ", fy2 = " << endClickY
+						<< ", FrameStartX = " << getFrameStartX() << ", FrameStartY = " << getFrameStartY()
+						<< ", FrameEndX = " << getFrameEndX() << ", FrameEndY = " << getFrameEndY())
 					deactivateFraming();
 				}
 				else if(((int) event.button.button) == 3)
