@@ -210,113 +210,66 @@ void MGMovingObject::update(MGFramework *w)
 				changeState(MOStateMoving);
 			}
 
-			if(getDestTileX() > getTileX() && getDestTileY() > getTileY())
+			int dx = 0;
+			int dy = 0;
+
+			if(getDestTileX() > getTileX())
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() + 1, getTileY() + 1), 0, getID()))
-				{
-					setNextXY(getTileX() + 1, getTileY() + 1, w);
-					m_X += d;
-					m_Y += d;
-				}
-			}
-			else if(getDestTileX() < getTileX() && getDestTileY() < getTileY())
-			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() - 1, getTileY() - 1), 0, getID()))
-				{
-					setNextXY(getTileX() - 1, getTileY() - 1, w);
-					m_X -= d;
-					m_Y -= d;
-				}
-			}
-			else if(getDestTileX() > getTileX() && getDestTileY() < getTileY())
-			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() + 1, getTileY() - 1), 0, getID()))
-				{
-					setNextXY(getTileX() + 1, getTileY() - 1, w);
-					m_X += d;
-					m_Y -= d;
-				}
-			}
-			else if(getDestTileX() < getTileX() && getDestTileY() > getTileY())
-			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() - 1, getTileY() + 1), 0, getID()))
-				{
-					setNextXY(getTileX() - 1, getTileY() + 1, w);
-					m_X -= d;
-					m_Y += d;
-				}
-			}
-			else if(getDestTileX() > getTileX())
-			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() + 1, getTileY()), 0, getID()))
-				{
-					setNextXY(getTileX() + 1, getTileY(), w);
-					m_X += d * 1.414;
-				}
+				dx = 1;
 			}
 			else if(getDestTileX() < getTileX())
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() - 1, getTileY()), 0, getID()))
-				{
-					setNextXY(getTileX() - 1, getTileY(), w);
-					m_X -= d * 1.414;
-				}
+				dx = -1;
 			}
-			else if(getDestTileY() > getTileY())
+			if(getDestTileY() > getTileY())
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX(), getTileY() + 1), 0, getID()))
-				{
-					setNextXY(getTileX(), getTileY() + 1, w);
-					m_Y += d * 1.414;
-				}
+				dy = 1;
 			}
 			else if(getDestTileY() < getTileY())
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX(), getTileY() - 1), 0, getID()))
+				dy = -1;
+			}
+			if(dx != 0 || dy != 0)
+			{
+				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() + dx, getTileY() + dy), 0, getID()))
 				{
-					setNextXY(getTileX(), getTileY() - 1, w);
-					m_Y -= d * 1.414;
+					setNextXY(getTileX() + dx, getTileY() + dy, w);
+					if(dx != 0 && dy != 0)
+					{
+						m_X += (d * (double)dx);
+						m_Y += (d * (double)dy);
+					}
+					else
+					{
+						m_X += (1.414 * d * (double)dx);
+						m_Y += (1.414 * d * (double)dy);
+					}
 				}
 			}
-			else
-			{
-				MGFLOG_ERROR("MGMovingObject::update executed a case which should never happen");
-				setTileXY(getTileX(), getTileY(), w);
-			}
 
-			if(m_X >= getTileSize() && m_Y >= getTileSize())
-			{
-				setTileXY(getTileX() + 1, getTileY() + 1, w);
-			}
-			else if(m_X >= getTileSize() && m_Y == 0)
-			{
-				setTileXY(getTileX() + 1, getTileY(), w);
-			}
-			else if(-m_X >= getTileSize() && -m_Y >= getTileSize())
-			{
-				setTileXY(getTileX() - 1, getTileY() - 1, w);
-			}
-			else if(-m_X >= getTileSize() && m_Y == 0)
-			{
-				setTileXY(getTileX() - 1, getTileY(), w);
-			}
-			else if(m_X >= getTileSize() && -m_Y >= getTileSize())
-			{
-				setTileXY(getTileX() + 1, getTileY() - 1, w);
-			}
-			else if(m_Y >= getTileSize() && m_X == 0)
-			{
-				setTileXY(getTileX(), getTileY() + 1, w);
-			}
-			else if(-m_X >= getTileSize() && m_Y >= getTileSize())
-			{
-				setTileXY(getTileX() - 1, getTileY() + 1, w);
-			}
-			else if(-m_Y >= getTileSize() && m_X == 0)
-			{
-				setTileXY(getTileX(), getTileY() - 1, w);
-			}
+			dx = 0;
+			dy = 0;
 
+			if(m_X >= getTileSize())
+			{
+				dx = 1;
+			}
+			else if(-m_X >= getTileSize())
+			{
+				dx = -1;
+			}
+			if(m_Y >= getTileSize())
+			{
+				dy = 1;
+			}
+			else if(-m_Y >= getTileSize())
+			{
+				dy = -1;
+			}
+			if((dx != 0 && dy != 0) || (dy != 0 && m_X == 0) || (dx != 0 && m_Y == 0))
+			{
+				setTileXY(getTileX() + dx, getTileY() + dy, w);
+			}
 			setTimeOfLastUpdate(MGF_GetExecTimeMS());
 		}
 		else if(!isStuck())
