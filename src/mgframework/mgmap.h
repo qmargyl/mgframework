@@ -50,12 +50,9 @@ private:
 	// Rendering optimizations
 	bool *m_MarkedForRendering;
 
-
-
 public:
 	MGMap();
 	~MGMap();
-
 
 	int getWidth(){ return m_Width; }
 	int getHeight(){ return m_Height; }
@@ -105,7 +102,6 @@ public:
 		}
 		return 0;
 	}
-
 
 	int getTileIndex(int clickX, int clickY);
 	int getTileX(int index){ return index % getWidth(); }

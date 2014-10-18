@@ -1828,7 +1828,6 @@ bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, 
 		deleteMO(it);
 		return false;
 	}
-
 	return true;
 }
 
@@ -2043,14 +2042,6 @@ int MGFramework::toInt(const std::string &s, MGSymbolTable *sym)
 		{
 			return m_CommandReturnVal;
 		}
-		else if(s == std::string("on"))
-		{
-			return MGF_TRUE;
-		}
-		else if(s == std::string("off"))
-		{
-			return MGF_FALSE;
-		}
 		else if(s == std::string("random_mo"))
 		{
 			if(getNumberOfMO() == 0)
@@ -2245,10 +2236,10 @@ void MGFramework::dump()
 	outFile.open(fileName.c_str(), std::ios_base::out);
 
 	outFile << "<html><head><link rel=stylesheet href=mgf.css type=text/css><title>MG Framework dump</title></head><body>" << std::endl;
-	outFile << "<h2>List of currently existing Moving Objects</h2>" << std::endl;
+	outFile << "<h3>List of currently existing Moving Objects</h3>" << std::endl;
+	outFile << "<p>";
 	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 	{
-		outFile << "<p>";
 		outFile << "[MO] ";
 		outFile << "ID: " << it->getID();
 		outFile << ", State: " << it->toString();
@@ -2256,9 +2247,9 @@ void MGFramework::dump()
 		outFile << ", TileY: " << it->getTileY();
 		outFile << ", Xoff: " << it->getXOffset();
 		outFile << ", Yoff: " << it->getYOffset();
-		outFile << "</p>" << std::endl;
+		outFile << "<br>" << std::endl;
 	}
-
+	outFile << "</p>" << std::endl;
 	outFile << "</body></html>" << std::endl;
 }
 

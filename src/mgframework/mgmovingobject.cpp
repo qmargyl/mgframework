@@ -440,8 +440,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 
 		case MGComponent_MO_INT_HISTORY_BOOL:
 		{
-			int inputOn = w->toInt(cmdvec[3], s);
-			if(inputOn == MGF_TRUE)
+			bool inputOn = w->toBool(cmdvec[3], s);
+			if(inputOn)
 			{
 				enableHistory();
 			}

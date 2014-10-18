@@ -12,9 +12,6 @@
 #define MGF_DISABLE_WINSOCK
 
 // Macros...
-// TODO: Remove MGF_TRUE and MGF_FALSE
-#define MGF_TRUE 1
-#define MGF_FALSE 0
 
 // These can be set to disable warning, info and error traces on a global level 
 //#define MGFLOG_WARNING(x)
