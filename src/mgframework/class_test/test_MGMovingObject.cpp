@@ -107,8 +107,8 @@ void Project2Test::test_MGMovingObject_setBasicPathStartMoving()
 	ASSERT_NOT_EQUAL(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_NOT_EQUAL(m.getTileX(), 3, "MO in wrong location");
 	ASSERT_NOT_EQUAL(m.getTileY(), 3, "MO in wrong location");
-	ASSERT_NOT_EQUAL(m.getDestTileX(), 3, "MO with wrong destination");
-	ASSERT_NOT_EQUAL(m.getDestTileY(), 3, "MO with wrong destination");
+	ASSERT_NOT_EQUAL(m.getDestTileX(), 0, "MO with wrong destination");
+	ASSERT_NOT_EQUAL(m.getDestTileY(), 0, "MO with wrong destination");
 	ASSERT_NOT_EQUAL(m.getXOffset(), 0, "MO in wrong location");
 	ASSERT_NOT_EQUAL(m.getYOffset(), 0, "MO in wrong location");
 
@@ -178,8 +178,8 @@ void Project2Test::test_MGMovingObject_setAStarPathStartMoving()
 	ASSERT_NOT_EQUAL(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_NOT_EQUAL(m.getTileX(), 3, "MO in wrong location");
 	ASSERT_NOT_EQUAL(m.getTileY(), 3, "MO in wrong location");
-	ASSERT_NOT_EQUAL(m.getDestTileX(), 3, "MO with wrong destination");
-	ASSERT_NOT_EQUAL(m.getDestTileY(), 3, "MO with wrong destination");
+	ASSERT_NOT_EQUAL(m.getDestTileX(), 0, "MO with wrong destination");
+	ASSERT_NOT_EQUAL(m.getDestTileY(), 0, "MO with wrong destination");
 	ASSERT_NOT_EQUAL(m.getXOffset(), 0, "MO in wrong location");
 	ASSERT_NOT_EQUAL(m.getYOffset(), 0, "MO in wrong location");
 

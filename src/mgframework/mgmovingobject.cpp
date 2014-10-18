@@ -184,15 +184,12 @@ void MGMovingObject::update(MGFramework *w)
 			}
 			else if(isStuck() && timeSinceLastUpdate > 10000)
 			{
-				setPath(w->m_Map.calculatePath(m_PathFindingAlgorithm, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
-				setTimeOfLastUpdate(MGF_GetExecTimeMS());
 				addToHistory("Stuck for too long");
 				MGFLOG_WARNING("MGMovingObject::update: MO stuck for too long");
 				changeState(MOStateIdle);
 				m_Path.clear();
 				return;
 			}
-
 		}
 		else
 		{
