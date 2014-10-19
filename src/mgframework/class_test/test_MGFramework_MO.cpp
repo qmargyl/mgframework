@@ -379,3 +379,51 @@ void Project2Test::test_MGFramework_markMOIndexInSymbolTable()
 	// Verify
 	ASSERT_NOT_EQUAL(mgf._getNumberOfMarkedMO(), 1, "MGF failed to mark MO");
 }
+
+void Project2Test::test_MGFramework_createMOAtLocation()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	mgf.init(16, 16, 32, 32);
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(10, 11), 0, "Target tile already occupied");
+
+	// Trigger
+	mgf.runConsoleCommand("add mo 1 -x 10 -y 11", &mgf, NULL);
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf._getNumberOfMO(), 1, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 1, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getTileX(), 10, "MGF failed to create MO at location");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getTileY(), 11, "MGF failed to create MO at location");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(10, 11), mgf.nthMO(0)->getID(), "MGF failed to occupy tile");
+}
+
+void Project2Test::test_MGFramework_oneMOTakesAStep()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	mgf.init(16, 16, 32, 32);
+	mgf.runConsoleCommand("add mo 1 -x 10 -y 10", &mgf, NULL);
+	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 1, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getTileX(), 10, "MGF failed to create MO at location");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getTileY(), 10, "MGF failed to create MO at location");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getDestTileX(), 10, "MO already had a destination");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getDestTileY(), 10, "MO already had a destination");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getNextTileX(), 10, "MGF failed to initialize MO next tile");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getNextTileY(), 10, "MGF failed to initialize MO next tile");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(10, 10), mgf.nthMO(0)->getID(), "MGF failed to occupy tile");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(11, 10), 0, "Target tile already occupied");
+
+	// Trigger
+	mgf.runConsoleCommand("mo 0 setdestination 11 10", &mgf, NULL);
+	mgf.nthMO(0)->update(&mgf); // Current location removed from path
+	mgf.nthMO(0)->update(&mgf); // Destination set and MO moving
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(10, 10), 0, "MGF failed to unoccupy tile");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(11, 10), mgf.nthMO(0)->getID(), "MGF failed to occupy tile");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getTileX(), 10, "MO left location of creation too early");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getTileY(), 10, "MO left location of creation too early");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getDestTileX(), 11, "MO did not get a destination");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getDestTileY(), 10, "MO did not get a destination");
+}

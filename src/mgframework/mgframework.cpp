@@ -1816,6 +1816,7 @@ bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, 
 	if(successful)
 	{
 		it->setTileXY(x, y, this);
+
 		it->setDestTileXY(it->getTileX(), it->getTileY());
 		it->setSpeed(1.0 / (double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
 		it->setOwner(owner);
@@ -2236,8 +2237,27 @@ void MGFramework::dump()
 	outFile.open(fileName.c_str(), std::ios_base::out);
 
 	outFile << "<html><head><link rel=stylesheet href=mgf.css type=text/css><title>MG Framework dump</title></head><body>" << std::endl;
+
+	// Printing some memory consumption related information
+	outFile << "<h3>Memory consumption information</h3>" << std::endl;
+	outFile << "<p>" << std::endl;
+	outFile << "sizeof(MGFramework): " << sizeof(MGFramework) << "<br>" << std::endl;
+	outFile << "sizeof(MGMovingObject): " << sizeof(MGMovingObject) << "<br>" << std::endl;
+	outFile << "sizeof(MGStationaryObject): " << sizeof(MGStationaryObject) << "<br>" << std::endl;
+	outFile << "sizeof(MGPeriodicEvent): " << sizeof(MGPeriodicEvent) << "<br>" << std::endl;
+	outFile << "sizeof(MGMap): " << sizeof(MGMap) << "<br>" << std::endl;
+	outFile << "KPI1 (sizeof(1 x MGMap(100, 100) + 100 x MGMovingObject + 1 x MGFramework)): "
+		<< sizeof(MGFramework) + 100 * sizeof(MGMovingObject)
+		+ sizeof(MGMap)
+		+ (100 * 100) * sizeof(int) // occupied
+		+ (100 * 100) * sizeof(unsigned int) // tile property
+		+ (100 * 100) * sizeof(bool); // marked for rendering
+	outFile << "<br>" << std::endl;
+	outFile << "</p>" << std::endl;
+
+	// Dumping all currently existing MOs:
 	outFile << "<h3>List of currently existing Moving Objects</h3>" << std::endl;
-	outFile << "<p>";
+	outFile << "<p>" << std::endl;
 	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 	{
 		outFile << "[MO] ";
@@ -2245,6 +2265,8 @@ void MGFramework::dump()
 		outFile << ", State: " << it->toString();
 		outFile << ", TileX: " << it->getTileX();
 		outFile << ", TileY: " << it->getTileY();
+		outFile << ", DestTileX: " << it->getDestTileX();
+		outFile << ", DestTileY: " << it->getDestTileY();
 		outFile << ", Xoff: " << it->getXOffset();
 		outFile << ", Yoff: " << it->getYOffset();
 		outFile << "<br>" << std::endl;

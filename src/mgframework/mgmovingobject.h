@@ -80,6 +80,8 @@ public:
 	inline const int getYOffset(){ return (int)(m_Y + 0.5); }
 	inline const int getCenterX(){ return getTileX() * getTileSize() + (int)(0.5 * getTileSize()); }
 	inline const int getCenterY(){ return getTileY() * getTileSize() + (int)(0.5 * getTileSize()); }
+	inline const int getNextTileX(){ return m_NextTileX; }
+	inline const int getNextTileY(){ return m_NextTileY; }
 
 	// MGComponent
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);

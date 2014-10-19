@@ -65,6 +65,8 @@ private:
 	static void test_MGFramework_deleteFirstMOPerOwner();
 	static void test_MGFramework_markMO();
 	static void test_MGFramework_markMOIndexInSymbolTable();
+	static void test_MGFramework_createMOAtLocation();
+	static void test_MGFramework_oneMOTakesAStep();
 
 	// test_system_test_002_basic_MO
 	static void test_002_basic_MO_create_delete();
@@ -142,6 +144,8 @@ public:
 		RUNTEST(test_MGFramework_deleteFirstMOPerOwner);
 		RUNTEST(test_MGFramework_markMO);
 		RUNTEST(test_MGFramework_markMOIndexInSymbolTable);
+		RUNTEST(test_MGFramework_createMOAtLocation);
+		RUNTEST(test_MGFramework_oneMOTakesAStep);
 
 		// test_system_test_002_basic_MO
 		RUNTEST(test_002_basic_MO_create_delete);

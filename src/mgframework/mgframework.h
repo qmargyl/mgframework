@@ -354,9 +354,6 @@ class MGFramework :public MGComponent
 		void setClientPlayer(int id){ m_PlayerNumber = id; }
 		int getClientPlayer(){ return m_PlayerNumber; }
 
-		// Dumping information to file for debugging purposes
-		void dump();
-
 	public:
 		MGFramework();
 		virtual ~MGFramework();
@@ -410,6 +407,9 @@ class MGFramework :public MGComponent
 
 		// Rendering optimizations related
 		bool isSelectiveTileRenderingActive(){ return m_SelectiveTileRendering; }
+
+		// Dumping information to file for debugging purposes
+		void dump();
 
 		static int initializeWinsock(WORD wVersionRequested);
 

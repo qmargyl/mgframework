@@ -63,6 +63,11 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
 	m_TileX = x;
 	m_TileY = y;
+	if(m_Path.size() == 0)
+	{
+		m_NextTileX = x;
+		m_NextTileY = y;
+	}
 	m_X = 0.0;
 	m_Y = 0.0;
 	m_FinishingLastMove = false;
