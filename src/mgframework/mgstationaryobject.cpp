@@ -15,6 +15,14 @@ MGStationaryObject::~MGStationaryObject()
 
 }
 
+bool operator<(MGStationaryObject &lhs, MGStationaryObject &rhs)
+{
+	// This is used for sorting stationary objects only. They are
+	// sorted by vertical location on the screen to be drawn in the
+	// correct order.
+	return lhs.m_TileY < rhs.m_TileY;
+}
+
 void MGStationaryObject::initialize()
 {
 	m_TileX = 0;
@@ -32,15 +40,6 @@ void MGStationaryObject::setTileXY(int x, int y, MGFramework *world)
 	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
 }
 
-void MGStationaryObject::copy(MGStationaryObject *src)
-{
-	//Copy ALL class variables!
-	m_TileX = src->m_TileX;
-	m_TileY = src->m_TileY;
-	m_ID = src->m_ID;
-	m_Owner = src->m_Owner;
-	m_LoggingEnabled = src->m_LoggingEnabled;
-}
 
 bool MGStationaryObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {

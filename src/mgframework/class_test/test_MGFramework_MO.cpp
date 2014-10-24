@@ -1,6 +1,4 @@
 #include "../../project2_test.h"
-#include "../mgpathitem.h"
-#include "../mgsymboltable.h"
 #include "../stubs/mgframeworkstub.h"
 
 

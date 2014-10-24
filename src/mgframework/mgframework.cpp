@@ -67,8 +67,6 @@ MGFramework::~MGFramework()
 {
 	if(m_PE) delete[] m_PE;
 	m_PE = NULL;
-	if(m_SO) delete[] m_SO;
-	m_SO = NULL;
 	if(m_SymbolTable) delete m_SymbolTable;
 	m_SymbolTable = NULL;
 	if(m_SymbolTableTransfer) delete m_SymbolTableTransfer;
@@ -883,20 +881,31 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_SO_INT_X:
 		{
-			int soIndex = toInt(cmdvec[1], s);
-			if(soIndex >= 0 && soIndex < getNumberOfSO())
+			unsigned int soIndex = (unsigned int)toInt(cmdvec[1], s);
+			unsigned int i = 0;
+			if(soIndex < getNumberOfSO())
 			{
-				return m_SO[toInt(cmdvec[1], s)].runConsoleCommand(c, this, s);
+				for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); it++)
+				{
+					if(i == soIndex)
+					{
+						return it->runConsoleCommand(c, this, s);
+					}
+					else
+					{
+						i++;
+					}
+				}
 			}
-			MGFLOG_WARNING("Console command was not forwarded to SO " << soIndex); 
+			MGFLOG_WARNING("Console command was not forwarded to SO, SOIndex:" << soIndex << ", NumberOfSO:" << getNumberOfSO() << ", i:" << i); 
 			return true;
 		}
 
 		case MGComponent_SO_ALL_X:
 		{
-			for(int i = 0; i < getNumberOfSO(); i++)
+			for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); it++)
 			{
-				m_SO[i].runConsoleCommand(c, this, s);
+				it->runConsoleCommand(c, this, s);
 			}
 			return true;
 		}
@@ -1027,13 +1036,28 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 			if(ownerParamSet)
 			{
-				// Delete only MOs connected to a specific owner
+				// Delete only SOs connected to a specific owner
 				MGFLOG_INFO("Deleting SOs owned by " << owner);
-				for(int i = getNumberOfSO() - 1; i >= 0; --i)
+				for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); )
 				{
-					if(m_SO[i].getOwner() == owner)
+					MGFLOG_INFO("SO owned by " << it->getOwner());
+					if(it->getOwner() == owner)
 					{
-						deleteSO(i);
+						MGFLOG_INFO("Deleting one out of " << m_SO.size() << " SOs");
+						if(it == m_SO.begin())
+						{
+							deleteSO(it);
+							it = m_SO.begin();
+						}
+						else
+						{
+							deleteSO(it);
+							it--;
+						}
+					}
+					else
+					{
+						it++;
 					}
 				}
 			}
@@ -1142,7 +1166,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_ADD_SO_INT_PARAMLIST:
 		{
-			int nBefore=getNumberOfSO();
+			int nBefore = getNumberOfSO();
 			int n = toInt(cmdvec[2], s);
 			int x = -1; // Invalid default value
 			int y = -1; // Invalid default value
@@ -1176,8 +1200,10 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 					n = 0; // Abort SO creation..
 				}
 			}
+
 			if(n > 0)
 			{
+				MGFLOG_INFO("Adding SOs: " << n << ", nBefore = " << nBefore);
 				addSO(n);
 			}
 			else
@@ -1186,19 +1212,23 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				return true;
 			}
 
-			if(m_SO != NULL)
+			// Loop from first new MO to the end.
+			std::list<MGStationaryObject>::iterator it = m_SO.begin();
+			for(int i = 0; i < nBefore; i++)
 			{
-				for(int i = nBefore; i < getNumberOfSO(); i++)
+				it++;
+			}
+			for(; it != m_SO.end(); )
+			{
+				// If setup returns true we step iterator, otherwise erase has already stepped it
+				MGFLOG_INFO("SetupSO x=" << x << ", y=" << y);
+				if(setupSO(it, x, y))
 				{
-					// If setup fails we must setup the same index again 
-					// since the failing SO has been deleted.
-					if(!setupSO(i, x, y)) --i;
+					it++;
 				}
 			}
-			else
-			{
-				MGFLOG_ERROR("SO storage is undefined");
-			}
+
+			m_SO.sort(); // Allows drawing the objects from screen top to bottom
 			return true;
 		}
 
@@ -1329,14 +1359,15 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_DELETE_SO_INT:
 		{
-			int soIndex=toInt(cmdvec[2], s);
-			if(m_SO != NULL && soIndex >= 0 && soIndex < getNumberOfSO())
+			unsigned int soIndex = (unsigned int)toInt(cmdvec[2], s);
+			if(soIndex < getNumberOfSO())
 			{
-				deleteSO(soIndex);
-			}
-			else if(m_SO == NULL)
-			{
-				MGFLOG_ERROR("m_SO = NULL and getNumberOfSO() = " << getNumberOfSO())
+				std::list<MGStationaryObject>::iterator it = m_SO.begin();
+				for(unsigned int i = 0; i < soIndex; i++)
+				{
+					it++;
+				}
+				deleteSO(it);
 			}
 			return true;
 		}
@@ -1741,7 +1772,7 @@ void MGFramework::addMO(int n)
 {
 	int tmpTotal = n + getNumberOfMO();
 
-	if(tmpTotal > m_Map.getWidth()*m_Map.getHeight())
+	if(tmpTotal > m_Map.getWidth() * m_Map.getHeight())
 	{
 		MGFLOG_ERROR(	"MGFramework::addMO cannot create " << tmpTotal << " MO on a " 
 						<< m_Map.getWidth() << " by " << m_Map.getHeight() << " map")
@@ -1816,7 +1847,6 @@ bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, 
 	if(successful)
 	{
 		it->setTileXY(x, y, this);
-
 		it->setDestTileXY(it->getTileX(), it->getTileY());
 		it->setSpeed(1.0 / (double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
 		it->setOwner(owner);
@@ -1833,65 +1863,62 @@ bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, 
 }
 
 
-bool MGFramework::setupSO(int i, int x, int y)
+bool MGFramework::setupSO(std::list<MGStationaryObject>::iterator it, int x, int y)
 {
-	if(i < 0 || i >= getNumberOfSO())
+	if(it == m_SO.end())
 	{
-		MGFLOG_ERROR("MGFramework::setupSO was given a bad index: " << i)
+		return false;
 	}
-	else
+
+	// Until these are passed as parameters together with owner
+	int x1 = 0;
+	int y1 = 0;
+	int x2 = m_Map.getWidth();
+	int y2 = m_Map.getHeight();
+
+	if(x < 0) x = randomN(x2 - x1) + x1;
+	if(y < 0) y = randomN(y2 - y1) + y1;
+	bool successful = false;
+
+	for(int q = 0; q < MGF_SOPOSITIONINGATTEMPTS; ++q)
 	{
-		if(x < 0)
+		if(m_Map.occupant(x,y) != 0)
 		{
-			x = randomN(m_Map.getWidth());
-		}
-		if(y < 0)
-		{
-			y = randomN(m_Map.getHeight());
-		}
-		bool successful=false;
-
-		for(int q = 0; q < MGF_SOPOSITIONINGATTEMPTS; ++q)
-		{
-			if(m_Map.occupant(x,y) != 0)
-			{
-				x = randomN(m_Map.getWidth());
-				y = randomN(m_Map.getHeight());
-			}
-			else
-			{
-				successful=true;
-				break;
-			}
-		}
-		// Find the first available (x,y) since the random placement failed.
-		if(!successful)
-		{
-			for(int t = 0; t < m_Map.getWidth() * m_Map.getHeight(); ++t)
-			{
-				if(m_Map.occupant(m_Map.getTileX(t), m_Map.getTileY(t)) == 0)
-				{
-					x = m_Map.getTileX(t);
-					y = m_Map.getTileY(t);
-					successful = true;
-					break;
-				}
-			}
-		}
-
-		if(successful)
-		{
-			m_SO[i].setTileXY(x, y, this);
-			m_Map.occupy(m_SO[i].getTileX(), m_SO[i].getTileY(), m_SO[i].getID());
-			if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_SO[i].getTileX(), m_SO[i].getTileY());
+			x = randomN(x2 - x1) + x1;
+			y = randomN(y2 - y1) + y1;
 		}
 		else
 		{
-			MGFLOG_ERROR("Failed to find space for SO at creation");
-			deleteSO(i);
-			return false;
+			successful = true;
+			break;
 		}
+	}
+	// Find the first available (x,y) since the random placement failed.
+	if(!successful)
+	{
+		for(int t = 0; t < m_Map.getWidth() * m_Map.getHeight(); ++t)
+		{
+			if(m_Map.occupant(m_Map.getTileX(t), m_Map.getTileY(t)) == 0)
+			{
+				x = m_Map.getTileX(t);
+				y = m_Map.getTileY(t);
+				successful = true;
+				break;
+			}
+		}
+	}
 
+	if(successful)
+	{
+		it->setTileXY(x, y, this);
+		m_Map.occupy(it->getTileX(), it->getTileY(), it->getID());
+		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(it->getTileX(), it->getTileY());
+	}
+	else
+	{
+		MGFLOG_ERROR("Failed to find space for SO at creation");
+		deleteSO(it);
+		return false;
 	}
 	return true;
 }
@@ -2160,62 +2187,50 @@ bool MGFramework::okMGFrameworkSyntax(const std::vector<std::string> &v_s)
 
 void MGFramework::deleteAllSO()
 {
-	if(m_SO) 
+	// Since all SO are deleted we can unoccupy all their tiles..
+	for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); it++)
 	{
-		for(int i = 0; i<getNumberOfSO(); ++i)
+		m_Map.unOccupy(it->getTileX(), it->getTileY());
+		if(isSelectiveTileRenderingActive())
 		{
-			m_Map.unOccupy(m_SO[i].getTileX(), m_SO[i].getTileY());
-			if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_SO[i].getTileX(), m_SO[i].getTileY());
+			m_Map.markForRendering(it->getTileX(), it->getTileY());
 		}
-
-		delete[] m_SO;
-		m_SO = NULL;
-		m_NSO = 0;
 	}
-	// Make sure tiles are re-rendered after deleting SOs
+	
+	m_SO.clear();
 	setRenderAllTiles();
 }
 
 void MGFramework::addSO(int n)
 {
-	MGStationaryObject *oldSO = new MGStationaryObject[getNumberOfSO()];
-	int nOld=getNumberOfSO();
-	for(int i = 0; i < nOld; i++)
+	int tmpTotal = n + getNumberOfSO();
+
+	if(tmpTotal > m_Map.getWidth() * m_Map.getHeight())
 	{
-		oldSO[i].copy(&m_SO[i]);
+		MGFLOG_ERROR(	"MGFramework::addSO cannot create " << tmpTotal << " SO on a " 
+						<< m_Map.getWidth() << " by " << m_Map.getHeight() << " map")
+		return;
 	}
-	if(m_SO) delete[] m_SO;
-	m_SO = NULL;
-	m_NSO = nOld + n;
-	m_SO = new MGStationaryObject[getNumberOfSO()];
-	for(int i = 0; i < nOld; i++)
+
+	for(int i = 0; i < n; i++)
 	{
-		m_SO[i].copy(&oldSO[i]);
+		MGStationaryObject so;
+		so.initialize();
+		m_SO.push_back(so);
 	}
-	// Make sure tiles are re-rendered after creating SOs
+
 	setRenderAllTiles();
 }
 
-void MGFramework::deleteSO(int index)
+void MGFramework::deleteSO(std::list<MGStationaryObject>::iterator it)
 {
-	if(index < 0 || index >= getNumberOfSO())
+	if(it != m_SO.end())
 	{
-		MGFLOG_ERROR("MGFramework::deleteSO was given a bad index: " << index)
+		m_Map.unOccupy(it->getTileX(), it->getTileY());
+		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(it->getTileX(), it->getTileY());
+		m_SO.erase(it);
+		setRenderAllTiles();
 	}
-	else
-	{
-		m_Map.unOccupy(m_SO[index].getTileX(), m_SO[index].getTileY());
-		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(m_SO[index].getTileX(), m_SO[index].getTileY());
-
-		for(int i = index; i < getNumberOfSO() - 1; ++i)
-		{
-			// Overwrite so(i) with so(i+1)
-			m_SO[i].copy(&m_SO[i + 1]);
-		}
-		m_NSO = getNumberOfSO() - 1;
-	}
-	// Make sure tiles are re-rendered after deleting SOs
-	setRenderAllTiles();
 }
 
 void MGFramework::countUnMark()

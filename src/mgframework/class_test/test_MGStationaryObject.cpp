@@ -54,37 +54,3 @@ void Project2Test::test_MGStationaryObject_setTileXY()
 	ASSERT_NOT_EQUAL(s.getTileX(), 9, "SO location not updated correctly");
 	ASSERT_NOT_EQUAL(s.getTileY(), 8, "SO location not updated correctly");
 }
-
-void Project2Test::test_MGStationaryObject_copy()
-{
-	// Setup
-	MGStationaryObject a;
-	MGStationaryObject b;
-	MGFrameworkStub mgf;
-	IMGWindowImpl win;
-	mgf.setWindowProperties(1024, 768, 32, false, std::string("test"), &win);
-	mgf.init(20, 20, 16, 16);
-	a.initialize();
-	b.initialize();
-	a.setTileXY(3, 5, &mgf);
-	b.setTileXY(1, 1, &mgf);
-	a.enableLogging();
-	b.disableLogging();
-	ASSERT_NOT_EQUAL(a.getTileX(), 3, "SO location not updated correctly");
-	ASSERT_NOT_EQUAL(a.getTileY(), 5, "SO location not updated correctly");
-	ASSERT_NOT_EQUAL(b.getTileX(), 1, "SO location not updated correctly");
-	ASSERT_NOT_EQUAL(b.getTileY(), 1, "SO location not updated correctly");
-	ASSERT_NOT_EQUAL(a.getID() == b.getID(), false, "SO ID not generated correctly");
-	ASSERT_NOT_EQUAL(a.loggingEnabled() == b.loggingEnabled(), false, "SO logging not set correctly");
-	
-	// Trigger
-	b.copy(&a);
-	
-	// Verify
-	ASSERT_NOT_EQUAL(a.getTileX(), 3, "SO location not copied correctly");
-	ASSERT_NOT_EQUAL(a.getTileY(), 5, "SO location not copied correctly");
-	ASSERT_NOT_EQUAL(b.getTileX(), 3, "SO location not copied correctly");
-	ASSERT_NOT_EQUAL(b.getTileY(), 5, "SO location not copied correctly");
-	ASSERT_NOT_EQUAL(a.getID() == b.getID(), true, "SO ID not copied correctly");
-	ASSERT_NOT_EQUAL(a.loggingEnabled() == b.loggingEnabled(), true, "SO logging not copied correctly");
-}

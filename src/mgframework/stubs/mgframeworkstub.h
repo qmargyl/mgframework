@@ -1,6 +1,8 @@
 #ifndef _MGFRAMEWORKSTUB_H
 #define _MGFRAMEWORKSTUB_H
 
+#include "../mgpathitem.h"
+#include "../mgsymboltable.h"
 #include "../mgframework.h"
 
 class MGFrameworkStub : public MGFramework
@@ -33,6 +35,19 @@ class MGFrameworkStub : public MGFramework
 		unsigned int _getNumberOfMarkedMO(){ return getNumberOfMarkedMO(); }
 		void _countMark(){ countMark(); }
 		void _countUnMark(){ countUnMark(); }
+
+		// Hooks to MO related methods in MGFramework
+		std::list<MGStationaryObject> _m_SO(){ return m_SO; }
+		void _deleteAllSO(){ deleteAllSO(); }
+		void _addSO(int n){ addSO(n); }
+		int _getNumberOfSO(){ return getNumberOfSO(); }
+		void _deleteSO(std::list<MGStationaryObject>::iterator it){ deleteSO(it); }
+		bool _setupSO(std::list<MGStationaryObject>::iterator it, int x, int y)
+		{
+			return setupSO(it, x, y);
+		}
+
+		// Hooks to other methods in MGFramework
 		int _getFrameStartX(){ return getFrameStartX(); }
 		int _getFrameStartY(){ return getFrameStartY(); }
 		int _getFrameEndX(){ return getFrameEndX(); }
@@ -54,6 +69,20 @@ class MGFrameworkStub : public MGFramework
 				n++;
 			}
 			return m_MO.end();
+		}
+
+		std::list<MGStationaryObject>::iterator nthSO(unsigned int i)
+		{
+			unsigned int n = 0;
+			for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); it++)
+			{
+				if(n == i)
+				{
+					return it;
+				}
+				n++;
+			}
+			return m_SO.end();
 		}
 
 		// Call counter getters

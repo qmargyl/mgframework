@@ -131,12 +131,6 @@ void MGMovingObject::setDestTileXY(int x, int y)
 void MGMovingObject::setPath(std::list<MGPathItem> p)
 {
 	m_Path = p;
-	/*
-	if(!m_Path.empty())
-	{
-		setDestTileXY(m_Path.front().getX(), m_Path.front().getY());
-	}
-	*/
 }
 
 
@@ -299,31 +293,6 @@ void MGMovingObject::update(MGFramework *w)
 	}
 }
 
-
-void MGMovingObject::copy(MGMovingObject *src)
-{
-	//Copy ALL class variables!
-	m_Speed = src->m_Speed;
-	m_TimeOfLastUpdate = src->m_TimeOfLastUpdate;
-	m_TileX = src->m_TileX;
-	m_TileY = src->m_TileY;
-	m_DestTileX = src->m_DestTileX;
-	m_DestTileY = src->m_DestTileY;
-	m_X = src->m_X;
-	m_Y = src->m_Y;
-	m_FinishingLastMove = src->m_FinishingLastMove;
-	m_TempDestTileX = src->m_TempDestTileX;
-	m_TempDestTileY = src->m_TempDestTileY;
-	m_Marked = src->m_Marked;
-	m_NextTileX = src->m_NextTileX;
-	m_NextTileY = src->m_NextTileY;
-	m_ID = src->m_ID;
-	m_Owner = src->m_Owner;
-	m_LoggingEnabled = src->m_LoggingEnabled;
-	m_CurrentState = src->m_CurrentState;
-	m_Path = src->m_Path;
-	m_PathFindingAlgorithm = src->m_PathFindingAlgorithm;
-}
 
 bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {

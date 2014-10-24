@@ -204,10 +204,10 @@ class MGFramework :public MGComponent
 			return m_Window;
 		}
 
-		std::list<MGMovingObject> m_MO;
-		MGPeriodicEvent *m_PE;			// Periodic Events
-		MGStationaryObject *m_SO;		// Stationary Objects
-		MGSymbolTable *m_SymbolTable;	// Symbols
+		std::list<MGMovingObject> m_MO;			// Moving Objects
+		MGPeriodicEvent *m_PE;					// Periodic Events
+		std::list<MGStationaryObject> m_SO;		// Stationary Objects
+		MGSymbolTable *m_SymbolTable;			// Symbols
 		MGSymbolTable *m_SymbolTableTransfer;	// Symbols transferred during a function call
 
 		// Enable/disable input functionality
@@ -290,13 +290,14 @@ class MGFramework :public MGComponent
 		void addMO(int n);
 		unsigned int getNumberOfMO(){ return (unsigned int)m_MO.size(); }
 		void deleteMO(std::list<MGMovingObject>::iterator it);		// Deletes an MO
-		bool setupMO(std::list<MGMovingObject>::iterator it, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2);		// Setups the MO with a specified index
+		bool setupMO(std::list<MGMovingObject>::iterator it, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2);		// Setups the MO
 
-		// MO selection related
-		int getNumberOfMarkedMO()
-		{ 
-			return std::min(m_MarkedMOs, getNumberOfMO());
-		}
+		// SO related
+		void deleteAllSO();
+		void addSO(int n);
+		unsigned int getNumberOfSO(){ return (unsigned int)m_SO.size(); }
+		void deleteSO(std::list<MGStationaryObject>::iterator it);
+		bool setupSO(std::list<MGStationaryObject>::iterator it, int x, int y);		// Setups the SO
 
 		// PE related
 		void deleteAllPE();
@@ -304,13 +305,11 @@ class MGFramework :public MGComponent
 		int getNumberOfPE(){ return std::max(m_NPE, 0); }
 		void deletePE(int index);
 
-		// SO related
-		void deleteAllSO();
-		void addSO(int n);
-		int getNumberOfSO(){ return std::max(m_NSO, 0); }
-		void deleteSO(int index);
-		bool setupSO(int i, int x, int y);		// Setups the MO with a specified index
-
+		// MO selection related
+		int getNumberOfMarkedMO()
+		{ 
+			return std::min(m_MarkedMOs, getNumberOfMO());
+		}
 
 		// Event related
 #ifndef UNITTEST_LINUX

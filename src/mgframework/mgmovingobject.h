@@ -70,7 +70,6 @@ public:
 
 	void setSpeed(double s, int tileSize); // Seconds, Tile size in pixels
 	void update(MGFramework *w);
-	void copy(MGMovingObject *src);
 
 	inline const int getTileX(){ return m_TileX; }
 	inline const int getTileY(){ return m_TileY; }

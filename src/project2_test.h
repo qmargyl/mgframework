@@ -25,7 +25,6 @@ private:
 	// test_MGStationaryObject
 	static void test_MGStationaryObject_initialize();
 	static void test_MGStationaryObject_setTileXY();
-	static void test_MGStationaryObject_copy();
 
 	// test_MGSymbolTable
 	static void test_MGSymbolTable_addSymbol();
@@ -68,6 +67,16 @@ private:
 	static void test_MGFramework_createMOAtLocation();
 	static void test_MGFramework_oneMOTakesAStep();
 
+	// test_MGFramework_SO
+	static void test_MGFramework_createSO();
+	static void test_MGFramework_deleteSO();
+	static void test_MGFramework_deleteFirstSO();
+	static void test_MGFramework_deleteFewSO();
+	static void test_MGFramework_deleteAllSO();
+	static void test_MGFramework_setupSO();
+	static void test_MGFramework_resetupSO();
+	static void test_MGFramework_createSOAtLocation();
+
 	// test_system_test_002_basic_MO
 	static void test_002_basic_MO_create_delete();
 	static void test_002_basic_MO_create_delete_with_owner();
@@ -101,7 +110,7 @@ public:
 		// test_MGStationaryObject
 		RUNTEST(test_MGStationaryObject_initialize);
 		RUNTEST(test_MGStationaryObject_setTileXY);
-		RUNTEST(test_MGStationaryObject_copy);
+		//RUNTEST(test_MGStationaryObject_copy);
 
 		// test_MGSymbolTable
 		RUNTEST(test_MGSymbolTable_addSymbol);
@@ -146,6 +155,16 @@ public:
 		RUNTEST(test_MGFramework_markMOIndexInSymbolTable);
 		RUNTEST(test_MGFramework_createMOAtLocation);
 		RUNTEST(test_MGFramework_oneMOTakesAStep);
+
+		// test_MGFramework_SO
+		RUNTEST(test_MGFramework_createSO);
+		RUNTEST(test_MGFramework_deleteSO);
+		RUNTEST(test_MGFramework_deleteFirstSO);
+		RUNTEST(test_MGFramework_deleteFewSO);
+		RUNTEST(test_MGFramework_deleteAllSO);
+		RUNTEST(test_MGFramework_setupSO);
+		RUNTEST(test_MGFramework_resetupSO);
+		RUNTEST(test_MGFramework_createSOAtLocation);
 
 		// test_system_test_002_basic_MO
 		RUNTEST(test_002_basic_MO_create_delete);

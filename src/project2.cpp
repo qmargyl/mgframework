@@ -92,7 +92,7 @@ void Project2::draw()
 		}
 
 		// Draw all moving objects...
-		int oX,oY;
+		int oX, oY;
 		for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
 		{
 			oX = it->getTileX() * m_Map.getTileWidth() + m_Map.getScrollX() + it->getXOffset();
@@ -122,18 +122,15 @@ void Project2::draw()
 		}
 
 		// Draw all stationary objects...
-		int sX,sY;
-		for(int i = 0; i < getNumberOfSO(); i++)
+		int sX, sY;
+		for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); it++)
 		{
-			if(m_SO != NULL)
+			sX = it->getTileX() * m_Map.getTileWidth() + m_Map.getScrollX();
+			sY = it->getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() - 16;
+			// Only draw visible stationary objects...
+			if(detectCollisionRectangle(sX, sY, sX + m_Map.getTileWidth(), sY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
 			{
-				sX = m_SO[i].getTileX() * m_Map.getTileWidth() + m_Map.getScrollX();
-				sY = m_SO[i].getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() - 16;
-				// Only draw visible stationary objects...
-				if(detectCollisionRectangle(sX, sY, sX + m_Map.getTileWidth(), sY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
-				{
-					drawTile(static_cast<void*>(m_StationaryObject), 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight() + 16);
-				}
+				drawTile(static_cast<void*>(m_StationaryObject), 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight() + 16);
 			}
 		}
 
@@ -143,7 +140,7 @@ void Project2::draw()
 		// Draw the mini map if enabled. Also draw all objects on it...
 		if(featureMiniMapEnabled())
 		{
-			getWindow()->drawFilledRectangleRGBA(getWindow()->getWidth() - m_Map.getWidth() - 16, 16, getWindow()->getWidth() - 16, m_Map.getHeight() + 16, 0x00, 0x00, 0x00, 60);
+			getWindow()->drawFilledRectangleRGB(getWindow()->getWidth() - m_Map.getWidth() - 16, 16, getWindow()->getWidth() - 16, m_Map.getHeight() + 16, 0x00, 0x00, 0x00);
 			for(int x = 0; x < m_Map.getWidth(); x++)
 			{
 				for(int y = 0; y < m_Map.getHeight(); y++)
