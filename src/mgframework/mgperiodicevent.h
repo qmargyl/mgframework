@@ -30,7 +30,7 @@ public:
 
 	// MGComponent
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
-	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
+	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const;
 };
 
 

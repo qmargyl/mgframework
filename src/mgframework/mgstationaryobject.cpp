@@ -97,7 +97,7 @@ bool MGStationaryObject::runConsoleCommand(const char *c, MGFramework *w, MGSymb
 	return true;
 }
 
-eMGComponentConsoleCommand MGStationaryObject::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
+eMGComponentConsoleCommand MGStationaryObject::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const
 {
 
 	if(cmdvec.size() == 3)

@@ -76,6 +76,7 @@ private:
 	static void test_MGFramework_setupSO();
 	static void test_MGFramework_resetupSO();
 	static void test_MGFramework_createSOAtLocation();
+	static void test_MGFramework_sortSOsWhenCreated();
 
 	// test_system_test_002_basic_MO
 	static void test_002_basic_MO_create_delete();
@@ -110,7 +111,6 @@ public:
 		// test_MGStationaryObject
 		RUNTEST(test_MGStationaryObject_initialize);
 		RUNTEST(test_MGStationaryObject_setTileXY);
-		//RUNTEST(test_MGStationaryObject_copy);
 
 		// test_MGSymbolTable
 		RUNTEST(test_MGSymbolTable_addSymbol);
@@ -165,6 +165,7 @@ public:
 		RUNTEST(test_MGFramework_setupSO);
 		RUNTEST(test_MGFramework_resetupSO);
 		RUNTEST(test_MGFramework_createSOAtLocation);
+		RUNTEST(test_MGFramework_sortSOsWhenCreated);
 
 		// test_system_test_002_basic_MO
 		RUNTEST(test_002_basic_MO_create_delete);

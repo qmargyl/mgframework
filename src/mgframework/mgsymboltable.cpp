@@ -68,7 +68,7 @@ void MGSymbolTable::printTable()
 	}
 }
 
-eMGComponentConsoleCommand MGSymbolTable::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
+eMGComponentConsoleCommand MGSymbolTable::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const
 {
 	return MGComponent_UNDEFINED;
 }

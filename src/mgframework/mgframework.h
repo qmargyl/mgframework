@@ -213,30 +213,30 @@ class MGFramework :public MGComponent
 		// Enable/disable input functionality
 		void enableInput(){ m_InputEnabled = true;}
 		void disableInput(){ m_InputEnabled = false;}
-		bool isInputEnabled(){ return m_InputEnabled;}
+		bool isInputEnabled() const { return m_InputEnabled;}
 
 // ***	// Feature Mouse scrolling
-		bool featureMouseScrollingEnabled(){ return m_FeatureMouseScrollingEnabled; }
+		bool featureMouseScrollingEnabled() const { return m_FeatureMouseScrollingEnabled; }
 		void enableFeatureMouseScrolling(){ m_FeatureMouseScrollingEnabled = true; }
 		void disableFeatureMouseScrolling(){ m_FeatureMouseScrollingEnabled = false; }
 
 // ***	// Feature Center on MO
-		bool featureCenterOnMO(){ return (m_FeatureCenterOnMO > -1); }
-		unsigned int centerMOIndex(){ return m_FeatureCenterOnMO; }
+		bool featureCenterOnMO() const { return (m_FeatureCenterOnMO > -1); }
+		unsigned int centerMOIndex() const { return m_FeatureCenterOnMO; }
 		void enableFeatureCenterOnMO(int moindex = 0){ m_FeatureCenterOnMO = moindex; }
 		void disableFeatureCenterOnMO(){ m_FeatureCenterOnMO = -1; }
 
 // ***	// Feature Dynamic FPS
-		bool featureDynamicFPSEnabled(){ return m_DynamicFPSEnabled; }
+		bool featureDynamicFPSEnabled() const { return m_DynamicFPSEnabled; }
 		void setDynamicFPSEnabled(bool val){ m_DynamicFPSEnabled = val; }
 
 		// Exit application functionality
 		void quit();
-		bool getQuitFlag(){ return m_Quit; }
+		bool getQuitFlag() const { return m_Quit; }
 
 		// Countdown feature needs a flag and a counter.
-		inline bool frameCountdownEnabled(){return m_FrameCountdownEnabled; }
-		inline int getFrameNumber(){return m_FrameNumber; }
+		inline bool frameCountdownEnabled() const {return m_FrameCountdownEnabled; }
+		inline int getFrameNumber() const {return m_FrameNumber; }
 		inline void setFrameNumber(int f){m_FrameNumber = f; }
 		inline void enableFrameCountdown(){m_FrameCountdownEnabled = true; }
 		inline void disableFrameCountdown(){m_FrameCountdownEnabled = false; }
@@ -246,15 +246,15 @@ class MGFramework :public MGComponent
 		void activateConsole();
 
 		//Socket terminal related.
-		void openSocketTerminal(){m_KeepSocketTerminalOpen = true; }
-		void closeSocketTerminal(){m_KeepSocketTerminalOpen = false; }
+		void openSocketTerminal(){ m_KeepSocketTerminalOpen = true; }
+		void closeSocketTerminal(){ m_KeepSocketTerminalOpen = false; }
 
 		// Frame selection related (click drag and release)
-		inline bool isFramingOngoing(){ return m_FramingOngoing; }
-		inline int getFrameStartX(){ return m_XFrameStart; }
-		inline int getFrameStartY(){ return m_YFrameStart; }
-		inline int getFrameEndX(){ return m_XFrameEnd; }
-		inline int getFrameEndY(){ return m_YFrameEnd; }
+		inline bool isFramingOngoing() const { return m_FramingOngoing; }
+		inline int getFrameStartX() const { return m_XFrameStart; }
+		inline int getFrameStartY() const { return m_YFrameStart; }
+		inline int getFrameEndX() const { return m_XFrameEnd; }
+		inline int getFrameEndY() const { return m_YFrameEnd; }
 		inline void setFrameStartX(int x){ m_XFrameStart = x; }
 		inline void setFrameStartY(int y){ m_YFrameStart = y; }
 		inline void setFrameEndX(int x){ m_XFrameEnd = x; }
@@ -288,25 +288,25 @@ class MGFramework :public MGComponent
 		// MO related
 		void deleteAllMO();
 		void addMO(int n);
-		unsigned int getNumberOfMO(){ return (unsigned int)m_MO.size(); }
+		unsigned int getNumberOfMO() const { return (unsigned int)m_MO.size(); }
 		void deleteMO(std::list<MGMovingObject>::iterator it);		// Deletes an MO
 		bool setupMO(std::list<MGMovingObject>::iterator it, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2);		// Setups the MO
 
 		// SO related
 		void deleteAllSO();
 		void addSO(int n);
-		unsigned int getNumberOfSO(){ return (unsigned int)m_SO.size(); }
+		unsigned int getNumberOfSO() const { return (unsigned int)m_SO.size(); }
 		void deleteSO(std::list<MGStationaryObject>::iterator it);
 		bool setupSO(std::list<MGStationaryObject>::iterator it, int x, int y);		// Setups the SO
 
 		// PE related
 		void deleteAllPE();
 		void addPE(int n);
-		int getNumberOfPE(){ return std::max(m_NPE, 0); }
+		int getNumberOfPE() const { return std::max(m_NPE, 0); }
 		void deletePE(int index);
 
 		// MO selection related
-		int getNumberOfMarkedMO()
+		int getNumberOfMarkedMO() const
 		{ 
 			return std::min(m_MarkedMOs, getNumberOfMO());
 		}
@@ -324,47 +324,49 @@ class MGFramework :public MGComponent
 // ***	// Feature Selective MO slection
 		inline void enableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = true; }
 		inline void disableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = false; }
-		inline bool featureOnlySelectOwnedMOEnabled(){ return m_OnlySelectOwnedMO; }
+		inline bool featureOnlySelectOwnedMOEnabled() const { return m_OnlySelectOwnedMO; }
 
 		// Graphics wrapper
 		void drawTile(void* imageSurface, int srcX, int srcY, int dstX, int dstY);
 		void drawTile(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
 
 		// Controlling game speed and execution
-		inline unsigned int getFPS();
+		inline unsigned int getFPS() const;
 		inline void setDesiredFPS(unsigned int f);
-		inline unsigned int getDesiredFPS();
-		inline int getLastFrameDelayTime(){return m_DelayTime;}	// How much time was left for additional calculations last frame.
+		inline unsigned int getDesiredFPS() const;
+		inline int getLastFrameDelayTime() const {return m_DelayTime;}	// How much time was left for additional calculations last frame.
 
 		// Console activation related
 		void enableTyping(){m_TypingEnabled = true;}
 		void disableTyping(){m_TypingEnabled = false;}
-		bool typingEnabled(){return m_TypingEnabled;}
+		bool typingEnabled() const {return m_TypingEnabled;}
 
 // ***	// Feature Selective Tile Rendering
 		void enableFeatureSelectiveTileRendering(){ m_SelectiveTileRendering = true; }
 		void disableFeatureSelectiveTileRendering(){ m_SelectiveTileRendering = false; }
 		void setRenderAllTiles(){ m_RenderAll = true; }
 		void unsetRenderAllTiles(){ m_RenderAll = false; }
-		bool renderAllTiles(){ return m_RenderAll; }
-		int getDrawnTilesCounter(){ return m_NDrawnTiles; }
+		bool renderAllTiles() const { return m_RenderAll; }
+		int getDrawnTilesCounter() const { return m_NDrawnTiles; }
 
 		// Instance related
 		void setClientPlayer(int id){ m_PlayerNumber = id; }
-		int getClientPlayer(){ return m_PlayerNumber; }
+		int getClientPlayer() const { return m_PlayerNumber; }
 
 	public:
 		MGFramework();
 		virtual ~MGFramework();
 
-		MGMap m_Map;			// Map that holds game logics needs to be accessed when graphics are drawn, and by moving objects.
+		// Map that holds game logics needs to be accessed when graphics are
+		// drawn, and by moving objects.
+		MGMap m_Map;
 
 		// Initialization
 		virtual bool init(int w, int h, int tw, int th) = 0;	// Force a derived sub-class to implement this as it is not framework related.
 		bool setWindowProperties(int width, int height, int bpp, bool fullscreen, const std::string &title, IMGWindow *win);
 		bool setWindowProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title, IMGWindow *win);
 		void unsetWindowProperties(){ m_WindowPropertiesSet = false; m_Window = NULL; }
-		bool windowPropertiesSet(){ return m_WindowPropertiesSet; }
+		bool windowPropertiesSet() const { return m_WindowPropertiesSet; }
 
 		// MO selection related (used by MO)
 		void countMark(){ m_MarkedMOs++; }
@@ -376,22 +378,22 @@ class MGFramework :public MGComponent
 
 		// Console command handling
 		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
-		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
+		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const;
 		static bool isNumericalInt(const std::string &s); // returns true if the argument contains only numbers.
 		static int staticToInt(const std::string &s); // returns an int converted from either a constant or a symbol.
-		bool toBool(const std::string &s, MGSymbolTable *sym); // returns a bool converted from either a constant or a symbol.
-		int toInt(const std::string &s, MGSymbolTable *sym); // returns an int converted from either a constant or a symbol.
+		bool toBool(const std::string &s, MGSymbolTable *sym) const; // returns a bool converted from either a constant or a symbol.
+		int toInt(const std::string &s, MGSymbolTable *sym) const; // returns an int converted from either a constant or a symbol.
 		void setCommandReturnValue(int v){ m_CommandReturnVal = v; } // TODO: Make this private?
-		bool okMGFrameworkSyntax(const std::vector<std::string> &v_s); // TODO: Make this private?
+		bool okMGFrameworkSyntax(const std::vector<std::string> &v_s) const; // TODO: Make this private?
 
 		//Socket terminal related
-		bool socketTerminalOpen(){ return m_KeepSocketTerminalOpen; }
-		void logIfEnabled(const char *log){}//{MGFLOG_INFO("" << log)}
-		int getPort(){ return m_Port; }
+		bool socketTerminalOpen() const { return m_KeepSocketTerminalOpen; }
+		void logIfEnabled(const char *log){}//{MGFLOG_INFO("" << log)} // TODO: Remove this?
+		int getPort() const { return m_Port; }
 		void setPort(int p){ m_Port = p; }
 
 		// Program version
-		std::string getMGFrameworkVersion(){ return std::string(MGFRAMEWORKVERSION); }
+		std::string getMGFrameworkVersion() const { return std::string(MGFRAMEWORKVERSION); }
 
 		// Execute the framework
 		void run(const char *scriptFileName, bool runOneFrame = false);
@@ -402,13 +404,13 @@ class MGFramework :public MGComponent
 // ***	// Feature Mini map
 		void enableFeatureMiniMap(){ m_MiniMapEnabled = true; }
 		void disableFeatureMiniMap(){ m_MiniMapEnabled = false; }
-		bool featureMiniMapEnabled(){ return m_MiniMapEnabled; }
+		bool featureMiniMapEnabled() const { return m_MiniMapEnabled; }
 
 		// Rendering optimizations related
-		bool isSelectiveTileRenderingActive(){ return m_SelectiveTileRendering; }
+		bool isSelectiveTileRenderingActive() const { return m_SelectiveTileRendering; }
 
 		// Dumping information to file for debugging purposes
-		void dump();
+		void dump() const;
 
 		static int initializeWinsock(WORD wVersionRequested);
 

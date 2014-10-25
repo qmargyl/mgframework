@@ -54,13 +54,13 @@ public:
 	MGMap();
 	~MGMap();
 
-	int getWidth(){ return m_Width; }
-	int getHeight(){ return m_Height; }
-	int getTileWidth(){ return m_TileWidth; }
-	int getTileHeight(){ return m_TileHeight; }
+	int getWidth() const { return m_Width; }
+	int getHeight() const { return m_Height; }
+	int getTileWidth() const { return m_TileWidth; }
+	int getTileHeight() const { return m_TileHeight; }
 
-	int getScrollX(){ return m_ScrollX; }
-	int getScrollY(){ return m_ScrollY; }
+	int getScrollX() const { return m_ScrollX; }
+	int getScrollY() const { return m_ScrollY; }
 	void setScrollOffset(int px, int py);
 	void mouseScrollingRelease(int x, int y);
 	void mouseScrollingClick(int x, int y);
@@ -68,10 +68,10 @@ public:
 
 	// A graphics edge around the screen means we have to scroll
 	// a bit more to be able to see the whole map.
-	int getTopEdge(){ return m_TopEdge; }
-	int getBottomEdge(){ return m_BottomEdge; }
-	int getLeftEdge(){ return m_LeftEdge; }
-	int getRightEdge(){ return m_RightEdge; }
+	int getTopEdge() const { return m_TopEdge; }
+	int getBottomEdge() const { return m_BottomEdge; }
+	int getLeftEdge() const { return m_LeftEdge; }
+	int getRightEdge() const { return m_RightEdge; }
 	void setTopEdge(int e){ m_TopEdge = e; }
 	void setBottomEdge(int e){ m_BottomEdge = e; }
 	void setLeftEdge(int e){ m_LeftEdge = e; }
@@ -104,23 +104,17 @@ public:
 	}
 
 	int getTileIndex(int clickX, int clickY);
-	int getTileX(int index){ return index % getWidth(); }
-	int getTileY(int index){ return (index - getTileX(index)) / getWidth(); }
+	int getTileX(int index) const { return index % getWidth(); }
+	int getTileY(int index) const { return (index - getTileX(index)) / getWidth(); }
 
-	int getWindowHeight(){ return m_WindowHeight; }
-	int getWindowWidth(){ return m_WindowWidth; }
+	int getWindowHeight() const { return m_WindowHeight; }
+	int getWindowWidth() const { return m_WindowWidth; }
 
 	// Path related
 	std::list<MGPathItem> calculatePath(eMGFPathType pathType, int ax, int ay, int bx, int by); // Calculates the path from A to B
 
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
-	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
-
-	// Statistics counters
-	void printStatisticsCounters();
-	unsigned long int getSCCalculatedPaths(){ return m_SC_CalculatedPaths; }
-	unsigned long int getSCLongestCalculatedPath(){ return m_SC_LongestCalculatedPath; }
-	unsigned long int getSCFailedPathCalculations(){ return m_SC_FailedPathCalculations; }
+	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const;
 
 	// Rendering optimizations
 	void unmarkForRendering(int x, int y)

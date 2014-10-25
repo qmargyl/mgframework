@@ -8,7 +8,10 @@ class MGComponentImpl : public MGComponent
 {
 	private:
 
-		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec){ return MGComponent_UNDEFINED ; }
+		eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const
+		{
+			return MGComponent_UNDEFINED;
+		}
 
 	public:
 

@@ -232,3 +232,25 @@ void Project2Test::test_MGFramework_createSOAtLocation()
 	ASSERT_NOT_EQUAL(mgf.nthSO(0)->getTileY(), 11, "MGF failed to create SO at location");
 	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(10, 11), mgf.nthSO(0)->getID(), "MGF failed to occupy tile");
 }
+
+void Project2Test::test_MGFramework_sortSOsWhenCreated()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	mgf.init(16, 16, 32, 32);
+
+	// Trigger
+	mgf.runConsoleCommand("add so 1 -x 1 -y 4", &mgf, NULL);
+	mgf.runConsoleCommand("add so 1 -x 1 -y 7", &mgf, NULL);
+	mgf.runConsoleCommand("add so 1 -x 1 -y 1", &mgf, NULL);
+	mgf.runConsoleCommand("add so 1 -x 1 -y 9", &mgf, NULL);
+	mgf.runConsoleCommand("add so 1 -x 1 -y 3", &mgf, NULL);
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf._getNumberOfSO(), 5, "MGF failed to create SO");
+	ASSERT_NOT_EQUAL(mgf.nthSO(0)->getTileY(), 1, "MGF failed to sort SO on creation");
+	ASSERT_NOT_EQUAL(mgf.nthSO(1)->getTileY(), 3, "MGF failed to sort SO on creation");
+	ASSERT_NOT_EQUAL(mgf.nthSO(2)->getTileY(), 4, "MGF failed to sort SO on creation");
+	ASSERT_NOT_EQUAL(mgf.nthSO(3)->getTileY(), 7, "MGF failed to sort SO on creation");
+	ASSERT_NOT_EQUAL(mgf.nthSO(4)->getTileY(), 9, "MGF failed to sort SO on creation");
+}

@@ -436,7 +436,7 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 	return true;
 }
 
-eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
+eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const
 {
 	if(cmdvec.size() == 3)
 	{
@@ -526,7 +526,7 @@ void MGMovingObject::changeState(MOState toState)
 	}
 }
 
-const char* MGMovingObject::toString(MOState s)
+const char* MGMovingObject::toString(MOState s) const
 {
 	switch(s)
 	{

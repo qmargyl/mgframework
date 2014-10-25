@@ -1514,7 +1514,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 }
 
 
-eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
+eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const
 {
 	if(cmdvec.size() == 1)
 	{
@@ -1668,7 +1668,7 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 }
 
 
-unsigned int MGFramework::getFPS()
+unsigned int MGFramework::getFPS() const
 {
 	/*
 	// XXX: Will this give more accurate timing?
@@ -1710,7 +1710,7 @@ void MGFramework::setDesiredFPS(unsigned int f)
 }
 
 
-unsigned int MGFramework::getDesiredFPS()
+unsigned int MGFramework::getDesiredFPS() const
 {
 	if(m_FPS >= 1) // Don't allow an FPS lower than 1
 	{
@@ -1972,7 +1972,6 @@ void MGFramework::deletePE(int index)
 void MGFramework::quit()
 { 
 	m_Quit = true; 
-	m_Map.printStatisticsCounters();
 	std::cout << "Execution time: " << MGF_GetExecTimeMS() << std::endl;
 }
 
@@ -2035,7 +2034,7 @@ int MGFramework::staticToInt(const std::string &s)
 	return 0;
 }
 
-bool MGFramework::toBool(const std::string &s, MGSymbolTable *sym)
+bool MGFramework::toBool(const std::string &s, MGSymbolTable *sym) const
 {
 	if(s == std::string("on"))
 	{
@@ -2055,7 +2054,7 @@ bool MGFramework::toBool(const std::string &s, MGSymbolTable *sym)
 	}
 }
 
-int MGFramework::toInt(const std::string &s, MGSymbolTable *sym)
+int MGFramework::toInt(const std::string &s, MGSymbolTable *sym) const
 {
 	if(isNumericalInt(s))
 	{
@@ -2174,7 +2173,7 @@ int MGFramework::initializeWinsock(WORD wVersionRequested)
 }
 
 
-bool MGFramework::okMGFrameworkSyntax(const std::vector<std::string> &v_s)
+bool MGFramework::okMGFrameworkSyntax(const std::vector<std::string> &v_s) const
 {
 	// XXX: This function is just an embryo...
 	if(v_s.size() > 0 && v_s[v_s.size() - 1] != std::string(""))
@@ -2245,7 +2244,7 @@ void MGFramework::countUnMark()
 	}
 }
 
-void MGFramework::dump()
+void MGFramework::dump() const
 {
 	std::string fileName = "dump_" + toString(MGF_GetExecTimeMS()) + ".html";
 	std::ofstream outFile;
@@ -2273,7 +2272,7 @@ void MGFramework::dump()
 	// Dumping all currently existing MOs:
 	outFile << "<h3>List of currently existing Moving Objects</h3>" << std::endl;
 	outFile << "<p>" << std::endl;
-	for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
+	for(std::list<MGMovingObject>::const_iterator it = m_MO.begin(); it != m_MO.end(); it++)
 	{
 		outFile << "[MO] ";
 		outFile << "ID: " << it->getID();

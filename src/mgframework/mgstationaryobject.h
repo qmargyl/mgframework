@@ -22,7 +22,7 @@ public:
 	int getTileX(){ return m_TileX;}
 	int getTileY(){ return m_TileY;}
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
-	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
+	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const;
 };
 
 

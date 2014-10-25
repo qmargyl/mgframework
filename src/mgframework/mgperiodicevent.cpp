@@ -186,7 +186,7 @@ bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w, MGSymbolT
 }
 
 
-eMGComponentConsoleCommand MGPeriodicEvent::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
+eMGComponentConsoleCommand MGPeriodicEvent::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const
 {
 	if(cmdvec.size() == 3)
 	{

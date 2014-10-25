@@ -10,7 +10,7 @@ class MGSymbolTable :public MGComponent
 {
 
 protected:
-	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
+	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const;
 
 public:
 

@@ -92,7 +92,7 @@ protected:
 		setID(generateID());
 	}
 
-	virtual eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) = 0;
+	virtual eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const = 0;
 
 public:
 	MGComponent()
@@ -105,32 +105,32 @@ public:
 
 	virtual bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s) = 0;
 
-	int getID(){ return m_ID;}
+	int getID() const { return m_ID;}
 
 	// Configuration of Logging...
 	void enableLogging(){ m_LoggingEnabled = true; }
 	void disableLogging(){ m_LoggingEnabled = false; }
-	bool loggingEnabled(){ return m_LoggingEnabled; }
+	bool loggingEnabled() const { return m_LoggingEnabled; }
 
 	// Component owner...
 	void setOwner(unsigned int owner){ m_Owner = owner; }
-	unsigned int getOwner(){ return m_Owner; }
+	unsigned int getOwner() const { return m_Owner; }
 	bool isOwned(){ return m_Owner != MGF_NOPLAYER; }
 
 	// Utility functions
 	static std::string toString(bool b){ if(b) return std::string("true"); return std::string("false"); }
 	static std::string toString(int number);
 	static std::string toString(unsigned number);
-	static int randomN(int upperLimit){ if(upperLimit == 0) return 0; return std::rand() % upperLimit; }
+	static int randomN(int upperLimit) { if(upperLimit == 0) return 0; return std::rand() % upperLimit; }
 	static void randomize(int seed){ std::srand(seed); }
-	static double distance(int x1, int y1, int x2, int y2){ return sqrt((double)(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))); }
+	static double distance(int x1, int y1, int x2, int y2) { return sqrt((double)(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))); }
 	static std::vector<std::string> split(char *str, const char *c);
 	static std::vector<std::string> symbols(char *str);
 	static bool oneOf(int x, int a1, int a2){ if(x == a1) return true; if(x == a2) return true; return false; }
 	static bool detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2);
 	static bool detectCollisionPointRectangle(int px, int py, int x1, int y1, int x2, int y2);
 	static float MGF_GetExecTimeS(){ return ((float)clock()) / CLOCKS_PER_SEC; }
-	static unsigned int MGF_GetExecTimeMS(){ return (unsigned int)(1000.0 * MGF_GetExecTimeS()); }
+	static unsigned int MGF_GetExecTimeMS() { return (unsigned int)(1000.0 * MGF_GetExecTimeS()); }
 };
 
 #endif

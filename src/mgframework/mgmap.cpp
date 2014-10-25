@@ -210,7 +210,7 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 	return true;
 }
 
-eMGComponentConsoleCommand MGMap::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec)
+eMGComponentConsoleCommand MGMap::detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const
 {
 	if(cmdvec.size() == 2)
 	{
@@ -338,9 +338,4 @@ std::list<MGPathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay
 	}
 
 	return path;
-}
-
-void MGMap::printStatisticsCounters()
-{
-
 }

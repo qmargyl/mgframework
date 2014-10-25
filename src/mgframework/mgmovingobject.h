@@ -29,7 +29,7 @@ private:
 
 	double getDistance(int wx, int wy);
 	static int getTileSize(){ return m_TileSize;}
-	double getSpeed(){ return m_Speed;}
+	double getSpeed() const { return m_Speed;}
 
 	//Marking related
 	bool m_Marked;
@@ -43,9 +43,9 @@ private:
 	};
 
 	MOState m_CurrentState;
-	MOState getCurrentState(){ return m_CurrentState; }
+	MOState getCurrentState() const { return m_CurrentState; }
 	void changeState(MOState toState);
-	const char* toString(MOState s);
+	const char* toString(MOState s) const;
 	static int m_MovingMOCounter;
 
 	std::list<MGPathItem> m_Path;
@@ -60,7 +60,7 @@ public:
 	~MGMovingObject();
 
 	void initialize();
-	std::string toString(){ return std::string(toString(getCurrentState())); }
+	std::string toString() const { return std::string(toString(getCurrentState())); }
 
 	void setTileXY(int x, int y, MGFramework *world);
 	void setNextXY(int x, int y, MGFramework *world);
@@ -71,37 +71,37 @@ public:
 	void setSpeed(double s, int tileSize); // Seconds, Tile size in pixels
 	void update(MGFramework *w);
 
-	inline const int getTileX(){ return m_TileX; }
-	inline const int getTileY(){ return m_TileY; }
-	inline const int getDestTileX(){ if(m_FinishingLastMove) return m_TempDestTileX; return m_DestTileX;	}
-	inline const int getDestTileY(){ if(m_FinishingLastMove) return m_TempDestTileY; return m_DestTileY;	}
-	inline const int getXOffset(){ return (int)(m_X + 0.5); } // Difference between actual coordinate and tile coordinate
-	inline const int getYOffset(){ return (int)(m_Y + 0.5); }
-	inline const int getCenterX(){ return getTileX() * getTileSize() + (int)(0.5 * getTileSize()); }
-	inline const int getCenterY(){ return getTileY() * getTileSize() + (int)(0.5 * getTileSize()); }
-	inline const int getNextTileX(){ return m_NextTileX; }
-	inline const int getNextTileY(){ return m_NextTileY; }
+	inline const int getTileX() const { return m_TileX; }
+	inline const int getTileY() const { return m_TileY; }
+	inline const int getDestTileX() const { if(m_FinishingLastMove) return m_TempDestTileX; return m_DestTileX;	}
+	inline const int getDestTileY() const { if(m_FinishingLastMove) return m_TempDestTileY; return m_DestTileY;	}
+	inline const int getXOffset() const { return (int)(m_X + 0.5); } // Difference between actual coordinate and tile coordinate
+	inline const int getYOffset() const { return (int)(m_Y + 0.5); }
+	inline const int getCenterX() { return getTileX() * getTileSize() + (int)(0.5 * getTileSize()); }
+	inline const int getCenterY() { return getTileY() * getTileSize() + (int)(0.5 * getTileSize()); }
+	inline const int getNextTileX() const { return m_NextTileX; }
+	inline const int getNextTileY() const { return m_NextTileY; }
 
 	// MGComponent
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
-	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec);
+	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const;
 
 	//Marking related
 	inline void mark(){ m_Marked = true; }
 	inline void unMark(){ m_Marked = false; }
-	inline bool isMarked(){ return m_Marked; }
+	inline bool isMarked() const { return m_Marked; }
 
 	//Update frequency related
 	inline void setTimeOfLastUpdate(unsigned int ms){ m_TimeOfLastUpdate = ms; }
 	inline const unsigned int getTimeOfLastUpdate(){ return m_TimeOfLastUpdate; }
 
 	//State related
-	inline const bool isCreated(){ return getCurrentState() == MOStateCreated; }
-	inline const bool isIdle(){ return getCurrentState() == MOStateIdle; }
-	inline const bool isMoving(){ return getCurrentState() == MOStateMoving; }
-	inline const bool isStuck(){ return getCurrentState() == MOStateStuck; }
-	inline const static bool anyMovingMO(){ return (m_MovingMOCounter > 0); }
-	inline const static int nMovingMO(){ return m_MovingMOCounter; }
+	inline const bool isCreated() const { return getCurrentState() == MOStateCreated; }
+	inline const bool isIdle() const { return getCurrentState() == MOStateIdle; }
+	inline const bool isMoving() const { return getCurrentState() == MOStateMoving; }
+	inline const bool isStuck() const { return getCurrentState() == MOStateStuck; }
+	inline const static bool anyMovingMO() { return (m_MovingMOCounter > 0); }
+	inline const static int nMovingMO() { return m_MovingMOCounter; }
 
 	// History related
 	void enableHistory(){ if(!m_HistoryEnabled) m_HistoryEnabled = true; }

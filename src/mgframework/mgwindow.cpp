@@ -153,6 +153,8 @@ void* MGWindow::loadBMPImage(std::string filename, bool transparent)
 	{
 		if(transparent)
 		{
+			// TODO: Make it possible to have other color codes than
+			// zero represent transparency
 			SDL_SetColorKey(loadedImage, SDL_TRUE, 0);
 		}
 		optimizedImage = SDL_CreateTextureFromSurface(m_Renderer, loadedImage);
