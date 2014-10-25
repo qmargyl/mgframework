@@ -16,11 +16,3 @@ MGPathItem::MGPathItem(int x, int y, double h)
 	m_Y = y;
 	m_Heuristic = h;
 }
-
-/*
-MGPathItem::MGPathItem(MGAtarNode node)
-{
-	m_X = node.getX(); 
-	m_Y = node.getY();
-}
-*/

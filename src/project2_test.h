@@ -6,6 +6,12 @@
 class Project2Test : public MGClassTester
 {
 private:
+	// test_MGPathItem
+	static void test_MGPathItem_createPathItemXY();
+	static void test_MGPathItem_createPathItemXYH();
+	static void test_MGPathItem_setH();
+	static void test_MGPathItem_equalCoordinate();
+
 	// test_MGComponent
 	static void test_MGComponent();
 	
@@ -93,6 +99,12 @@ private:
 public:
 	void runAll()
 	{
+		// test_MGPathItem
+		RUNTEST(test_MGPathItem_createPathItemXY);
+		RUNTEST(test_MGPathItem_createPathItemXYH);
+		RUNTEST(test_MGPathItem_setH);
+		RUNTEST(test_MGPathItem_equalCoordinate);
+
 		// test_MGComponent
 		RUNTEST(test_MGComponent);
 

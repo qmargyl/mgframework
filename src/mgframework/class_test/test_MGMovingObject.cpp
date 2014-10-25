@@ -74,19 +74,14 @@ void Project2Test::test_MGMovingObject_setBasicPathStartMoving()
 
 	// Initialize the MO
 	ASSERT_NOT_EQUAL(m.isCreated(), true, "MO was created in wrong state");
-	ASSERT_NOT_EQUAL(m.isIdle(), false, "MO was created in wrong state");
 	m.initialize();
 	m.setSpeed(0.5, 16); // Two tiles per second
-	ASSERT_NOT_EQUAL(m.isCreated(), false, "MO was created in wrong state");
 	ASSERT_NOT_EQUAL(m.isIdle(), true, "MO was created in wrong state");
 
 	// Set MO location
 	m.setTileXY(3, 3, &mgf);
 
-	ASSERT_NOT_EQUAL(m.isCreated(), false, "MO was created in wrong state");
 	ASSERT_NOT_EQUAL(m.isIdle(), true, "MO was created in wrong state");
-	ASSERT_NOT_EQUAL(m.isMoving(), false, "MO was created in wrong state");
-	ASSERT_NOT_EQUAL(m.isStuck(), false, "MO was created in wrong state");
 	ASSERT_NOT_EQUAL(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_NOT_EQUAL(m.getTileX(), 3, "MO created in wrong location");
 	ASSERT_NOT_EQUAL(m.getTileY(), 3, "MO created in wrong location");
@@ -100,10 +95,7 @@ void Project2Test::test_MGMovingObject_setBasicPathStartMoving()
 	m.setPath(map.calculatePath(MGFBASICPATH1, 3, 3, 4, 4));
 
 	// Verify
-	ASSERT_NOT_EQUAL(m.isCreated(), false, "MO in wrong state");
 	ASSERT_NOT_EQUAL(m.isIdle(), true, "MO in wrong state");
-	ASSERT_NOT_EQUAL(m.isMoving(), false, "MO in wrong state");
-	ASSERT_NOT_EQUAL(m.isStuck(), false, "MO in wrong state");
 	ASSERT_NOT_EQUAL(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_NOT_EQUAL(m.getTileX(), 3, "MO in wrong location");
 	ASSERT_NOT_EQUAL(m.getTileY(), 3, "MO in wrong location");
@@ -145,19 +137,14 @@ void Project2Test::test_MGMovingObject_setAStarPathStartMoving()
 
 	// Initialize the MO
 	ASSERT_NOT_EQUAL(m.isCreated(), true, "MO was created in wrong state");
-	ASSERT_NOT_EQUAL(m.isIdle(), false, "MO was created in wrong state");
 	m.initialize();
 	m.setSpeed(0.5, 16); // Two tiles per second
-	ASSERT_NOT_EQUAL(m.isCreated(), false, "MO was created in wrong state");
 	ASSERT_NOT_EQUAL(m.isIdle(), true, "MO was created in wrong state");
 
 	// Set MO location
 	m.setTileXY(3, 3, &mgf);
 
-	ASSERT_NOT_EQUAL(m.isCreated(), false, "MO was created in wrong state");
 	ASSERT_NOT_EQUAL(m.isIdle(), true, "MO was created in wrong state");
-	ASSERT_NOT_EQUAL(m.isMoving(), false, "MO was created in wrong state");
-	ASSERT_NOT_EQUAL(m.isStuck(), false, "MO was created in wrong state");
 	ASSERT_NOT_EQUAL(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_NOT_EQUAL(m.getTileX(), 3, "MO created in wrong location");
 	ASSERT_NOT_EQUAL(m.getTileY(), 3, "MO created in wrong location");
@@ -171,10 +158,7 @@ void Project2Test::test_MGMovingObject_setAStarPathStartMoving()
 	m.setPath(map.calculatePath(MGFASTARLIST, 3, 3, 4, 4));
 
 	// Verify
-	ASSERT_NOT_EQUAL(m.isCreated(), false, "MO in wrong state");
 	ASSERT_NOT_EQUAL(m.isIdle(), true, "MO in wrong state");
-	ASSERT_NOT_EQUAL(m.isMoving(), false, "MO in wrong state");
-	ASSERT_NOT_EQUAL(m.isStuck(), false, "MO in wrong state");
 	ASSERT_NOT_EQUAL(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_NOT_EQUAL(m.getTileX(), 3, "MO in wrong location");
 	ASSERT_NOT_EQUAL(m.getTileY(), 3, "MO in wrong location");
@@ -191,10 +175,7 @@ void Project2Test::test_MGMovingObject_setAStarPathStartMoving()
 
 	// Verify
 	m.printHistory();
-	ASSERT_NOT_EQUAL(m.isCreated(), false, "MO in wrong state");
-	ASSERT_NOT_EQUAL(m.isIdle(), false, "MO in wrong state");
 	ASSERT_NOT_EQUAL(m.isMoving(), true, "MO in wrong state");
-	ASSERT_NOT_EQUAL(m.isStuck(), false, "MO in wrong state");
 	ASSERT_NOT_EQUAL(m.anyMovingMO(), true, "No MO is moving");
 	ASSERT_NOT_EQUAL(m.getTileX(), 3, "MO in wrong location");
 	ASSERT_NOT_EQUAL(m.getTileY(), 3, "MO in wrong location");
@@ -216,10 +197,8 @@ void Project2Test::test_MGMovingObject_setAStarPathGetStuck()
 
 	// Initialize the MO
 	ASSERT_NOT_EQUAL(m.isCreated(), true, "MO was created in wrong state");
-	ASSERT_NOT_EQUAL(m.isIdle(), false, "MO was created in wrong state");
 	m.initialize();
 	m.setSpeed(0.5, 16); // Two tiles per second
-	ASSERT_NOT_EQUAL(m.isCreated(), false, "MO was created in wrong state");
 	ASSERT_NOT_EQUAL(m.isIdle(), true, "MO was created in wrong state");
 
 	// Set MO location and path
@@ -238,9 +217,6 @@ void Project2Test::test_MGMovingObject_setAStarPathGetStuck()
 
 	// Verify - Wanted destination tile is occupied -> MO is stuck.
 	m.printHistory();
-	ASSERT_NOT_EQUAL(m.isCreated(), false, "MO in wrong state");
-	ASSERT_NOT_EQUAL(m.isIdle(), false, "MO in wrong state");
-	ASSERT_NOT_EQUAL(m.isMoving(), false, "MO in wrong state");
 	ASSERT_NOT_EQUAL(m.isStuck(), true, "MO in wrong state");
 	ASSERT_NOT_EQUAL(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_NOT_EQUAL(m.getTileX(), 3, "MO in wrong location");
