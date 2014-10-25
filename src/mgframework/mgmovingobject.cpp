@@ -162,8 +162,7 @@ void MGMovingObject::update(MGFramework *w)
 	}
 	else
 	{
-		int timeSinceLastUpdate = MGF_GetExecTimeMS() - getTimeOfLastUpdate();
-		double d = m_Speed * (timeSinceLastUpdate / 1000.0);
+		int currentTimeSinceLastUpdate = MGF_GetExecTimeMS() - getTimeOfLastUpdate();
 
 		MGPathItem pathI = m_Path.front();
 		int x = pathI.getX();
@@ -181,7 +180,7 @@ void MGMovingObject::update(MGFramework *w)
 				changeState(MOStateStuck);
 				return;
 			}
-			else if(isStuck() && timeSinceLastUpdate > 10000)
+			else if(isStuck() && currentTimeSinceLastUpdate > 10000)
 			{
 				addToHistory("Stuck for too long");
 				MGFLOG_WARNING("MGMovingObject::update: MO stuck for too long");
@@ -231,6 +230,7 @@ void MGMovingObject::update(MGFramework *w)
 			{
 				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() + dx, getTileY() + dy), 0, getID()))
 				{
+					double d = getSpeed() * (currentTimeSinceLastUpdate / 1000.0);
 					setNextXY(getTileX() + dx, getTileY() + dy, w);
 					if(dx != 0 && dy != 0)
 					{

@@ -28,8 +28,8 @@ private:
 	
 
 	double getDistance(int wx, int wy);
-	static int getTileSize(){ return m_TileSize;}
-	double getSpeed() const { return m_Speed;}
+	static int getTileSize(){ return m_TileSize; }
+	inline double getSpeed() const { return m_Speed; }
 
 	//Marking related
 	bool m_Marked;
