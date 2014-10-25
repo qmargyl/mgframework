@@ -13,7 +13,14 @@ private:
 	static void test_MGPathItem_equalCoordinate();
 
 	// test_MGComponent
-	static void test_MGComponent();
+	static void test_MGComponent_generateID();
+	static void test_MGComponent_enableDisableLogging();
+	static void test_MGComponent_setOwner();
+	static void test_MGComponent_toStringBool();
+	static void test_MGComponent_toStringInt();
+	static void test_MGComponent_toStringUInt();
+	static void test_MGComponent_oneOf();
+	static void test_MGComponent_symbols();
 	
 	// test_MGMovingObject
 	static void test_MGMovingObject_initialize();
@@ -106,7 +113,14 @@ public:
 		RUNTEST(test_MGPathItem_equalCoordinate);
 
 		// test_MGComponent
-		RUNTEST(test_MGComponent);
+		RUNTEST(test_MGComponent_generateID);
+		RUNTEST(test_MGComponent_enableDisableLogging);
+		RUNTEST(test_MGComponent_setOwner);
+		RUNTEST(test_MGComponent_toStringBool);
+		RUNTEST(test_MGComponent_toStringInt);
+		RUNTEST(test_MGComponent_toStringUInt);
+		RUNTEST(test_MGComponent_oneOf);
+		RUNTEST(test_MGComponent_symbols);
 
 		// test_MGMovingObject
 		RUNTEST(test_MGMovingObject_initialize);
