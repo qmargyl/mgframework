@@ -55,11 +55,11 @@ enum eMGComponentConsoleCommand : unsigned int
 	MGComponent_LOGGING_BOOL,
 	MGComponent_MINIMAP_BOOL,
 	MGComponent_INPUT_BOOL,
-	MGComponent_DYNAMICFPS_BOOL,
+	//MGComponent_DYNAMICFPS_BOOL,
 	MGComponent_WINDOW_FULLSCREEN_BOOL,
 	// TODO: Implement this to replace all settings commands:
 	// MGComponent_CONFIGURE_PARAMLIST,
-	// configure -pathfinding <astar/basic> -fullscreen <on/off> -dynamicfps <on/off> -fps <int> -input <on/off> -logging <on/off> -minimap <on/off>
+	// configure -pathfinding <astar/basic> -fullscreen <on/off> -fps <int> -input <on/off> -logging <on/off> -minimap <on/off>
 
 	// Operators
 	MGComponent_SYMBOL_ASSIGNTO_INT,						//var1 = 32, var2 = getnumberofmo, etc
@@ -144,11 +144,11 @@ class MGFramework :public MGComponent
 		int m_PlayerNumber;
 
 		// FPS related
-		unsigned int m_FrameTime;			// Holds current frame time
+		//unsigned int m_FrameTime;			// Holds current frame time
 		unsigned int m_ActualFrameTime;	// Calculated for each frame
 		unsigned int m_FPS;				// Holds desired FPS
 		int m_DelayTime;			// Holds delay in ms for last frame
-		bool m_DynamicFPSEnabled;	// Feature activation
+		//bool m_DynamicFPSEnabled;	// Feature activation
 
 		// Mouse scrolling
 		bool m_FeatureMouseScrollingEnabled;	// Feature activation
@@ -227,8 +227,8 @@ class MGFramework :public MGComponent
 		void disableFeatureCenterOnMO(){ m_FeatureCenterOnMO = -1; }
 
 // ***	// Feature Dynamic FPS
-		bool featureDynamicFPSEnabled() const { return m_DynamicFPSEnabled; }
-		void setDynamicFPSEnabled(bool val){ m_DynamicFPSEnabled = val; }
+//		bool featureDynamicFPSEnabled() const { return m_DynamicFPSEnabled; }
+//		void setDynamicFPSEnabled(bool val){ m_DynamicFPSEnabled = val; }
 
 		// Exit application functionality
 		void quit();

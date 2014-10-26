@@ -27,11 +27,9 @@ MGFramework::MGFramework():
 	m_MiniMapEnabled(true),
 	m_MGFInstanceType(MGFSINGLEPLAYERINSTANCE),
 	m_PlayerNumber(MGF_NOPLAYER),
-	m_FrameTime(16),
 	m_ActualFrameTime(16),
 	m_FPS(60),
 	m_DelayTime(0),
-	m_DynamicFPSEnabled(true),
 	m_FeatureMouseScrollingEnabled(true),
 	m_FrameCountdownEnabled(false),
 	m_FrameNumber(0),
@@ -56,9 +54,7 @@ MGFramework::MGFramework():
 	m_SymbolTable(NULL),
 	m_SymbolTableTransfer(NULL)
 {
-	setDesiredFPS(20);
 	std::srand((int)std::time(0));
-
 	m_SymbolTable = new MGSymbolTable();
 	m_SymbolTableTransfer = new MGSymbolTable();
 }
@@ -642,7 +638,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 	while(processEvents())
 	{
 		// Calculate the current frame time (and implicitly FPS)..
-		m_FrameTime = MGF_GetExecTimeMS() - lastFrameTime; //number of ms from last frame was handled
+		//m_FrameTime = MGF_GetExecTimeMS() - lastFrameTime; //number of ms from last frame was handled
 		lastFrameTime = MGF_GetExecTimeMS();
 		frameStartTime = MGF_GetExecTimeMS();
 
@@ -687,13 +683,7 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 
 		// Sleep if there is time to spare..
 		m_DelayTime = (1000 / getDesiredFPS()) - (MGF_GetExecTimeMS() - frameStartTime);
-		if(m_DelayTime > 0)
-		{
-			//TODO: Change to SDL sleep method but move it into MGWindow class to collect all SDL dependencies there.
-#ifndef UNITTEST_LINUX
-			Sleep((DWORD)m_DelayTime);
-#endif
-		}
+		getWindow()->sleep(m_DelayTime);
 		m_ActualFrameTime = MGF_GetExecTimeMS() - frameStartTime;
 
 		// All tiles have been rendered at least once - start selective tile rendering
@@ -730,6 +720,7 @@ void MGFramework::handleMGFGameLogics()
 	}
 
 	// Example of how FPS can be controlled dynamically
+	/*
 	if(featureDynamicFPSEnabled())
 	{
 		if(getLastFrameDelayTime() > 10)
@@ -741,7 +732,7 @@ void MGFramework::handleMGFGameLogics()
 			setDesiredFPS(std::max(1, (int)(getFPS() - 1)));
 		}
 	}
-
+	*/
 	resetDrawnTilesCounter();
 }
 
@@ -1401,22 +1392,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			}
 			return true;
 		}
-
-		case MGComponent_DYNAMICFPS_BOOL:
-		{
-			if(toBool(cmdvec[1], s))
-			{
-				setDynamicFPSEnabled(true);
-				MGFLOG_INFO("Dynamic FPS enabled.");
-			}
-			else
-			{
-				setDynamicFPSEnabled(false);
-				MGFLOG_INFO("Dynamic FPS disabled.");
-			}
-			return true;
-		}
-
 		case MGComponent_RUNFRAMES_INT:
 		{
 			enableFrameCountdown();
@@ -1562,10 +1537,6 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 		{
 			return MGComponent_MINIMAP_BOOL;
 		}
-		else if(cmdvec[0] == "dynamicfps")
-		{
-			return MGComponent_DYNAMICFPS_BOOL;
-		}
 		else if(cmdvec[0] == "runframes")
 		{
 			return MGComponent_RUNFRAMES_INT;
@@ -1670,30 +1641,8 @@ eMGComponentConsoleCommand MGFramework::detectMGComponentConsoleCommand(const st
 
 unsigned int MGFramework::getFPS() const
 {
-	/*
-	// XXX: Will this give more accurate timing?
-	if(m_ActualFrameTime>0) return (unsigned int)(1000/m_ActualFrameTime);
+	if(m_ActualFrameTime > 0) return (unsigned int)(1000 / m_ActualFrameTime);
 	return getDesiredFPS();
-	*/
-
-	if(m_FrameTime > 0)
-	{
-		unsigned int result = (unsigned int)(1000 / m_FrameTime);
-		if((result > 0) && (result < (2 * getDesiredFPS())))
-		{
-			return result;
-		}
-		else
-		{
-			MGFLOG_WARNING("FPS incorrectly calculated (MGFramework::getIntFPS()): " << "m_FrameTime:" << m_FrameTime << ", result:" << result);
-			return getDesiredFPS();
-		}
-	}
-	else
-	{
-		MGFLOG_WARNING("FPS incorrectly calculated (MGFramework::getIntFPS()): " << m_FrameTime);
-		return getDesiredFPS();
-	}
 }
 
 

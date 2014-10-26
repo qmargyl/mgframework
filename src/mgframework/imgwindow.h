@@ -23,6 +23,7 @@ class IMGWindow
 		virtual void flipSurface() = 0;
 		virtual void activateFullscreen() = 0;
 		virtual void deactivateFullscreen() = 0;
+		virtual void sleep(int ms) = 0;
 
 		virtual void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height) = 0;
 		virtual void* loadBMPImage(std::string filename, bool transparent) = 0;

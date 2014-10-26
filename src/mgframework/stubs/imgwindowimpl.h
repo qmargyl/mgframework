@@ -31,6 +31,8 @@ class IMGWindowImpl : public IMGWindow
 		void deactivateFullscreen(){ m_deactivateFullscreenCounter++; }
 		unsigned int getDeactivateFullscreenCounter(){ return m_deactivateFullscreenCounter; }
 
+		void sleep(int ms){}
+
 		void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height){}
 		void* loadBMPImage(std::string filename, bool transparent){ return (void*)0; }
 		void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB){}
