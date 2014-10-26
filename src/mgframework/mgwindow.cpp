@@ -126,6 +126,13 @@ void MGWindow::deactivateFullscreen()
 	SDL_SetWindowFullscreen(m_Screen, 0);
 }
 
+void MGWindow::sleep(int ms)
+{
+	if(ms > 0)
+	{
+		SDL_Delay((Uint32)ms);
+	}
+}
 
 void MGWindow::drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {

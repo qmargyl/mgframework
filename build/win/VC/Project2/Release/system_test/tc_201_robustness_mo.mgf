@@ -1,7 +1,6 @@
 
 
 call testcase_mo
-dynamicfps off
 setfps 500
 call testcase_mo
 exit application
@@ -18,7 +17,6 @@ function ext_testcase_mo_normal
 end
 
 function ext_testcase_mo_nofps
-  dynamicfps off
   setfps 500
   call testcase_mo
   exit application

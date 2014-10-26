@@ -1047,6 +1047,7 @@ void Project2Test::test_002_basic_MO_stressing()
 	mgf.runConsoleCommand("runoneframe", &mgf, NULL);
 	mgf.runConsoleCommand("runoneframe", &mgf, NULL);
 	mgf.runConsoleCommand("runoneframe", &mgf, NULL);
+	mgf.runConsoleCommand("dump", &mgf, NULL);
 	mgf.runConsoleCommand("delete all mo -owner 2", &mgf, NULL);
 	mgf.runConsoleCommand("delete all mo -owner 1", &mgf, NULL);
 	mgf.runConsoleCommand("delete all mo -owner 3", &mgf, NULL);

@@ -42,6 +42,7 @@ class MGWindow : public IMGWindow
 		void flipSurface();
 		void activateFullscreen();
 		void deactivateFullscreen();
+		void sleep(int ms);
 
 		void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		void* loadBMPImage(std::string filename, bool transparent);
