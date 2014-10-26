@@ -54,7 +54,7 @@ class MGAStarNode
 		}
 		
 		// True if the states of @this and @node are equal
-		bool operator==(const MGAStarNode& node)
+		bool operator==(const MGAStarNode& node) const
 		{
 			return m_X == node.getX() && m_Y == node.getY();
 		}
@@ -70,7 +70,7 @@ class MGAStarNode
 		void setH(double h){ m_H = h; }
 		
 		// Under-estimate the remaining path length from @this to @node
-		double heuristic(const MGAStarNode &node)
+		double heuristic(const MGAStarNode &node) const
 		{
 			// Actual distance when there are no obstacles between start and goal
 			int dx = abs(getX() - node.getX());

@@ -133,14 +133,6 @@ public:
 		}
 	}
 
-	void markForRendering(int i)
-	{ 
-		if(i >= 0 && i < getHeight() * getWidth())
-		{
-			m_MarkedForRendering[i] = true; 
-		}
-	}
-
 	bool isMarkedForRendering(int x, int y)
 	{
 		return x >= 0 && y >= 0 && x < getWidth() && y < getHeight() && m_MarkedForRendering[y * getWidth() + x];

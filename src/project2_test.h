@@ -104,7 +104,7 @@ private:
 	static void test_002_basic_MO_stressing();
 
 public:
-	void runAll()
+	void runAll() const
 	{
 		// test_MGPathItem
 		RUNTEST(test_MGPathItem_createPathItemXY);

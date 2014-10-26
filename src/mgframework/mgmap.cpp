@@ -90,9 +90,9 @@ int MGMap::getTileIndex(int clickX, int clickY)
 {
 	MGFLOG_INFO("MGMap::getTileIndex(" << clickX << ", " << clickY << ")");
 	if(	clickX > getLeftEdge() &&
-		clickX < (getWindowWidth()-getRightEdge()) && 
-		clickY > getTopEdge() && 
-		clickY < (getWindowHeight()-getBottomEdge()))
+		clickX < (getWindowWidth() - getRightEdge()) &&
+		clickY > getTopEdge() &&
+		clickY < (getWindowHeight() - getBottomEdge()))
 	{
 		int x = (clickX - getScrollX()) / getTileWidth();
 		int y = (clickY - getScrollY()) / getTileHeight();
@@ -112,8 +112,8 @@ void MGMap::mouseScrollingRelease(int x, int y)
 void MGMap::mouseScrollingClick(int x, int y)
 {
 	m_MouseScrollingOngoing = true;
-	m_MouseScrollingXClick=x;
-	m_MouseScrollingYClick=y;
+	m_MouseScrollingXClick = x;
+	m_MouseScrollingYClick = y;
 }
 
 bool MGMap::mouseScrollingUpdate(int x, int y)
@@ -183,7 +183,7 @@ bool MGMap::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 			int y = w->toInt(cmdvec[3], s);
 			int tx = w->toInt(cmdvec[4], s);
 			int ty = w->toInt(cmdvec[5], s);
-			reInit(x,y,tx,ty);
+			reInit(x, y, tx, ty);
 			return true;
 		}
 
@@ -325,9 +325,9 @@ std::list<MGPathItem> MGMap::calculatePath(eMGFPathType pathType, int ax, int ay
 		if(loggingEnabled())
 		{
 			MGFLOG_INFO("Path:");
-			for (std::list<MGPathItem>::iterator it=path.begin(); it != path.end(); ++it)
+			for (std::list<MGPathItem>::iterator it = path.begin(); it != path.end(); ++it)
 			{
-				MGFLOG_INFO("(" << (*it).getX() << ", " << (*it).getY() << ")");
+				MGFLOG_INFO("(" << it->getX() << ", " << it->getY() << ")");
 			}
 		}
 	}

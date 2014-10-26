@@ -38,7 +38,7 @@ class MGClassTester
 private:
 
 public:
-	virtual void runAll() = 0;
+	virtual void runAll() const = 0;
 
 	// Log filtering/comparing/evaluation
 	static void logEval(std::string logFileName);
