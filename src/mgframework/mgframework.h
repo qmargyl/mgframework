@@ -55,7 +55,6 @@ enum eMGComponentConsoleCommand : unsigned int
 	MGComponent_LOGGING_BOOL,
 	MGComponent_MINIMAP_BOOL,
 	MGComponent_INPUT_BOOL,
-	//MGComponent_DYNAMICFPS_BOOL,
 	MGComponent_WINDOW_FULLSCREEN_BOOL,
 	// TODO: Implement this to replace all settings commands:
 	// MGComponent_CONFIGURE_PARAMLIST,
@@ -144,11 +143,9 @@ class MGFramework :public MGComponent
 		int m_PlayerNumber;
 
 		// FPS related
-		//unsigned int m_FrameTime;			// Holds current frame time
 		unsigned int m_ActualFrameTime;	// Calculated for each frame
 		unsigned int m_FPS;				// Holds desired FPS
 		int m_DelayTime;			// Holds delay in ms for last frame
-		//bool m_DynamicFPSEnabled;	// Feature activation
 
 		// Mouse scrolling
 		bool m_FeatureMouseScrollingEnabled;	// Feature activation
@@ -226,10 +223,6 @@ class MGFramework :public MGComponent
 		void enableFeatureCenterOnMO(int moindex = 0){ m_FeatureCenterOnMO = moindex; }
 		void disableFeatureCenterOnMO(){ m_FeatureCenterOnMO = -1; }
 
-// ***	// Feature Dynamic FPS
-//		bool featureDynamicFPSEnabled() const { return m_DynamicFPSEnabled; }
-//		void setDynamicFPSEnabled(bool val){ m_DynamicFPSEnabled = val; }
-
 		// Exit application functionality
 		void quit();
 		bool getQuitFlag() const { return m_Quit; }
@@ -259,28 +252,9 @@ class MGFramework :public MGComponent
 		inline void setFrameStartY(int y){ m_YFrameStart = y; }
 		inline void setFrameEndX(int x){ m_XFrameEnd = x; }
 		inline void setFrameEndY(int y){ m_YFrameEnd = y; }
-
-		void activateFraming(int x, int y)
-		{
-			setFrameStartX(x); 
-			setFrameStartY(y); 
-			setFrameEndX(x); 
-			setFrameEndY(y); 
-			m_FramingOngoing = true;
-		}
-
-		void deactivateFraming()
-		{ 
-			m_FramingOngoing = false;
-			setRenderAllTiles();
-		}
-
-		inline void updateFraming(int x, int y)
-		{
-			setFrameEndX(x); 
-			setFrameEndY(y);
-			setRenderAllTiles();
-		}
+		inline void activateFraming(int x, int y);
+		inline void deactivateFraming();
+		inline void updateFraming(int x, int y);
 
 		// Execution, game logics..
 		void handleMGFGameLogics();
@@ -289,15 +263,15 @@ class MGFramework :public MGComponent
 		void deleteAllMO();
 		void addMO(int n);
 		unsigned int getNumberOfMO() const { return (unsigned int)m_MO.size(); }
-		void deleteMO(std::list<MGMovingObject>::iterator it);		// Deletes an MO
-		bool setupMO(std::list<MGMovingObject>::iterator it, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2);		// Setups the MO
+		void deleteMO(std::list<MGMovingObject>::iterator it);
+		bool setupMO(std::list<MGMovingObject>::iterator it, int x, int y, unsigned int owner, int speed, int x1, int y1, int x2, int y2);
 
 		// SO related
 		void deleteAllSO();
 		void addSO(int n);
 		unsigned int getNumberOfSO() const { return (unsigned int)m_SO.size(); }
 		void deleteSO(std::list<MGStationaryObject>::iterator it);
-		bool setupSO(std::list<MGStationaryObject>::iterator it, int x, int y);		// Setups the SO
+		bool setupSO(std::list<MGStationaryObject>::iterator it, int x, int y);
 
 		// PE related
 		void deleteAllPE();
@@ -306,10 +280,7 @@ class MGFramework :public MGComponent
 		void deletePE(int index);
 
 		// MO selection related
-		int getNumberOfMarkedMO() const
-		{ 
-			return std::min(m_MarkedMOs, getNumberOfMO());
-		}
+		int getNumberOfMarkedMO() const { return std::min(m_MarkedMOs, getNumberOfMO()); }
 
 		// Event related
 #ifndef UNITTEST_LINUX
@@ -321,14 +292,14 @@ class MGFramework :public MGComponent
 		virtual void draw() = 0;
 		virtual void handleGameLogics() = 0;
 
-// ***	// Feature Selective MO slection
+// ***	// Feature MO selection for own MO
 		inline void enableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = true; }
 		inline void disableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = false; }
 		inline bool featureOnlySelectOwnedMOEnabled() const { return m_OnlySelectOwnedMO; }
 
 		// Graphics wrapper
-		void drawTile(void* imageSurface, int srcX, int srcY, int dstX, int dstY);
-		void drawTile(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
+		void drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY);
+		void drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
 
 		// Controlling game speed and execution
 		inline unsigned int getFPS() const;
@@ -374,7 +345,7 @@ class MGFramework :public MGComponent
 
 		// Client/Server
 		void setInstanceType(eMGFInstanceType it){ m_MGFInstanceType = it; }
-		eMGFInstanceType getInstanceType(){ return m_MGFInstanceType; }
+		eMGFInstanceType getInstanceType() const { return m_MGFInstanceType; }
 
 		// Console command handling
 		bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);

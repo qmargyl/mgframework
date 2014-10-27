@@ -719,20 +719,6 @@ void MGFramework::handleMGFGameLogics()
 		it->update(this);
 	}
 
-	// Example of how FPS can be controlled dynamically
-	/*
-	if(featureDynamicFPSEnabled())
-	{
-		if(getLastFrameDelayTime() > 10)
-		{
-			setDesiredFPS(getFPS() + 1);
-		}
-		else if(getLastFrameDelayTime() < 7)
-		{
-			setDesiredFPS(std::max(1, (int)(getFPS() - 1)));
-		}
-	}
-	*/
 	resetDrawnTilesCounter();
 }
 
@@ -751,6 +737,30 @@ void MGFramework::activateConsole()
 	disableTyping();
 }
 
+
+void MGFramework::activateFraming(int x, int y)
+{
+	setFrameStartX(x); 
+	setFrameStartY(y); 
+	setFrameEndX(x); 
+	setFrameEndY(y); 
+	m_FramingOngoing = true;
+}
+
+
+void MGFramework::deactivateFraming()
+{ 
+	m_FramingOngoing = false;
+	setRenderAllTiles();
+}
+
+
+void MGFramework::updateFraming(int x, int y)
+{
+	setFrameEndX(x); 
+	setFrameEndY(y);
+	setRenderAllTiles();
+}
 
 
 void MGFramework::symbolAssignTo(std::string sym, std::string val, MGSymbolTable *s)
@@ -1925,14 +1935,14 @@ void MGFramework::quit()
 }
 
 
-void MGFramework::drawTile(void* imageSurface, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH)
+void MGFramework::drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH)
 {
 	increaseDrawnTilesCounter();
 	getWindow()->drawSprite(imageSurface, srcX, srcY, dstX, dstY, tileW, tileH);
 }
 
 
-void MGFramework::drawTile(void* imageSurface, int srcX, int srcY, int dstX, int dstY)
+void MGFramework::drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY)
 {
 	increaseDrawnTilesCounter();
 	getWindow()->drawSprite(imageSurface, srcX, srcY, dstX, dstY, m_Map.getTileWidth(), m_Map.getTileHeight());
