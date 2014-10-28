@@ -1938,14 +1938,14 @@ void MGFramework::quit()
 void MGFramework::drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH)
 {
 	increaseDrawnTilesCounter();
-	getWindow()->drawSprite(imageSurface, srcX, srcY, dstX, dstY, tileW, tileH);
+	getWindow()->drawSprite(imageTexture, srcX, srcY, dstX, dstY, tileW, tileH);
 }
 
 
 void MGFramework::drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY)
 {
 	increaseDrawnTilesCounter();
-	getWindow()->drawSprite(imageSurface, srcX, srcY, dstX, dstY, m_Map.getTileWidth(), m_Map.getTileHeight());
+	getWindow()->drawSprite(imageTexture, srcX, srcY, dstX, dstY, m_Map.getTileWidth(), m_Map.getTileHeight());
 }
 
 
