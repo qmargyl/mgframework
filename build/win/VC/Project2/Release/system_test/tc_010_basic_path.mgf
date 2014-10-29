@@ -3,14 +3,7 @@
 
 call testcase_1
 call testcase_2
-
-
-// After running all testcases, exit.. (not needed since testcase_2 will exit)
-delete all mo
-delete all pe
-input on
-exit application
-
+exit application // this is also called from testcase_2
 
 // We should never reach this point, generate error
 delete all mo
@@ -19,163 +12,157 @@ expect getnumberofmo 0
 
 
 
-
-
 // *******************************************************************
 // Test case 2 - Create some MO on a 128x128 map, set their destinations 
 // and run some frames, not enough for MO to reach their destinations.
-// The test is to see if the MO can find paths or not
+// The test is to see if the MO can find paths or not when blocked by
+// other MO
 //
 // *******************************************************************
 function testcase_2
-input off
-delete all pe
-expect getnumberofpe 0
-delete all mo
-expect getnumberofmo 0
-map logging off
-map setsize 128 128 32 32
+  input off
+  delete all pe
+  expect getnumberofpe 0
+  delete all mo
+  expect getnumberofmo 0
+  map logging off
+  map setsize 128 128 32 32
 
-// These MO will be given destinations..
-delete all mo
-add mo 1 -x 127 -y 127 -speed 6
-add mo 1 -x 75 -y 75 -speed 6
-add mo 1 -x 95 -y 127 -speed 6
-add mo 1 -x 127 -y 95 -speed 6
-add mo 1 -x 75 -y 127 -speed 6
-add mo 1 -x 127 -y 75 -speed 6
-add mo 1 -x 55 -y 127 -speed 6
-add mo 1 -x 127 -y 55 -speed 6
-add mo 1 -x 25 -y 127 -speed 6
-add mo 1 -x 127 -y 25 -speed 6
-add mo 1 -x 5 -y 127 -speed 6
-add mo 1 -x 127 -y 5 -speed 6
+  // These MO will be given destinations..
+  delete all mo
+  add mo 1 -x 127 -y 127 -speed 6
+  add mo 1 -x 75 -y 75 -speed 6
+  add mo 1 -x 95 -y 127 -speed 6
+  add mo 1 -x 127 -y 95 -speed 6
+  add mo 1 -x 75 -y 127 -speed 6
+  add mo 1 -x 127 -y 75 -speed 6
+  add mo 1 -x 55 -y 127 -speed 6
+  add mo 1 -x 127 -y 55 -speed 6
+  add mo 1 -x 25 -y 127 -speed 6
+  add mo 1 -x 127 -y 25 -speed 6
+  add mo 1 -x 5 -y 127 -speed 6
+  add mo 1 -x 127 -y 5 -speed 6
 
+  // These MO are used to block the ones with destinations
+  add mo 2000
 
-// These MO are used to block the ones with destinations
-add mo 2000
+  mo 0 setdestination random_x random_y
+  mo 1 setdestination random_x random_y
+  mo 2 setdestination random_x random_y
+  mo 3 setdestination random_x random_y
+  mo 4 setdestination random_x random_y
+  mo 5 setdestination random_x random_y
+  mo 6 setdestination random_x random_y
+  mo 7 setdestination random_x random_y
+  mo 8 setdestination random_x random_y
+  mo 9 setdestination random_x random_y
+  mo 10 setdestination random_x random_y
+  mo 11 setdestination random_x random_y
 
-mo 0 setdestination random_x random_y
-mo 1 setdestination random_x random_y
-mo 2 setdestination random_x random_y
-mo 3 setdestination random_x random_y
-mo 4 setdestination random_x random_y
-mo 5 setdestination random_x random_y
-mo 6 setdestination random_x random_y
-mo 7 setdestination random_x random_y
-mo 8 setdestination random_x random_y
-mo 9 setdestination random_x random_y
-mo 10 setdestination random_x random_y
-mo 11 setdestination random_x random_y
+  call runframes_400
 
-call runframes_400
-
-delete all mo
-delete all pe
-input on
-exit application
+  delete all mo
+  delete all pe
+  input on
+  exit application
 end
 
 
 // *******************************************************************
 // Test case 1 - Create 50 MO on a 128x128 map, set their destinations 
-// and run enough frames so that they will reach their destinations.
-// The test is to see if the MO can reach their destinations or not.
+// and run enough frames to see the MO move.
 //
 // *******************************************************************
 function testcase_1
 
-input off
-delete all pe
-expect getnumberofpe 0
-delete all mo
-expect getnumberofmo 0
-delete all mo
-add mo 50 -owner 1 -speed 8
-map logging off
-map setsize 128 128 32 32
+  input off
+  delete all pe
+  expect getnumberofpe 0
+  delete all mo
+  expect getnumberofmo 0
+  delete all mo
+  add mo 50 -owner 1 -speed 8
+  map logging off
+  map setsize 128 128 32 32
 
-mo 0 setdestination 0 0
-mo 1 setdestination 10 10
-mo 2 setdestination 3 10
-mo 3 setdestination 10 3
-mo 4 setdestination 5 5
-mo 5 setdestination 2 10
-mo 6 setdestination 10 2
-mo 7 setdestination 4 4
-mo 8 setdestination 5 5
-mo 9 setdestination 7 2
+  mo 0 setdestination 0 0
+  mo 1 setdestination 10 10
+  mo 2 setdestination 3 10
+  mo 3 setdestination 10 3
+  mo 4 setdestination 5 5
+  mo 5 setdestination 2 10
+  mo 6 setdestination 10 2
+  mo 7 setdestination 4 4
+  mo 8 setdestination 5 5
+  mo 9 setdestination 7 2
 
-x1 = random_x
-y1 = random_y
-x2 = random_x
-y2 = random_y
-x3 = random_x
-y3 = random_y
-x4 = random_x
-y4 = random_y
-x5 = random_x
-y5 = random_y
-x6 = random_x
-y6 = random_y
-x7 = random_x
-y7 = random_y
-x8 = random_x
-y8 = random_y
-x9 = random_x
-y9 = random_y
-x10 = random_x
-y10 = random_y
+  x1 = random_x
+  y1 = random_y
+  x2 = random_x
+  y2 = random_y
+  x3 = random_x
+  y3 = random_y
+  x4 = random_x
+  y4 = random_y
+  x5 = random_x
+  y5 = random_y
+  x6 = random_x
+  y6 = random_y
+  x7 = random_x
+  y7 = random_y
+  x8 = random_x
+  y8 = random_y
+  x9 = random_x
+  y9 = random_y
+  x10 = random_x
+  y10 = random_y
 
-mo 10 setdestination x1 y1
-mo 11 setdestination x2 y2
-mo 12 setdestination x3 y3
-mo 13 setdestination x4 y4
-mo 14 setdestination x5 y5
-mo 15 setdestination x6 y6
-mo 16 setdestination x7 y7
-mo 17 setdestination x8 y8
-mo 18 setdestination x9 y9
-mo 19 setdestination x10 y10
+  mo 10 setdestination x1 y1
+  mo 11 setdestination x2 y2
+  mo 12 setdestination x3 y3
+  mo 13 setdestination x4 y4
+  mo 14 setdestination x5 y5
+  mo 15 setdestination x6 y6
+  mo 16 setdestination x7 y7
+  mo 17 setdestination x8 y8
+  mo 18 setdestination x9 y9
+  mo 19 setdestination x10 y10
 
-mo 20 setdestination random_x random_y
-mo 21 setdestination random_x random_y
-mo 22 setdestination random_x random_y
-mo 23 setdestination random_x random_y
-mo 24 setdestination random_x random_y
-mo 25 setdestination random_x random_y
-mo 26 setdestination random_x random_y
-mo 27 setdestination random_x random_y
-mo 28 setdestination random_x random_y
-mo 29 setdestination random_x random_y
+  mo 20 setdestination random_x random_y
+  mo 21 setdestination random_x random_y
+  mo 22 setdestination random_x random_y
+  mo 23 setdestination random_x random_y
+  mo 24 setdestination random_x random_y
+  mo 25 setdestination random_x random_y
+  mo 26 setdestination random_x random_y
+  mo 27 setdestination random_x random_y
+  mo 28 setdestination random_x random_y
+  mo 29 setdestination random_x random_y
 
-mo 30 setdestination random_x random_y
-mo 31 setdestination random_x random_y
-mo 32 setdestination random_x random_y
-mo 33 setdestination random_x random_y
-mo 34 setdestination random_x random_y
-mo 35 setdestination random_x random_y
-mo 36 setdestination random_x random_y
-mo 37 setdestination random_x random_y
-mo 38 setdestination random_x random_y
-mo 39 setdestination random_x random_y
+  mo 30 setdestination random_x random_y
+  mo 31 setdestination random_x random_y
+  mo 32 setdestination random_x random_y
+  mo 33 setdestination random_x random_y
+  mo 34 setdestination random_x random_y
+  mo 35 setdestination random_x random_y
+  mo 36 setdestination random_x random_y
+  mo 37 setdestination random_x random_y
+  mo 38 setdestination random_x random_y
+  mo 39 setdestination random_x random_y
 
-mo 40 setdestination random_x random_y
-mo 41 setdestination random_x random_y
-mo 42 setdestination random_x random_y
-mo 43 setdestination random_x random_y
-mo 44 setdestination random_x random_y
-mo 45 setdestination random_x random_y
-mo 46 setdestination random_x random_y
-mo 47 setdestination random_x random_y
-mo 48 setdestination random_x random_y
-mo 49 setdestination random_x random_y
+  mo 40 setdestination random_x random_y
+  mo 41 setdestination random_x random_y
+  mo 42 setdestination random_x random_y
+  mo 43 setdestination random_x random_y
+  mo 44 setdestination random_x random_y
+  mo 45 setdestination random_x random_y
+  mo 46 setdestination random_x random_y
+  mo 47 setdestination random_x random_y
+  mo 48 setdestination random_x random_y
+  mo 49 setdestination random_x random_y
 
-// Run 1600 frames
-call runframes_400
-call runframes_400
-call runframes_400
-call runframes_400
+  // Run 400 frames
+  call runframes_400
 
 end
 
@@ -187,426 +174,36 @@ expect getnumberofmo 0
 
 
 function runframes_400
-
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-
-
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-
-
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-
-
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-
-
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-
-
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-
-
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-
-
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-runoneframe
-
+  call runframes_50
+  call runframes_50
+  call runframes_50
+  call runframes_50
+  call runframes_50
+  call runframes_50
+  call runframes_50
+  call runframes_50
 end
 
+function runframes_50
+  call runframes_10
+  call runframes_10
+  call runframes_10
+  call runframes_10
+  call runframes_10
+end
 
-
+function runframes_10
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+  runoneframe
+end
 
 
 

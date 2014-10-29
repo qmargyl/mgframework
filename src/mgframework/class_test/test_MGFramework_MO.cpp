@@ -1,5 +1,6 @@
 #include "../../project2_test.h"
 #include "../stubs/mgframeworkstub.h"
+#include "../stubs/imgwindowimpl.h"
 
 
 void Project2Test::test_MGFramework_createMO()
@@ -400,6 +401,8 @@ void Project2Test::test_MGFramework_oneMOTakesAStep()
 {
 	// Setup
 	MGFrameworkStub mgf;
+	IMGWindowImpl win;
+	mgf.setWindowProperties(1024, 768, 32, false, std::string("test"), &win);
 	mgf.init(16, 16, 32, 32);
 	mgf.runConsoleCommand("add mo 1 -x 10 -y 10", &mgf, NULL);
 	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 1, "MGF failed to create MO");

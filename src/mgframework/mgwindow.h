@@ -37,12 +37,14 @@ class MGWindow : public IMGWindow
 		bool setProperties(int width, int height, int bpp, bool fullscreen, const std::string &title);
 		bool setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title);
 		void setSize(int width, int height){ m_Height = height; m_Width = width; }
-		int getHeight(){ return m_Height; }
-		int getWidth(){ return m_Width; }
+		int getHeight() const { return m_Height; }
+		int getWidth() const { return m_Width; }
 		void flipSurface();
 		void activateFullscreen();
 		void deactivateFullscreen();
+
 		void sleep(int ms);
+		unsigned int getExecTimeMS() const;
 
 		void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		void* loadBMPImage(std::string filename, bool transparent);

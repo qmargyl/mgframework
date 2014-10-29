@@ -19,8 +19,8 @@ class IMGWindowImpl : public IMGWindow
 		bool setProperties(int width, int height, int bpp, bool fullscreen, const std::string &title){ return true; }
 		bool setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title){ return true; }
 		void setSize(int width, int height){}
-		int getHeight(){ return 768; }
-		int getWidth(){ return 1024; }
+		int getHeight() const { return 768; }
+		int getWidth() const { return 1024; }
 
 		void flipSurface(){ m_flipSurfaceCounter++; }
 		unsigned int getFlipSurfaceCounter(){ return m_flipSurfaceCounter; }
@@ -32,6 +32,7 @@ class IMGWindowImpl : public IMGWindow
 		unsigned int getDeactivateFullscreenCounter(){ return m_deactivateFullscreenCounter; }
 
 		void sleep(int ms){}
+		unsigned int getExecTimeMS() const { return (unsigned int)0; }
 
 		void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height){}
 		void* loadBMPImage(std::string filename, bool transparent){ return (void*)0; }

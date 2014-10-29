@@ -196,10 +196,6 @@ class MGFramework :public MGComponent
 		IMGWindow *m_Window;
 
 	protected:
-		IMGWindow *getWindow()
-		{
-			return m_Window;
-		}
 
 		std::list<MGMovingObject> m_MO;			// Moving Objects
 		MGPeriodicEvent *m_PE;					// Periodic Events
@@ -332,6 +328,11 @@ class MGFramework :public MGComponent
 		// drawn, and by moving objects.
 		MGMap m_Map;
 
+		IMGWindow *getWindow()
+		{
+			return m_Window;
+		}
+
 		// Initialization
 		virtual bool init(int w, int h, int tw, int th) = 0;	// Force a derived sub-class to implement this as it is not framework related.
 		bool setWindowProperties(int width, int height, int bpp, bool fullscreen, const std::string &title, IMGWindow *win);
@@ -381,7 +382,7 @@ class MGFramework :public MGComponent
 		bool isSelectiveTileRenderingActive() const { return m_SelectiveTileRendering; }
 
 		// Dumping information to file for debugging purposes
-		void dump() const;
+		void dump();
 
 		static int initializeWinsock(WORD wVersionRequested);
 

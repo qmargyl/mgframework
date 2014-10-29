@@ -10,7 +10,7 @@ int MGMovingObject::m_MovingMOCounter = 0;
 MGMovingObject::MGMovingObject()
 {
 	m_HistoryEnabled = false;
-	setTimeOfLastUpdate(MGF_GetExecTimeMS());
+	setTimeOfLastUpdate((unsigned int)(1000.0 * (((float)clock()) / CLOCKS_PER_SEC)));
 	m_FinishingLastMove = false;
 	m_Marked = false;
 	m_TileX = 0;
@@ -37,7 +37,7 @@ MGMovingObject::~MGMovingObject()
 
 void MGMovingObject::initialize()
 {
-	setTimeOfLastUpdate(MGF_GetExecTimeMS());
+	setTimeOfLastUpdate((unsigned int)(1000.0 * (((float)clock()) / CLOCKS_PER_SEC)));
 	m_FinishingLastMove = false;
 	m_Marked = false;
 	m_TileX = 0;
@@ -162,7 +162,7 @@ void MGMovingObject::update(MGFramework *w)
 	}
 	else
 	{
-		int currentTimeSinceLastUpdate = MGF_GetExecTimeMS() - getTimeOfLastUpdate();
+		unsigned int currentTimeSinceLastUpdate = w->getWindow()->getExecTimeMS() - getTimeOfLastUpdate();
 
 		MGPathItem pathI = m_Path.front();
 		int x = pathI.getX();
@@ -176,7 +176,7 @@ void MGMovingObject::update(MGFramework *w)
 			{
 				//MGFLOG_WARNING("MGMovingObject::update concluded that the path is blocked. Will try to find a new Path...");
 				setPath(w->m_Map.calculatePath(m_PathFindingAlgorithm, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
-				setTimeOfLastUpdate(MGF_GetExecTimeMS());
+				setTimeOfLastUpdate(w->getWindow()->getExecTimeMS());
 				changeState(MOStateStuck);
 				return;
 			}
@@ -192,7 +192,7 @@ void MGMovingObject::update(MGFramework *w)
 		else
 		{
 			setDestTileXY(x, y);
-			setTimeOfLastUpdate(MGF_GetExecTimeMS());
+			setTimeOfLastUpdate(w->getWindow()->getExecTimeMS());
 			if(isStuck())
 			{
 				changeState(MOStateMoving);
@@ -276,7 +276,7 @@ void MGMovingObject::update(MGFramework *w)
 			{
 				m_Y = dy * getTileSize();
 			}
-			setTimeOfLastUpdate(MGF_GetExecTimeMS());
+			setTimeOfLastUpdate(w->getWindow()->getExecTimeMS());
 		}
 		else if(!isStuck())
 		{

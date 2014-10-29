@@ -134,6 +134,11 @@ void MGWindow::sleep(int ms)
 	}
 }
 
+unsigned int MGWindow::getExecTimeMS() const
+{
+	return SDL_GetTicks();
+}
+
 void MGWindow::drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {
 	SDL_Rect srcRect;

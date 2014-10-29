@@ -18,12 +18,14 @@ class IMGWindow
 		virtual bool setProperties(int width, int height, int bpp, bool fullscreen, const std::string &title) = 0;
 		virtual bool setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title) = 0;
 		virtual void setSize(int width, int height) = 0;
-		virtual int getHeight() = 0;
-		virtual int getWidth() = 0;
+		virtual int getHeight() const = 0;
+		virtual int getWidth() const = 0;
 		virtual void flipSurface() = 0;
 		virtual void activateFullscreen() = 0;
 		virtual void deactivateFullscreen() = 0;
+
 		virtual void sleep(int ms) = 0;
+		virtual unsigned int getExecTimeMS() const = 0;
 
 		virtual void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height) = 0;
 		virtual void* loadBMPImage(std::string filename, bool transparent) = 0;

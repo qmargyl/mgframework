@@ -632,15 +632,14 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 	unsigned int frameStartTime = 0; 
 	if(!runOneFrame) m_DelayTime = 0;
 	// Assume an initial value of m_FrameTime of 1000/getDesiredFPS().
-	unsigned int lastFrameTime = MGF_GetExecTimeMS() - (1000 / getDesiredFPS()); // MGF_GetExecTimeMS() - lastFrameTime cannot be zero.
+	unsigned int lastFrameTime = getWindow()->getExecTimeMS() - (1000 / getDesiredFPS()); // MGF_GetExecTimeMS() - lastFrameTime cannot be zero.
 
 	// Frame loop (processEvents, handleGameLogics, draw)
 	while(processEvents())
 	{
 		// Calculate the current frame time (and implicitly FPS)..
-		//m_FrameTime = MGF_GetExecTimeMS() - lastFrameTime; //number of ms from last frame was handled
-		lastFrameTime = MGF_GetExecTimeMS();
-		frameStartTime = MGF_GetExecTimeMS();
+		lastFrameTime = getWindow()->getExecTimeMS();
+		frameStartTime = getWindow()->getExecTimeMS();
 
 		// Handle all calculations and draw current frame..
 
@@ -682,9 +681,9 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 		}
 
 		// Sleep if there is time to spare..
-		m_DelayTime = (1000 / getDesiredFPS()) - (MGF_GetExecTimeMS() - frameStartTime);
+		m_DelayTime = (1000 / getDesiredFPS()) - (getWindow()->getExecTimeMS() - frameStartTime);
 		getWindow()->sleep(m_DelayTime);
-		m_ActualFrameTime = MGF_GetExecTimeMS() - frameStartTime;
+		m_ActualFrameTime = getWindow()->getExecTimeMS() - frameStartTime;
 
 		// All tiles have been rendered at least once - start selective tile rendering
 		unsetRenderAllTiles();
@@ -1931,7 +1930,7 @@ void MGFramework::deletePE(int index)
 void MGFramework::quit()
 { 
 	m_Quit = true; 
-	std::cout << "Execution time: " << MGF_GetExecTimeMS() << std::endl;
+	std::cout << "Execution time: " << getWindow()->getExecTimeMS() << std::endl;
 }
 
 
@@ -2203,9 +2202,9 @@ void MGFramework::countUnMark()
 	}
 }
 
-void MGFramework::dump() const
+void MGFramework::dump()
 {
-	std::string fileName = "dump_" + toString(MGF_GetExecTimeMS()) + ".html";
+	std::string fileName = "dump_" + toString(getWindow()->getExecTimeMS()) + ".html";
 	std::ofstream outFile;
 	outFile.open(fileName.c_str(), std::ios_base::out);
 
