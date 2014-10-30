@@ -14,12 +14,12 @@
 	} while(0)
 
 #ifndef UNITTEST_LINUX
-  #define RUNTEST(f) do{ \
+	#define RUNTEST(f) do{ \
 		std::cout << "[TC] " << #f << std::endl; \
 		f ## (); \
 	} while(0)
 #else
-  #define RUNTEST(f) do{ \
+	#define RUNTEST(f) do{ \
 		std::cout << "[TC] " << #f << std::endl; \
 		f(); \
 	} while(0)

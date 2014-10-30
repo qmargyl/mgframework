@@ -9,11 +9,15 @@ class IMGWindowImpl : public IMGWindow
 		unsigned int m_flipSurfaceCounter;
 		unsigned int m_activateFullscreenCounter;
 		unsigned int m_deactivateFullscreenCounter;
+
+		// Simulated time
+		unsigned int m_currentTime;
 	public:
 		IMGWindowImpl()
 		:	m_flipSurfaceCounter(0),
 			m_activateFullscreenCounter(0),
-			m_deactivateFullscreenCounter(0)
+			m_deactivateFullscreenCounter(0),
+			m_currentTime(0)
 		{}
 		bool createWindow(){ return true; }
 		bool setProperties(int width, int height, int bpp, bool fullscreen, const std::string &title){ return true; }
@@ -32,7 +36,8 @@ class IMGWindowImpl : public IMGWindow
 		unsigned int getDeactivateFullscreenCounter(){ return m_deactivateFullscreenCounter; }
 
 		void sleep(int ms){}
-		unsigned int getExecTimeMS() const { return (unsigned int)0; }
+		unsigned int getExecTimeMS() const { return m_currentTime; }
+		void elapseTime(unsigned int ms){ m_currentTime += ms; }
 
 		void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height){}
 		void* loadBMPImage(std::string filename, bool transparent){ return (void*)0; }

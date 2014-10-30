@@ -397,7 +397,7 @@ void Project2Test::test_MGFramework_createMOAtLocation()
 	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(10, 11), mgf.nthMO(0)->getID(), "MGF failed to occupy tile");
 }
 
-void Project2Test::test_MGFramework_oneMOTakesAStep()
+void Project2Test::test_MGFramework_oneMOStartsToTakeAStepRight()
 {
 	// Setup
 	MGFrameworkStub mgf;
@@ -418,7 +418,12 @@ void Project2Test::test_MGFramework_oneMOTakesAStep()
 	// Trigger
 	mgf.runConsoleCommand("mo 0 setdestination 11 10", &mgf, NULL);
 	mgf.nthMO(0)->update(&mgf); // Current location removed from path
+	win.elapseTime(16);
 	mgf.nthMO(0)->update(&mgf); // Destination set and MO moving
+	win.elapseTime(16);
+	mgf.nthMO(0)->update(&mgf); // Moving
+	win.elapseTime(16);
+	mgf.nthMO(0)->update(&mgf); // Moving
 
 	// Verify
 	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(10, 10), 0, "MGF failed to unoccupy tile");
@@ -427,4 +432,45 @@ void Project2Test::test_MGFramework_oneMOTakesAStep()
 	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getTileY(), 10, "MO left location of creation too early");
 	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getDestTileX(), 11, "MO did not get a destination");
 	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getDestTileY(), 10, "MO did not get a destination");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getXOffset() > 0, true, "MO did not start moving");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getYOffset(), 0, "MO moved in the wrong direction");
+}
+
+void Project2Test::test_MGFramework_oneMOStartsToTakeAStepLeft()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	IMGWindowImpl win;
+	mgf.setWindowProperties(1024, 768, 32, false, std::string("test"), &win);
+	mgf.init(16, 16, 32, 32);
+	mgf.runConsoleCommand("add mo 1 -x 10 -y 10", &mgf, NULL);
+	ASSERT_NOT_EQUAL(mgf._m_MO().size(), 1, "MGF failed to create MO");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getTileX(), 10, "MGF failed to create MO at location");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getTileY(), 10, "MGF failed to create MO at location");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getDestTileX(), 10, "MO already had a destination");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getDestTileY(), 10, "MO already had a destination");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getNextTileX(), 10, "MGF failed to initialize MO next tile");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getNextTileY(), 10, "MGF failed to initialize MO next tile");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(10, 10), mgf.nthMO(0)->getID(), "MGF failed to occupy tile");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(9, 10), 0, "Target tile already occupied");
+
+	// Trigger
+	mgf.runConsoleCommand("mo 0 setdestination 9 10", &mgf, NULL);
+	mgf.nthMO(0)->update(&mgf); // Current location removed from path
+	win.elapseTime(16);
+	mgf.nthMO(0)->update(&mgf); // Destination set and MO moving
+	win.elapseTime(16);
+	mgf.nthMO(0)->update(&mgf); // Moving
+	win.elapseTime(16);
+	mgf.nthMO(0)->update(&mgf); // Moving
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(10, 10), 0, "MGF failed to unoccupy tile");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(9, 10), mgf.nthMO(0)->getID(), "MGF failed to occupy tile");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getTileX(), 10, "MO left location of creation too early");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getTileY(), 10, "MO left location of creation too early");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getDestTileX(), 9, "MO did not get a destination");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getDestTileY(), 10, "MO did not get a destination");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getXOffset() < 0, true, "MO did not start moving");
+	ASSERT_NOT_EQUAL(mgf.nthMO(0)->getYOffset(), 0, "MO moved in the wrong direction");
 }

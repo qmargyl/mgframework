@@ -382,7 +382,7 @@ class MGFramework :public MGComponent
 		bool isSelectiveTileRenderingActive() const { return m_SelectiveTileRendering; }
 
 		// Dumping information to file for debugging purposes
-		void dump();
+		void dump(std::string addToName = "");
 
 		static int initializeWinsock(WORD wVersionRequested);
 

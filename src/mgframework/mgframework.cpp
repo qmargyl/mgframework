@@ -2202,9 +2202,9 @@ void MGFramework::countUnMark()
 	}
 }
 
-void MGFramework::dump()
+void MGFramework::dump(std::string addToName)
 {
-	std::string fileName = "dump_" + toString(getWindow()->getExecTimeMS()) + ".html";
+	std::string fileName = "dump_" + addToName + toString(getWindow()->getExecTimeMS()) + ".html";
 	std::ofstream outFile;
 	outFile.open(fileName.c_str(), std::ios_base::out);
 
@@ -2224,6 +2224,16 @@ void MGFramework::dump()
 		+ (100 * 100) * sizeof(int) // occupied
 		+ (100 * 100) * sizeof(unsigned int) // tile property
 		+ (100 * 100) * sizeof(bool); // marked for rendering
+	outFile << "<br>" << std::endl;
+	outFile << "</p>" << std::endl;
+
+	// Dumping framework parameters:
+	outFile << "<h3>Framework parameters</h3>" << std::endl;
+	outFile << "<p>" << std::endl;
+	outFile << "CurrentTime(ms): " << getWindow()->getExecTimeMS() << "<br>" << std::endl;
+	outFile << "NumberOfMO: " << getNumberOfMO() << "<br>" << std::endl;
+	outFile << "NumberOfPE: " << getNumberOfPE() << "<br>" << std::endl;
+	outFile << "NumberOfSO: " << getNumberOfSO() << "<br>" << std::endl;
 	outFile << "<br>" << std::endl;
 	outFile << "</p>" << std::endl;
 

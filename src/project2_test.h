@@ -79,7 +79,8 @@ private:
 	static void test_MGFramework_markMO();
 	static void test_MGFramework_markMOIndexInSymbolTable();
 	static void test_MGFramework_createMOAtLocation();
-	static void test_MGFramework_oneMOTakesAStep();
+	static void test_MGFramework_oneMOStartsToTakeAStepRight();
+	static void test_MGFramework_oneMOStartsToTakeAStepLeft();
 
 	// test_MGFramework_SO
 	static void test_MGFramework_createSO();
@@ -182,7 +183,9 @@ public:
 		RUNTEST(test_MGFramework_markMO);
 		RUNTEST(test_MGFramework_markMOIndexInSymbolTable);
 		RUNTEST(test_MGFramework_createMOAtLocation);
-		RUNTEST(test_MGFramework_oneMOTakesAStep);
+		RUNTEST(test_MGFramework_oneMOStartsToTakeAStepRight);
+		RUNTEST(test_MGFramework_oneMOStartsToTakeAStepLeft);
+
 
 		// test_MGFramework_SO
 		RUNTEST(test_MGFramework_createSO);
