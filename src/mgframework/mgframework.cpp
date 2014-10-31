@@ -699,9 +699,6 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 
 void MGFramework::handleMGFGameLogics()
 {
-	// Handle all events in the event queue
-	// Not implemented yet
-
 	// Update periodic event to trigger rare events
 	for(int i = 0; i < getNumberOfPE(); i++)
 	{

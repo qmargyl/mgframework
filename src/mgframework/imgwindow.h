@@ -14,6 +14,11 @@ enum eMGWindowScreenResolution{
 class IMGWindow
 {
 	public:
+		struct MGTextureHandle
+		{
+			void* texture;
+		};
+
 		virtual bool createWindow() = 0;
 		virtual bool setProperties(int width, int height, int bpp, bool fullscreen, const std::string &title) = 0;
 		virtual bool setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title) = 0;

@@ -26,6 +26,8 @@ bool Project2::init(int w, int h, int tw, int th)
 		m_MovingObject = static_cast<SDL_Texture*>(getWindow()->loadBMPImage("movingobject.bmp", true));
 		m_StationaryObject = static_cast<SDL_Texture*>(getWindow()->loadBMPImage("stationaryobject.bmp", true));
 		m_Mark = static_cast<SDL_Texture*>(getWindow()->loadBMPImage("mark.bmp", true));
+		// TODO: Remove the SDL dependency:
+		//       getWindow()->loadBMPImage("tileset.bmp", &m_Floor, false);
 
 		// Objects such as the map are initialized here.
 		m_Map.init(w, h, tw, th, getWindow()->getWidth(), getWindow()->getHeight()); // width (in number of tiles), height, tile width (in pixels), tile height, resolution x and y.
