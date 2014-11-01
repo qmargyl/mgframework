@@ -186,6 +186,7 @@ class MGFramework :public MGComponent
 		// Selective Tile Rendering
 		bool m_SelectiveTileRendering;
 		bool m_RenderAll;
+		// TODO: Move the counter to MGWindow to get rid of the drawTile wrapper methods in MGFramework
 		int m_NDrawnTiles;
 		inline void resetDrawnTilesCounter(){ m_NDrawnTiles = 0; }
 		inline void increaseDrawnTilesCounter(){ ++m_NDrawnTiles; }
@@ -293,9 +294,11 @@ class MGFramework :public MGComponent
 		inline void disableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = false; }
 		inline bool featureOnlySelectOwnedMOEnabled() const { return m_OnlySelectOwnedMO; }
 
-		// Graphics wrapper
+		// Graphics wrappers
 		void drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY);
+		void drawTile(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY);
 		void drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
+		void drawTile(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
 
 		// Controlling game speed and execution
 		inline unsigned int getFPS() const;

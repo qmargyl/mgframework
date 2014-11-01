@@ -41,6 +41,7 @@ class IMGWindowImpl : public IMGWindow
 
 		void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height){}
 		void* loadBMPImage(std::string filename, bool transparent){ return (void*)0; }
+		void loadBMPImage(std::string fileName, MGTexHandle &texHandle, bool transparent){}
 		void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB){}
 		void putPixelRGB(int x, int y, unsigned char r, unsigned char g, unsigned char b){}
 		void drawRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b){}

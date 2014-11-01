@@ -11,14 +11,16 @@ enum eMGWindowScreenResolution{
 	MGWindow_RES_640_480
 };
 
+struct MGTexHandle
+{
+	MGTexHandle();
+	~MGTexHandle();
+	void* tex;
+};
+
 class IMGWindow
 {
 	public:
-		struct MGTextureHandle
-		{
-			void* texture;
-		};
-
 		virtual bool createWindow() = 0;
 		virtual bool setProperties(int width, int height, int bpp, bool fullscreen, const std::string &title) = 0;
 		virtual bool setProperties(eMGWindowScreenResolution screenResolution, int bpp, bool fullscreen, const std::string &title) = 0;
@@ -33,7 +35,8 @@ class IMGWindow
 		virtual unsigned int getExecTimeMS() const = 0;
 
 		virtual void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height) = 0;
-		virtual void* loadBMPImage(std::string filename, bool transparent) = 0;
+		virtual void* loadBMPImage(std::string fileName, bool transparent) = 0;
+		virtual void loadBMPImage(std::string fileName, MGTexHandle &texHandle, bool transparent) = 0;
 		virtual void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB) = 0;
 		virtual void putPixelRGB(int x, int y, unsigned char r, unsigned char g, unsigned char b) = 0;
 		virtual void drawRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b) = 0;

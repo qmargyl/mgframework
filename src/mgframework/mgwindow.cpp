@@ -8,6 +8,19 @@
 #include <GL/glu.h>
 #include "mgframework.h"
 
+MGTexHandle::MGTexHandle()
+{
+	tex = NULL;
+}
+
+MGTexHandle::~MGTexHandle()
+{
+	if(tex)
+	{
+		SDL_DestroyTexture(static_cast<SDL_Texture*>(tex));
+	}
+}
+
 
 MGWindow::MGWindow():
 	m_Width(0),
@@ -155,12 +168,11 @@ void MGWindow::drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int 
 }
 
 
-
-void* MGWindow::loadBMPImage(std::string filename, bool transparent) 
+void* MGWindow::loadBMPImage(std::string fileName, bool transparent) 
 {
 	SDL_Surface* loadedImage = NULL;
 	SDL_Texture* optimizedImage = NULL;
-	loadedImage = SDL_LoadBMP(filename.c_str());
+	loadedImage = SDL_LoadBMP(fileName.c_str());
 	if(loadedImage != NULL)
 	{
 		if(transparent)
@@ -173,6 +185,16 @@ void* MGWindow::loadBMPImage(std::string filename, bool transparent)
 		SDL_FreeSurface(loadedImage);
 	}
 	return (void*)optimizedImage;
+}
+
+
+void MGWindow::loadBMPImage(std::string fileName, MGTexHandle &texHandle, bool transparent)
+{
+	if(texHandle.tex)
+	{
+		SDL_DestroyTexture(static_cast<SDL_Texture*>(texHandle.tex));
+	}
+	texHandle.tex = loadBMPImage(fileName, transparent);
 }
 
 

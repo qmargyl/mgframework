@@ -22,12 +22,10 @@ bool Project2::init(int w, int h, int tw, int th)
 		}
 
 		// All graphics should be loaded here.
-		m_Floor = static_cast<SDL_Texture*>(getWindow()->loadBMPImage("tileset.bmp", false));
-		m_MovingObject = static_cast<SDL_Texture*>(getWindow()->loadBMPImage("movingobject.bmp", true));
-		m_StationaryObject = static_cast<SDL_Texture*>(getWindow()->loadBMPImage("stationaryobject.bmp", true));
-		m_Mark = static_cast<SDL_Texture*>(getWindow()->loadBMPImage("mark.bmp", true));
-		// TODO: Remove the SDL dependency:
-		//       getWindow()->loadBMPImage("tileset.bmp", &m_Floor, false);
+		getWindow()->loadBMPImage("tileset.bmp", m_Floor, false);
+		getWindow()->loadBMPImage("movingobject.bmp", m_MovingObject, true);
+		getWindow()->loadBMPImage("stationaryobject.bmp", m_StationaryObject, true);
+		getWindow()->loadBMPImage("mark.bmp", m_Mark, true);
 
 		// Objects such as the map are initialized here.
 		m_Map.init(w, h, tw, th, getWindow()->getWidth(), getWindow()->getHeight()); // width (in number of tiles), height, tile width (in pixels), tile height, resolution x and y.
@@ -132,7 +130,7 @@ void Project2::draw()
 			// Only draw visible stationary objects...
 			if(detectCollisionRectangle(sX, sY, sX + m_Map.getTileWidth(), sY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
 			{
-				drawTile(static_cast<void*>(m_StationaryObject), 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight() + 16);
+				drawTile(m_StationaryObject, 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight() + 16);
 			}
 		}
 
