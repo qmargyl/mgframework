@@ -67,24 +67,27 @@ void Project2::draw()
 	if(!noRenderingNeeded)
 	{
 		// Draw all tiles visible in the window...
+		int tX, tY;
 		for(int x = 0; x < m_Map.getWidth(); x++)
 		{
+			tX = x * m_Map.getTileWidth() + m_Map.getScrollX();
 			for(int y = 0; y < m_Map.getHeight(); y++)
 			{
 				// Only draw the tiles actually visible (+1 to draw partly visible tiles) in the window...
-				if(  ((x * m_Map.getTileWidth() + m_Map.getScrollX()) <= getWindow()->getWidth() + m_Map.getTileWidth()) &&
-					 ((x * m_Map.getTileWidth() + m_Map.getScrollX()) >= 0 - m_Map.getTileWidth()) &&
-					 ((y * m_Map.getTileHeight() + m_Map.getScrollY()) <= getWindow()->getHeight() + m_Map.getTileHeight()) &&
-					 ((y * m_Map.getTileHeight() + m_Map.getScrollY()) >= 0 - m_Map.getTileHeight()) &&
+				tY = y * m_Map.getTileHeight() + m_Map.getScrollY();
+				if(  (tX <= getWindow()->getWidth() + m_Map.getTileWidth()) &&
+					 (tX >= 0 - m_Map.getTileWidth()) &&
+					 (tY <= getWindow()->getHeight() + m_Map.getTileHeight()) &&
+					 (tY >= 0 - m_Map.getTileHeight()) &&
 					 (!isSelectiveTileRenderingActive() || renderAllTiles() || m_Map.isMarkedForRendering(x, y)) )
 				{
 					if(m_Map.getTileProperty(x, y) & MGMAP_TP_PROPERTY_1)
 					{
-						drawTile(m_Floor, 0, 0, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY());
+						drawTile(m_Floor, 0, 0, tX, tY);
 					}
 					else if(m_Map.getTileProperty(x, y) & MGMAP_TP_PROPERTY_2)
 					{
-						drawTile(m_Floor, 32, 64, x * m_Map.getTileWidth() + m_Map.getScrollX(), y * m_Map.getTileHeight() + m_Map.getScrollY());
+						drawTile(m_Floor, 32, 64, tX, tY);
 					}
 					m_Map.unmarkForRendering(x, y);
 				}
@@ -140,26 +143,21 @@ void Project2::draw()
 		// Draw the mini map if enabled. Also draw all objects on it...
 		if(featureMiniMapEnabled())
 		{
+			int miniX, miniY;
 			getWindow()->drawFilledRectangleRGB(getWindow()->getWidth() - m_Map.getWidth() - 16, 16, getWindow()->getWidth() - 16, m_Map.getHeight() + 16, 0x00, 0x00, 0x00);
 			for(int x = 0; x < m_Map.getWidth(); x++)
 			{
+				miniX = x * m_Map.getTileWidth() + m_Map.getScrollX();
 				for(int y = 0; y < m_Map.getHeight(); y++)
 				{
 					// Only draw the tiles actually visible in the window...
-					if(  ((x * m_Map.getTileWidth() + m_Map.getScrollX()) <= getWindow()->getWidth()) &&
-						 ((x * m_Map.getTileWidth() + m_Map.getScrollX()) >= 0) &&
-						 ((y * m_Map.getTileHeight() + m_Map.getScrollY()) <= getWindow()->getHeight()) &&
-						 ((y * m_Map.getTileHeight() + m_Map.getScrollY()) >= 0)  )
+					miniY = y * m_Map.getTileHeight() + m_Map.getScrollY();
+					if(  (miniX <= getWindow()->getWidth()) &&
+						 (miniX >= 0) &&
+						 (miniY <= getWindow()->getHeight()) &&
+						 (miniY >= 0)  )
 					{
-						// Different color for different tile property of each tile...
-						if(m_Map.getTileProperty(x, y)  & MGMAP_TP_PROPERTY_1)
-						{
-							getWindow()->putPixelRGB(x + getWindow()->getWidth() - m_Map.getWidth() - 16, y + 16, 0x3F, 0x3F, 0x3F);
-						}
-						else if(m_Map.getTileProperty(x, y)  & MGMAP_TP_PROPERTY_2)
-						{
-							getWindow()->putPixelRGB(x + getWindow()->getWidth() - m_Map.getWidth() - 16, y + 16, 0xFF, 0xFF, 0xFF);
-						}
+						getWindow()->putPixelRGB(x + getWindow()->getWidth() - m_Map.getWidth() - 16, y + 16, 0x3F, 0x3F, 0x3F);
 					}
 				}
 			}
@@ -171,15 +169,15 @@ void Project2::draw()
 		}
 	}
 
-	// Example of how text can be printed on the surface.. Here FPS and time left between frames.
+	// Example of how text can be printed on screen.. Here FPS and time left between frames.
 	getWindow()->drawText((std::string("MOs: ") + MGFramework::toString((int)getNumberOfMO()) + 
-		std::string("(") + MGFramework::toString((int)MGMovingObject::nMovingMO()) + std::string(")") + std::string("          ")).c_str(), 
+		std::string("(") + MGFramework::toString((int)MGMovingObject::nMovingMO()) + std::string(")") + std::string("      ")).c_str(), 
 			 16, getWindow()->getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 30, 0, 0, 0, 0, 255, 0);
-	getWindow()->drawText((std::string("FD : ") + MGFramework::toString((int)getLastFrameDelayTime()) + std::string("          ")).c_str(), 
+	getWindow()->drawText((std::string("FD : ") + MGFramework::toString((int)getLastFrameDelayTime()) + std::string("      ")).c_str(), 
 			 16, getWindow()->getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 50, 0, 0, 0, 0, 255, 0);
-	getWindow()->drawText((std::string("FPS: ") + MGFramework::toString((int)getFPS()) + std::string("          ")).c_str(), 
+	getWindow()->drawText((std::string("FPS: ") + MGFramework::toString((int)getFPS()) + std::string("      ")).c_str(), 
 			 16, getWindow()->getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 70, 0, 0, 0, 0, 255, 0);
-	getWindow()->drawText((std::string("DT: ") + MGFramework::toString(getDrawnTilesCounter()) + std::string("          ")).c_str(), 
+	getWindow()->drawText((std::string("DT: ") + MGFramework::toString(getDrawnTilesCounter()) + std::string("      ")).c_str(), 
 			 16, getWindow()->getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 90, 0, 0, 0, 0, 255, 0);
 
 
