@@ -180,10 +180,6 @@ class MGFramework :public MGComponent
 		// Selective Tile Rendering
 		bool m_SelectiveTileRendering;
 		bool m_RenderAll;
-		// TODO: Move the counter to MGWindow to get rid of the drawTile wrapper methods in MGFramework
-		int m_NDrawnTiles;
-		inline void resetDrawnTilesCounter(){ m_NDrawnTiles = 0; }
-		inline void increaseDrawnTilesCounter(){ ++m_NDrawnTiles; }
 
 		// Center on MO
 		int m_FeatureCenterOnMO;
@@ -289,10 +285,10 @@ class MGFramework :public MGComponent
 		inline bool featureOnlySelectOwnedMOEnabled() const { return m_OnlySelectOwnedMO; }
 
 		// Graphics wrappers
-		void drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY);
-		void drawTile(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY);
-		void drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
-		void drawTile(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
+//		void drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY);
+//		void drawTile(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY);
+//		void drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
+//		void drawTile(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
 
 		// Controlling frame rate
 		inline unsigned int getFPS() const;
@@ -311,7 +307,6 @@ class MGFramework :public MGComponent
 		void setRenderAllTiles(){ m_RenderAll = true; }
 		void unsetRenderAllTiles(){ m_RenderAll = false; }
 		bool renderAllTiles() const { return m_RenderAll; }
-		int getDrawnTilesCounter() const { return m_NDrawnTiles; }
 
 		// Instance related
 		void setClientPlayer(int id){ m_PlayerNumber = id; }

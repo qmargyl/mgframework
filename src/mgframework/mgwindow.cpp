@@ -27,6 +27,7 @@ MGWindow::MGWindow():
 	m_Height(0),
 	m_Bpp(0),
 	m_Fullscreen(false),
+	m_NDrawnSprites(0),
 #ifndef MGF_DISABLE_TTF
 	m_Font(0),
 #endif
@@ -152,8 +153,9 @@ unsigned int MGWindow::getExecTimeMS() const
 	return SDL_GetTicks();
 }
 
-void MGWindow::drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height)
+void MGWindow::drawSprite(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height)
 {
+	increaseDrawnSpritesCounter();
 	SDL_Rect srcRect;
 	srcRect.x = srcX;
 	srcRect.y = srcY;
@@ -164,7 +166,7 @@ void MGWindow::drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int 
 	dstRect.y = dstY;
 	dstRect.w = width;
 	dstRect.h = height;
-	SDL_RenderCopy(m_Renderer, static_cast<SDL_Texture*>(imageTexture), &srcRect, &dstRect);
+	SDL_RenderCopy(m_Renderer, static_cast<SDL_Texture*>(imageTexture.tex), &srcRect, &dstRect);
 }
 
 

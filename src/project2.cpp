@@ -42,10 +42,10 @@ bool Project2::init(int w, int h, int tw, int th)
 		enableFeatureMouseScrolling();
 		disableFeatureCenterOnMO();
 
-		// Setup application specific game logics..
+		// Setup application specific logics..
 		runConsoleCommand("open terminalserver", this, NULL);
-		runConsoleCommand("logging off", this, NULL); // Turn on logging for the MGFramework class
-		runConsoleCommand("map logging off", this, NULL); // Turn on logging for the MGMap class
+		runConsoleCommand("logging off", this, NULL);
+		runConsoleCommand("map logging off", this, NULL);
 		runConsoleCommand("minimap on", this, NULL);
 
 		return true;
@@ -84,11 +84,11 @@ void Project2::draw()
 				{
 					if(m_Map.getTileProperty(x, y) & MGMAP_TP_PROPERTY_1)
 					{
-						drawTile(textures[TEX_GRASS], 0, 0, tX, tY);
+						getWindow()->drawSprite(textures[TEX_GRASS], 0, 0, tX, tY, m_Map.getTileWidth(), m_Map.getTileHeight());
 					}
 					else if(m_Map.getTileProperty(x, y) & MGMAP_TP_PROPERTY_2)
 					{
-						drawTile(textures[TEX_GRASS], 32, 64, tX, tY);
+						getWindow()->drawSprite(textures[TEX_GRASS], 32, 64, tX, tY, m_Map.getTileWidth(), m_Map.getTileHeight());
 					}
 					m_Map.unmarkForRendering(x, y);
 				}
@@ -104,7 +104,7 @@ void Project2::draw()
 			// Only draw visible moving objects...
 			if(detectCollisionRectangle(oX, oY, oX + m_Map.getTileWidth(), oY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
 			{
-				drawTile(textures[TEX_PINKBLOB], 0, 0, oX, oY);
+				getWindow()->drawSprite(textures[TEX_PINKBLOB], 0, 0, oX, oY, m_Map.getTileWidth(), m_Map.getTileHeight());
 				if(!it->isIdle() && isSelectiveTileRenderingActive())
 				{
 					m_Map.markForRendering(it->getTileX(), it->getTileY());
@@ -120,7 +120,7 @@ void Project2::draw()
 
 				if(it->isMarked())
 				{
-					drawTile(textures[TEX_REDFRAME], 0, 0, oX, oY);
+					getWindow()->drawSprite(textures[TEX_REDFRAME], 0, 0, oX, oY, m_Map.getTileWidth(), m_Map.getTileHeight());
 				}
 			}
 		}
@@ -134,7 +134,7 @@ void Project2::draw()
 			// Only draw visible stationary objects...
 			if(detectCollisionRectangle(sX, sY, sX + m_Map.getTileWidth(), sY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
 			{
-				drawTile(textures[TEX_TREE], 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight() + 16);
+				getWindow()->drawSprite(textures[TEX_TREE], 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight() + 16);
 			}
 		}
 
@@ -178,7 +178,7 @@ void Project2::draw()
 			 16, getWindow()->getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 50, 0, 0, 0, 0, 255, 0);
 	getWindow()->drawText((std::string("FPS: ") + MGFramework::toString((int)getFPS()) + std::string("      ")).c_str(), 
 			 16, getWindow()->getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 70, 0, 0, 0, 0, 255, 0);
-	getWindow()->drawText((std::string("DT: ") + MGFramework::toString(getDrawnTilesCounter()) + std::string("      ")).c_str(), 
+	getWindow()->drawText((std::string("DT: ") + MGFramework::toString(getWindow()->getDrawnSpritesCounter()) + std::string("      ")).c_str(), 
 			 16, getWindow()->getWidth() - m_Map.getWidth() - 16, m_Map.getHeight() + 90, 0, 0, 0, 0, 255, 0);
 
 

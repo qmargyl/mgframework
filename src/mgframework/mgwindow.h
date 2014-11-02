@@ -28,6 +28,8 @@ class MGWindow : public IMGWindow
   #endif
 #endif
 
+		int m_NDrawnSprites;
+		inline void increaseDrawnSpritesCounter(){ ++m_NDrawnSprites; }
 	public:
 
 		MGWindow();
@@ -46,7 +48,10 @@ class MGWindow : public IMGWindow
 		void sleep(int ms);
 		unsigned int getExecTimeMS() const;
 
-		void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height);
+		int getDrawnSpritesCounter() const { return m_NDrawnSprites; }
+		void resetDrawnSpritesCounter(){ m_NDrawnSprites = 0; }
+
+		void drawSprite(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height);
 		void* loadBMPImage(std::string fileName, bool transparent);
 		void loadBMPImage(std::string fileName, MGTexHandle &texHandle, bool transparent);
 		void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB);

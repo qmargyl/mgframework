@@ -34,7 +34,10 @@ class IMGWindow
 		virtual void sleep(int ms) = 0;
 		virtual unsigned int getExecTimeMS() const = 0;
 
-		virtual void drawSprite(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height) = 0;
+		virtual int getDrawnSpritesCounter() const = 0;
+		virtual void resetDrawnSpritesCounter() = 0;
+
+		virtual void drawSprite(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY, int width, int height) = 0;
 		virtual void* loadBMPImage(std::string fileName, bool transparent) = 0;
 		virtual void loadBMPImage(std::string fileName, MGTexHandle &texHandle, bool transparent) = 0;
 		virtual void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB) = 0;

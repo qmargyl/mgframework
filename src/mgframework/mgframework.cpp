@@ -45,7 +45,6 @@ MGFramework::MGFramework():
 	m_CommandReturnVal(0),
 	m_SelectiveTileRendering(false),
 	m_RenderAll(true),
-	m_NDrawnTiles(0),
 	m_FeatureCenterOnMO(-1),
 	m_SymbolTable(NULL),
 	m_SymbolTableTransfer(NULL)
@@ -709,7 +708,7 @@ void MGFramework::handleMGFGameLogics()
 		it->update(this);
 	}
 
-	resetDrawnTilesCounter();
+	getWindow()->resetDrawnSpritesCounter();
 }
 
 
@@ -1918,31 +1917,6 @@ void MGFramework::quit()
 { 
 	m_Quit = true; 
 	std::cout << "Execution time: " << getWindow()->getExecTimeMS() << std::endl;
-}
-
-
-void MGFramework::drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH)
-{
-	increaseDrawnTilesCounter();
-	getWindow()->drawSprite(imageTexture, srcX, srcY, dstX, dstY, tileW, tileH);
-}
-
-void MGFramework::drawTile(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH)
-{
-	increaseDrawnTilesCounter();
-	getWindow()->drawSprite(imageTexture.tex, srcX, srcY, dstX, dstY, tileW, tileH);
-}
-
-void MGFramework::drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY)
-{
-	increaseDrawnTilesCounter();
-	getWindow()->drawSprite(imageTexture, srcX, srcY, dstX, dstY, m_Map.getTileWidth(), m_Map.getTileHeight());
-}
-
-void MGFramework::drawTile(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY)
-{
-	increaseDrawnTilesCounter();
-	getWindow()->drawSprite(imageTexture.tex, srcX, srcY, dstX, dstY, m_Map.getTileWidth(), m_Map.getTileHeight());
 }
 
 
