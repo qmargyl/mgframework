@@ -10,10 +10,16 @@ class Project2 : public MGFramework
 		virtual void draw(); // MGFramework
 
 		// Application specific graphics
-		MGTexHandle m_Floor;
-		MGTexHandle m_MovingObject;
-		MGTexHandle m_StationaryObject;
-		MGTexHandle m_Mark;
+		enum
+		{
+			TEX_GRASS = 0,
+			TEX_PINKBLOB,
+			TEX_TREE,
+			TEX_REDFRAME,
+			NO_OF_TEXTURES
+		} TextureIndex;
+
+		std::vector<MGTexHandle> textures;
 
 	public:
 		Project2();

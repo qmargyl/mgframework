@@ -22,10 +22,11 @@ bool Project2::init(int w, int h, int tw, int th)
 		}
 
 		// All graphics should be loaded here.
-		getWindow()->loadBMPImage("tileset.bmp", m_Floor, false);
-		getWindow()->loadBMPImage("movingobject.bmp", m_MovingObject, true);
-		getWindow()->loadBMPImage("stationaryobject.bmp", m_StationaryObject, true);
-		getWindow()->loadBMPImage("mark.bmp", m_Mark, true);
+		for(unsigned int i = 0; i < NO_OF_TEXTURES; i++) textures.push_back(MGTexHandle());
+		getWindow()->loadBMPImage("tileset.bmp", textures[TEX_GRASS], false);
+		getWindow()->loadBMPImage("movingobject.bmp", textures[TEX_PINKBLOB], true);
+		getWindow()->loadBMPImage("stationaryobject.bmp", textures[TEX_TREE], true);
+		getWindow()->loadBMPImage("mark.bmp", textures[TEX_REDFRAME], true);
 
 		// Objects such as the map are initialized here.
 		m_Map.init(w, h, tw, th, getWindow()->getWidth(), getWindow()->getHeight()); // width (in number of tiles), height, tile width (in pixels), tile height, resolution x and y.
@@ -83,11 +84,11 @@ void Project2::draw()
 				{
 					if(m_Map.getTileProperty(x, y) & MGMAP_TP_PROPERTY_1)
 					{
-						drawTile(m_Floor, 0, 0, tX, tY);
+						drawTile(textures[TEX_GRASS], 0, 0, tX, tY);
 					}
 					else if(m_Map.getTileProperty(x, y) & MGMAP_TP_PROPERTY_2)
 					{
-						drawTile(m_Floor, 32, 64, tX, tY);
+						drawTile(textures[TEX_GRASS], 32, 64, tX, tY);
 					}
 					m_Map.unmarkForRendering(x, y);
 				}
@@ -103,7 +104,7 @@ void Project2::draw()
 			// Only draw visible moving objects...
 			if(detectCollisionRectangle(oX, oY, oX + m_Map.getTileWidth(), oY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
 			{
-				drawTile(m_MovingObject, 0, 0, oX, oY);
+				drawTile(textures[TEX_PINKBLOB], 0, 0, oX, oY);
 				if(!it->isIdle() && isSelectiveTileRenderingActive())
 				{
 					m_Map.markForRendering(it->getTileX(), it->getTileY());
@@ -119,7 +120,7 @@ void Project2::draw()
 
 				if(it->isMarked())
 				{
-					drawTile(m_Mark, 0, 0, oX, oY);
+					drawTile(textures[TEX_REDFRAME], 0, 0, oX, oY);
 				}
 			}
 		}
@@ -133,7 +134,7 @@ void Project2::draw()
 			// Only draw visible stationary objects...
 			if(detectCollisionRectangle(sX, sY, sX + m_Map.getTileWidth(), sY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
 			{
-				drawTile(m_StationaryObject, 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight() + 16);
+				drawTile(textures[TEX_TREE], 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight() + 16);
 			}
 		}
 

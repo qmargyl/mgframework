@@ -82,7 +82,6 @@ private:
 	int generateID(){ return m_IDGenerator++; }
 
 protected:
-
 	int m_ID;
 	unsigned int m_Owner;
 	bool m_LoggingEnabled;		// Setting allows extended logging to console.
