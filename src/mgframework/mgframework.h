@@ -157,12 +157,6 @@ class MGFramework :public MGComponent
 		//MO related
 		unsigned int m_MarkedMOs;
 
-		//PE related
-		int m_NPE; // Number of Periodic Events
-
-		//SO related
-		int m_NSO; // Number of Stationary Objects
-
 		//Socket terminal related.
 #ifndef UNITTEST_LINUX
 		SDL_Thread *m_SocketTerminal;
@@ -199,7 +193,7 @@ class MGFramework :public MGComponent
 	protected:
 
 		std::list<MGMovingObject> m_MO;			// Moving Objects
-		MGPeriodicEvent *m_PE;					// Periodic Events
+		std::list<MGPeriodicEvent> m_PE;		// Periodic Events
 		std::list<MGStationaryObject> m_SO;		// Stationary Objects
 		MGSymbolTable *m_SymbolTable;			// Symbols
 		MGSymbolTable *m_SymbolTableTransfer;	// Symbols transferred during a function call
@@ -273,8 +267,8 @@ class MGFramework :public MGComponent
 		// PE related
 		void deleteAllPE();
 		void addPE(int n);
-		int getNumberOfPE() const { return std::max(m_NPE, 0); }
-		void deletePE(int index);
+		unsigned int getNumberOfPE() const { return (unsigned int)m_PE.size(); }
+		void deletePE(std::list<MGPeriodicEvent>::iterator it);
 
 		// MO selection related
 		int getNumberOfMarkedMO() const { return std::min(m_MarkedMOs, getNumberOfMO()); }
@@ -300,7 +294,7 @@ class MGFramework :public MGComponent
 		void drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
 		void drawTile(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
 
-		// Controlling game speed and execution
+		// Controlling frame rate
 		inline unsigned int getFPS() const;
 		inline void setDesiredFPS(unsigned int f);
 		inline unsigned int getDesiredFPS() const;

@@ -33,8 +33,8 @@ bool Project2Server::init(int w, int h, int tw, int th)
 
 		if(getNumberOfPE() > 0)
 		{
-			m_PE[0].setupTimer(4000);
-			m_PE[0].activate();
+			m_PE.begin()->setupTimer(4000);
+			m_PE.begin()->activate();
 		}
 
 		return true;
@@ -50,7 +50,7 @@ void Project2Server::handleGameLogics()
 	// Update periodic event to trigger rare events
 	if(getNumberOfPE() > 0)
 	{
-		if(m_PE[0].update())
+		if(m_PE.begin()->update())
 		{
 			// Set all moving objects destination coordinate.
 			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)

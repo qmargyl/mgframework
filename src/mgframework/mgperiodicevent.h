@@ -22,7 +22,6 @@ public:
 	void deactivate();
 	bool isActive();
 	int timeLeft();
-    void copy(const MGPeriodicEvent *src);
 
 	// Script related
 	void setFileName1(const char *c);

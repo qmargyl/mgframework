@@ -61,19 +61,6 @@ int MGPeriodicEvent::timeLeft()
 }
 
 
-void MGPeriodicEvent::copy(const MGPeriodicEvent *src)
-{
-	//Copy ALL class variables!
-	m_Period = src->m_Period;
-	m_StartTime = src->m_StartTime;
-	m_isActive = src->m_isActive;
-	m_Owner = src->m_Owner;
-	//...including MGComponent ones
-	m_LoggingEnabled = src->m_LoggingEnabled;
-	m_FileName1 = src->m_FileName1;
-	m_ID = src->m_ID;
-}
-
 bool MGPeriodicEvent::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {
 	char cmd[MGF_SCRIPTLINE_MAXLENGTH];

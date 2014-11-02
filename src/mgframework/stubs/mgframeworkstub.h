@@ -36,7 +36,7 @@ class MGFrameworkStub : public MGFramework
 		void _countMark(){ countMark(); }
 		void _countUnMark(){ countUnMark(); }
 
-		// Hooks to MO related methods in MGFramework
+		// Hooks to SO related methods in MGFramework
 		std::list<MGStationaryObject> _m_SO(){ return m_SO; }
 		void _deleteAllSO(){ deleteAllSO(); }
 		void _addSO(int n){ addSO(n); }
@@ -46,6 +46,13 @@ class MGFrameworkStub : public MGFramework
 		{
 			return setupSO(it, x, y);
 		}
+
+		// Hooks to PE related methods in MGFramework
+		std::list<MGPeriodicEvent> _m_PE(){ return m_PE; }
+		void _deleteAllPE(){ deleteAllPE(); }
+		void _addPE(int n){ addPE(n); }
+		int _getNumberOfPE(){ return getNumberOfPE(); }
+		void _deletePE(std::list<MGPeriodicEvent>::iterator it){ deletePE(it); }
 
 		// Hooks to other methods in MGFramework
 		int _getFrameStartX(){ return getFrameStartX(); }
@@ -83,6 +90,20 @@ class MGFrameworkStub : public MGFramework
 				n++;
 			}
 			return m_SO.end();
+		}
+
+		std::list<MGPeriodicEvent>::iterator nthPE(unsigned int i)
+		{
+			unsigned int n = 0;
+			for(std::list<MGPeriodicEvent>::iterator it = m_PE.begin(); it != m_PE.end(); it++)
+			{
+				if(n == i)
+				{
+					return it;
+				}
+				n++;
+			}
+			return m_PE.end();
 		}
 
 		// Call counter getters

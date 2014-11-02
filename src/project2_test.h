@@ -93,6 +93,13 @@ private:
 	static void test_MGFramework_createSOAtLocation();
 	static void test_MGFramework_sortSOsWhenCreated();
 
+	// test_MGFramework_PE
+	static void test_MGFramework_createPE();
+	static void test_MGFramework_deletePE();
+	static void test_MGFramework_deleteFirstPE();
+	static void test_MGFramework_deleteFewPE();
+	static void test_MGFramework_deleteAllPE();
+
 	// test_system_test_002_basic_MO
 	static void test_002_basic_MO_create_delete();
 	static void test_002_basic_MO_create_delete_with_owner();
@@ -197,6 +204,13 @@ public:
 		RUNTEST(test_MGFramework_resetupSO);
 		RUNTEST(test_MGFramework_createSOAtLocation);
 		RUNTEST(test_MGFramework_sortSOsWhenCreated);
+
+		// test_MGFramework_PE
+		RUNTEST(test_MGFramework_createPE);
+		RUNTEST(test_MGFramework_deletePE);
+		RUNTEST(test_MGFramework_deleteFirstPE);
+		RUNTEST(test_MGFramework_deleteFewPE);
+		RUNTEST(test_MGFramework_deleteAllPE);
 
 		// test_system_test_002_basic_MO
 		RUNTEST(test_002_basic_MO_create_delete);

@@ -76,15 +76,15 @@ class MGComponent
 private:
 	static int m_IDGenerator;
 	static size_t m_allocatedMemory;
+	int m_ID;
+	unsigned int m_Owner;
+	bool m_LoggingEnabled;		// Setting allows extended logging to console.
 
 	// Methods for setting the object ID..
 	void setID(int id){ m_ID = id; }
 	int generateID(){ return m_IDGenerator++; }
 
 protected:
-	int m_ID;
-	unsigned int m_Owner;
-	bool m_LoggingEnabled;		// Setting allows extended logging to console.
 
 	void setID()
 	{

@@ -34,8 +34,6 @@ MGFramework::MGFramework():
 	m_FrameCountdownEnabled(false),
 	m_FrameNumber(0),
 	m_MarkedMOs(0),
-	m_NPE(0),
-	m_NSO(0),
 	m_KeepSocketTerminalOpen(false),
 	m_Port(0),
 	m_FramingOngoing(false),
@@ -49,8 +47,6 @@ MGFramework::MGFramework():
 	m_RenderAll(true),
 	m_NDrawnTiles(0),
 	m_FeatureCenterOnMO(-1),
-	m_PE(NULL),
-	m_SO(NULL),
 	m_SymbolTable(NULL),
 	m_SymbolTableTransfer(NULL)
 {
@@ -61,8 +57,6 @@ MGFramework::MGFramework():
 
 MGFramework::~MGFramework()
 {
-	if(m_PE) delete[] m_PE;
-	m_PE = NULL;
 	if(m_SymbolTable) delete m_SymbolTable;
 	m_SymbolTable = NULL;
 	if(m_SymbolTableTransfer) delete m_SymbolTableTransfer;
@@ -700,12 +694,12 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 void MGFramework::handleMGFGameLogics()
 {
 	// Update periodic event to trigger rare events
-	for(int i = 0; i < getNumberOfPE(); i++)
+	for(std::list<MGPeriodicEvent>::iterator it = m_PE.begin(); it != m_PE.end(); it++)
 	{
-		if(m_PE[i].update())
+		if(it->update())
 		{
 			MGFLOG_INFO("PE triggered an update");
-			m_PE[i].runFile1(this);
+			it->runFile1(this);
 		}
 	}
 
@@ -858,10 +852,21 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 		case MGComponent_PE_INT_LOGGING_OFF:
 		case MGComponent_PE_INT_STOREFILENAME_FILENAME:
 		{
-			int peIndex=toInt(cmdvec[1], s);
-			if(peIndex >= 0 && peIndex < getNumberOfPE())
+			unsigned int peIndex = (unsigned int)toInt(cmdvec[1], s);
+			unsigned int i = 0;
+			if(peIndex < getNumberOfPE())
 			{
-				return m_PE[toInt(cmdvec[1], s)].runConsoleCommand(c, this, s);
+				for(std::list<MGPeriodicEvent>::iterator it = m_PE.begin(); it != m_PE.end(); it++)
+				{
+					if(i == peIndex)
+					{
+						return it->runConsoleCommand(c, this, s);
+					}
+					else
+					{
+						i++;
+					}
+				}
 			}
 			MGFLOG_WARNING("Console command was not forwarded to PE " << peIndex); 
 			return true;
@@ -869,9 +874,9 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 		case MGComponent_PE_ALL_X:
 		{
-			for(int i = 0; i < getNumberOfPE(); i++)
+			for(std::list<MGPeriodicEvent>::iterator it = m_PE.begin(); it != m_PE.end(); it++)
 			{
-				m_PE[i].runConsoleCommand(c, this, s);
+				it->runConsoleCommand(c, this, s);
 			}
 			return true;
 		}
@@ -968,8 +973,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			return true;
 		}
 
-
-
 		case MGComponent_DELETE_ALL_PE_PARAMLIST:
 		{
 			int owner = 0;
@@ -991,26 +994,39 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 
 			if(ownerParamSet)
 			{
-				// Delete only PEs connected to a specific owner
+				// Delete only MOs connected to a specific owner
 				MGFLOG_INFO("Deleting PEs owned by " << owner);
-				for(int i = getNumberOfPE() - 1; i >= 0; --i)
+				for(std::list<MGPeriodicEvent>::iterator it = m_PE.begin(); it != m_PE.end(); )
 				{
-					if(m_PE[i].getOwner() == owner)
+					MGFLOG_INFO("PE owned by " << it->getOwner());
+					if(it->getOwner() == owner)
 					{
-						deletePE(i);
+						MGFLOG_INFO("Deleting one out of " << m_PE.size() << " PEs");
+						if(it == m_PE.begin())
+						{
+							deletePE(it);
+							it = m_PE.begin();
+						}
+						else
+						{
+							deletePE(it);
+							it--;
+						}
+					}
+					else
+					{
+						it++;
 					}
 				}
 			}
 			else
 			{
-				// Create zero new PEs.
+				//Deleting ALL PEs is faster than deleting them per owner 
 				MGFLOG_INFO("Creating zero PE...");
 				deleteAllPE();
 			}
 			return true;
 		}
-
-
 
 		case MGComponent_DELETE_ALL_SO_PARAMLIST:
 		{
@@ -1066,7 +1082,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			}
 			return true;
 		}
-
 
 		case MGComponent_ADD_MO_INT_PARAMLIST:
 		{
@@ -1159,8 +1174,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			return true;
 		}
 
-
-
 		case MGComponent_ADD_SO_INT_PARAMLIST:
 		{
 			int nBefore = getNumberOfSO();
@@ -1209,7 +1222,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				return true;
 			}
 
-			// Loop from first new MO to the end.
+			// Loop from first new SO to the end.
 			std::list<MGStationaryObject>::iterator it = m_SO.begin();
 			for(int i = 0; i < nBefore; i++)
 			{
@@ -1228,7 +1241,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			m_SO.sort(); // Allows drawing the objects from screen top to bottom
 			return true;
 		}
-
 
 		case MGComponent_ADD_PE_INT_PARAMLIST:
 		{
@@ -1257,20 +1269,19 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 				MGFLOG_ERROR("Error in command (add pe <n>)");
 				return true;
 			}
-			for(int i = nBefore; i < getNumberOfPE(); i++)
+
+			// Loop from first new PE to the end.
+			std::list<MGPeriodicEvent>::iterator it = m_PE.begin();
+			for(int i = 0; i < nBefore; i++)
 			{
-				if(m_PE != NULL)
-				{
-					m_PE[i].setOwner(owner);
-				}
-				if(m_PE == NULL)
-				{
-					MGFLOG_WARNING("m_PE = NULL and getNumberOfPE() = " << getNumberOfPE())
-				}
+				it++;
+			}
+			for(; it != m_PE.end(); it++)
+			{
+				it->setOwner(owner);
 			}
 			return true;
 		}
-
 
 		case MGComponent_OPEN_TERMINALSERVER:
 		{
@@ -1293,7 +1304,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 #endif
 			return true;
 		}
-
 
 		case MGComponent_MO_INT_X:
 		case MGComponent_MO_INT_MARK:
@@ -1881,45 +1891,25 @@ bool MGFramework::setupSO(std::list<MGStationaryObject>::iterator it, int x, int
 
 void MGFramework::deleteAllPE()
 {
-	if(m_PE) delete[] m_PE;
-	m_PE = NULL;
-	m_NPE = 0;
+	m_PE.clear();
 }
 
 
 void MGFramework::addPE(int n)
 {
-	MGPeriodicEvent *oldPE = new MGPeriodicEvent[getNumberOfPE()];
-	int nOld = getNumberOfPE();
-	for(int i = 0; i < nOld; i++)
+	for(int i = 0; i < n; i++)
 	{
-		oldPE[i].copy(&m_PE[i]);
-	}
-	if(m_PE) delete[] m_PE;
-	m_PE = NULL;
-	m_NPE = nOld + n;
-	m_PE = new MGPeriodicEvent[getNumberOfPE()];
-	for(int i = 0; i < nOld; i++)
-	{
-		m_PE[i].copy(&oldPE[i]);
+		MGPeriodicEvent pe;
+		m_PE.push_back(pe);
 	}
 }
 
 
-void MGFramework::deletePE(int index)
+void MGFramework::deletePE(std::list<MGPeriodicEvent>::iterator it)
 {
-	if(index < 0 || index >= getNumberOfPE())
+	if(it != m_PE.end())
 	{
-		MGFLOG_ERROR("MGFramework::deletePE was given a bad index: " << index)
-	}
-	else
-	{
-		for(int i = index; i < getNumberOfPE() - 1; ++i)
-		{
-			// Overwrite pe(i) with pe(i+1)
-			m_PE[i].copy(&m_PE[i + 1]);
-		}
-		m_NPE = getNumberOfPE() - 1;
+		m_PE.erase(it);
 	}
 }
 
