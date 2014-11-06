@@ -1,7 +1,8 @@
 #ifndef _I_MG_WINDOW_H
 #define _I_MG_WINDOW_H
 
-enum eMGWindowScreenResolution{
+enum eMGWindowScreenResolution
+{
 	// Wide screen resolutions (16:9)
 	MGWindow_RES_1920_1080 = 0,
 	MGWindow_RES_1600_900,

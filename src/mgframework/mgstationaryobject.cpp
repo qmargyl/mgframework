@@ -4,9 +4,12 @@
 #include <cstring>
 
 MGStationaryObject::MGStationaryObject()
+:	m_TileX(0),
+	m_TileY(0),
+	m_XOff(0),
+	m_YOff(0),
+	m_Type(0)
 {
-	m_TileX = 0;
-	m_TileY = 0;
 	setOwner(MGF_NOPLAYER);
 }
 
@@ -20,24 +23,38 @@ bool operator<(MGStationaryObject &lhs, MGStationaryObject &rhs)
 	// This is used for sorting stationary objects only. They are
 	// sorted by vertical location on the screen to be drawn in the
 	// correct order.
-	return lhs.m_TileY < rhs.m_TileY;
+	if(lhs.m_TileY < rhs.m_TileY)
+	{
+		return true;
+	}
+	else if(lhs.m_TileY == rhs.m_TileY)
+	{
+		return lhs.m_YOff < rhs.m_YOff;
+	}
+	return false;
 }
 
-void MGStationaryObject::initialize()
-{
-	m_TileX = 0;
-	m_TileY = 0;
-	setOwner(MGF_NOPLAYER);
-}
 
-void MGStationaryObject::setTileXY(int x, int y, MGFramework *world)
+void MGStationaryObject::setTileXY(int x, int y, MGFramework *world, bool occupyMap)
 {
-	world->m_Map.unOccupy(getTileX(), getTileY());
-	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
+	if(occupyMap && world)
+	{
+		world->m_Map.unOccupy(getTileX(), getTileY());
+		if(world->isSelectiveTileRenderingActive())
+		{
+			world->m_Map.markForRendering(getTileX(), getTileY());
+		}
+	}
 	m_TileX = x;
 	m_TileY = y;
-	world->m_Map.occupy(getTileX(), getTileY(), getID());
-	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
+	if(occupyMap && world)
+	{
+		world->m_Map.occupy(getTileX(), getTileY(), getID());
+		if(world->isSelectiveTileRenderingActive())
+		{
+			world->m_Map.markForRendering(getTileX(), getTileY());
+		}
+	}
 }
 
 

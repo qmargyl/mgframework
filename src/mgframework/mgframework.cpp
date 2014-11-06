@@ -1179,6 +1179,7 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			int n = toInt(cmdvec[2], s);
 			int x = -1; // Invalid default value
 			int y = -1; // Invalid default value
+			int t = 0;  // Type default value
 			for(unsigned int i = 3; i < cmdvec.size(); ++i)
 			{
 				if(cmdvec[i] == "-x" && cmdvec.size() > (i + 1))
@@ -1190,7 +1191,6 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 						MGFLOG_ERROR("Parameter -x can only be set when adding one SO");
 						n = 0; // Abort SO creation..
 					}
-					
 				}
 				else if(cmdvec[i] == "-y" && cmdvec.size() > (i + 1))
 				{
@@ -1201,7 +1201,11 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 						MGFLOG_ERROR("Parameter -y can only be set when adding one SO");
 						n = 0; // Abort SO creation..
 					}
-					
+				}
+				else if(cmdvec[i] == "-type" && cmdvec.size() > (i + 1))
+				{
+					t = toInt(cmdvec[i + 1], s);
+					++i;
 				}
 				else
 				{
@@ -1230,8 +1234,8 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			for(; it != m_SO.end(); )
 			{
 				// If setup returns true we step iterator, otherwise erase has already stepped it
-				MGFLOG_INFO("SetupSO x=" << x << ", y=" << y);
-				if(setupSO(it, x, y))
+				MGFLOG_INFO("SetupSO x=" << x << ", y=" << y << ", t=" << t);
+				if(setupSO(it, x, y, t))
 				{
 					it++;
 				}
@@ -1827,7 +1831,7 @@ bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, 
 }
 
 
-bool MGFramework::setupSO(std::list<MGStationaryObject>::iterator it, int x, int y)
+bool MGFramework::setupSO(std::list<MGStationaryObject>::iterator it, int x, int y, int t, bool occupyMap)
 {
 	if(it == m_SO.end())
 	{
@@ -1846,7 +1850,7 @@ bool MGFramework::setupSO(std::list<MGStationaryObject>::iterator it, int x, int
 
 	for(int q = 0; q < MGF_SOPOSITIONINGATTEMPTS; ++q)
 	{
-		if(m_Map.occupant(x,y) != 0)
+		if(occupyMap && m_Map.occupant(x,y) != 0)
 		{
 			x = randomN(x2 - x1) + x1;
 			y = randomN(y2 - y1) + y1;
@@ -1857,7 +1861,7 @@ bool MGFramework::setupSO(std::list<MGStationaryObject>::iterator it, int x, int
 			break;
 		}
 	}
-	// Find the first available (x,y) since the random placement failed.
+	// Find the first available (x,y) since the (random) placement failed.
 	if(!successful)
 	{
 		for(int t = 0; t < m_Map.getWidth() * m_Map.getHeight(); ++t)
@@ -1874,8 +1878,9 @@ bool MGFramework::setupSO(std::list<MGStationaryObject>::iterator it, int x, int
 
 	if(successful)
 	{
-		it->setTileXY(x, y, this);
-		m_Map.occupy(it->getTileX(), it->getTileY(), it->getID());
+		it->setTileXY(x, y, this, occupyMap);
+		it->setType(t);
+		// This is done by setTileXY -- m_Map.occupy(it->getTileX(), it->getTileY(), it->getID());
 		if(isSelectiveTileRenderingActive()) m_Map.markForRendering(it->getTileX(), it->getTileY());
 	}
 	else
@@ -2144,7 +2149,6 @@ void MGFramework::addSO(int n)
 	for(int i = 0; i < n; i++)
 	{
 		MGStationaryObject so;
-		so.initialize();
 		m_SO.push_back(so);
 	}
 
@@ -2172,6 +2176,129 @@ void MGFramework::countUnMark()
 	{
 		MGFLOG_ERROR("MGFramework::countUnMark decreased number of marked MO below zero");
 	}
+}
+
+void MGFramework::increaseDensityOfStationaryObjects(int stationaryObjectType, int neighboursThreshold)
+{
+	if(neighboursThreshold < 1 || neighboursThreshold > 8 || (int)getNumberOfSO() < neighboursThreshold)
+	{
+		MGFLOG_ERROR(	"MGFramework::increaseDensityOfStationaryObjects cannot run algorithm on " 
+						<< getNumberOfSO() << " existing SO with a neighbour limit of " << neighboursThreshold);
+		return;
+	}
+	int nAddedSO = 0;
+	int* forest = new int[m_Map.getWidth() * m_Map.getHeight()];
+	for(int y = 0; y < m_Map.getHeight(); y++)
+	{
+		for(int x = 0; x < m_Map.getWidth(); x++)
+		{
+			forest[y * m_Map.getWidth() + x] = 0;
+		}
+	}
+	for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); it++)
+	{
+		if(it->getType() == stationaryObjectType)
+		{
+			forest[it->getTileY() * m_Map.getWidth() + it->getTileX()] = 1;
+		}
+	}
+	
+	for(int y = 1; y < m_Map.getHeight() - 1; y++)
+	{
+		for(int x = 1; x < m_Map.getWidth() - 1; x++)
+		{
+			if(m_Map.occupant(x, y) == 0)
+			{
+				// If x,y has three or more neighbours, create SO at x,y
+				int neighbours = 	forest[(y - 1) * m_Map.getWidth() + (x - 1)] +
+									forest[(y - 1) * m_Map.getWidth() + x] + 
+									forest[(y - 1) * m_Map.getWidth() + (x + 1)] +
+									forest[y * m_Map.getWidth() + (x - 1)] + 
+									forest[y * m_Map.getWidth() + (x + 1)] +
+									forest[(y + 1) * m_Map.getWidth() + (x - 1)] +
+									forest[(y + 1) * m_Map.getWidth() + x] +
+									forest[(y + 1) * m_Map.getWidth() + (x + 1)];
+				if(neighbours > neighboursThreshold)
+				{
+					addSO(1);
+					std::list<MGStationaryObject>::iterator it = m_SO.end();
+					it--;
+					if(setupSO(it, x, y, stationaryObjectType))
+					{
+						nAddedSO++;
+					}
+					else
+					{
+						MGFLOG_ERROR(	"MGFramework::increaseDensityOfStationaryObjects failed to setup new SO of type "
+										<< stationaryObjectType << " at x=" << x << ", y=" << y);
+						MGFLOG_ERROR("MGFramework::increaseDensityOfStationaryObjects might have corrupted the SO list");
+						delete[] forest;
+						return;
+					}
+				}
+			}
+		}
+	}
+	m_SO.sort();
+	MGFLOG_INFO("MGFramework::increaseDensityOfStationaryObjects added " << nAddedSO << " SO of type " << stationaryObjectType);
+	delete[] forest;
+}
+
+void MGFramework::fillInStationaryObjectClusters(int stationaryObjectType)
+{
+	if((int)getNumberOfSO() < 4)
+	{
+		MGFLOG_ERROR(	"MGFramework::fillInStationaryObjectClusters cannot run algorithm on " 
+						<< getNumberOfSO() << " existing SO");
+		return;
+	}
+	int nAddedSO = 0;
+	int* forest = new int[m_Map.getWidth() * m_Map.getHeight()];
+	for(int y = 0; y < m_Map.getHeight(); y++)
+	{
+		for(int x = 0; x < m_Map.getWidth(); x++)
+		{
+			forest[y * m_Map.getWidth() + x] = 0;
+		}
+	}
+	for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); it++)
+	{
+		if(it->getType() == stationaryObjectType)
+		{
+			forest[it->getTileY() * m_Map.getWidth() + it->getTileX()] = 1;
+		}
+	}
+	for(int y = 0; y < m_Map.getHeight() - 1; y++)
+	{
+		for(int x = 0; x < m_Map.getWidth() - 1; x++)
+		{
+			if(	forest[y * m_Map.getWidth() + x] == 1 &&
+				forest[y * m_Map.getWidth() + (x + 1)] == 1 &&
+				forest[(y + 1) * m_Map.getWidth() + x] == 1 &&
+				forest[(y + 1) * m_Map.getWidth() + (x + 1)] == 1)
+			{
+				addSO(1);
+				std::list<MGStationaryObject>::iterator it = m_SO.end();
+				it--;
+				if(setupSO(it, x, y, stationaryObjectType, false))
+				{
+					nAddedSO++;
+					it->setOffsetXY(m_Map.getTileWidth() / 2, m_Map.getTileHeight() / 2);
+				}
+				else
+				{
+					MGFLOG_ERROR(	"MGFramework::fillInStationaryObjectClusters failed to setup new SO of type "
+									<< stationaryObjectType << " at x=" << x << ", y=" << y);
+					MGFLOG_ERROR("MGFramework::fillInStationaryObjectClusers might have corrupted the SO list");
+					delete[] forest;
+					return;
+				}
+			}
+		}
+	}
+	m_SO.sort();
+	MGFLOG_INFO("MGFramework::fillInStationaryObjectClusters added " << nAddedSO << " SO of type " << stationaryObjectType);
+	delete[] forest;
 }
 
 void MGFramework::dump(std::string addToName)

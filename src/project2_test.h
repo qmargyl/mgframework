@@ -37,8 +37,9 @@ private:
 	static void test_MGAStarNode();
 	
 	// test_MGStationaryObject
-	static void test_MGStationaryObject_initialize();
 	static void test_MGStationaryObject_setTileXY();
+	static void test_MGStationaryObject_setType();
+	static void test_MGStationaryObject_setTileXYWithoutOccupy();
 
 	// test_MGSymbolTable
 	static void test_MGSymbolTable_addSymbol();
@@ -92,6 +93,11 @@ private:
 	static void test_MGFramework_resetupSO();
 	static void test_MGFramework_createSOAtLocation();
 	static void test_MGFramework_sortSOsWhenCreated();
+	static void test_MGFramework_setDefaultSOType();
+	static void test_MGFramework_setSpecifiedSOType();
+	static void test_MGFramework_setSpecifiedSOTypeBasedOnSymbol();
+	static void test_MGFramework_fillInSOClusterOf4SO();
+	static void test_MGFramework_increaseDensityOfSO();
 
 	// test_MGFramework_PE
 	static void test_MGFramework_createPE();
@@ -145,8 +151,9 @@ public:
 		RUNTEST(test_MGAStarNode);
 		
 		// test_MGStationaryObject
-		RUNTEST(test_MGStationaryObject_initialize);
 		RUNTEST(test_MGStationaryObject_setTileXY);
+		RUNTEST(test_MGStationaryObject_setType);
+		RUNTEST(test_MGStationaryObject_setTileXYWithoutOccupy);
 
 		// test_MGSymbolTable
 		RUNTEST(test_MGSymbolTable_addSymbol);
@@ -204,6 +211,11 @@ public:
 		RUNTEST(test_MGFramework_resetupSO);
 		RUNTEST(test_MGFramework_createSOAtLocation);
 		RUNTEST(test_MGFramework_sortSOsWhenCreated);
+		RUNTEST(test_MGFramework_setDefaultSOType);
+		RUNTEST(test_MGFramework_setSpecifiedSOType);
+		RUNTEST(test_MGFramework_setSpecifiedSOTypeBasedOnSymbol);
+		RUNTEST(test_MGFramework_fillInSOClusterOf4SO);
+		RUNTEST(test_MGFramework_increaseDensityOfSO);
 
 		// test_MGFramework_PE
 		RUNTEST(test_MGFramework_createPE);

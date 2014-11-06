@@ -62,6 +62,11 @@ class MGFrameworkStub : public MGFramework
 		void _activateFraming(int x, int y){ activateFraming(x, y); }
 		void _deactivateFraming(){ deactivateFraming(); }
 		void _updateFraming(int x, int y){ updateFraming(x, y); }
+		void _fillInStationaryObjectClusters(int stationaryObjectType){ fillInStationaryObjectClusters(stationaryObjectType); }
+		void _increaseDensityOfStationaryObjects(int stationaryObjectType, int neighboursThreshold)
+		{
+			increaseDensityOfStationaryObjects(stationaryObjectType, neighboursThreshold);
+		}
 
 		// Helper functions
 		std::list<MGMovingObject>::iterator nthMO(unsigned int i)
@@ -104,6 +109,22 @@ class MGFrameworkStub : public MGFramework
 				n++;
 			}
 			return m_PE.end();
+		}
+
+		unsigned int getNoOfOccupiedTiles()
+		{
+			unsigned int res = 0;
+			for(int y = 0; y < m_Map.getHeight(); y++)
+			{
+				for(int x = 0; x < m_Map.getWidth(); x++)
+				{
+					if(m_Map.occupant(x, y) != 0)
+					{
+						res++;
+					}
+				}
+			}
+			return res;
 		}
 
 		// Call counter getters

@@ -1,5 +1,6 @@
 #include "../../project2_test.h"
 #include "../stubs/mgframeworkstub.h"
+#include "../mgsymboltable.h"
 
 
 void Project2Test::test_MGFramework_createSO()
@@ -253,4 +254,102 @@ void Project2Test::test_MGFramework_sortSOsWhenCreated()
 	ASSERT_NOT_EQUAL(mgf.nthSO(2)->getTileY(), 4, "MGF failed to sort SO on creation");
 	ASSERT_NOT_EQUAL(mgf.nthSO(3)->getTileY(), 7, "MGF failed to sort SO on creation");
 	ASSERT_NOT_EQUAL(mgf.nthSO(4)->getTileY(), 9, "MGF failed to sort SO on creation");
+}
+
+void Project2Test::test_MGFramework_setDefaultSOType()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	mgf.init(16, 16, 32, 32);
+
+	// Trigger and verify default type when not specified
+	mgf.runConsoleCommand("add so 1", &mgf, NULL);
+	ASSERT_NOT_EQUAL(mgf.nthSO(0)->getType(), 0, "MGF failed to create SO with correct type");
+}
+
+void Project2Test::test_MGFramework_setSpecifiedSOType()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	mgf.init(16, 16, 32, 32);
+
+	// Trigger and verify type when specified
+	mgf.runConsoleCommand("add so 1 -type 666", &mgf, NULL);
+	ASSERT_NOT_EQUAL(mgf.nthSO(0)->getType(), 666, "MGF failed to create SO with correct type");
+}
+
+void Project2Test::test_MGFramework_setSpecifiedSOTypeBasedOnSymbol()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	MGSymbolTable symbols;
+	mgf.init(16, 16, 32, 32);
+	symbols.addSymbol(std::string("SO_TYPE"), 88);
+
+	// Trigger and verify type when specified with symbol
+	mgf.runConsoleCommand("add so 1 -type SO_TYPE", &mgf, &symbols);
+	ASSERT_NOT_EQUAL(mgf.nthSO(0)->getType(), 88, "MGF failed to create SO with correct type");
+}
+
+void Project2Test::test_MGFramework_fillInSOClusterOf4SO()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	mgf.init(16, 16, 32, 32);
+	mgf.runConsoleCommand("add so 1 -x 5 -y 5 -type 17", &mgf, NULL);
+	mgf.runConsoleCommand("add so 1 -x 6 -y 5 -type 17", &mgf, NULL);
+	mgf.runConsoleCommand("add so 1 -x 5 -y 6 -type 17", &mgf, NULL);
+	mgf.runConsoleCommand("add so 1 -x 6 -y 6 -type 17", &mgf, NULL);
+
+	// Trigger
+	mgf._fillInStationaryObjectClusters(17);
+
+	// Verify (SO list being sorted makes the indexing non-trivial)
+	ASSERT_NOT_EQUAL(mgf._getNumberOfSO(), 5, "MGF failed to create SO");
+	ASSERT_NOT_EQUAL(mgf.getNoOfOccupiedTiles(), 4, "MGF failed to create SO and maintain correct map occupations");
+	ASSERT_NOT_EQUAL(mgf.nthSO(0)->getTileX(), 5, "MGF failed to create SO in correct location");
+	ASSERT_NOT_EQUAL(mgf.nthSO(0)->getTileY(), 5, "MGF failed to create SO in correct location");
+	ASSERT_NOT_EQUAL(mgf.nthSO(2)->getTileX(), 5, "MGF failed to create SO in correct location");
+	ASSERT_NOT_EQUAL(mgf.nthSO(2)->getTileY(), 5, "MGF failed to create SO in correct location");
+	ASSERT_NOT_EQUAL(mgf.nthSO(2)->getXOffset() > 0, true, "MGF failed to create SO in correct location");
+	ASSERT_NOT_EQUAL(mgf.nthSO(2)->getYOffset() > 0, true, "MGF failed to create SO in correct location");
+}
+
+void Project2Test::test_MGFramework_increaseDensityOfSO()
+{
+	// Setup
+	MGFrameworkStub mgf;
+	mgf.init(16, 16, 32, 32);
+	mgf.runConsoleCommand("add so 1 -x 5 -y 5 -type 17", &mgf, NULL);
+	mgf.runConsoleCommand("add so 1 -x 6 -y 5 -type 17", &mgf, NULL);
+	mgf.runConsoleCommand("add so 1 -x 7 -y 5 -type 17", &mgf, NULL);
+
+	// Trigger
+	mgf._increaseDensityOfStationaryObjects(17, 2);
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf._getNumberOfSO(), 5, "MGF failed to create SO");
+	ASSERT_NOT_EQUAL(mgf.getNoOfOccupiedTiles(), 5, "MGF failed to create SO and maintain correct map occupations");
+
+	mgf._increaseDensityOfStationaryObjects(17, 3);
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf._getNumberOfSO(), 5, "MGF failed to create SO");
+	ASSERT_NOT_EQUAL(mgf.getNoOfOccupiedTiles(), 5, "MGF failed to create SO and maintain correct map occupations");
+
+	mgf._increaseDensityOfStationaryObjects(17, 2);
+
+	// Verify
+	ASSERT_NOT_EQUAL(mgf._getNumberOfSO(), 9, "MGF failed to create SO");
+	ASSERT_NOT_EQUAL(mgf.getNoOfOccupiedTiles(), 9, "MGF failed to create SO and maintain correct map occupations");
+
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(5, 5) != 0, true, "Failed to occupy map");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(6, 5) != 0, true, "Failed to occupy map");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(7, 5) != 0, true, "Failed to occupy map");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(5, 4) != 0, true, "Failed to occupy map");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(6, 4) != 0, true, "Failed to occupy map");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(7, 4) != 0, true, "Failed to occupy map");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(5, 6) != 0, true, "Failed to occupy map");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(6, 6) != 0, true, "Failed to occupy map");
+	ASSERT_NOT_EQUAL(mgf.m_Map.occupant(7, 6) != 0, true, "Failed to occupy map");
 }

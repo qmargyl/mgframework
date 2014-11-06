@@ -48,6 +48,11 @@ bool Project2::init(int w, int h, int tw, int th)
 		runConsoleCommand("map logging off", this, NULL);
 		runConsoleCommand("minimap on", this, NULL);
 
+//		runConsoleCommand("add so 2000 -type 17", this, NULL);
+//		increaseDensityOfStationaryObjects(17, 2);
+//		increaseDensityOfStationaryObjects(17, 2);
+//		fillInStationaryObjectClusters(17);
+
 		return true;
 	}
 	else
@@ -129,8 +134,8 @@ void Project2::draw()
 		int sX, sY;
 		for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); it++)
 		{
-			sX = it->getTileX() * m_Map.getTileWidth() + m_Map.getScrollX();
-			sY = it->getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() - 16;
+			sX = it->getTileX() * m_Map.getTileWidth() + m_Map.getScrollX() + it->getXOffset();
+			sY = it->getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + it->getYOffset() - 16;
 			// Only draw visible stationary objects...
 			if(detectCollisionRectangle(sX, sY, sX + m_Map.getTileWidth(), sY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
 			{

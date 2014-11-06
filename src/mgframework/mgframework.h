@@ -258,7 +258,7 @@ class MGFramework :public MGComponent
 		void addSO(int n);
 		unsigned int getNumberOfSO() const { return (unsigned int)m_SO.size(); }
 		void deleteSO(std::list<MGStationaryObject>::iterator it);
-		bool setupSO(std::list<MGStationaryObject>::iterator it, int x, int y);
+		bool setupSO(std::list<MGStationaryObject>::iterator it, int x, int y, int t = 0, bool occupyMap = true);
 
 		// PE related
 		void deleteAllPE();
@@ -284,12 +284,6 @@ class MGFramework :public MGComponent
 		inline void disableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = false; }
 		inline bool featureOnlySelectOwnedMOEnabled() const { return m_OnlySelectOwnedMO; }
 
-		// Graphics wrappers
-//		void drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY);
-//		void drawTile(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY);
-//		void drawTile(void* imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
-//		void drawTile(const MGTexHandle &imageTexture, int srcX, int srcY, int dstX, int dstY, int tileW, int tileH);
-
 		// Controlling frame rate
 		inline unsigned int getFPS() const;
 		inline void setDesiredFPS(unsigned int f);
@@ -311,6 +305,10 @@ class MGFramework :public MGComponent
 		// Instance related
 		void setClientPlayer(int id){ m_PlayerNumber = id; }
 		int getClientPlayer() const { return m_PlayerNumber; }
+
+// ***	// Feature Forest Generation Algorithms
+		void increaseDensityOfStationaryObjects(int stationaryObjectType, int neighboursThreshold);
+		void fillInStationaryObjectClusters(int stationaryObjectType);
 
 	public:
 		MGFramework();
