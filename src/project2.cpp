@@ -25,7 +25,8 @@ bool Project2::init(int w, int h, int tw, int th)
 		for(unsigned int i = 0; i < NO_OF_TEXTURES; i++) textures.push_back(MGTexHandle());
 		getWindow()->loadBMPImage("tileset.bmp", textures[TEX_GRASS], false);
 		getWindow()->loadBMPImage("movingobject.bmp", textures[TEX_PINKBLOB], true);
-		getWindow()->loadBMPImage("stationaryobject.bmp", textures[TEX_TREE], true);
+		getWindow()->loadBMPImage("tree.bmp", textures[TEX_TREE], true);
+		getWindow()->loadBMPImage("tree2.bmp", textures[TEX_TREE2], true);
 		getWindow()->loadBMPImage("mark.bmp", textures[TEX_REDFRAME], true);
 
 		// Objects such as the map are initialized here.

@@ -15,6 +15,7 @@ class Project2 : public MGFramework
 			TEX_GRASS = 0,
 			TEX_PINKBLOB,
 			TEX_TREE,
+			TEX_TREE2,
 			TEX_REDFRAME,
 			NO_OF_TEXTURES
 		} TextureIndex;
