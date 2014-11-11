@@ -132,6 +132,7 @@ void Project2::draw()
 		}
 
 		// Draw all stationary objects...
+		// TODO: The hard coded 16 should be parameterized
 		int sX, sY;
 		for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); it++)
 		{
@@ -148,32 +149,7 @@ void Project2::draw()
 		getWindow()->drawRectangleRGB(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge() - m_Map.getRightEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge() - m_Map.getTopEdge(),  0x00, 0x00, 0xFF);
 
 		// Draw the mini map if enabled. Also draw all objects on it...
-		if(featureMiniMapEnabled())
-		{
-			int miniX, miniY;
-			getWindow()->drawFilledRectangleRGB(getWindow()->getWidth() - m_Map.getWidth() - 16, 16, getWindow()->getWidth() - 16, m_Map.getHeight() + 16, 0x00, 0x00, 0x00);
-			for(int x = 0; x < m_Map.getWidth(); x++)
-			{
-				miniX = x * m_Map.getTileWidth() + m_Map.getScrollX();
-				for(int y = 0; y < m_Map.getHeight(); y++)
-				{
-					// Only draw the tiles actually visible in the window...
-					miniY = y * m_Map.getTileHeight() + m_Map.getScrollY();
-					if(  (miniX <= getWindow()->getWidth()) &&
-						 (miniX >= 0) &&
-						 (miniY <= getWindow()->getHeight()) &&
-						 (miniY >= 0)  )
-					{
-						getWindow()->putPixelRGB(x + getWindow()->getWidth() - m_Map.getWidth() - 16, y + 16, 0x3F, 0x3F, 0x3F);
-					}
-				}
-			}
-			// Draw all moving objects on the mini map..
-			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
-			{
-				getWindow()->putPixelRGB(it->getTileX() + getWindow()->getWidth() - m_Map.getWidth() - 16, it->getTileY() + 16, 0xFF, 0x00, 0x00);
-			}
-		}
+		drawBasicMiniMap(16, 16);
 	}
 
 	// Example of how text can be printed on screen.. Here FPS and time left between frames.

@@ -2301,6 +2301,44 @@ void MGFramework::fillInStationaryObjectClusters(int stationaryObjectType)
 	delete[] forest;
 }
 
+void MGFramework::drawBasicMiniMap(int distFromUpRightX, int distFromUpRightY)
+{
+	if(featureMiniMapEnabled())
+	{
+		int miniX, miniY;
+		getWindow()->drawFilledRectangleRGB(getWindow()->getWidth() - m_Map.getWidth() - distFromUpRightX,
+											distFromUpRightY,
+											getWindow()->getWidth() - distFromUpRightX,
+											m_Map.getHeight() + distFromUpRightY,
+											0x00, 0x00, 0x00);
+		for(int x = 0; x < m_Map.getWidth(); x++)
+		{
+			miniX = x * m_Map.getTileWidth() + m_Map.getScrollX();
+			for(int y = 0; y < m_Map.getHeight(); y++)
+			{
+				// Only draw the tiles actually visible in the window...
+				miniY = y * m_Map.getTileHeight() + m_Map.getScrollY();
+				if(  (miniX <= getWindow()->getWidth()) &&
+					 (miniX >= 0) &&
+					 (miniY <= getWindow()->getHeight()) &&
+					 (miniY >= 0)  )
+				{
+					getWindow()->putPixelRGB(	x + getWindow()->getWidth() - m_Map.getWidth() - distFromUpRightX,
+												y + distFromUpRightY,
+												0x3F, 0x3F, 0x3F);
+				}
+			}
+		}
+		// Draw all moving objects on the mini map..
+		for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
+		{
+			getWindow()->putPixelRGB(	it->getTileX() + getWindow()->getWidth() - m_Map.getWidth() - distFromUpRightX,
+										it->getTileY() + distFromUpRightY,
+										0xFF, 0x00, 0x00);
+		}
+	}
+}
+
 void MGFramework::dump(std::string addToName)
 {
 	std::string fileName = "dump_" + addToName + toString(getWindow()->getExecTimeMS()) + ".html";

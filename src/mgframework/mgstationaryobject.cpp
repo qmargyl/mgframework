@@ -8,7 +8,8 @@ MGStationaryObject::MGStationaryObject()
 	m_TileY(0),
 	m_XOff(0),
 	m_YOff(0),
-	m_Type(0)
+	m_Type(0),
+	m_texHandle(NULL)
 {
 	setOwner(MGF_NOPLAYER);
 }

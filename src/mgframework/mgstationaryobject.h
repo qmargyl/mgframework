@@ -3,6 +3,7 @@
 #include "mgcomponent.h"
 
 class MGFramework;
+struct MGTexHandle;
 
 class MGStationaryObject :public MGComponent
 {
@@ -12,6 +13,7 @@ private:
 	int m_XOff;
 	int m_YOff;
 	int m_Type;
+	MGTexHandle* m_texHandle;
 
 public:
 

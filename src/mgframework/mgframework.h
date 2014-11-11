@@ -125,7 +125,7 @@ enum eMGComponentConsoleCommand : unsigned int
 int runMGFrameworkSocketTerminal(void *fm);
 
 
-class MGFramework :public MGComponent
+class MGFramework : public MGComponent
 {
 	private:
 		// Enable/disable input functionality
@@ -278,6 +278,9 @@ class MGFramework :public MGComponent
 		// Force a derived sub-class to implement this as it is not framework related.
 		virtual void draw() = 0;
 		virtual void handleGameLogics() = 0;
+
+		// Drawing helper functions
+		void drawBasicMiniMap(int distFromUpRightX, int distFromUpRightY);
 
 // ***	// Feature MO selection for own MO
 		inline void enableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = true; }
