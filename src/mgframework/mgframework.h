@@ -281,6 +281,7 @@ class MGFramework : public MGComponent
 
 		// Drawing helper functions
 		void drawBasicMiniMap(int distFromUpRightX, int distFromUpRightY);
+		void drawAllSOWithTexHandles();
 
 // ***	// Feature MO selection for own MO
 		inline void enableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = true; }
@@ -312,6 +313,7 @@ class MGFramework : public MGComponent
 // ***	// Feature Forest Generation Algorithms
 		void increaseDensityOfStationaryObjects(int stationaryObjectType, int neighboursThreshold);
 		void fillInStationaryObjectClusters(int stationaryObjectType);
+		void setStationaryObjectTexHandles(int stationaryObjectType, std::vector<MGTexHandle*> tHVec);
 
 	public:
 		MGFramework();

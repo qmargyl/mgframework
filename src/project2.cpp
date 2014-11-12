@@ -54,6 +54,11 @@ bool Project2::init(int w, int h, int tw, int th)
 //		increaseDensityOfStationaryObjects(17, 2);
 //		fillInStationaryObjectClusters(17);
 
+		std::vector<MGTexHandle*> tHVec;
+		tHVec.push_back(&textures[TEX_TREE]);
+		tHVec.push_back(&textures[TEX_TREE2]);
+		setStationaryObjectTexHandles(17, tHVec);
+
 		return true;
 	}
 	else
@@ -132,18 +137,7 @@ void Project2::draw()
 		}
 
 		// Draw all stationary objects...
-		// TODO: The hard coded 16 should be parameterized
-		int sX, sY;
-		for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); it++)
-		{
-			sX = it->getTileX() * m_Map.getTileWidth() + m_Map.getScrollX() + it->getXOffset();
-			sY = it->getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + it->getYOffset() - 16;
-			// Only draw visible stationary objects...
-			if(detectCollisionRectangle(sX, sY, sX + m_Map.getTileWidth(), sY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
-			{
-				getWindow()->drawSprite(textures[TEX_TREE], 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight() + 16);
-			}
-		}
+		drawAllSOWithTexHandles();
 
 		// Draw a frame around the edge of the map
 		getWindow()->drawRectangleRGB(m_Map.getLeftEdge(), m_Map.getTopEdge(), m_Map.getWindowWidth() - m_Map.getLeftEdge() - m_Map.getRightEdge(), m_Map.getWindowHeight() - m_Map.getBottomEdge() - m_Map.getTopEdge(),  0x00, 0x00, 0xFF);

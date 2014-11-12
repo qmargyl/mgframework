@@ -2301,6 +2301,17 @@ void MGFramework::fillInStationaryObjectClusters(int stationaryObjectType)
 	delete[] forest;
 }
 
+void MGFramework::setStationaryObjectTexHandles(int stationaryObjectType, std::vector<MGTexHandle*> tHVec)
+{
+	for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); it++)
+	{
+		if(it->getType() == stationaryObjectType)
+		{
+			it->setTexHandle(tHVec);
+		}
+	}
+}
+
 void MGFramework::drawBasicMiniMap(int distFromUpRightX, int distFromUpRightY)
 {
 	if(featureMiniMapEnabled())
@@ -2337,6 +2348,28 @@ void MGFramework::drawBasicMiniMap(int distFromUpRightX, int distFromUpRightY)
 										0xFF, 0x00, 0x00);
 		}
 	}
+}
+
+void MGFramework::drawAllSOWithTexHandles()
+{
+		int sX, sY;
+		for(std::list<MGStationaryObject>::iterator it = m_SO.begin(); it != m_SO.end(); it++)
+		{
+			sX = it->getTileX() * m_Map.getTileWidth() + m_Map.getScrollX() + it->getXOffset();
+			sY = it->getTileY() * m_Map.getTileHeight() + m_Map.getScrollY() + it->getYOffset() - 16;
+			// Only draw visible stationary objects...
+			if(detectCollisionRectangle(sX, sY, sX + m_Map.getTileWidth(), sY + m_Map.getTileHeight(), 0, 0, getWindow()->getWidth(), getWindow()->getHeight()))
+			{
+				if(it->getTexHandle())
+				{
+					getWindow()->drawSprite(*(it->getTexHandle()), 0, 0, sX, sY, m_Map.getTileWidth(), m_Map.getTileHeight() + 16);
+				}
+				else
+				{
+					getWindow()->drawFilledRectangleRGB(sX, sY, sX + m_Map.getTileWidth(), sY + m_Map.getTileHeight() + 16, 0, 255, 0);
+				}
+			}
+		}
 }
 
 void MGFramework::dump(std::string addToName)
