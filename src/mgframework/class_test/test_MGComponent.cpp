@@ -92,3 +92,35 @@ void Project2Test::test_MGComponent_symbols()
 	ASSERT_NOT_EQUAL(c.symbols("q==1").size(), 3, "Wrong number of symbols");
 	ASSERT_NOT_EQUAL(c.symbols("(u)").size(), 3, "Wrong number of symbols");
 }
+
+void Project2Test::test_MGComponent_randomNOfZeroAlwaysReturnsZero()
+{
+	for(int i = 0; i < 100; i++)
+	{
+		ASSERT_NOT_EQUAL(MGComponent::randomN(0), 0, "randomN returned non-zero");
+	}
+}
+
+void Project2Test::test_MGComponent_randomNOfOneAlwaysReturnsZero()
+{
+	for(int i = 0; i < 100; i++)
+	{
+		ASSERT_NOT_EQUAL(MGComponent::randomN(1), 0, "randomN returned non-zero");
+	}
+}
+
+void Project2Test::test_MGComponent_randomNOfFourAlwaysReturnsWithinLimits()
+{
+	bool result[4] = {false, false, false, false};
+	for(int i = 0; i < 1000; i++)
+	{
+		int r = MGComponent::randomN(4);
+		ASSERT_NOT_EQUAL(r < 4, true, "randomN returned above limit");
+		ASSERT_NOT_EQUAL(r >= 0, true, "randomN returned below limit");
+		result[r] = true;
+	}
+	ASSERT_NOT_EQUAL(result[0], true, "randomN never generated a 0");
+	ASSERT_NOT_EQUAL(result[1], true, "randomN never generated a 1");
+	ASSERT_NOT_EQUAL(result[2], true, "randomN never generated a 2");
+	ASSERT_NOT_EQUAL(result[3], true, "randomN never generated a 3");
+}

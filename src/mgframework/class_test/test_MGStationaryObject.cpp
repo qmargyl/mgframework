@@ -58,3 +58,33 @@ void Project2Test::test_MGStationaryObject_setTileXYWithoutOccupy()
 	ASSERT_NOT_EQUAL(a.getTileX(), 45, "SO location not updated correctly");
 	ASSERT_NOT_EQUAL(a.getTileY(), 54, "SO location not updated correctly");
 }
+
+void Project2Test::test_MGStationaryObject_setOneTexHandle()
+{
+	// Setup
+	MGStationaryObject a;
+	MGTexHandle tH;
+	std::vector<MGTexHandle*> tHVec;
+	tHVec.push_back(&tH);
+	ASSERT_NOT_EQUAL(a.getTexHandle(), NULL, "getTexHandle returned incorrectly");
+	ASSERT_NOT_EQUAL(tHVec.size(), 1, "Vector not initialized correctly");
+	ASSERT_NOT_EQUAL(tHVec[0], &tH, "Vector not initialized correctly");
+
+	// Trigger
+	a.setTexHandle(&tH);
+
+	// Verify
+	ASSERT_NOT_EQUAL(a.getTexHandle(), &tH, "getTexHandle returned incorrectly");
+
+	// Trigger
+	a.setTexHandle(NULL);
+
+	// Verify
+	ASSERT_NOT_EQUAL(a.getTexHandle(), NULL, "getTexHandle returned incorrectly");
+
+	// Trigger
+	a.setTexHandle(tHVec);
+
+	// Verify
+	ASSERT_NOT_EQUAL(a.getTexHandle(), &tH, "getTexHandle returned incorrectly");
+}

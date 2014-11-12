@@ -30,6 +30,9 @@ public:
 	inline const int getYOffset() const { return m_YOff; }
 	void setType(int t){ m_Type = t; }
 	int getType() const { return m_Type; }
+	void setTexHandle(MGTexHandle* tH){ m_texHandle = tH; }
+	void setTexHandle(std::vector<MGTexHandle*> tHVec);
+	const MGTexHandle* getTexHandle() const { return m_texHandle; }
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);
 	eMGComponentConsoleCommand detectMGComponentConsoleCommand(const std::vector<std::string> &cmdvec) const;
 };

@@ -58,6 +58,15 @@ void MGStationaryObject::setTileXY(int x, int y, MGFramework *world, bool occupy
 	}
 }
 
+void MGStationaryObject::setTexHandle(std::vector<MGTexHandle*> tHVec)
+{
+	if(tHVec.empty())
+	{
+		MGFLOG_ERROR("MGStationaryObject::setTexHandle received empty vector of texture handles");
+		return;
+	}
+	m_texHandle = tHVec[randomN(static_cast<unsigned int>(tHVec.size()))];
+}
 
 bool MGStationaryObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s)
 {

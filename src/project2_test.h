@@ -21,6 +21,9 @@ private:
 	static void test_MGComponent_toStringUInt();
 	static void test_MGComponent_oneOf();
 	static void test_MGComponent_symbols();
+	static void test_MGComponent_randomNOfZeroAlwaysReturnsZero();
+	static void test_MGComponent_randomNOfOneAlwaysReturnsZero();
+	static void test_MGComponent_randomNOfFourAlwaysReturnsWithinLimits();
 	
 	// test_MGMovingObject
 	static void test_MGMovingObject_initialize();
@@ -40,6 +43,7 @@ private:
 	static void test_MGStationaryObject_setTileXY();
 	static void test_MGStationaryObject_setType();
 	static void test_MGStationaryObject_setTileXYWithoutOccupy();
+	static void test_MGStationaryObject_setOneTexHandle();
 
 	// test_MGSymbolTable
 	static void test_MGSymbolTable_addSymbol();
@@ -135,6 +139,9 @@ public:
 		RUNTEST(test_MGComponent_toStringUInt);
 		RUNTEST(test_MGComponent_oneOf);
 		RUNTEST(test_MGComponent_symbols);
+		RUNTEST(test_MGComponent_randomNOfZeroAlwaysReturnsZero);
+		RUNTEST(test_MGComponent_randomNOfOneAlwaysReturnsZero);
+		RUNTEST(test_MGComponent_randomNOfFourAlwaysReturnsWithinLimits);
 
 		// test_MGMovingObject
 		RUNTEST(test_MGMovingObject_initialize);
@@ -154,6 +161,7 @@ public:
 		RUNTEST(test_MGStationaryObject_setTileXY);
 		RUNTEST(test_MGStationaryObject_setType);
 		RUNTEST(test_MGStationaryObject_setTileXYWithoutOccupy);
+		RUNTEST(test_MGStationaryObject_setOneTexHandle);
 
 		// test_MGSymbolTable
 		RUNTEST(test_MGSymbolTable_addSymbol);
