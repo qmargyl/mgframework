@@ -1291,7 +1291,18 @@ bool MGFramework::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable
 			MGFLOG_INFO("Opening terminal server...");
 #ifndef MGF_DISABLE_WINSOCK
 			openSocketTerminal();
-			m_SocketTerminal = SDL_CreateThread(runMGFrameworkSocketTerminal, this);
+			if(getInstanceType() == MGFSERVERINSTANCE)
+			{
+				m_SocketTerminal = SDL_CreateThread(MGSC::startServerThread, "TerminalServer", this);
+			}
+			else if(getInstanceType() == MGFCLIENTINSTANCE)
+			{
+				m_SocketTerminal = SDL_CreateThread(MGSC::startClientThread, "TerminalClient", this);
+			}
+			else if(getInstanceType() == MGFSINGLEPLAYERINSTANCE)
+			{
+				m_SocketTerminal = NULL;
+			}
 #endif
 			return true;
 		}
@@ -2088,7 +2099,7 @@ int MGFramework::toInt(const std::string &s, MGSymbolTable *sym) const
 }
 
 
-int MGFramework::initializeWinsock(WORD wVersionRequested)
+bool MGFramework::initializeWinsock(WORD wVersionRequested)
 {
 #ifndef MGF_DISABLE_WINSOCK
 	WSADATA wsaData;
@@ -2096,15 +2107,15 @@ int MGFramework::initializeWinsock(WORD wVersionRequested)
 
 	if(err != 0)
 	{
-		return 0; // Tell the user that we couldn't find a usable winsock.dll 
+		return false; // Tell the user that we couldn't find a usable winsock.dll 
 	}
 	if(LOBYTE(wsaData.wVersion ) != 1 || HIBYTE(wsaData.wVersion) != 1)
 	{
-		return 0;
+		return false;
 	}
 	//Everything is fine: proceed
 #endif
-	return 1;
+	return true;
 }
 
 
@@ -2425,98 +2436,4 @@ void MGFramework::dump(std::string addToName)
 	}
 	outFile << "</p>" << std::endl;
 	outFile << "</body></html>" << std::endl;
-}
-
-int runMGFrameworkSocketTerminal(void *fm)
-{
-#ifndef MGF_DISABLE_WINSOCK
-	MGFramework *mgf = (MGFramework *)fm;
-	int PORTNR = mgf->getPort();
-	mgf->logIfEnabled((std::string("Opening socket terminal... port ") + MGFramework::toString(mgf->getPort())).c_str());
-	
-	bool connectionOpen = true;
-	int nZerosInARow = 0;
-
-	while(mgf->socketTerminalOpen())
-	{
-		if(!mgf->initializeWinsock (MAKEWORD(1, 1) ) ) 
-		{
-			mgf->logIfEnabled("Error initializing Winsock.");
-			return 1;
-		}
-
-		SOCKET fd, fd_new; 	// "file" descriptors for the network sockets
-		SOCKADDR_IN saddr_me;
-
-		if((fd=socket(AF_INET,SOCK_STREAM,0)) == INVALID_SOCKET)
-		{
-			mgf->logIfEnabled("Server: socket not connected ");
-			return 1;
-		}
-
-		saddr_me.sin_family = AF_INET;
-		saddr_me.sin_addr.s_addr= htonl(INADDR_ANY);
-		saddr_me.sin_port = htons(PORTNR);
-
-		if(bind(fd, (LPSOCKADDR) &saddr_me, sizeof(saddr_me)) == SOCKET_ERROR)
-		{
-			mgf->logIfEnabled("Server: bind failure ");
-			return 1;
-		}
-
-		if(listen(fd, 1) == SOCKET_ERROR)
-		{
-			mgf->logIfEnabled("Server: listen failure ");
-			return 1;
-		}
-
-		// the server is now started and ready to accept a command..
-		//mgf->logIfEnabled("Waiting for terminal command...");
-
-		if( (fd_new=accept(fd, NULL, NULL)) == INVALID_SOCKET)
-		{
-			mgf->logIfEnabled("Server: accept failure ");
-			return 1;
-		}
-
-		while(connectionOpen)
-		{
-			char buf[256];
-			for (int i = 0; i < 256; i++)
-			{
-				buf[i] = 0;
-			}
-			if(recv(fd_new, buf, sizeof(buf), 0) == SOCKET_ERROR )
-			{
-				mgf->logIfEnabled("Server: receiving failure ");
-				return 1;
-			}
-
-			// Now buf contains the request string.
-
-			int lBuf = (int)strlen(buf);
-			if(lBuf == 0)
-			{
-				nZerosInARow++;
-			}
-			else
-			{
-				nZerosInARow = 0;
-				mgf->runConsoleCommand(buf, mgf, NULL);
-				if(send(fd_new, "ok\n\r", 4, 0) == SOCKET_ERROR)
-				{
-					mgf->logIfEnabled("Server: Failed sending an answer to client request");
-					return 1;
-				}
-			}
-			if(nZerosInARow>4)
-			{
-				connectionOpen = false;
-			}
-		}
-		WSACleanup();
-	}
-	mgf->logIfEnabled("Socket terminal closed...");
-#endif
-	return 0;
 }

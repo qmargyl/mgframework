@@ -5,7 +5,6 @@
 
 Project2Server::Project2Server()
 {
-	// Default parameters for demo application Project2...
 	unsetWindowProperties(); // Force setWindowProperties to be called before init.
 	disableTyping();
 	setInstanceType(MGFSERVERINSTANCE);
@@ -18,24 +17,17 @@ bool Project2Server::init(int w, int h, int tw, int th)
 	// The window is created.
 	if (windowPropertiesSet())
 	{
-		// Objcts such as the map are initialized here.
+		// Objects such as the map are initialized here.
 		m_Map.init(w, h, tw, th, getWindow()->getWidth(), getWindow()->getHeight()); // width (in number of tiles), height, tile width (in pixels), tile height, resolution x and y.
 
-
-		// Setup game logics..
-
-		runConsoleCommand("setfps 30", this, NULL); // Framework default is 20 FPS
-		runConsoleCommand("delete all mo", this, NULL);
-		runConsoleCommand("add mo 5", this, NULL);
+		// Open terminal server for incoming connection requests
+		setPort(666);
 		runConsoleCommand("open terminalserver", this, NULL);
-		runConsoleCommand("delete all pe", this, NULL);
+		
+		// Print a status update to the console periodically
 		runConsoleCommand("add pe 1", this, NULL);
-
-		if(getNumberOfPE() > 0)
-		{
-			m_PE.begin()->setupTimer(4000);
-			m_PE.begin()->activate();
-		}
+		m_PE.begin()->setupTimer(10000);
+		m_PE.begin()->activate();
 
 		return true;
 	}
@@ -52,11 +44,7 @@ void Project2Server::handleGameLogics()
 	{
 		if(m_PE.begin()->update())
 		{
-			// Set all moving objects destination coordinate.
-			for(std::list<MGMovingObject>::iterator it = m_MO.begin(); it != m_MO.end(); it++)
-			{
-				it->setDestTileXY(randomN(m_Map.getWidth()), randomN(m_Map.getHeight()));
-			}
+			std::cout << "Status: nMO=" << getNumberOfMO() << std::endl;
 		}
 	}
 

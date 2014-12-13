@@ -7,8 +7,6 @@
 #include "mgcomponent.h"
 
 int MGComponent::m_IDGenerator = 0;
-size_t MGComponent::m_allocatedMemory = 0;
-
 
 bool MGComponent::detectCollisionRectangle(int x1, int y1, int x2, int y2, int a1, int b1, int a2, int b2)
 {

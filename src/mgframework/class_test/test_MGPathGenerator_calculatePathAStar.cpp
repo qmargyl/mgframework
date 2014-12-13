@@ -13,72 +13,72 @@ void Project2Test::test_MGPathGenerator_calculatePathAStar()
 
 	// Diagonal
 	MGPathGenerator::calculatePathAStar(1, 1, 9, 9, map, path);
-	ASSERT_NOT_EQUAL(path.size(), 9, "Diagonal path in open terrain has incorrect length");
+	ASSERT_EQ(path.size(), 9, "Diagonal path in open terrain has incorrect length");
 	path.clear();
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+	ASSERT_EQ(path.size(), 0, "Path is non-empty");
 
 	// Diagonal
 	MGPathGenerator::calculatePathAStar(9, 9, 1, 1, map, path);
-	ASSERT_NOT_EQUAL(path.size(), 9, "Diagonal path in open terrain has incorrect length");
+	ASSERT_EQ(path.size(), 9, "Diagonal path in open terrain has incorrect length");
 	path.clear();
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+	ASSERT_EQ(path.size(), 0, "Path is non-empty");
 
 	// Diagonal
 	MGPathGenerator::calculatePathAStar(1, 9, 9, 1, map, path);
-	ASSERT_NOT_EQUAL(path.size(), 9, "Diagonal path in open terrain has incorrect length");
+	ASSERT_EQ(path.size(), 9, "Diagonal path in open terrain has incorrect length");
 	path.clear();
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+	ASSERT_EQ(path.size(), 0, "Path is non-empty");
 
 	// Diagonal
 	MGPathGenerator::calculatePathAStar(9, 1, 1, 9, map, path);
-	ASSERT_NOT_EQUAL(path.size(), 9, "Diagonal path in open terrain has incorrect length");
+	ASSERT_EQ(path.size(), 9, "Diagonal path in open terrain has incorrect length");
 	path.clear();
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+	ASSERT_EQ(path.size(), 0, "Path is non-empty");
 
 	// Almost horizontal
 	MGPathGenerator::calculatePathAStar(1, 4, 9, 5, map, path);
-	ASSERT_NOT_EQUAL(path.size(), 9, "Path in open terrain has incorrect length");
+	ASSERT_EQ(path.size(), 9, "Path in open terrain has incorrect length");
 	path.clear();
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+	ASSERT_EQ(path.size(), 0, "Path is non-empty");
 
 	// Horizontal
 	MGPathGenerator::calculatePathAStar(2, 2, 7, 2, map, path);
-	ASSERT_NOT_EQUAL(path.size(), 6, "Horizontal path in open terrain has incorrect length");
+	ASSERT_EQ(path.size(), 6, "Horizontal path in open terrain has incorrect length");
 	path.clear();
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+	ASSERT_EQ(path.size(), 0, "Path is non-empty");
 
 	// Horizontal
 	MGPathGenerator::calculatePathAStar(6, 5, 1, 5, map, path);
-	ASSERT_NOT_EQUAL(path.size(), 6, "Horizontal path in open terrain has incorrect length");
+	ASSERT_EQ(path.size(), 6, "Horizontal path in open terrain has incorrect length");
 	path.clear();
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+	ASSERT_EQ(path.size(), 0, "Path is non-empty");
 
 	// Vertical
 	MGPathGenerator::calculatePathAStar(4, 9, 4, 0, map, path);
-	ASSERT_NOT_EQUAL(path.size(), 10, "Vertical path in open terrain has incorrect length");
+	ASSERT_EQ(path.size(), 10, "Vertical path in open terrain has incorrect length");
 	path.clear();
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+	ASSERT_EQ(path.size(), 0, "Path is non-empty");
 
 	// 5,5->7,7
 	MGPathGenerator::calculatePathAStar(5, 5, 7, 7, map, path);
-	ASSERT_NOT_EQUAL(path.size(), 3, "5,5->7,7 path in open terrain has incorrect length");
+	ASSERT_EQ(path.size(), 3, "5,5->7,7 path in open terrain has incorrect length");
 	path.clear();
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+	ASSERT_EQ(path.size(), 0, "Path is non-empty");
 
 	// Large map
 	map.reInit(100, 100, 16, 16);
 
 	// 5,5->7,8
 	MGPathGenerator::calculatePathAStar(5, 5, 7, 8, map, path);
-	ASSERT_NOT_EQUAL(path.size(), 4, "5,5->7,8 path in open terrain has incorrect length");
+	ASSERT_EQ(path.size(), 4, "5,5->7,8 path in open terrain has incorrect length");
 	path.clear();
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+	ASSERT_EQ(path.size(), 0, "Path is non-empty");
 
 	// Long path
 	MGPathGenerator::calculatePathAStar(5, 11, 93, 94, map, path);
-	ASSERT_NOT_EQUAL(path.size(), 89, "Long path in open terrain has incorrect length");
+	ASSERT_EQ(path.size(), 89, "Long path in open terrain has incorrect length");
 	path.clear();
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path is non-empty");
+	ASSERT_EQ(path.size(), 0, "Path is non-empty");
 }
 
 void Project2Test::test_MGPathGenerator_calculatePathAStarAroundObstacle()
@@ -100,11 +100,11 @@ void Project2Test::test_MGPathGenerator_calculatePathAStarAroundObstacle()
 	MGPathGenerator::calculatePathAStar(3, 5, 8, 5, map, path);
 
 	// Verify
-	ASSERT_NOT_EQUAL(path.front().getX(), 3, "Incorrect path content");
-	ASSERT_NOT_EQUAL(path.front().getY(), 5, "Incorrect path content");
-	ASSERT_NOT_EQUAL(path.back().getX(), 8, "Incorrect path content");
-	ASSERT_NOT_EQUAL(path.back().getY(), 5, "Incorrect path content");
-	ASSERT_NOT_EQUAL(path.size() > 7, true, "Path is corrupt");
+	ASSERT_EQ(path.front().getX(), 3, "Incorrect path content");
+	ASSERT_EQ(path.front().getY(), 5, "Incorrect path content");
+	ASSERT_EQ(path.back().getX(), 8, "Incorrect path content");
+	ASSERT_EQ(path.back().getY(), 5, "Incorrect path content");
+	ASSERT_EQ(path.size() > 7, true, "Path is corrupt");
 }
 
 void Project2Test::test_MGPathGenerator_calculatePathAStarUnreachable()
@@ -126,5 +126,5 @@ void Project2Test::test_MGPathGenerator_calculatePathAStarUnreachable()
 	MGPathGenerator::calculatePathAStar(7, 7, 3, 3, map, path);
 
 	// Verify
-	ASSERT_NOT_EQUAL(path.size(), 0, "Path to unreachable tile is non-empty");
+	ASSERT_EQ(path.size(), 0, "Path to unreachable tile is non-empty");
 }

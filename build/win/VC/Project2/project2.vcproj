@@ -216,6 +216,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\..\src\mgframework\mgsc.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\..\src\mgframework\mgstationaryobject.cpp"
 				>
 			</File>
@@ -280,6 +284,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGPeriodicEvent.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\src\mgframework\class_test\test_MGSC.cpp"
 					>
 				</File>
 				<File
@@ -363,6 +371,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\..\src\mgframework\mgperiodicevent.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\src\mgframework\mgsc.h"
 				>
 			</File>
 			<File

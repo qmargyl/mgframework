@@ -9,6 +9,7 @@
 #include "mgsymboltable.h"
 #include "mgstationaryobject.h"
 #include "mgfversion.h"
+#include "mgsc.h"
 
 
 // Configurable defines...
@@ -120,11 +121,6 @@ enum eMGComponentConsoleCommand : unsigned int
 	MGComponent_SO_ALL_LOGGING_OFF,
 };
 
-
-
-int runMGFrameworkSocketTerminal(void *fm);
-
-
 class MGFramework : public MGComponent
 {
 	private:
@@ -205,6 +201,7 @@ class MGFramework : public MGComponent
 		void disableFeatureMouseScrolling(){ m_FeatureMouseScrollingEnabled = false; }
 
 // ***	// Feature Center on MO
+		//TODO: Re-implement this feature under the name center on coordinate
 		bool featureCenterOnMO() const { return (m_FeatureCenterOnMO > -1); }
 		unsigned int centerMOIndex() const { return m_FeatureCenterOnMO; }
 		void enableFeatureCenterOnMO(int moindex = 0){ m_FeatureCenterOnMO = moindex; }
@@ -355,7 +352,6 @@ class MGFramework : public MGComponent
 
 		//Socket terminal related
 		bool socketTerminalOpen() const { return m_KeepSocketTerminalOpen; }
-		void logIfEnabled(const char *log){}//{MGFLOG_INFO("" << log)} // TODO: Remove this?
 		int getPort() const { return m_Port; }
 		void setPort(int p){ m_Port = p; }
 
@@ -379,7 +375,7 @@ class MGFramework : public MGComponent
 		// Dumping information to file for debugging purposes
 		void dump(std::string addToName = "");
 
-		static int initializeWinsock(WORD wVersionRequested);
+		static bool initializeWinsock(WORD wVersionRequested);
 
 };
 

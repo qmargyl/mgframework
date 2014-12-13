@@ -110,6 +110,9 @@ private:
 	static void test_MGFramework_deleteFewPE();
 	static void test_MGFramework_deleteAllPE();
 
+	// test_MGSC
+	static void test_MGSC_startServer();
+
 	// test_system_test_002_basic_MO
 	static void test_002_basic_MO_create_delete();
 	static void test_002_basic_MO_create_delete_with_owner();
@@ -231,6 +234,9 @@ public:
 		RUNTEST(test_MGFramework_deleteFirstPE);
 		RUNTEST(test_MGFramework_deleteFewPE);
 		RUNTEST(test_MGFramework_deleteAllPE);
+
+		// test_MGSC
+		RUNTEST(test_MGSC_startServer);
 
 		// test_system_test_002_basic_MO
 		RUNTEST(test_002_basic_MO_create_delete);

@@ -44,6 +44,7 @@ bool Project2::init(int w, int h, int tw, int th)
 		disableFeatureCenterOnMO();
 
 		// Setup application specific logics..
+		setPort(667);
 		runConsoleCommand("open terminalserver", this, NULL);
 		runConsoleCommand("logging off", this, NULL);
 		runConsoleCommand("map logging off", this, NULL);

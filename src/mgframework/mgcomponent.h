@@ -7,9 +7,9 @@
 #include <cmath>
 #include <iomanip>
 
-// Disable features by #define
+// Disable certain features at compile time
 //#define MGF_DISABLE_TTF
-#define MGF_DISABLE_WINSOCK
+//#define MGF_DISABLE_WINSOCK
 
 // Macros...
 
@@ -75,7 +75,6 @@ class MGComponent
 {
 private:
 	static int m_IDGenerator;
-	static size_t m_allocatedMemory;
 	int m_ID;
 	unsigned int m_Owner;
 	bool m_LoggingEnabled;		// Setting allows extended logging to console.
