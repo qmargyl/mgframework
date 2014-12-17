@@ -3,6 +3,8 @@
 #include <algorithm> 
 #include "mgframework/mgframework.h"
 
+#define DEBUG_MARK_OCCUPIED 1
+
 Project2::Project2()
 {
 	unsetWindowProperties(); // Force setWindowProperties to be called before init.
@@ -103,6 +105,13 @@ void Project2::draw()
 						getWindow()->drawSprite(textures[TEX_GRASS], 32, 64, tX, tY, m_Map.getTileWidth(), m_Map.getTileHeight());
 					}
 					m_Map.unmarkForRendering(x, y);
+					if(DEBUG_MARK_OCCUPIED)
+					{
+						if(m_Map.occupant(x, y) != 0)
+						{
+							getWindow()->drawCircleRGB(tX + m_Map.getTileWidth() / 2, tY + m_Map.getTileHeight() / 2, m_Map.getTileHeight() / 2, 0, 0, 255);
+						}
+					}
 				}
 			}
 		}

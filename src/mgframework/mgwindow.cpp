@@ -224,35 +224,65 @@ void MGWindow::putPixelRGB(int x, int y, unsigned char r, unsigned char g, unsig
 	SDL_RenderDrawPoint(m_Renderer, x, y);
 }
 
+void MGWindow::drawCircleRGB(int x0, int y0, int radius, unsigned char r, unsigned char g, unsigned char b)
+{
+	SDL_SetRenderDrawColor(m_Renderer, (Uint8)r, (Uint8)g, (Uint8)b, 255);
+	int x = radius;
+	int y = 0;
+	int radiusError = 1 - x;
+
+	while(x >= y)
+	{
+		SDL_RenderDrawPoint(m_Renderer, x + x0, y + y0);
+		SDL_RenderDrawPoint(m_Renderer, y + x0, x + y0);
+		SDL_RenderDrawPoint(m_Renderer, -x + x0, y + y0);
+		SDL_RenderDrawPoint(m_Renderer, -y + x0, x + y0);
+		SDL_RenderDrawPoint(m_Renderer, -x + x0, -y + y0);
+		SDL_RenderDrawPoint(m_Renderer, -y + x0, -x + y0);
+		SDL_RenderDrawPoint(m_Renderer, x + x0, -y + y0);
+		SDL_RenderDrawPoint(m_Renderer, y + x0, -x + y0);
+		y++;
+		if(radiusError < 0)
+		{
+			radiusError += 2 * y + 1;
+		}
+		else
+		{
+			x--;
+			radiusError += 2 * (y - x + 1);
+		}
+	}
+}
+
 void MGWindow::drawRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b)
 {
+	SDL_SetRenderDrawColor(m_Renderer, r, g, b, 255);
 	SDL_Rect dstRect;
 	dstRect.x = x1;
 	dstRect.y = y1;
 	dstRect.w = x2 - x1;
 	dstRect.h = y2 - y1;
-	SDL_SetRenderDrawColor(m_Renderer, r, g, b, 255);
 	SDL_RenderDrawRect(m_Renderer, &dstRect);
 }
 
 void MGWindow::drawFilledRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b)
 {
+	SDL_SetRenderDrawColor(m_Renderer, r, g, b, 255);
 	SDL_Rect dstRect;
 	dstRect.x = x1;
 	dstRect.y = y1;
 	dstRect.w = x2 - x1;
 	dstRect.h = y2 - y1;
-	SDL_SetRenderDrawColor(m_Renderer, r, g, b, 255);
 	SDL_RenderFillRect(m_Renderer, &dstRect);
 }
 
 void MGWindow::drawFilledRectangleRGBA(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
+	SDL_SetRenderDrawColor(m_Renderer, r, g, b, a);
 	SDL_Rect dstRect;
 	dstRect.x = x1;
 	dstRect.y = y1;
 	dstRect.w = x2 - x1;
 	dstRect.h = y2 - y1;
-	SDL_SetRenderDrawColor(m_Renderer, r, g, b, a);
 	SDL_RenderFillRect(m_Renderer, &dstRect);
 }

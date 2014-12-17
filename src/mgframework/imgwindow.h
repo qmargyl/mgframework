@@ -43,6 +43,7 @@ class IMGWindow
 		virtual void loadBMPImage(std::string fileName, MGTexHandle &texHandle, bool transparent) = 0;
 		virtual void drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB) = 0;
 		virtual void putPixelRGB(int x, int y, unsigned char r, unsigned char g, unsigned char b) = 0;
+		virtual void drawCircleRGB(int x0, int y0, int radius, unsigned char r, unsigned char g, unsigned char b) = 0;
 		virtual void drawRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b) = 0;
 		virtual void drawFilledRectangleRGB(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b) = 0;
 		virtual void drawFilledRectangleRGBA(int x1, int y1, int x2, int y2, unsigned char r, unsigned char g, unsigned char b, unsigned char a) = 0;
