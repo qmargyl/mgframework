@@ -10,7 +10,7 @@ enum eMGFPathType;
 class MGMovingObject :public MGComponent
 {
 private:
-	double m_Speed; // pixels per second
+	double m_VPixelsPerSecond;
 	int m_TimeOfLastUpdate;
 	int m_TileX;
 	int m_TileY;
@@ -29,7 +29,7 @@ private:
 
 	double getDistance(int wx, int wy);
 	static int getTileSize(){ return m_TileSize; }
-	inline double getSpeed() const { return m_Speed; }
+	inline double getSpeed() const { return m_VPixelsPerSecond; }
 
 	//Marking related
 	bool m_Marked;

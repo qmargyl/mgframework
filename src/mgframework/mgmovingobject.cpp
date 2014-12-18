@@ -21,7 +21,7 @@ MGMovingObject::MGMovingObject()
 	m_NextTileY = 0;
 	m_X = 0.0;
 	m_Y = 0.0;
-	m_Speed = 0.0;
+	m_VPixelsPerSecond = 0.0;
 	m_CurrentState = MOStateCreated;
 	m_PathFindingAlgorithm = MGFBASICPATH1;
 	setOwner(MGF_NOPLAYER);
@@ -141,14 +141,14 @@ double MGMovingObject::getDistance(int wx, int wy)
 
 void MGMovingObject::setSpeed(double s, int tileSize)
 {
-	if(s > (double)0 && tileSize > 0)
+	if(s > 0.0 && tileSize > 0)
 	{
-		m_Speed = (double)tileSize / s;
+		m_VPixelsPerSecond = static_cast<double>(tileSize) / s;
 		m_TileSize = tileSize;
 	}
 	else
 	{
-		m_Speed = (double)0;
+		m_VPixelsPerSecond = 0.0;
 		m_TileSize = 0;
 	}
 }
