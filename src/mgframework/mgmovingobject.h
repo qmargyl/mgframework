@@ -22,8 +22,6 @@ private:
 	bool m_FinishingLastMove;
 	int m_TempDestTileX;
 	int m_TempDestTileY;
-	int m_NextTileX;
-	int m_NextTileY;
 	eMGFPathType m_PathFindingAlgorithm;
 	
 
@@ -63,7 +61,6 @@ public:
 	std::string toString() const { return std::string(toString(getCurrentState())); }
 
 	void setTileXY(int x, int y, MGFramework *world);
-	void setNextXY(int x, int y, MGFramework *world);
 
 	void setDestTileXY(int x, int y);
 	void setPath(std::list<MGPathItem> p);
@@ -79,8 +76,6 @@ public:
 	inline const int getYOffset() const { return (int)(m_Y + 0.5); }
 	inline const int getCenterX() { return getTileX() * getTileSize() + (int)(0.5 * getTileSize()); }
 	inline const int getCenterY() { return getTileY() * getTileSize() + (int)(0.5 * getTileSize()); }
-	inline const int getNextTileX() const { return m_NextTileX; }
-	inline const int getNextTileY() const { return m_NextTileY; }
 
 	// MGComponent
 	bool runConsoleCommand(const char *c, MGFramework *w, MGSymbolTable *s);

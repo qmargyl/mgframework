@@ -17,8 +17,6 @@ MGMovingObject::MGMovingObject()
 	m_TileY = 0;
 	m_DestTileX = 0;
 	m_DestTileY = 0;
-	m_NextTileX = 0;
-	m_NextTileY = 0;
 	m_X = 0.0;
 	m_Y = 0.0;
 	m_VPixelsPerSecond = 0.0;
@@ -44,8 +42,6 @@ void MGMovingObject::initialize()
 	m_TileY = 0;
 	m_DestTileX = 0;
 	m_DestTileY = 0;
-	m_NextTileX = 0;
-	m_NextTileY = 0;
 	m_X = 0.0;
 	m_Y = 0.0;
 	m_PathFindingAlgorithm = MGFBASICPATH1;
@@ -63,11 +59,6 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
 	m_TileX = x;
 	m_TileY = y;
-	if(m_Path.size() == 0)
-	{
-		m_NextTileX = x;
-		m_NextTileY = y;
-	}
 	m_X = 0.0;
 	m_Y = 0.0;
 	m_FinishingLastMove = false;
@@ -77,39 +68,6 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 		addToHistory(	(std::string("FinalDestination: ") + MGComponent::toString(getTileX()) + 
 						 std::string(",") + MGComponent::toString(getTileY()) ).c_str());
 		changeState(MOStateIdle);
-	}
-}
-
-void MGMovingObject::setNextXY(int x, int y, MGFramework *world)
-{
-	if(world->m_Map.occupant(x, y) == getID())
-	{
-
-	}
-	else if(MGFramework::distance(getTileX(), getTileY(), x, y) >= 1.5)
-	{
-		MGFLOG_ERROR("MGMovingObject::setNextXY detected an incorrect step size"); 
-	}
-	else if(world->m_Map.occupant(x, y) == 0)
-	{
-		if(	world->m_Map.occupant(m_NextTileX, m_NextTileY) == getID() ||
-			world->m_Map.occupant(m_NextTileX, m_NextTileY) == 0)
-		{
-			world->m_Map.unOccupy(m_NextTileX, m_NextTileY);
-			if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(m_NextTileX, m_NextTileY);
-		}
-		else
-		{
-			MGFLOG_WARNING("MGMovingObject::setNextXY tried to leave a tile not occupied by MO");
-		}
-		world->m_Map.occupy(x, y, getID());
-		if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(x, y);
-		m_NextTileX = x; 
-		m_NextTileY = y;
-	}
-	else
-	{
-		MGFLOG_ERROR("MGMovingObject::setNextXY tried to occupy an occupied tile"); 
 	}
 }
 
@@ -228,10 +186,9 @@ void MGMovingObject::update(MGFramework *w)
 			}
 			if(dx != 0 || dy != 0)
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() + dx, getTileY() + dy), 0, getID()))
+				if(MGFramework::oneOf(w->m_Map.occupant(getDestTileX(), getDestTileY()), 0, getID()))
 				{
 					double d = getSpeed() * (currentTimeSinceLastUpdate / 1000.0);
-					setNextXY(getTileX() + dx, getTileY() + dy, w);
 					if(dx != 0 && dy != 0)
 					{
 						m_X += (d * (double)dx);
@@ -266,7 +223,7 @@ void MGMovingObject::update(MGFramework *w)
 			}
 			if((dx != 0 && dy != 0) || (dy != 0 && m_X == 0) || (dx != 0 && m_Y == 0))
 			{
-				setTileXY(getTileX() + dx, getTileY() + dy, w);
+				setTileXY(getDestTileX(), getDestTileY(), w);
 			}
 			else if(dx != 0)
 			{
