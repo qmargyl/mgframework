@@ -356,7 +356,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			addToHistory(	(std::string("CalculatePath: ") + MGComponent::toString(getTileX()) + 
 							 std::string(",") + MGComponent::toString(getTileY()) + std::string(" -> ") +
 							 MGComponent::toString(dx) + std::string(",") + MGComponent::toString(dy)).c_str());
-			setPath(w->m_Map.calculatePath(m_PathFindingAlgorithm, getTileX(), getTileY(), dx, dy));
+			// Starting from NextTile allows finishing the ongoing step before starting to follow a new path.
+			setPath(w->m_Map.calculatePath(m_PathFindingAlgorithm, getNextTileX(), getNextTileY(), dx, dy));
 			MGFLOG_INFO("Path length: " << m_Path.size());
 			return true;
 		}
