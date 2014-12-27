@@ -71,18 +71,26 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 	}
 }
 
-void MGMovingObject::setNextTileXY(int x, int y)
+void MGMovingObject::setNextTileXY(int x, int y, MGFramework *world)
 {
-	// If we are still finishing our last move, save current 
-	// destination to temp variable and then set new destination
-	if(m_X != 0.0 || m_Y != 0.0 || m_FinishingMove)
+	if(world->m_Map.occupant(x, y) != getID() && world->m_Map.occupant(x, y) != 0)
 	{
-		m_TempNextTileX = m_NextTileX;
-		m_TempNextTileY = m_NextTileY;
-		m_FinishingMove = true;
+		// Something in the way
 	}
-	m_NextTileX = x;
-	m_NextTileY = y;
+	else
+	{
+		if(m_X != 0.0 || m_Y != 0.0 || m_FinishingMove)
+		{
+			// Handle an ongoing step from one tile to another
+			m_TempNextTileX = m_NextTileX;
+			m_TempNextTileY = m_NextTileY;
+			m_FinishingMove = true;
+		}
+		world->m_Map.unOccupy(m_NextTileX, m_NextTileY);
+		m_NextTileX = x;
+		m_NextTileY = y;
+		world->m_Map.occupy(m_NextTileX, m_NextTileY, getID());
+	}
 }
 
 
@@ -149,7 +157,7 @@ void MGMovingObject::update(MGFramework *w)
 		}
 		else
 		{
-			setNextTileXY(x, y);
+			setNextTileXY(x, y, w);
 			setTimeOfLastUpdate(w->getWindow()->getExecTimeMS());
 			if(isStuck())
 			{

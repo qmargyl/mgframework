@@ -61,8 +61,8 @@ public:
 	std::string toString() const { return std::string(toString(getCurrentState())); }
 
 	void setTileXY(int x, int y, MGFramework *world);
+	void setNextTileXY(int x, int y, MGFramework *world);
 
-	void setNextTileXY(int x, int y);
 	void setPath(std::list<MGPathItem> p);
 
 	void setSpeed(double s, int tileSize); // Seconds, Tile size in pixels

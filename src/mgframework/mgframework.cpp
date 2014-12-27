@@ -1826,7 +1826,7 @@ bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, 
 	if(successful)
 	{
 		it->setTileXY(x, y, this);
-		it->setNextTileXY(it->getTileX(), it->getTileY());
+		it->setNextTileXY(it->getTileX(), it->getTileY(), this);
 		it->setSpeed(1.0 / (double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
 		it->setOwner(owner);
 		m_Map.occupy(it->getTileX(), it->getTileY(), it->getID());
