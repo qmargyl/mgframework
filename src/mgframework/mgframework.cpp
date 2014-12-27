@@ -1826,7 +1826,7 @@ bool MGFramework::setupMO(std::list<MGMovingObject>::iterator it, int x, int y, 
 	if(successful)
 	{
 		it->setTileXY(x, y, this);
-		it->setDestTileXY(it->getTileX(), it->getTileY());
+		it->setNextTileXY(it->getTileX(), it->getTileY());
 		it->setSpeed(1.0 / (double)speed, m_Map.getTileHeight()); // speed = 2 means 2 tiles per second
 		it->setOwner(owner);
 		m_Map.occupy(it->getTileX(), it->getTileY(), it->getID());
@@ -2428,8 +2428,8 @@ void MGFramework::dump(std::string addToName)
 		outFile << ", State: " << it->toString();
 		outFile << ", TileX: " << it->getTileX();
 		outFile << ", TileY: " << it->getTileY();
-		outFile << ", DestTileX: " << it->getDestTileX();
-		outFile << ", DestTileY: " << it->getDestTileY();
+		outFile << ", NextTileX: " << it->getNextTileX();
+		outFile << ", NextTileY: " << it->getNextTileY();
 		outFile << ", Xoff: " << it->getXOffset();
 		outFile << ", Yoff: " << it->getYOffset();
 		outFile << "<br>" << std::endl;

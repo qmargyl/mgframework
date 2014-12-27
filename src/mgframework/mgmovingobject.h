@@ -14,14 +14,14 @@ private:
 	int m_TimeOfLastUpdate;
 	int m_TileX;
 	int m_TileY;
-	int m_DestTileX;
-	int m_DestTileY;
+	int m_NextTileX;
+	int m_NextTileY;
 	double m_X;
 	double m_Y;
+	bool m_FinishingMove;
+	int m_TempNextTileX;
+	int m_TempNextTileY;
 	static int m_TileSize;
-	bool m_FinishingLastMove;
-	int m_TempDestTileX;
-	int m_TempDestTileY;
 	eMGFPathType m_PathFindingAlgorithm;
 	
 
@@ -62,7 +62,7 @@ public:
 
 	void setTileXY(int x, int y, MGFramework *world);
 
-	void setDestTileXY(int x, int y);
+	void setNextTileXY(int x, int y);
 	void setPath(std::list<MGPathItem> p);
 
 	void setSpeed(double s, int tileSize); // Seconds, Tile size in pixels
@@ -70,8 +70,8 @@ public:
 
 	inline const int getTileX() const { return m_TileX; }
 	inline const int getTileY() const { return m_TileY; }
-	inline const int getDestTileX() const { if(m_FinishingLastMove) return m_TempDestTileX; return m_DestTileX;	}
-	inline const int getDestTileY() const { if(m_FinishingLastMove) return m_TempDestTileY; return m_DestTileY;	}
+	inline const int getNextTileX() const { if(m_FinishingMove) return m_TempNextTileX; return m_NextTileX;	}
+	inline const int getNextTileY() const { if(m_FinishingMove) return m_TempNextTileY; return m_NextTileY;	}
 	inline const int getXOffset() const { return (int)(m_X + 0.5); } // Difference between actual coordinate and tile coordinate
 	inline const int getYOffset() const { return (int)(m_Y + 0.5); }
 	inline const int getCenterX() { return getTileX() * getTileSize() + (int)(0.5 * getTileSize()); }

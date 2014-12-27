@@ -11,12 +11,12 @@ MGMovingObject::MGMovingObject()
 {
 	m_HistoryEnabled = false;
 	setTimeOfLastUpdate((unsigned int)(1000.0 * (((float)clock()) / CLOCKS_PER_SEC)));
-	m_FinishingLastMove = false;
+	m_FinishingMove = false;
 	m_Marked = false;
 	m_TileX = 0;
 	m_TileY = 0;
-	m_DestTileX = 0;
-	m_DestTileY = 0;
+	m_NextTileX = 0;
+	m_NextTileY = 0;
 	m_X = 0.0;
 	m_Y = 0.0;
 	m_VPixelsPerSecond = 0.0;
@@ -36,12 +36,12 @@ MGMovingObject::~MGMovingObject()
 void MGMovingObject::initialize()
 {
 	setTimeOfLastUpdate((unsigned int)(1000.0 * (((float)clock()) / CLOCKS_PER_SEC)));
-	m_FinishingLastMove = false;
+	m_FinishingMove = false;
 	m_Marked = false;
 	m_TileX = 0;
 	m_TileY = 0;
-	m_DestTileX = 0;
-	m_DestTileY = 0;
+	m_NextTileX = 0;
+	m_NextTileY = 0;
 	m_X = 0.0;
 	m_Y = 0.0;
 	m_PathFindingAlgorithm = MGFBASICPATH1;
@@ -61,8 +61,8 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 	m_TileY = y;
 	m_X = 0.0;
 	m_Y = 0.0;
-	m_FinishingLastMove = false;
-	if(getDestTileX() == getTileX() && getDestTileY() == getTileY() && isMoving() && m_Path.size() == 1)
+	m_FinishingMove = false;
+	if(getNextTileX() == getTileX() && getNextTileY() == getTileY() && isMoving() && m_Path.size() == 1)
 	{
 		// Final destination reached
 		addToHistory(	(std::string("FinalDestination: ") + MGComponent::toString(getTileX()) + 
@@ -71,18 +71,18 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 	}
 }
 
-void MGMovingObject::setDestTileXY(int x, int y)
+void MGMovingObject::setNextTileXY(int x, int y)
 {
 	// If we are still finishing our last move, save current 
 	// destination to temp variable and then set new destination
-	if(m_X != 0.0 || m_Y != 0.0 || m_FinishingLastMove)
+	if(m_X != 0.0 || m_Y != 0.0 || m_FinishingMove)
 	{
-		m_TempDestTileX = m_DestTileX;
-		m_TempDestTileY = m_DestTileY;
-		m_FinishingLastMove = true;
+		m_TempNextTileX = m_NextTileX;
+		m_TempNextTileY = m_NextTileY;
+		m_FinishingMove = true;
 	}
-	m_DestTileX = x;
-	m_DestTileY = y;
+	m_NextTileX = x;
+	m_NextTileY = y;
 }
 
 
@@ -149,7 +149,7 @@ void MGMovingObject::update(MGFramework *w)
 		}
 		else
 		{
-			setDestTileXY(x, y);
+			setNextTileXY(x, y);
 			setTimeOfLastUpdate(w->getWindow()->getExecTimeMS());
 			if(isStuck())
 			{
@@ -158,7 +158,7 @@ void MGMovingObject::update(MGFramework *w)
 		}
 
 		// Not stuck and not at destination tile
-		if(!isStuck() && (getDestTileX() != getTileX() || getDestTileY() != getTileY()))
+		if(!isStuck() && (getNextTileX() != getTileX() || getNextTileY() != getTileY()))
 		{
 			if(!isMoving())
 			{
@@ -168,25 +168,25 @@ void MGMovingObject::update(MGFramework *w)
 			int dx = 0;
 			int dy = 0;
 
-			if(getDestTileX() > getTileX())
+			if(getNextTileX() > getTileX())
 			{
 				dx = 1;
 			}
-			else if(getDestTileX() < getTileX())
+			else if(getNextTileX() < getTileX())
 			{
 				dx = -1;
 			}
-			if(getDestTileY() > getTileY())
+			if(getNextTileY() > getTileY())
 			{
 				dy = 1;
 			}
-			else if(getDestTileY() < getTileY())
+			else if(getNextTileY() < getTileY())
 			{
 				dy = -1;
 			}
 			if(dx != 0 || dy != 0)
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getDestTileX(), getDestTileY()), 0, getID()))
+				if(MGFramework::oneOf(w->m_Map.occupant(getNextTileX(), getNextTileY()), 0, getID()))
 				{
 					double d = getSpeed() * (currentTimeSinceLastUpdate / 1000.0);
 					if(dx != 0 && dy != 0)
@@ -223,7 +223,7 @@ void MGMovingObject::update(MGFramework *w)
 			}
 			if((dx != 0 && dy != 0) || (dy != 0 && m_X == 0) || (dx != 0 && m_Y == 0))
 			{
-				setTileXY(getDestTileX(), getDestTileY(), w);
+				setTileXY(getNextTileX(), getNextTileY(), w);
 			}
 			else if(dx != 0)
 			{
