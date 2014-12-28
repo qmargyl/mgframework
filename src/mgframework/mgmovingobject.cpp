@@ -11,17 +11,15 @@ MGMovingObject::MGMovingObject()
 {
 	m_HistoryEnabled = false;
 	setTimeOfLastUpdate((unsigned int)(1000.0 * (((float)clock()) / CLOCKS_PER_SEC)));
-	m_FinishingLastMove = false;
+	m_FinishingMove = false;
 	m_Marked = false;
 	m_TileX = 0;
 	m_TileY = 0;
-	m_DestTileX = 0;
-	m_DestTileY = 0;
 	m_NextTileX = 0;
 	m_NextTileY = 0;
 	m_X = 0.0;
 	m_Y = 0.0;
-	m_Speed = 0.0;
+	m_VPixelsPerSecond = 0.0;
 	m_CurrentState = MOStateCreated;
 	m_PathFindingAlgorithm = MGFBASICPATH1;
 	setOwner(MGF_NOPLAYER);
@@ -38,12 +36,10 @@ MGMovingObject::~MGMovingObject()
 void MGMovingObject::initialize()
 {
 	setTimeOfLastUpdate((unsigned int)(1000.0 * (((float)clock()) / CLOCKS_PER_SEC)));
-	m_FinishingLastMove = false;
+	m_FinishingMove = false;
 	m_Marked = false;
 	m_TileX = 0;
 	m_TileY = 0;
-	m_DestTileX = 0;
-	m_DestTileY = 0;
 	m_NextTileX = 0;
 	m_NextTileY = 0;
 	m_X = 0.0;
@@ -63,15 +59,10 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 	if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(getTileX(), getTileY());
 	m_TileX = x;
 	m_TileY = y;
-	if(m_Path.size() == 0)
-	{
-		m_NextTileX = x;
-		m_NextTileY = y;
-	}
 	m_X = 0.0;
 	m_Y = 0.0;
-	m_FinishingLastMove = false;
-	if(getDestTileX() == getTileX() && getDestTileY() == getTileY() && isMoving() && m_Path.size() == 1)
+	m_FinishingMove = false;
+	if(getNextTileX() == getTileX() && getNextTileY() == getTileY() && isMoving() && m_Path.size() == 1)
 	{
 		// Final destination reached
 		addToHistory(	(std::string("FinalDestination: ") + MGComponent::toString(getTileX()) + 
@@ -80,51 +71,26 @@ void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
 	}
 }
 
-void MGMovingObject::setNextXY(int x, int y, MGFramework *world)
+void MGMovingObject::setNextTileXY(int x, int y, MGFramework *world)
 {
-	if(world->m_Map.occupant(x, y) == getID())
+	if(world->m_Map.occupant(x, y) != getID() && world->m_Map.occupant(x, y) != 0)
 	{
-
-	}
-	else if(MGFramework::distance(getTileX(), getTileY(), x, y) >= 1.5)
-	{
-		MGFLOG_ERROR("MGMovingObject::setNextXY detected an incorrect step size"); 
-	}
-	else if(world->m_Map.occupant(x, y) == 0)
-	{
-		if(	world->m_Map.occupant(m_NextTileX, m_NextTileY) == getID() ||
-			world->m_Map.occupant(m_NextTileX, m_NextTileY) == 0)
-		{
-			world->m_Map.unOccupy(m_NextTileX, m_NextTileY);
-			if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(m_NextTileX, m_NextTileY);
-		}
-		else
-		{
-			MGFLOG_WARNING("MGMovingObject::setNextXY tried to leave a tile not occupied by MO");
-		}
-		world->m_Map.occupy(x, y, getID());
-		if(world->isSelectiveTileRenderingActive()) world->m_Map.markForRendering(x, y);
-		m_NextTileX = x; 
-		m_NextTileY = y;
+		// Something in the way
 	}
 	else
 	{
-		MGFLOG_ERROR("MGMovingObject::setNextXY tried to occupy an occupied tile"); 
+		if(m_X != 0.0 || m_Y != 0.0 || m_FinishingMove)
+		{
+			// Handle an ongoing step from one tile to another
+			m_TempNextTileX = m_NextTileX;
+			m_TempNextTileY = m_NextTileY;
+			m_FinishingMove = true;
+		}
+		world->m_Map.unOccupy(m_NextTileX, m_NextTileY);
+		m_NextTileX = x;
+		m_NextTileY = y;
+		world->m_Map.occupy(m_NextTileX, m_NextTileY, getID());
 	}
-}
-
-void MGMovingObject::setDestTileXY(int x, int y)
-{
-	// If we are still finishing our last move, save current 
-	// destination to temp variable and then set new destination
-	if(m_X != 0.0 || m_Y != 0.0 || m_FinishingLastMove)
-	{
-		m_TempDestTileX = m_DestTileX;
-		m_TempDestTileY = m_DestTileY;
-		m_FinishingLastMove = true;
-	}
-	m_DestTileX = x;
-	m_DestTileY = y;
 }
 
 
@@ -141,14 +107,14 @@ double MGMovingObject::getDistance(int wx, int wy)
 
 void MGMovingObject::setSpeed(double s, int tileSize)
 {
-	if(s > (double)0 && tileSize > 0)
+	if(s > 0.0 && tileSize > 0)
 	{
-		m_Speed = (double)tileSize / s;
+		m_VPixelsPerSecond = static_cast<double>(tileSize) / s;
 		m_TileSize = tileSize;
 	}
 	else
 	{
-		m_Speed = (double)0;
+		m_VPixelsPerSecond = 0.0;
 		m_TileSize = 0;
 	}
 }
@@ -191,7 +157,7 @@ void MGMovingObject::update(MGFramework *w)
 		}
 		else
 		{
-			setDestTileXY(x, y);
+			setNextTileXY(x, y, w);
 			setTimeOfLastUpdate(w->getWindow()->getExecTimeMS());
 			if(isStuck())
 			{
@@ -200,7 +166,7 @@ void MGMovingObject::update(MGFramework *w)
 		}
 
 		// Not stuck and not at destination tile
-		if(!isStuck() && (getDestTileX() != getTileX() || getDestTileY() != getTileY()))
+		if(!isStuck() && (getNextTileX() != getTileX() || getNextTileY() != getTileY()))
 		{
 			if(!isMoving())
 			{
@@ -210,28 +176,27 @@ void MGMovingObject::update(MGFramework *w)
 			int dx = 0;
 			int dy = 0;
 
-			if(getDestTileX() > getTileX())
+			if(getNextTileX() > getTileX())
 			{
 				dx = 1;
 			}
-			else if(getDestTileX() < getTileX())
+			else if(getNextTileX() < getTileX())
 			{
 				dx = -1;
 			}
-			if(getDestTileY() > getTileY())
+			if(getNextTileY() > getTileY())
 			{
 				dy = 1;
 			}
-			else if(getDestTileY() < getTileY())
+			else if(getNextTileY() < getTileY())
 			{
 				dy = -1;
 			}
 			if(dx != 0 || dy != 0)
 			{
-				if(MGFramework::oneOf(w->m_Map.occupant(getTileX() + dx, getTileY() + dy), 0, getID()))
+				if(MGFramework::oneOf(w->m_Map.occupant(getNextTileX(), getNextTileY()), 0, getID()))
 				{
 					double d = getSpeed() * (currentTimeSinceLastUpdate / 1000.0);
-					setNextXY(getTileX() + dx, getTileY() + dy, w);
 					if(dx != 0 && dy != 0)
 					{
 						m_X += (d * (double)dx);
@@ -266,7 +231,7 @@ void MGMovingObject::update(MGFramework *w)
 			}
 			if((dx != 0 && dy != 0) || (dy != 0 && m_X == 0) || (dx != 0 && m_Y == 0))
 			{
-				setTileXY(getTileX() + dx, getTileY() + dy, w);
+				setTileXY(getNextTileX(), getNextTileY(), w);
 			}
 			else if(dx != 0)
 			{
@@ -391,7 +356,8 @@ bool MGMovingObject::runConsoleCommand(const char *c, MGFramework *w, MGSymbolTa
 			addToHistory(	(std::string("CalculatePath: ") + MGComponent::toString(getTileX()) + 
 							 std::string(",") + MGComponent::toString(getTileY()) + std::string(" -> ") +
 							 MGComponent::toString(dx) + std::string(",") + MGComponent::toString(dy)).c_str());
-			setPath(w->m_Map.calculatePath(m_PathFindingAlgorithm, getTileX(), getTileY(), dx, dy));
+			// Starting from NextTile allows finishing the ongoing step before starting to follow a new path.
+			setPath(w->m_Map.calculatePath(m_PathFindingAlgorithm, getNextTileX(), getNextTileY(), dx, dy));
 			MGFLOG_INFO("Path length: " << m_Path.size());
 			return true;
 		}

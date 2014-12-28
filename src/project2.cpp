@@ -3,7 +3,7 @@
 #include <algorithm> 
 #include "mgframework/mgframework.h"
 
-#define DEBUG_MARK_OCCUPIED 1
+#define DEBUG_MARK_OCCUPIED 0
 
 Project2::Project2()
 {

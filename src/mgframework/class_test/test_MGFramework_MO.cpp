@@ -408,10 +408,10 @@ void Project2Test::test_MGFramework_oneMOStartsToTakeAStepRight()
 	ASSERT_EQ(mgf._m_MO().size(), 1, "MGF failed to create MO");
 	ASSERT_EQ(mgf.nthMO(0)->getTileX(), 10, "MGF failed to create MO at location");
 	ASSERT_EQ(mgf.nthMO(0)->getTileY(), 10, "MGF failed to create MO at location");
-	ASSERT_EQ(mgf.nthMO(0)->getDestTileX(), 10, "MO already had a destination");
-	ASSERT_EQ(mgf.nthMO(0)->getDestTileY(), 10, "MO already had a destination");
-	ASSERT_EQ(mgf.nthMO(0)->getNextTileX(), 10, "MGF failed to initialize MO next tile");
-	ASSERT_EQ(mgf.nthMO(0)->getNextTileY(), 10, "MGF failed to initialize MO next tile");
+	ASSERT_EQ(mgf.nthMO(0)->getNextTileX(), 10, "MO already had a destination");
+	ASSERT_EQ(mgf.nthMO(0)->getNextTileY(), 10, "MO already had a destination");
+//	ASSERT_EQ(mgf.nthMO(0)->getNextTileX(), 10, "MGF failed to initialize MO next tile");
+//	ASSERT_EQ(mgf.nthMO(0)->getNextTileY(), 10, "MGF failed to initialize MO next tile");
 	ASSERT_EQ(mgf.m_Map.occupant(10, 10), mgf.nthMO(0)->getID(), "MGF failed to occupy tile");
 	ASSERT_EQ(mgf.m_Map.occupant(11, 10), 0, "Target tile already occupied");
 
@@ -430,8 +430,8 @@ void Project2Test::test_MGFramework_oneMOStartsToTakeAStepRight()
 	ASSERT_EQ(mgf.m_Map.occupant(11, 10), mgf.nthMO(0)->getID(), "MGF failed to occupy tile");
 	ASSERT_EQ(mgf.nthMO(0)->getTileX(), 10, "MO left location of creation too early");
 	ASSERT_EQ(mgf.nthMO(0)->getTileY(), 10, "MO left location of creation too early");
-	ASSERT_EQ(mgf.nthMO(0)->getDestTileX(), 11, "MO did not get a destination");
-	ASSERT_EQ(mgf.nthMO(0)->getDestTileY(), 10, "MO did not get a destination");
+	ASSERT_EQ(mgf.nthMO(0)->getNextTileX(), 11, "MO did not get a destination");
+	ASSERT_EQ(mgf.nthMO(0)->getNextTileY(), 10, "MO did not get a destination");
 	ASSERT_EQ(mgf.nthMO(0)->getXOffset() > 0, true, "MO did not start moving");
 	ASSERT_EQ(mgf.nthMO(0)->getYOffset(), 0, "MO moved in the wrong direction");
 }
@@ -447,10 +447,10 @@ void Project2Test::test_MGFramework_oneMOStartsToTakeAStepLeft()
 	ASSERT_EQ(mgf._m_MO().size(), 1, "MGF failed to create MO");
 	ASSERT_EQ(mgf.nthMO(0)->getTileX(), 10, "MGF failed to create MO at location");
 	ASSERT_EQ(mgf.nthMO(0)->getTileY(), 10, "MGF failed to create MO at location");
-	ASSERT_EQ(mgf.nthMO(0)->getDestTileX(), 10, "MO already had a destination");
-	ASSERT_EQ(mgf.nthMO(0)->getDestTileY(), 10, "MO already had a destination");
-	ASSERT_EQ(mgf.nthMO(0)->getNextTileX(), 10, "MGF failed to initialize MO next tile");
-	ASSERT_EQ(mgf.nthMO(0)->getNextTileY(), 10, "MGF failed to initialize MO next tile");
+	ASSERT_EQ(mgf.nthMO(0)->getNextTileX(), 10, "MO already had a destination");
+	ASSERT_EQ(mgf.nthMO(0)->getNextTileY(), 10, "MO already had a destination");
+//	ASSERT_EQ(mgf.nthMO(0)->getNextTileX(), 10, "MGF failed to initialize MO next tile");
+//	ASSERT_EQ(mgf.nthMO(0)->getNextTileY(), 10, "MGF failed to initialize MO next tile");
 	ASSERT_EQ(mgf.m_Map.occupant(10, 10), mgf.nthMO(0)->getID(), "MGF failed to occupy tile");
 	ASSERT_EQ(mgf.m_Map.occupant(9, 10), 0, "Target tile already occupied");
 
@@ -469,8 +469,8 @@ void Project2Test::test_MGFramework_oneMOStartsToTakeAStepLeft()
 	ASSERT_EQ(mgf.m_Map.occupant(9, 10), mgf.nthMO(0)->getID(), "MGF failed to occupy tile");
 	ASSERT_EQ(mgf.nthMO(0)->getTileX(), 10, "MO left location of creation too early");
 	ASSERT_EQ(mgf.nthMO(0)->getTileY(), 10, "MO left location of creation too early");
-	ASSERT_EQ(mgf.nthMO(0)->getDestTileX(), 9, "MO did not get a destination");
-	ASSERT_EQ(mgf.nthMO(0)->getDestTileY(), 10, "MO did not get a destination");
+	ASSERT_EQ(mgf.nthMO(0)->getNextTileX(), 9, "MO did not get a destination");
+	ASSERT_EQ(mgf.nthMO(0)->getNextTileY(), 10, "MO did not get a destination");
 	ASSERT_EQ(mgf.nthMO(0)->getXOffset() < 0, true, "MO did not start moving");
 	ASSERT_EQ(mgf.nthMO(0)->getYOffset(), 0, "MO moved in the wrong direction");
 }

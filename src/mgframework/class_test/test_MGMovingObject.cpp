@@ -18,8 +18,8 @@ void Project2Test::test_MGMovingObject_initialize()
 	ASSERT_EQ(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_EQ(m.getTileX(), 0, "MO created in wrong location");
 	ASSERT_EQ(m.getTileY(), 0, "MO created in wrong location");
-	ASSERT_EQ(m.getDestTileX(), 0, "MO created with wrong destination");
-	ASSERT_EQ(m.getDestTileY(), 0, "MO created with wrong destination");
+	ASSERT_EQ(m.getNextTileX(), 0, "MO created with wrong destination");
+	ASSERT_EQ(m.getNextTileY(), 0, "MO created with wrong destination");
 	ASSERT_EQ(m.getXOffset(), 0, "MO created in wrong location");
 	ASSERT_EQ(m.getYOffset(), 0, "MO created in wrong location");
 	ASSERT_EQ(m.getOwner(), 0, "MO created with wrong owner");
@@ -36,8 +36,8 @@ void Project2Test::test_MGMovingObject_initialize()
 	ASSERT_EQ(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_EQ(m.getTileX(), 0, "MO created in wrong location");
 	ASSERT_EQ(m.getTileY(), 0, "MO created in wrong location");
-	ASSERT_EQ(m.getDestTileX(), 0, "MO created with wrong destination");
-	ASSERT_EQ(m.getDestTileY(), 0, "MO created with wrong destination");
+	ASSERT_EQ(m.getNextTileX(), 0, "MO created with wrong destination");
+	ASSERT_EQ(m.getNextTileY(), 0, "MO created with wrong destination");
 	ASSERT_EQ(m.getXOffset(), 0, "MO created in wrong location");
 	ASSERT_EQ(m.getYOffset(), 0, "MO created in wrong location");
 	ASSERT_EQ(m.getOwner(), 0, "MO created with wrong owner");
@@ -85,8 +85,8 @@ void Project2Test::test_MGMovingObject_setBasicPathStartMoving()
 	ASSERT_EQ(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_EQ(m.getTileX(), 3, "MO created in wrong location");
 	ASSERT_EQ(m.getTileY(), 3, "MO created in wrong location");
-	ASSERT_EQ(m.getDestTileX(), 0, "MO created with wrong destination");
-	ASSERT_EQ(m.getDestTileY(), 0, "MO created with wrong destination");
+	ASSERT_EQ(m.getNextTileX(), 0, "MO created with wrong destination");
+	ASSERT_EQ(m.getNextTileY(), 0, "MO created with wrong destination");
 	ASSERT_EQ(m.getXOffset(), 0, "MO created in wrong location");
 	ASSERT_EQ(m.getYOffset(), 0, "MO created in wrong location");
 	ASSERT_EQ(m.getOwner(), 0, "MO created with wrong owner");
@@ -99,8 +99,8 @@ void Project2Test::test_MGMovingObject_setBasicPathStartMoving()
 	ASSERT_EQ(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_EQ(m.getTileX(), 3, "MO in wrong location");
 	ASSERT_EQ(m.getTileY(), 3, "MO in wrong location");
-	ASSERT_EQ(m.getDestTileX(), 0, "MO with wrong destination");
-	ASSERT_EQ(m.getDestTileY(), 0, "MO with wrong destination");
+	ASSERT_EQ(m.getNextTileX(), 0, "MO with wrong destination");
+	ASSERT_EQ(m.getNextTileY(), 0, "MO with wrong destination");
 	ASSERT_EQ(m.getXOffset(), 0, "MO in wrong location");
 	ASSERT_EQ(m.getYOffset(), 0, "MO in wrong location");
 
@@ -119,8 +119,8 @@ void Project2Test::test_MGMovingObject_setBasicPathStartMoving()
 	ASSERT_EQ(m.anyMovingMO(), true, "Some MO are moving");
 	ASSERT_EQ(m.getTileX(), 3, "MO in wrong location");
 	ASSERT_EQ(m.getTileY(), 3, "MO in wrong location");
-	ASSERT_EQ(m.getDestTileX(), 4, "MO with wrong destination");
-	ASSERT_EQ(m.getDestTileY(), 4, "MO with wrong destination");
+	ASSERT_EQ(m.getNextTileX(), 4, "MO with wrong destination");
+	ASSERT_EQ(m.getNextTileY(), 4, "MO with wrong destination");
 }
 
 void Project2Test::test_MGMovingObject_setAStarPathStartMoving()
@@ -148,8 +148,8 @@ void Project2Test::test_MGMovingObject_setAStarPathStartMoving()
 	ASSERT_EQ(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_EQ(m.getTileX(), 3, "MO created in wrong location");
 	ASSERT_EQ(m.getTileY(), 3, "MO created in wrong location");
-	ASSERT_EQ(m.getDestTileX(), 0, "MO created with wrong destination");
-	ASSERT_EQ(m.getDestTileY(), 0, "MO created with wrong destination");
+	ASSERT_EQ(m.getNextTileX(), 0, "MO created with wrong destination");
+	ASSERT_EQ(m.getNextTileY(), 0, "MO created with wrong destination");
 	ASSERT_EQ(m.getXOffset(), 0, "MO created in wrong location");
 	ASSERT_EQ(m.getYOffset(), 0, "MO created in wrong location");
 	ASSERT_EQ(m.getOwner(), 0, "MO created with wrong owner");
@@ -162,8 +162,8 @@ void Project2Test::test_MGMovingObject_setAStarPathStartMoving()
 	ASSERT_EQ(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_EQ(m.getTileX(), 3, "MO in wrong location");
 	ASSERT_EQ(m.getTileY(), 3, "MO in wrong location");
-	ASSERT_EQ(m.getDestTileX(), 0, "MO with wrong destination");
-	ASSERT_EQ(m.getDestTileY(), 0, "MO with wrong destination");
+	ASSERT_EQ(m.getNextTileX(), 0, "MO with wrong destination");
+	ASSERT_EQ(m.getNextTileY(), 0, "MO with wrong destination");
 	ASSERT_EQ(m.getXOffset(), 0, "MO in wrong location");
 	ASSERT_EQ(m.getYOffset(), 0, "MO in wrong location");
 
@@ -179,8 +179,8 @@ void Project2Test::test_MGMovingObject_setAStarPathStartMoving()
 	ASSERT_EQ(m.anyMovingMO(), true, "No MO is moving");
 	ASSERT_EQ(m.getTileX(), 3, "MO in wrong location");
 	ASSERT_EQ(m.getTileY(), 3, "MO in wrong location");
-	ASSERT_EQ(m.getDestTileX(), 4, "MO with wrong destination");
-	ASSERT_EQ(m.getDestTileY(), 4, "MO with wrong destination");
+	ASSERT_EQ(m.getNextTileX(), 4, "MO with wrong destination");
+	ASSERT_EQ(m.getNextTileY(), 4, "MO with wrong destination");
 }
 
 void Project2Test::test_MGMovingObject_setAStarPathGetStuck()
@@ -221,6 +221,6 @@ void Project2Test::test_MGMovingObject_setAStarPathGetStuck()
 	ASSERT_EQ(m.anyMovingMO(), false, "Some MO are moving");
 	ASSERT_EQ(m.getTileX(), 3, "MO in wrong location");
 	ASSERT_EQ(m.getTileY(), 3, "MO in wrong location");
-	ASSERT_EQ(m.getDestTileX(), 3, "MO with wrong destination");
-	ASSERT_EQ(m.getDestTileY(), 3, "MO with wrong destination");
+	ASSERT_EQ(m.getNextTileX(), 3, "MO with wrong destination");
+	ASSERT_EQ(m.getNextTileY(), 3, "MO with wrong destination");
 }
