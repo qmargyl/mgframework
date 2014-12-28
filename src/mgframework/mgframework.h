@@ -130,7 +130,9 @@ class MGFramework : public MGComponent
 		// Exit application functionality
 		bool m_Quit;
 
-		bool m_TypingEnabled;		// Setting allows typing commands to console.
+		bool m_TypingEnabled;			// Set when typing commands to console.
+		bool m_FeatureConsoleEnabled;	// Setting allows activating the console.
+
 		bool m_WindowPropertiesSet; // Used to determine if all Windows properties have been set.
 		bool m_MiniMapEnabled;		// Enables the mini map implementation.
 
@@ -281,20 +283,23 @@ class MGFramework : public MGComponent
 		void drawAllSOWithTexHandles();
 
 // ***	// Feature MO selection for own MO
-		inline void enableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = true; }
-		inline void disableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = false; }
-		inline bool featureOnlySelectOwnedMOEnabled() const { return m_OnlySelectOwnedMO; }
+		void enableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = true; }
+		void disableFeatureOnlySelectOwnedMO(){ m_OnlySelectOwnedMO = false; }
+		bool featureOnlySelectOwnedMOEnabled() const { return m_OnlySelectOwnedMO; }
 
 		// Controlling frame rate
 		inline unsigned int getFPS() const;
 		inline void setDesiredFPS(unsigned int f);
 		inline unsigned int getDesiredFPS() const;
-		inline int getLastFrameDelayTime() const {return m_DelayTime;}	// How much time was left for additional calculations last frame.
+		inline int getLastFrameDelayTime() const { return m_DelayTime; }	// How much time was left for additional calculations last frame.
 
 		// Console activation related
-		void enableTyping(){m_TypingEnabled = true;}
-		void disableTyping(){m_TypingEnabled = false;}
-		bool typingEnabled() const {return m_TypingEnabled;}
+		bool featureConsoleEnabled() const { return m_FeatureConsoleEnabled; }
+		void enableFeatureConsole(){ m_FeatureConsoleEnabled = true; }
+		void disableFeatureConsole(){ m_FeatureConsoleEnabled = false; }
+		void enableTyping(){ m_TypingEnabled = true; }
+		void disableTyping(){ m_TypingEnabled = false; }
+		bool typingEnabled() const { return m_TypingEnabled; }
 
 // ***	// Feature Selective Tile Rendering
 		void enableFeatureSelectiveTileRendering(){ m_SelectiveTileRendering = true; }

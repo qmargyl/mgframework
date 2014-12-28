@@ -23,6 +23,7 @@ MGFramework::MGFramework():
 	m_InputEnabled(true),
 	m_Quit(false),
 	m_TypingEnabled(true),
+	m_FeatureConsoleEnabled(true),
 	m_WindowPropertiesSet(false),
 	m_MiniMapEnabled(true),
 	m_MGFInstanceType(MGFSINGLEPLAYERINSTANCE),
@@ -92,7 +93,8 @@ bool MGFramework::processEvents()
 				if(!typingEnabled())
 				{
 					SDL_Keycode sym = event.key.keysym.sym;
-					if(sym == SDLK_ESCAPE) //Enable typing in the console if ESC is pressed..
+					// Enable typing in the console if ESC is pressed and feature is enabled..
+					if(featureConsoleEnabled() && sym == SDLK_ESCAPE)
 					{
 						activateConsole();
 					}
@@ -624,21 +626,18 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 
 	unsigned int frameStartTime = 0; 
 	if(!runOneFrame) m_DelayTime = 0;
-	// Assume an initial value of m_FrameTime of 1000/getDesiredFPS().
-	unsigned int lastFrameTime = getWindow()->getExecTimeMS() - (1000 / getDesiredFPS()); // MGF_GetExecTimeMS() - lastFrameTime cannot be zero.
 
 	// Frame loop (processEvents, handleGameLogics, draw)
 	while(processEvents())
 	{
 		// Calculate the current frame time (and implicitly FPS)..
-		lastFrameTime = getWindow()->getExecTimeMS();
 		frameStartTime = getWindow()->getExecTimeMS();
 
 		// Handle all calculations and draw current frame..
 
 
-		//If frame countdown is enabled (a.k.a. we are counting down frames to go into console again)
-		//and the counter is zero, activate the console.
+		// If frame countdown is enabled (we are counting down frames to go into console again)
+		// and the counter is zero, activate the console.
 		if(frameCountdownEnabled())
 		{
 			static int nFrames = 0;
@@ -647,7 +646,10 @@ void MGFramework::run(const char *scriptFileName, bool runOneFrame)
 				std::cout << "Frame countdown results: " << std::endl;
 				std::cout << "\tNumber of frames executed: " << nFrames << std::endl;
 				nFrames = 0;
-				if(!runOneFrame)activateConsole();
+				if(featureConsoleEnabled() && !runOneFrame)
+				{
+					activateConsole();
+				}
 			}
 			else if (getFrameNumber() > 0)
 			{
