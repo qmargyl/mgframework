@@ -1,6 +1,8 @@
 #ifndef _MG_FRAMEWORK_H
 #define _MG_FRAMEWORK_H
 
+#include <algorithm>
+
 #include "mgcomponent.h"
 #include "mgwindow.h"
 #include "mgmap.h"

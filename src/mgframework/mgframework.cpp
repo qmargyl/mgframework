@@ -500,7 +500,6 @@ int MGFramework::parse(const char *sFileName)
 					else if(skipToEndIf == 0 && okMGFrameworkSyntax(v_scriptLine))
 					{
 						// function call..
-						//MGFLOG_INFO("Tokens: " << v_scriptLine.size());
 						if(v_scriptLine.size() > 1 && v_scriptLine[0]=="call")
 						{
 							// call filename:func -param paramvalue ... 
@@ -543,7 +542,7 @@ int MGFramework::parse(const char *sFileName)
 								}
 							}
 
-							if (fColon!=std::string::npos)
+							if(fColon != std::string::npos)
 							{
 								MGFLOG_INFO("MGFramework::parse calling " << v_scriptLine[1].c_str());
 								symbolAssignTo(	v_scriptLine[1], 

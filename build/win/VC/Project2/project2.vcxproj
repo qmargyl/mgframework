@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{93075348-E351-4FC4-A7E7-26240F1B00B0}</ProjectGuid>
+    <RootNamespace>mgframework</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.24730.2</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\..\..\..\download_sdl\SDL_ttf-2.0.11\include;..\..\..\..\..\..\download_sdl\SDL-devel-1.2.14-VC8\SDL-1.2.14\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;sdl.lib;sdlmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\git_repos\mgframework\src\sdl2\include;C:\git_repos\mgframework\src\sdl2_ttf\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;wsock32.lib;SDL2.lib;SDL2main.lib;SDL2_ttf.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\git_repos\mgframework\src\sdl2\lib\x86;C:\git_repos\mgframework\src\sdl2_ttf\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\main.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGAStarNode.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGComponent.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGFramework_misc.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGFramework_MO.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGFramework_PE.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGFramework_SO.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGMap.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGMovingObject.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGPathGenerator_calculatePathAStar.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGPathItem.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGPeriodicEvent.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGSC.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGStationaryObject.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_MGSymbolTable.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\class_test\test_system_test_002_basic_MO.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\mgclasstester.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\mgcomponent.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\mgframework.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\mgmap.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\mgmovingobject.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\mgpathgenerator.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\mgpathitem.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\mgperiodicevent.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\mgsc.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\mgstationaryobject.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\mgsymboltable.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\mgwindow.cpp" />
+    <ClCompile Include="..\..\..\..\src\mgframework\stubs\mgframeworkstub.cpp" />
+    <ClCompile Include="..\..\..\..\src\project2.cpp" />
+    <ClCompile Include="..\..\..\..\src\project2_server.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\src\mgframework\imgwindow.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgastarnode.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgclasstester.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgcomponent.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgframework.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgfversion.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgmap.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgmovingobject.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgpathgenerator.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgpathitem.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgperiodicevent.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgsc.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgstationaryobject.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgsymboltable.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\mgwindow.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\stubs\imgwindowimpl.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\stubs\mgcomponentimpl.h" />
+    <ClInclude Include="..\..\..\..\src\mgframework\stubs\mgframeworkstub.h" />
+    <ClInclude Include="..\..\..\..\src\project2.h" />
+    <ClInclude Include="..\..\..\..\src\project2_server.h" />
+    <ClInclude Include="..\..\..\..\src\project2_test.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

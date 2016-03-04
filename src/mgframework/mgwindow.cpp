@@ -8,6 +8,8 @@
 #include <GL/glu.h>
 #include "mgframework.h"
 
+extern "C" { FILE __iob_func[3] = { *stdin, *stdout, *stderr }; }
+
 MGTexHandle::MGTexHandle()
 {
 	tex = NULL;
@@ -203,8 +205,8 @@ void MGWindow::loadBMPImage(std::string fileName, MGTexHandle &texHandle, bool t
 void MGWindow::drawText(const char* string, int size, int x, int y, int fR, int fG, int fB, int bR, int bG, int bB)
 {
 #ifndef MGF_DISABLE_TTF
-	SDL_Color foregroundColor = {fR, fG, fB};
-	SDL_Color backgroundColor = {bR, bG, bB};
+	SDL_Color foregroundColor = {static_cast<Uint8>(fR), static_cast<Uint8>(fG), static_cast<Uint8>(fB)};
+	SDL_Color backgroundColor = {static_cast<Uint8>(bR), static_cast<Uint8>(bG), static_cast<Uint8>(bB)};
 	SDL_Surface* textSurface = TTF_RenderText_Shaded(m_Font, string, foregroundColor, backgroundColor);
 	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(m_Renderer, textSurface);
 	int texW = 0;
