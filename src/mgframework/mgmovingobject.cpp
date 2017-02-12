@@ -15,6 +15,8 @@ MGMovingObject::MGMovingObject()
 	m_Marked = false;
 	m_TileX = 0;
 	m_TileY = 0;
+	m_LastX = 0;
+	m_LastY = 0;
 	m_NextTileX = 0;
 	m_NextTileY = 0;
 	m_X = 0.0;
@@ -130,9 +132,21 @@ void MGMovingObject::update(MGFramework *w)
 	{
 		unsigned int currentTimeSinceLastUpdate = w->getWindow()->getExecTimeMS() - getTimeOfLastUpdate();
 
-		MGPathItem pathI = m_Path.front();
-		int x = pathI.getX();
-		int y = pathI.getY();
+		int x = 0;
+		int y = 0;
+		if (m_X == 0 && m_Y == 0)
+		{
+			MGPathItem pathI = m_Path.front();
+			x = pathI.getX();
+			y = pathI.getY();
+			m_LastX = x;
+			m_LastY = y;
+		}
+		else
+		{
+			x = m_LastX;
+			y = m_LastY;
+		}
 
 		// Something has moved into the MO's path. A new path needs to be calculated.
 		if(w->m_Map.occupant(x, y) != getID() && w->m_Map.occupant(x, y) != 0)

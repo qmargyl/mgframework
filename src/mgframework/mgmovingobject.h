@@ -14,6 +14,8 @@ private:
 	int m_TimeOfLastUpdate;
 	int m_TileX;
 	int m_TileY;
+	int m_LastX;
+	int m_LastY;
 	int m_NextTileX;
 	int m_NextTileY;
 	double m_X;
