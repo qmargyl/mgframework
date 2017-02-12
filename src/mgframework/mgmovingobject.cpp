@@ -15,8 +15,8 @@ MGMovingObject::MGMovingObject()
 	m_Marked = false;
 	m_TileX = 0;
 	m_TileY = 0;
-	m_LastX = 0;
-	m_LastY = 0;
+	m_LastTileX = 0;
+	m_LastTileY = 0;
 	m_NextTileX = 0;
 	m_NextTileY = 0;
 	m_X = 0.0;
@@ -42,6 +42,8 @@ void MGMovingObject::initialize()
 	m_Marked = false;
 	m_TileX = 0;
 	m_TileY = 0;
+	m_LastTileX = 0;
+	m_LastTileY = 0;
 	m_NextTileX = 0;
 	m_NextTileY = 0;
 	m_X = 0.0;
@@ -134,18 +136,21 @@ void MGMovingObject::update(MGFramework *w)
 
 		int x = 0;
 		int y = 0;
+
 		if (m_X == 0 && m_Y == 0)
 		{
+			// Move towards new target
 			MGPathItem pathI = m_Path.front();
 			x = pathI.getX();
 			y = pathI.getY();
-			m_LastX = x;
-			m_LastY = y;
+			m_LastTileX = x;
+			m_LastTileY = y;
 		}
 		else
 		{
-			x = m_LastX;
-			y = m_LastY;
+			// Keep moving towards last target if not yet arrived there
+			x = m_LastTileX;
+			y = m_LastTileY;
 		}
 
 		// Something has moved into the MO's path. A new path needs to be calculated.
@@ -154,7 +159,6 @@ void MGMovingObject::update(MGFramework *w)
 			// Try to find a new path to the last element in the path.
 			if(!isStuck()/* || (isStuck() && timeSinceLastUpdate > 5000)*/)
 			{
-				//MGFLOG_WARNING("MGMovingObject::update concluded that the path is blocked. Will try to find a new Path...");
 				setPath(w->m_Map.calculatePath(m_PathFindingAlgorithm, getTileX(), getTileY(), m_Path.back().getX(), m_Path.back().getY()));
 				setTimeOfLastUpdate(w->getWindow()->getExecTimeMS());
 				changeState(MOStateStuck);
