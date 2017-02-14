@@ -1762,7 +1762,6 @@ void MGFramework::addMO(int n)
 	for(int i = 0; i < n; i++)
 	{
 		MGMovingObject mo;
-		mo.initialize();
 		m_MO.push_back(mo);
 	}
 

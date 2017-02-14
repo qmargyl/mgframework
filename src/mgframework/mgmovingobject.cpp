@@ -9,22 +9,8 @@ int MGMovingObject::m_MovingMOCounter = 0;
 
 MGMovingObject::MGMovingObject()
 {
-	m_HistoryEnabled = false;
-	setTimeOfLastUpdate((unsigned int)(1000.0 * (((float)clock()) / CLOCKS_PER_SEC)));
-	m_FinishingMove = false;
-	m_Marked = false;
-	m_TileX = 0;
-	m_TileY = 0;
-	m_LastTileX = 0;
-	m_LastTileY = 0;
-	m_NextTileX = 0;
-	m_NextTileY = 0;
-	m_X = 0.0;
-	m_Y = 0.0;
-	m_VPixelsPerSecond = 0.0;
 	m_CurrentState = MOStateCreated;
-	m_PathFindingAlgorithm = MGFBASICPATH1;
-	setOwner(MGF_NOPLAYER);
+	initialize();
 }
 
 MGMovingObject::~MGMovingObject()
@@ -37,17 +23,19 @@ MGMovingObject::~MGMovingObject()
 
 void MGMovingObject::initialize()
 {
+	m_HistoryEnabled = false;
 	setTimeOfLastUpdate((unsigned int)(1000.0 * (((float)clock()) / CLOCKS_PER_SEC)));
 	m_FinishingMove = false;
 	m_Marked = false;
 	m_TileX = 0;
 	m_TileY = 0;
-	m_LastTileX = 0;
-	m_LastTileY = 0;
+	m_TempNextTileX = 0;
+	m_TempNextTileY = 0;
 	m_NextTileX = 0;
 	m_NextTileY = 0;
 	m_X = 0.0;
 	m_Y = 0.0;
+	m_VPixelsPerSecond = 0.0;
 	m_PathFindingAlgorithm = MGFBASICPATH1;
 	setOwner(MGF_NOPLAYER);
 	if(!isCreated())
@@ -143,14 +131,14 @@ void MGMovingObject::update(MGFramework *w)
 			MGPathItem pathI = m_Path.front();
 			x = pathI.getX();
 			y = pathI.getY();
-			m_LastTileX = x;
-			m_LastTileY = y;
+			m_TempNextTileX = x;
+			m_TempNextTileY = y;
 		}
 		else
 		{
 			// Keep moving towards last target if not yet arrived there
-			x = m_LastTileX;
-			y = m_LastTileY;
+			x = m_TempNextTileX;
+			y = m_TempNextTileY;
 		}
 
 		// Something has moved into the MO's path. A new path needs to be calculated.

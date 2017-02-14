@@ -14,8 +14,6 @@ private:
 	int m_TimeOfLastUpdate;
 	int m_TileX;
 	int m_TileY;
-	int m_LastTileX;
-	int m_LastTileY;
 	int m_NextTileX;
 	int m_NextTileY;
 	double m_X;
@@ -53,13 +51,13 @@ private:
 	bool m_HistoryEnabled;
 
 	void addToHistory(const char *str);
+	void initialize();
 
 public:
 
 	MGMovingObject();
 	~MGMovingObject();
 
-	void initialize();
 	std::string toString() const { return std::string(toString(getCurrentState())); }
 
 	void setTileXY(int x, int y, MGFramework *world);
