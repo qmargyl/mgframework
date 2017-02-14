@@ -9,7 +9,6 @@ int MGMovingObject::m_MovingMOCounter = 0;
 
 MGMovingObject::MGMovingObject()
 {
-	m_CurrentState = MOStateCreated;
 	initialize();
 }
 
@@ -38,11 +37,7 @@ void MGMovingObject::initialize()
 	m_VPixelsPerSecond = 0.0;
 	m_PathFindingAlgorithm = MGFBASICPATH1;
 	setOwner(MGF_NOPLAYER);
-	if(!isCreated())
-	{
-		MGFLOG_ERROR("MGMovingObject::initialize was called in the wrong state: " << toString(getCurrentState())); 
-	}
-	changeState(MOStateIdle);
+	m_CurrentState = MOStateIdle;
 }
 
 void MGMovingObject::setTileXY(int x, int y, MGFramework *world)
@@ -467,15 +462,7 @@ eMGComponentConsoleCommand MGMovingObject::detectMGComponentConsoleCommand(const
 void MGMovingObject::changeState(MOState toState)
 {
 	// XXX: This function should also update statistics counters?
-	if(toState == MOStateCreated)
-	{
-		MGFLOG_ERROR("MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", MOStateCreated should not be re-entered");
-	}
-	else if(getCurrentState() == MOStateCreated && toState == MOStateMoving)
-	{
-		MGFLOG_ERROR("MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState) << ", expected MOStateIdle");
-	}
-	else if(getCurrentState() != toState)
+	if(getCurrentState() != toState)
 	{
 		MGFLOG_INFO("MGMovingObject::changeState " << toString(getCurrentState()) << "->" << toString(toState));
 
@@ -502,10 +489,6 @@ const char* MGMovingObject::toString(MOState s) const
 {
 	switch(s)
 	{
-		case MOStateCreated:
-		{
-			return "MOStateCreated";
-		}
 		case MOStateIdle:
 		{
 			return "MOStateIdle";

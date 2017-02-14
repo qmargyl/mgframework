@@ -34,8 +34,7 @@ private:
 
 	//State
 	enum MOState{
-		MOStateCreated = 0,
-		MOStateIdle,
+		MOStateIdle = 0,
 		MOStateMoving,
 		MOStateStuck
 	};
@@ -91,7 +90,6 @@ public:
 	inline const unsigned int getTimeOfLastUpdate(){ return m_TimeOfLastUpdate; }
 
 	//State related
-	inline const bool isCreated() const { return getCurrentState() == MOStateCreated; }
 	inline const bool isIdle() const { return getCurrentState() == MOStateIdle; }
 	inline const bool isMoving() const { return getCurrentState() == MOStateMoving; }
 	inline const bool isStuck() const { return getCurrentState() == MOStateStuck; }
